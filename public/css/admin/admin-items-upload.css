@@ -1,0 +1,307 @@
+/* FindBack Kampus | Popup unggah laporan barang */
+.fb-admin-add-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 19px;
+            border: 1px solid #850c2d;
+            border-radius: 12px;
+            background: #850c2d;
+            color: #fff;
+            font: inherit;
+            font-weight: 750;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background .2s ease, transform .2s ease;
+        }
+        .fb-admin-add-button:hover { background: #680923; transform: translateY(-1px); }
+        .fb-admin-add-button:focus-visible { outline: 3px solid #eab3c8; outline-offset: 2px; }
+        .fb-admin-add-dialog {
+            box-sizing: border-box;
+            width: min(94vw, 610px);
+            max-height: min(90dvh, 850px);
+            margin: auto;
+            padding: 0;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            border: 1px solid #eedce4;
+            border-radius: 22px;
+            background: #fff;
+            color: #351326;
+            box-shadow: 0 26px 80px rgba(32, 8, 20, .35);
+        }
+        .fb-admin-add-dialog::backdrop { background: rgba(24, 7, 16, .64); backdrop-filter: blur(4px); }
+        .fb-admin-add-form { display: block; padding: 0; }
+        .fb-admin-add-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 25px 26px 22px;
+            border-bottom: 1px solid #f2e5eb;
+            background: linear-gradient(120deg, #fff7fa, #fff);
+        }
+        .fb-admin-add-title-row { display: flex; align-items: center; gap: 15px; min-width: 0; }
+        .fb-add-title-icon {
+            display: grid;
+            place-items: center;
+            width: 58px;
+            height: 58px;
+            flex: 0 0 58px;
+            border-radius: 17px;
+            background: linear-gradient(160deg, #a3164a, #850c2d);
+            color: #fff;
+            box-shadow: 0 9px 18px rgba(133, 12, 45, .16);
+        }
+        .fb-add-title-icon svg { width: 27px; height: 27px; }
+        .fb-add-title-copy { min-width: 0; }
+        .fb-admin-add-top h2 { margin: 0; font-size: 20px; line-height: 1.3; letter-spacing: -.3px; color: #401529; }
+        .fb-admin-add-top p { margin: 6px 0 0; max-width: 390px; font-size: 12.5px; line-height: 1.6; color: #916f7e; }
+        .fb-add-close {
+            display: grid;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            flex: 0 0 38px;
+            padding: 9px;
+            border: 1px solid #efdfe5;
+            border-radius: 11px;
+            background: #fff;
+            color: #80546a;
+            cursor: pointer;
+        }
+        .fb-add-close:hover { background: #fff0f5; color: #850c2d; }
+        .fb-add-close svg { width: 17px; height: 17px; }
+        .fb-add-fields { display: grid; gap: 19px; padding: 25px 26px; }
+        .fb-admin-add-form .fb-add-field { display: grid; gap: 9px; min-width: 0; }
+        .fb-add-label { display: flex; align-items: center; gap: 9px; color: #482235; font-size: 13px; font-weight: 750; line-height: 1.5; }
+        .fb-add-label svg { width: 18px; height: 18px; flex: none; color: #a33c62; }
+        .fb-add-label b { color: #b7244a; }
+        .fb-add-optional { font-size: 11px; font-weight: 550; color: #977c89; }
+        .fb-admin-add-form .fb-add-field > input:not([type="file"]),
+        .fb-admin-add-form .fb-add-field > select,
+        .fb-admin-add-form .fb-add-field > textarea {
+            box-sizing: border-box;
+            display: block;
+            width: 100%;
+            min-height: 48px;
+            padding: 13px 15px;
+            border: 1px solid #e7ced9;
+            border-radius: 12px;
+            background: #fff;
+            color: #351326;
+            font: inherit;
+            font-size: 13px;
+            font-weight: 450;
+            transition: border-color .2s ease, box-shadow .2s ease;
+        }
+        .fb-admin-add-form .fb-add-field > textarea { min-height: 116px; resize: vertical; line-height: 1.6; }
+        .fb-admin-add-form .fb-add-field > input::placeholder,
+        .fb-admin-add-form .fb-add-field > textarea::placeholder { color: #b59ba7; }
+        .fb-admin-add-form .fb-add-field > :is(input, select, textarea):focus-visible {
+            outline: 2px solid #b65e80;
+            outline-offset: 2px;
+            border-color: #b65e80;
+        }
+        .fb-add-photo-field { min-width: 0; }
+        .fb-admin-add-form .fb-add-photo-field > .fb-add-upload-zone {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 216px;
+            gap: 10px;
+            padding: 25px 20px;
+            border: 1.5px dashed #ddb2c4;
+            border-radius: 17px;
+            background: linear-gradient(155deg, #fffafb, #fdf3f7);
+            text-align: center;
+            cursor: pointer;
+            transition: border-color .2s ease, background .2s ease;
+        }
+        .fb-admin-add-form .fb-add-photo-field > .fb-add-upload-zone:hover { border-color: #9f3157; background: #fff2f7; }
+        .fb-admin-add-form .fb-add-photo-field > .fb-add-upload-zone:focus-within { outline: 2px solid #b65e80; outline-offset: 2px; }
+        .fb-admin-add-form .fb-add-upload-illustration {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 72px;
+            height: 72px;
+            flex: 0 0 72px;
+            margin: 0 auto 3px;
+            border-radius: 20px;
+            background: #f6dfe8;
+            color: #90183f;
+        }
+        .fb-admin-add-form .fb-add-upload-illustration svg { display: block; width: 42px; height: 42px; margin: auto; }
+        .fb-admin-add-form .fb-add-upload-title { display: block; font-size: 16px; font-weight: 800; color: #542035; }
+        .fb-admin-add-form .fb-add-upload-hint { display: block; font-size: 12px; line-height: 1.6; color: #967b87; }
+        .fb-admin-add-form .fb-add-file-name { display: block; max-width: 100%; font-size: 12px; font-weight: 650; color: #8e3154; overflow-wrap: anywhere; }
+        .fb-admin-add-form .fb-add-file-input {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            opacity: 0;
+            overflow: hidden;
+            clip-path: inset(50%);
+        }
+        .fb-admin-add-form .fb-add-file-input:focus-visible + * { outline: 2px solid #b65e80; }
+        .fb-admin-add-form .fb-add-photo-preview {
+            display: block;
+            width: min(100%, 260px);
+            max-height: 170px;
+            margin: 8px auto 0;
+            border: 1px solid #ecdde4;
+            border-radius: 11px;
+            background: #fff;
+            object-fit: contain;
+        }
+        .fb-admin-add-form .fb-add-photo-preview[hidden] { display: none; }
+        .fb-admin-add-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+            padding: 13px 15px;
+            border: 1px solid #d5eddd;
+            border-radius: 12px;
+            background: #f2faf5;
+            color: #376b4b;
+            font-size: 12px;
+            line-height: 1.65;
+        }
+        .fb-admin-add-note svg { width: 19px; height: 19px; flex: none; margin-top: 1px; color: #168049; }
+        .fb-admin-add-actions {
+            display: flex;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 11px;
+            padding: 18px 26px 23px;
+            border-top: 1px solid #f1e4ea;
+            background: #fff;
+        }
+        .fb-admin-add-actions button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 46px;
+            gap: 9px;
+            padding: 11px 20px;
+            border: 1px solid #e5cdd7;
+            border-radius: 11px;
+            background: #fff;
+            color: #7c153c;
+            font: inherit;
+            font-size: 13px;
+            font-weight: 750;
+            cursor: pointer;
+        }
+        .fb-admin-add-actions .fb-add-submit { background: #850c2d; border-color: #850c2d; color: #fff; box-shadow: 0 7px 17px rgba(133, 12, 45, .14); }
+        .fb-admin-add-actions .fb-add-submit:hover { background: #660a25; }
+        .fb-admin-add-actions .fb-add-submit svg { width: 17px; height: 17px; }
+        .fb-admin-add-actions .fb-add-cancel:hover { background: #fff4f7; }
+        .fb-admin-add-alert { margin: 15px 0; padding: 13px 18px; border-radius: 12px; background: #e9f7ef; color: #12663b; }
+        .fb-admin-add-error { background: #fff0f1; color: #a11b38; }
+        @media (max-width: 650px) {
+            .fb-admin-add-dialog { width: 95vw; max-height: 92dvh; }
+            .fb-admin-add-top { padding: 19px 17px; }
+            .fb-add-fields { padding: 19px 17px; gap: 16px; }
+            .fb-admin-add-actions { padding: 15px 17px; }
+            .fb-admin-add-top h2 { font-size: 18px; }
+            .fb-add-title-icon { width: 48px; height: 48px; flex-basis: 48px; }
+            .fb-add-title-icon svg { width: 23px; height: 23px; }
+            .fb-admin-add-actions button { flex: 1; padding-inline: 10px; }
+            .fb-admin-add-button { padding: 10px 12px; }
+            .fb-admin-add-form .fb-add-photo-field > .fb-add-upload-zone { min-height: 200px; padding: 20px 13px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .fb-admin-add-button,
+            .fb-admin-add-form .fb-add-photo-field > .fb-add-upload-zone { transition: none; }
+        }
+
+/* Penyelarasan ikon unggah foto */
+.fb-admin-add-form .fb-add-upload-illustration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 68px;
+    height: 68px;
+    flex: 0 0 68px;
+    margin: 0 auto 4px;
+    border-radius: 18px;
+}
+.fb-admin-add-form .fb-add-upload-illustration svg {
+    display: block;
+    width: 32px;
+    height: 32px;
+    margin: 0;
+    flex: none;
+}
+
+
+/* =============================================================
+   V42 — LABEL FOTO SEJAJAR / HEADER PACKAGE PLUS
+   Berlaku khusus untuk popup admin.items, tidak memengaruhi tabel.
+   ============================================================= */
+.fb-admin-add-dialog .fb-admin-add-form .fb-add-photo-field > .fb-add-label {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 9px;
+    width: fit-content;
+    margin: 0;
+    padding: 0;
+    line-height: 1.4;
+    text-align: left;
+}
+.fb-admin-add-dialog .fb-admin-add-form .fb-add-photo-field > .fb-add-label svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    flex: 0 0 18px;
+    margin: 0;
+    color: #a33c62;
+}
+.fb-admin-add-dialog .fb-admin-add-form .fb-add-photo-field > .fb-add-label b {
+    color: #b7244a;
+    margin-left: -4px;
+}
+.fb-admin-add-dialog .fb-add-title-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    flex: 0 0 58px;
+    border-radius: 17px;
+    background: #850c2d;
+    color: #fff;
+}
+.fb-admin-add-dialog .fb-add-title-icon svg {
+    display: block;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+}
+.fb-admin-add-dialog .fb-add-photo-field {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+}
+.fb-admin-add-dialog .fb-add-upload-zone {
+    width: 100%;
+}
+@media (max-width: 480px) {
+    .fb-admin-add-dialog .fb-add-title-icon {
+        width: 48px; height: 48px; flex-basis: 48px;
+    }
+    .fb-admin-add-dialog .fb-add-title-icon svg {
+        width: 26px; height: 26px;
+    }
+}

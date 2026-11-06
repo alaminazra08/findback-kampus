@@ -4,24 +4,37 @@
 @section('breadcrumb', 'Pencocokan Barang')
 
 @section('content')
-    <link rel="stylesheet" href="{{ asset('css/admin/admin-matching.css') }}?v=35">
+    <link rel="stylesheet" href="{{ asset('css/admin/admin-matching.css') }}?v=36">
     <div class="match-wrap">
         <a class="match-back" href="{{ route('admin.matching.index') }}">← Kembali ke Pencocokan</a>
-        <div class="match-heading">
-            <div>
-                <p class="match-kicker">DETAIL KANDIDAT · {{ $match->id }}</p>
-                <h1>Detail <span>Pencocokan</span></h1>
-                <p>Bandingkan dua laporan sebelum memutuskan kandidat cocok atau tidak.</p>
+        {{-- Header detail kandidat: satu panel ringkas, skor tetap bersumber dari sistem --}}
+        <header class="match-detail-hero" aria-labelledby="match-detail-title">
+            <div class="match-detail-hero-main">
+                <div class="match-detail-hero-top">
+                    <span class="match-detail-id">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="m12 3-9 5 9 5 9-5-9-5Z" />
+                            <path d="M3 8v8l9 5 9-5V8M12 13v8" />
+                            <path d="M17.5 14v7M14 17.5h7" />
+                        </svg>
+                        Kandidat {{ $match->id }}
+                    </span>
+                    <span class="match-pill {{ $match->status }}">{{ \App\Support\WorkflowStatus::matches()[$match->status] ?? $match->status }}</span>
+                </div>
+                <h1 id="match-detail-title">Detail <span>Pencocokan Barang</span></h1>
+                <p class="match-detail-intro">Tinjau kesamaan barang hilang dan ditemukan sebelum menentukan hasil pencocokan.</p>
             </div>
-            <div class="match-score-large"><small>Skor kemiripan
-                    sistem</small><strong>{{ number_format((float) $match->match_score, 0) }}%</strong>
-                <div class="match-score-track" role="meter" aria-label="Skor kemiripan" aria-valuemin="0"
-                    aria-valuemax="100" aria-valuenow="{{ max(0, min(100, (int) round($match->match_score))) }}"><span
-                        class="fb-refactor fb-percent-{{ max(0, min(100, (int) round($match->match_score))) }}"></span>
-                </div><span
-                    class="match-pill {{ $match->status }}">{{ \App\Support\WorkflowStatus::matches()[$match->status] ?? $match->status }}</span>
+            <div class="match-detail-hero-score">
+                <div class="match-detail-score-value">
+                    <span>Skor kemiripan sistem</span>
+                    <strong>{{ number_format((float) $match->match_score, 0) }}%</strong>
+                </div>
+                <div class="match-score-track" role="meter" aria-label="Skor kemiripan" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ max(0, min(100, (int) round($match->match_score))) }}">
+                    <span class="fb-refactor fb-percent-{{ max(0, min(100, (int) round($match->match_score))) }}"></span>
+                </div>
+                <p>Skor menunjukkan kemiripan laporan, bukan kepastian kepemilikan. Periksa detail dan foto sebelum mengambil keputusan.</p>
             </div>
-        </div>
+        </header>
         @if (session('success'))
             <div class="match-flash success" role="status">{{ session('success') }}</div>
         @endif
@@ -94,17 +107,35 @@
                     <p>Ringkasan alasan kandidat dipasangkan oleh sistem.</p>
                 </div>
             </div>
-            <div class="match-reason-box"><span class="match-reason-label">DASAR PERHITUNGAN KEMIRIPAN</span>
-                @php $reasonParts = array_values(array_filter(array_map('trim', explode(';', (string) $match->match_reason)))); @endphp
-                @if (count($reasonParts) > 1)
+            @php
+                // Alasan lama tetap dapat dibaca tanpa menampilkan istilah versi atau kategori.
+                $reasonParts = array_values(array_filter(
+                    array_map('trim', explode(';', (string) $match->match_reason)),
+                    fn ($part) => $part !== ''
+                        && !str_contains(mb_strtolower($part), 'metode v2')
+                        && !str_contains(mb_strtolower($part), 'kategori')
+                ));
+                $locationHasReason = collect($reasonParts)->contains(fn ($part) => str_starts_with($part, 'Lokasi '));
+                $dateHasReason = collect($reasonParts)->contains(fn ($part) => str_starts_with($part, 'Tanggal '));
+                // Untuk kandidat yang tersimpan sebelum pembaruan, tampilkan alasan yang tidak tercatat.
+                if (!$locationHasReason && $match->lostItem && $match->foundItem) {
+                    $reasonParts[] = 'Lokasi berbeda atau tidak cukup serupa (+0)';
+                }
+                if (!$dateHasReason && $match->lostItem && $match->foundItem) {
+                    $reasonParts[] = 'Tanggal di luar rentang pencocokan atau tidak tersedia (+0)';
+                }
+            @endphp
+            <div class="match-reason-box">
+                <span class="match-reason-label">FAKTOR PENILAIAN KEMIRIPAN</span>
+                <p class="match-reason-help">Angka dalam tanda kurung adalah poin yang diberikan sistem untuk setiap faktor, bukan bukti kepemilikan.</p>
+                @if (count($reasonParts))
                     <ul class="match-reason-list">
                         @foreach ($reasonParts as $part)
-                            <li><span class="match-reason-dot" aria-hidden="true"></span><span>{{ $part }}</span>
-                            </li>
+                            <li><span class="match-reason-dot" aria-hidden="true"></span><span>{{ $part }}</span></li>
                         @endforeach
                     </ul>
                 @else
-                    <p>{{ $match->match_reason ?: 'Tidak ada alasan pencocokan.' }}</p>
+                    <p>Rincian faktor pencocokan belum tersedia untuk kandidat ini.</p>
                 @endif
             </div>
             <p class="match-notice" role="note"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none"

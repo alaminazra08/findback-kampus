@@ -196,6 +196,11 @@ Route::middleware(['auth', 'role:admin'])
 
         Route::get('/items', [AdminItemController::class, 'index'])->name('items.index');
 
+        // Admin menambah barang hilang/ditemukan dan langsung mempublikasikannya.
+        Route::post('/items', [AdminItemController::class, 'store'])
+            ->middleware('throttle:10,1')
+            ->name('items.store');
+
         Route::get('/items/{item}', [AdminItemController::class, 'show'])->name('items.show');
 
         // ----------------------------------------------------

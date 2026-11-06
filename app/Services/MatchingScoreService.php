@@ -11,8 +11,6 @@ class MatchingScoreService
     {
         $score = 0;
         $reasons = [];
-        // v2 applies only to newly inserted candidates; existing scores are not recalculated.
-        $reasons[] = 'Metode v2: nama 40, ciri 25, lokasi 25, tanggal 10; kategori tidak dinilai';
         $tokens = function (?string $text): array {
             $parts = preg_split(
                 "/[^\p{L}\p{N}]+/u",
@@ -70,6 +68,8 @@ class MatchingScoreService
             ) {
                 $score += 12;
                 $reasons[] = 'Lokasi berkaitan (+12)';
+            } else {
+                $reasons[] = 'Lokasi berbeda (+0)';
             }
         }
 
@@ -81,6 +81,8 @@ class MatchingScoreService
             } elseif ($days <= 7) {
                 $score += 5;
                 $reasons[] = 'Tanggal dalam 7 hari (+5)';
+            } else {
+                $reasons[] = 'Tanggal berjauhan (+0)';
             }
         }
         return [min(100, $score), $reasons];

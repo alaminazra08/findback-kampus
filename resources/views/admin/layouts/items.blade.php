@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 
@@ -31,6 +30,10 @@
 
     <link rel="stylesheet"
         href="{{ asset('css/admin/admin-workflow.css') }}?v=1">
+
+    {{-- CSS khusus popup unggah laporan barang --}}
+    <link rel="stylesheet"
+        href="{{ asset('css/admin/admin-items-upload.css') }}?v=1">
 
     {{-- SIDEBAR --}}
     <link rel="stylesheet"
@@ -350,12 +353,18 @@
     {{-- ANIMASI LOGO --}}
     <script src="{{ asset('js/admin/sidebar-brand.js') }}"></script>
 
+    {{-- CSS khusus popup unggah laporan barang --}}
+    <link rel="stylesheet"
+        href="{{ asset('css/admin/admin-items-upload.css') }}?v=1">
+
     {{-- SIDEBAR --}}
     <script
         src="{{ asset('js/admin/admin-sidebar-v44.js') }}?v=48"
         defer>
     </script>
 
+    {{-- JavaScript popup unggah laporan barang --}}
+    <script src="{{ asset('js/admin/admin-items-upload.js') }}?v=1" defer></script>
 </body>
 
 </html>

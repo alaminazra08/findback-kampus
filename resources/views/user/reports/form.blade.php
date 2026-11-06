@@ -1,3 +1,4 @@
+{{-- FindBack Kampus - Formulir Pelaporan Barang --}}
 <div class="cu-form-wrap {{ $kind === 'found' ? 'found' : '' }}">
     <header class="cu-title cu-title-icon"><span
             class="cu-round {{ $kind === 'found' ? 'green' : 'red' }}">@include('user.components.icon', ['icon' => $kind === 'found' ? 'box' : 'search'])</span>

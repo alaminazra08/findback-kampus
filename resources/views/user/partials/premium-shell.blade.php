@@ -1,4 +1,21 @@
+
 @php
+    /*
+    |--------------------------------------------------------------------------
+    | IDENTITAS APLIKASI DINAMIS
+    |--------------------------------------------------------------------------
+    | Menggunakan data Pengaturan Sistem yang disediakan ke view.
+    */
+
+    $fpSiteName = $fbBrand['site_name'] ?? 'FindBack Kampus';
+    $fpInstitutionName = $fbBrand['institution_name'] ?? 'Fakultas Sains dan Teknologi';
+
+    /*
+    |--------------------------------------------------------------------------
+    | NAVIGASI PENGGUNA
+    |--------------------------------------------------------------------------
+    */
+
     $fpNav = [
         ['dashboard', 'Beranda', 'home', 'dashboard'],
         ['user.items.index', 'Cari Barang', 'search', 'user.items.*'],
@@ -7,7 +24,7 @@
         ['user.chat.index', 'Chat Admin', 'message', 'user.chat.*'],
     ];
 
-    $fpName = auth()->user()->name;
+    $fpName = auth()->user()->name ?? 'Pengguna';
 
     $fpCurrentPage = 'Laporan barang';
 
@@ -24,35 +41,75 @@
     }
 @endphp
 
-<a class="fp-skip" href="#fp-content">Langsung ke konten</a>
+{{-- AKSESIBILITAS --}}
+<a class="fp-skip" href="#fp-content">
+    Langsung ke konten
+</a>
 
+{{-- OVERLAY MOBILE --}}
 <div class="fp-overlay" id="fp-overlay" hidden></div>
 
-<aside class="fp-sidebar" id="fp-sidebar" aria-label="Navigasi pengguna">
+{{-- SIDEBAR PENGGUNA --}}
+<aside
+    class="fp-sidebar"
+    id="fp-sidebar"
+    aria-label="Navigasi pengguna"
+>
 
-    <a class="fp-brand" href="{{ route('dashboard') }}">
-        <img src="{{ asset('images/logo-findback.png') }}" alt="">
+    {{-- IDENTITAS APLIKASI --}}
+    <a
+        class="fp-brand"
+        href="{{ route('dashboard') }}"
+        aria-label="{{ $fpSiteName }} - Beranda pengguna"
+    >
+
+        <img
+            src="{{ asset('images/logo-findback.png') }}"
+            alt=""
+        >
+
         <span>
-            FindBack
-            <span class="fp-brand-sub">KAMPUS · FST</span>
+            {{ $fpSiteName }}
+
+            <span class="fp-brand-sub">
+                {{ $fpInstitutionName }}
+            </span>
         </span>
+
         <span class="fp-brand-dot"></span>
+
     </a>
 
+    {{-- INFORMASI WORKSPACE --}}
     <div class="fp-workspace">
+
         <span class="fp-workspace-icon">F</span>
+
         <div>
             <strong>Ruang pengguna</strong>
-            <small>UIN Imam Bonjol Padang</small>
+
+            <small>{{ $fpInstitutionName }}</small>
         </div>
+
     </div>
 
-    <p class="fp-nav-label">RUANG UTAMA</p>
+    {{-- MENU UTAMA --}}
+    <p class="fp-nav-label">
+        RUANG UTAMA
+    </p>
 
     <nav aria-label="Menu utama">
+
         @foreach ($fpNav as [$r, $label, $icon, $active])
-            <a class="fp-nav-link {{ request()->routeIs($active) ? 'is-active' : '' }}" href="{{ route($r) }}"
-                @if (request()->routeIs($active)) aria-current="page" @endif>
+
+            <a
+                class="fp-nav-link {{ request()->routeIs($active) ? 'is-active' : '' }}"
+                href="{{ route($r) }}"
+                @if (request()->routeIs($active))
+                    aria-current="page"
+                @endif
+            >
+
                 @include('user.partials.premium-icon', ['name' => $icon])
 
                 <span>{{ $label }}</span>
@@ -60,102 +117,176 @@
                 @if (request()->routeIs($active))
                     <span class="fp-active-dot"></span>
                 @endif
+
             </a>
+
         @endforeach
+
     </nav>
 
-    <p class="fp-nav-label">BANTU TEMUKAN KEMBALI</p>
+    {{-- MENU PELAPORAN --}}
+    <p class="fp-nav-label">
+        BANTU TEMUKAN KEMBALI
+    </p>
 
     <nav aria-label="Pelaporan barang">
 
-        <a class="fp-nav-link {{ request()->routeIs('user.reports.lost.*') ? 'is-active' : '' }}"
-            href="{{ route('user.reports.lost.create') }}">
+        {{-- LAPORAN KEHILANGAN --}}
+        <a
+            class="fp-nav-link {{ request()->routeIs('user.reports.lost.*') ? 'is-active' : '' }}"
+            href="{{ route('user.reports.lost.create') }}"
+        >
+
             @include('user.partials.premium-icon', ['name' => 'lost'])
+
             <span>Laporkan Kehilangan</span>
+
         </a>
 
-        <a class="fp-nav-link {{ request()->routeIs('user.reports.found.*') ? 'is-active' : '' }}"
-            href="{{ route('user.reports.found.create') }}">
+        {{-- LAPORAN PENEMUAN --}}
+        <a
+            class="fp-nav-link {{ request()->routeIs('user.reports.found.*') ? 'is-active' : '' }}"
+            href="{{ route('user.reports.found.create') }}"
+        >
+
             @include('user.partials.premium-icon', ['name' => 'found'])
+
             <span>Laporkan Penemuan</span>
+
         </a>
 
     </nav>
 
+    {{-- BAGIAN BAWAH SIDEBAR --}}
     <div class="fp-sidebar-bottom">
 
         <div class="fp-care">
-            <span>SEDIKIT PEDULI, BANYAK BERARTI.</span>
+
+            <span>
+                SEDIKIT PEDULI, BANYAK BERARTI.
+            </span>
 
             <p>
                 Barang yang kamu temukan bisa sangat berarti bagi seseorang.
             </p>
 
             <a href="{{ route('user.reports.found.create') }}">
+
                 Bantu kembalikan
+
                 @include('user.partials.premium-icon', ['name' => 'arrow'])
+
             </a>
+
         </div>
 
-        <form method="POST" action="{{ route('logout') }}">
+        {{-- LOGOUT --}}
+        <form
+            method="POST"
+            action="{{ route('logout') }}"
+        >
+
             @csrf
 
-            <button class="fp-exit" type="submit">
+            <button
+                class="fp-exit"
+                type="submit"
+            >
+
                 @include('user.partials.premium-icon', ['name' => 'logout'])
+
                 Keluar dari akun
+
             </button>
+
         </form>
 
     </div>
 
 </aside>
 
+{{-- TOPBAR --}}
 <header class="fp-topbar">
 
     <div class="fp-top-left">
 
-        <button class="fp-menu" id="fp-menu" type="button" aria-label="Buka navigasi" aria-controls="fp-sidebar"
-            aria-expanded="false">
+        {{-- TOMBOL NAVIGASI MOBILE --}}
+        <button
+            class="fp-menu"
+            id="fp-menu"
+            type="button"
+            aria-label="Buka navigasi"
+            aria-controls="fp-sidebar"
+            aria-expanded="false"
+        >
+
             @include('user.partials.premium-icon', ['name' => 'menu'])
+
         </button>
 
+        {{-- BREADCRUMB --}}
         <span class="fp-top-label">
+
             Ruang pengguna
+
             <span>/</span>
+
             <strong>{{ $fpCurrentPage }}</strong>
+
         </span>
 
     </div>
 
+    {{-- BAGIAN KANAN TOPBAR --}}
     <div class="fp-top-right">
 
+        {{-- NAMA INSTITUSI DINAMIS --}}
         <span class="fp-campus">
-            {{ $fbBrand['institution_name'] }}
+            {{ $fpInstitutionName }}
         </span>
 
         <span class="fp-top-divider"></span>
 
+        {{-- AVATAR USER --}}
         <span class="fp-avatar">
             {{ mb_strtoupper(mb_substr($fpName, 0, 1)) }}
         </span>
 
+        {{-- INFORMASI AKUN --}}
         <span class="fp-account">
+
             <strong>{{ $fpName }}</strong>
+
             <small>Akun pengguna</small>
+
         </span>
 
     </div>
 
 </header>
 
-<nav class="fp-mobile-nav" aria-label="Navigasi cepat">
+{{-- NAVIGASI CEPAT MOBILE --}}
+<nav
+    class="fp-mobile-nav"
+    aria-label="Navigasi cepat"
+>
 
     @foreach ($fpNav as [$r, $label, $icon, $active])
-        <a href="{{ route($r) }}" class="{{ request()->routeIs($active) ? 'is-active' : '' }}"
-            @if (request()->routeIs($active)) aria-current="page" @endif>
+
+        <a
+            href="{{ route($r) }}"
+            class="{{ request()->routeIs($active) ? 'is-active' : '' }}"
+            @if (request()->routeIs($active))
+                aria-current="page"
+            @endif
+        >
+
             @include('user.partials.premium-icon', ['name' => $icon])
+
             <span>{{ $label }}</span>
+
         </a>
+
     @endforeach
 
 </nav>

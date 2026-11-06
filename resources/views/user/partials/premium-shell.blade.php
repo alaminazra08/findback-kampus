@@ -130,7 +130,7 @@
     <div class="fp-top-right">
 
         <span class="fp-campus">
-            Fakultas Sains dan Teknologi
+            {{ $fbBrand['institution_name'] }}
         </span>
 
         <span class="fp-top-divider"></span>

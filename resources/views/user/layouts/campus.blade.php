@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="#800d2b">
-    <title>@yield('title') | FindBack Kampus</title>
+    <title>@yield('title') | {{ $fbBrand['site_name'] }}</title>
     <link rel="icon" href="{{ asset('images/logo-findback.png') }}">
     <link rel="stylesheet" href="{{ asset('css/user/campus.css') }}?v=1">
     <script src="{{ asset('js/user/campus.js') }}?v=1" defer></script>
@@ -100,7 +100,7 @@
         @yield('content')
     </main>
     <footer class="cu-footer"><a class="cu-brand" href="{{ route('dashboard') }}">FindBack
-            <span>Kampus</span></a><span>Fakultas Sains dan Teknologi · UIN Imam Bonjol Padang</span><small>©
+            <span>Kampus</span></a><span>{{ $fbBrand['institution_name'] }} · UIN Imam Bonjol Padang</span><small>©
             {{ date('Y') }}</small></footer>
 </body>
 

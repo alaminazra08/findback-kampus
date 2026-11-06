@@ -10,7 +10,7 @@
 
     <meta name="theme-color" content="#850c2d">
 
-    <title>Daftar Akun | FindBack Kampus</title>
+    <title>Daftar Akun | {{ $fbBrand['site_name'] }}</title>
 
     <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
 
@@ -72,7 +72,7 @@
 
                 <img src="{{ asset('images/logo-findback.png') }}" alt="" width="36" height="36">
 
-                <span><strong>FindBack Kampus</strong><small>LOST &amp; FOUND · FST UIN IB</small></span>
+                <span><strong>{{ $fbBrand['site_name'] }}</strong><small>LOST &amp; FOUND · FST UIN IB</small></span>
 
             </div>
 
@@ -138,7 +138,7 @@
 
                     </span>
 
-                    <span><strong>FindBack Kampus</strong><small>LOST &amp; FOUND KAMPUS</small></span>
+                    <span><strong>{{ $fbBrand['site_name'] }}</strong><small>LOST &amp; FOUND KAMPUS</small></span>
 
                 </div>
 
@@ -148,7 +148,7 @@
 
                     <h1 id="register-title">Buat Akun Baru</h1>
 
-                    <p>Isi data diri Anda untuk mulai menggunakan FindBack Kampus.</p>
+                    <p>Isi data diri Anda untuk mulai menggunakan {{ $fbBrand['site_name'] }}.</p>
 
                 </header>
 
@@ -341,7 +341,7 @@
                 <p class="fb-auth-switch">Sudah punya akun? <a href="{{ route('login') }}">Login di sini</a></p>
 
                 <p class="fb-auth-footnote">Dengan mendaftar, Anda menyetujui penggunaan data untuk layanan pelaporan
-                    dan pencarian barang sesuai kebijakan FindBack Kampus.</p>
+                    dan pencarian barang sesuai kebijakan {{ $fbBrand['site_name'] }}.</p>
 
             </div>
 

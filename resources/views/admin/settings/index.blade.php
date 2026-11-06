@@ -62,7 +62,7 @@
                 <header><span class="fb-settings-section-icon">⌕</span>
                     <div>
                         <h2 id="matching-title">Preferensi Pencocokan</h2>
-                        <p>Nilai yang tersedia untuk dibaca modul Pencocokan.</p>
+                        <p>Batas skor digunakan pada proses pencocokan berikutnya.</p>
                     </div>
                 </header>
                 <label class="fb-settings-field compact"><span>Skor minimum kandidat (0–100%) <b>*</b></span>
@@ -71,9 +71,7 @@
                             value="{{ old('matching_min_score', $settings['matching_min_score']) }}"><strong>%</strong>
                     </div>
                 </label>
-                <p class="fb-settings-note">Perubahan angka ini baru memengaruhi pencocokan otomatis setelah
-                    <code>MatchingController</code> membaca nilai <code>matching_min_score</code> dari tabel
-                    <code>app_settings</code>. Saat ini pengaturan disimpan, bukan otomatis diterapkan.
+                <p class="fb-settings-note">Nilai ini digunakan oleh modul pencocokan pada proses berikutnya; hasil pencocokan lama tidak dihitung ulang otomatis.
                 </p>
             </section>
 
@@ -99,8 +97,7 @@
                         </select>
                     </div>
                 @endforeach
-                <p class="fb-settings-note">Preferensi ini tersimpan di database. Pengiriman notifikasi yang sebenarnya
-                    harus dihubungkan secara terpisah agar mematuhi pengaturan.</p>
+                <p class="fb-settings-note">Pemberitahuan admin untuk laporan dan klaim mengikuti preferensi ini. Pemberitahuan pencocokan berlaku untuk pengiriman yang menggunakan layanan AdminAlerts. Pesan keputusan kepada pengguna tidak dinonaktifkan.</p>
             </section>
 
             <div class="fb-settings-footer-actions">

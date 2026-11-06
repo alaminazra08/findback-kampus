@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#850c2d">
     <meta name="description"
         content="Masuk ke FindBack Kampus untuk melaporkan dan menemukan kembali barang di lingkungan Fakultas Sains dan Teknologi.">
-    <title>Masuk | FindBack Kampus</title>
+    <title>Masuk | {{ $fbBrand['site_name'] }}</title>
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('css/auth/auth.css') }}">
     <link rel="stylesheet" href="{{ asset('css/auth/login.css') }}">
@@ -62,7 +62,7 @@
                 <header class="fb-auth-heading">
                     <span class="fb-auth-heading__eyebrow">SELAMAT DATANG KEMBALI</span>
                     <h1 id="login-title">Masuk ke Akun Anda</h1>
-                    <p>Masuk untuk melanjutkan pencarian dan pelaporan barang di FindBack Kampus.</p>
+                    <p>Masuk untuk melanjutkan pencarian dan pelaporan barang di {{ $fbBrand['site_name'] }}.</p>
                 </header>
                 @if (session('success'))
                     <div class="fb-login-success" role="status">{{ session('success') }}</div>
@@ -196,7 +196,7 @@
                 </div>
                 <p class="fb-recovery-eyebrow">KEAMANAN AKUN</p>
                 <h2 id="fb-recovery-title">Lupa kata sandi?</h2>
-                <p class="fb-recovery-description" id="fb-recovery-description">Masukkan email akun FindBack Kampus.
+                <p class="fb-recovery-description" id="fb-recovery-description">Masukkan email akun {{ $fbBrand['site_name'] }}.
                     Kami akan mengirimkan tautan untuk membuat kata sandi baru.</p>
                 @if (request()->query('recovery') === '1' && session('status'))
                     <div class="fb-recovery-feedback fb-recovery-feedback--success" role="status">

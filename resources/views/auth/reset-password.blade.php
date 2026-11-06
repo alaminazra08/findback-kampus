@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#850c2d">
-    <title>Atur ulang kata sandi | FindBack Kampus</title>
+    <title>Atur ulang kata sandi | {{ $fbBrand['site_name'] }}</title>
     <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/auth/password-recovery.css') }}">
     <link rel="stylesheet" href="{{ asset('css/shared/view-utilities.css') }}">

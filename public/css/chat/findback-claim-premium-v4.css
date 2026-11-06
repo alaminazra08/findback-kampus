@@ -1,0 +1,509 @@
+/* FindBack Chat Klaim Premium v4 — tidak mengubah fungsi backend */
+.fb-claim-chat-jump {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0 5px;
+    padding: 12px 17px;
+    border: 1px solid #e9c7d4;
+    border-radius: 13px;
+    background: #fff7fa;
+    color: #850c2d;
+    text-decoration: none;
+    font-weight: 750;
+    font-size: 13px;
+    transition:
+        background 0.2s,
+        transform 0.2s;
+}
+.fb-claim-chat-jump:hover {
+    background: #f9e9ef;
+    transform: translateY(-1px);
+}
+.fb-claim-chat-jump.is-archive {
+    color: #6c5862;
+    background: #f9f5f7;
+}
+.fcp-panel {
+    margin: 26px 0 30px;
+    background: #fff;
+    border: 1px solid #ecdce2;
+    border-radius: 26px;
+    box-shadow: 0 18px 50px rgba(62, 12, 34, 0.065);
+    overflow: hidden;
+    scroll-margin-top: 110px;
+}
+.fcp-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 27px 31px;
+    background: linear-gradient(120deg, #fff 0%, #fff7fa 100%);
+    border-bottom: 1px solid #f0e2e8;
+}
+.fcp-eyebrow {
+    display: block;
+    color: #a00d45;
+    letter-spacing: 0.14em;
+    font-size: 10px;
+    font-weight: 850;
+    margin-bottom: 8px;
+}
+.fcp-head h2 {
+    font-size: clamp(21px, 2vw, 28px);
+    color: #351521;
+    margin: 0 0 7px;
+    font-weight: 850;
+}
+.fcp-head p {
+    margin: 0;
+    color: #917985;
+    font-size: 13px;
+    line-height: 1.65;
+}
+.fcp-status {
+    flex: none;
+    padding: 10px 14px;
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 800;
+}
+.fcp-status.is-active {
+    color: #187247;
+    background: #e9f7ef;
+}
+.fcp-status.is-closed {
+    color: #735d69;
+    background: #f4edf1;
+}
+.fcp-contact {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 17px 30px;
+    border-bottom: 1px solid #f0e2e8;
+    background: #fff;
+}
+.fcp-avatar {
+    width: 46px;
+    height: 46px;
+    flex: none;
+    border-radius: 15px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #850c2d, #bd2958);
+    color: #fff;
+    font-weight: 850;
+    font-size: 20px;
+}
+.fcp-contact > div {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.fcp-contact strong {
+    color: #351521;
+    font-size: 15px;
+}
+.fcp-contact small {
+    color: #9d8490;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+.fcp-context {
+    margin-left: auto;
+    color: #8a274b;
+    background: #fff2f7;
+    border: 1px solid #f1d8e1;
+    border-radius: 99px;
+    padding: 9px 13px;
+    font-size: 11px;
+    font-weight: 750;
+    text-align: right;
+}
+.fcp-messages {
+    height: clamp(330px, 48vh, 540px);
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 30px;
+    background:
+        radial-gradient(ellipse at top left, #fff5f9, transparent 45%),
+        linear-gradient(#fdf9fb, #fff);
+    scroll-behavior: smooth;
+}
+.fcp-message {
+    display: flex;
+    justify-content: flex-start;
+}
+.fcp-message.mine {
+    justify-content: flex-end;
+}
+.fcp-bubble {
+    max-width: min(72%, 600px);
+    min-width: 105px;
+    background: #fff;
+    border: 1px solid #eedde4;
+    border-radius: 17px 17px 17px 5px;
+    padding: 13px 17px;
+    box-shadow: 0 6px 22px rgba(60, 12, 32, 0.04);
+    overflow-wrap: anywhere;
+}
+.fcp-message.mine .fcp-bubble {
+    background: linear-gradient(135deg, #850c2d, #a31648);
+    color: #fff;
+    border-color: #850c2d;
+    border-radius: 17px 17px 5px 17px;
+}
+.fcp-bubble strong {
+    font-size: 11px;
+    color: #9c1242;
+}
+.fcp-message.mine .fcp-bubble strong {
+    color: #ffdbeb;
+}
+.fcp-bubble p {
+    white-space: pre-wrap;
+    margin: 7px 0;
+    font-size: 13px;
+    line-height: 1.65;
+}
+.fcp-bubble small {
+    display: block;
+    font-size: 10px;
+    opacity: 0.75;
+    text-align: right;
+    margin-top: 8px;
+}
+.fcp-bubble img {
+    max-width: min(100%, 280px);
+    max-height: 250px;
+    object-fit: contain;
+    border-radius: 10px;
+    margin-top: 9px;
+}
+.fcp-empty {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    max-width: 370px;
+}
+.fcp-empty span {
+    width: 64px;
+    height: 64px;
+    border-radius: 20px;
+    background: #f9e8ef;
+    color: #850c2d;
+    display: grid;
+    place-items: center;
+    font-size: 32px;
+}
+.fcp-empty strong {
+    font-size: 18px;
+    color: #351521;
+}
+.fcp-empty p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #977d8a;
+    margin: 0;
+}
+.fcp-compose {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 17px 22px;
+    background: #fff;
+    border-top: 1px solid #f0e1e7;
+}
+.fcp-attach {
+    width: 48px;
+    height: 48px;
+    flex: none;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: #f9e8ef;
+    color: #850c2d;
+    font-size: 25px;
+    cursor: pointer;
+}
+.fcp-attach input {
+    display: none;
+}
+.fcp-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+}
+.fcp-compose textarea {
+    flex: 1;
+    min-width: 0;
+    min-height: 49px;
+    max-height: 130px;
+    border: 1px solid #e9d6df;
+    border-radius: 14px;
+    padding: 13px 15px;
+    font: inherit;
+    font-size: 13px;
+    resize: vertical;
+    outline: none;
+}
+.fcp-compose textarea:focus {
+    border-color: #9f1749;
+    box-shadow: 0 0 0 3px #850c2d12;
+}
+.fcp-compose button {
+    flex: none;
+    min-height: 48px;
+    border: 0;
+    border-radius: 13px;
+    background: #850c2d;
+    color: #fff;
+    padding: 0 20px;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+}
+.fcp-compose button:hover {
+    background: #6c0825;
+}
+.fcp-closed {
+    padding: 22px;
+    text-align: center;
+    background: #faf5f7;
+    color: #79636d;
+    font-size: 13px;
+    line-height: 1.7;
+    border-top: 1px solid #f0e1e7;
+}
+@media (max-width: 800px) {
+    .fcp-head {
+        padding: 21px;
+        align-items: flex-start;
+    }
+    .fcp-contact {
+        padding: 15px 20px;
+    }
+    .fcp-messages {
+        padding: 20px;
+        height: clamp(320px, 52vh, 500px);
+    }
+    .fcp-context {
+        max-width: 150px;
+    }
+    .fcp-bubble {
+        max-width: 85%;
+    }
+}
+@media (max-width: 560px) {
+    .fcp-panel {
+        border-radius: 19px;
+        margin: 18px 0;
+    }
+    .fcp-head {
+        padding: 20px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .fcp-status {
+        padding: 8px 11px;
+    }
+    .fcp-contact {
+        flex-wrap: wrap;
+        gap: 9px;
+    }
+    .fcp-context {
+        width: 100%;
+        max-width: none;
+        margin: 4px 0 0;
+        text-align: left;
+    }
+    .fcp-messages {
+        height: 52vh;
+        min-height: 290px;
+        padding: 13px;
+        gap: 11px;
+    }
+    .fcp-bubble {
+        max-width: 92%;
+        padding: 11px 13px;
+    }
+    .fcp-compose {
+        padding: 12px;
+        gap: 9px;
+        flex-wrap: wrap;
+    }
+    .fcp-compose textarea {
+        flex: 1 1 calc(100% - 65px);
+    }
+    .fcp-compose button {
+        width: 100%;
+    }
+    .fb-claim-chat-jump {
+        max-width: 100%;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .fcp-messages {
+        scroll-behavior: auto;
+    }
+    .fb-claim-chat-jump {
+        transition: none;
+    }
+}
+/* Tampilan premium saat ruang chat dibuka langsung lewat menu Pesan Pengguna */
+.fb-chat-page .chat-container {
+    max-width: 1120px !important;
+}
+.fb-chat-page .chat-heading {
+    padding: 8px 4px 4px;
+}
+.fb-chat-page .chat-heading h1 {
+    font-size: clamp(26px, 3vw, 40px) !important;
+    letter-spacing: -0.025em;
+}
+.fb-chat-page .chat-panel {
+    border: 1px solid #ecdce2 !important;
+    border-radius: 24px !important;
+    overflow: hidden;
+    box-shadow: 0 20px 48px rgba(62, 12, 34, 0.07) !important;
+}
+.fb-chat-page .chat-panel-header {
+    background: linear-gradient(120deg, #fff, #fff6f9) !important;
+    padding: 20px 24px !important;
+}
+.fb-chat-page .chat-messages {
+    min-height: 420px !important;
+    max-height: 55vh !important;
+    background: linear-gradient(160deg, #fff5f9, #fff 60%) !important;
+    padding: 24px !important;
+}
+.fb-chat-page .chat-bubble {
+    border-radius: 17px !important;
+    padding: 13px 16px !important;
+    max-width: min(75%, 600px) !important;
+}
+.fb-chat-page .mine .chat-bubble {
+    background: linear-gradient(135deg, #850c2d, #a31648) !important;
+}
+.fb-chat-page .chat-form {
+    padding: 18px 22px !important;
+}
+.fb-chat-page .chat-form textarea {
+    border-radius: 14px !important;
+}
+.fb-chat-page .chat-form button {
+    border-radius: 13px !important;
+}
+@media (max-width: 600px) {
+    .fb-chat-page .chat-panel {
+        border-radius: 18px !important;
+    }
+    .fb-chat-page .chat-panel-header {
+        padding: 14px !important;
+    }
+    .fb-chat-page .chat-messages {
+        min-height: 300px !important;
+        padding: 13px !important;
+    }
+    .fb-chat-page .chat-bubble {
+        max-width: 92% !important;
+    }
+    .fb-chat-page .chat-form {
+        padding: 12px !important;
+    }
+}
+
+/* V5: chat muncul hanya saat tombol ditekan, tanpa panel panjang di bawah klaim */
+.fcp-dialog {
+    position: fixed;
+    inset: 0;
+    box-sizing: border-box;
+    margin: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 22px;
+    width: min(980px, calc(100vw - 32px));
+    max-width: 980px;
+    max-height: min(88dvh, 850px);
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 28px 90px rgba(38, 5, 22, 0.28);
+}
+.fcp-dialog::backdrop {
+    background: rgba(22, 8, 17, 0.6);
+    backdrop-filter: blur(4px);
+}
+.fcp-dialog-shell {
+    position: relative;
+    max-height: min(88dvh, 850px);
+    overflow: auto;
+}
+.fcp-dialog .fcp-panel {
+    margin: 0;
+    max-width: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    scroll-margin-top: 0;
+}
+.fcp-dialog .fcp-head {
+    padding-right: 72px;
+}
+.fcp-dialog-close {
+    position: absolute;
+    z-index: 5;
+    top: 16px;
+    right: 18px;
+    width: 39px;
+    height: 39px;
+    border-radius: 12px;
+    border: 1px solid #ecd8e0;
+    background: #fff;
+    cursor: pointer;
+    color: #850c2d;
+    font-size: 17px;
+    font-weight: 700;
+}
+.fcp-dialog-close:hover {
+    background: #fff0f5;
+}
+.fcp-dialog .fcp-messages {
+    height: clamp(230px, 39dvh, 420px);
+}
+.fb-claim-chat-jump {
+    font-family: inherit;
+    cursor: pointer;
+}
+@media (max-width: 620px) {
+    .fcp-dialog {
+        width: calc(100vw - 14px);
+        max-height: 95dvh;
+        border-radius: 16px;
+    }
+    .fcp-dialog-shell {
+        max-height: 95dvh;
+    }
+    .fcp-dialog .fcp-head {
+        padding-right: 58px;
+    }
+    .fcp-dialog-close {
+        top: 12px;
+        right: 12px;
+        width: 35px;
+        height: 35px;
+    }
+    .fcp-dialog .fcp-messages {
+        height: clamp(220px, 36dvh, 350px);
+    }
+}

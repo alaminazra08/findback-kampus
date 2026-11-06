@@ -1,0 +1,32 @@
+.fb-chat-page .chat-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.fb-chat-page .chat-heading {
+    margin-bottom: 22px;
+}
+
+.fb-chat-page .chat-panel {
+    width: 100%;
+}
+
+.fb-chat-page .chat-messages {
+    min-height: 420px;
+    max-height: 62vh;
+    scroll-behavior: smooth;
+}
+
+.fb-chat-page .chat-back {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+@media (max-width: 600px) {
+    .fb-chat-page .chat-messages {
+        min-height: 350px;
+        max-height: 58vh;
+    }
+}

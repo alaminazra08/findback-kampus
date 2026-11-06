@@ -1,0 +1,125 @@
+/* FindBack Tahap 2D - additive responsive refinements for shared admin shell. */
+:root {
+    --fb2d-touch: 44px;
+}
+.fb-workspace,
+.fb-admin-shell {
+    min-width: 0;
+}
+.fb-workspace main,
+.fb-workspace section,
+.fb-workspace article {
+    min-width: 0;
+}
+.fb-workspace img,
+.fb-workspace video,
+.fb-workspace svg {
+    max-width: 100%;
+}
+.fb-workspace input,
+.fb-workspace select,
+.fb-workspace textarea {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+.fb-workspace :is(button, [role="button"], .fb-menu-toggle) {
+    touch-action: manipulation;
+}
+.fb-workspace :is(a, button, input, select, textarea):focus-visible {
+    outline: 3px solid #ad4770;
+    outline-offset: 3px;
+}
+.fb-workspace :is(h1, h2, h3, p, td, th) {
+    overflow-wrap: break-word;
+}
+/* Narrow desktops and tablets: avoid clipped top bar and wide control groups. */
+@media (min-width: 961px) and (max-width: 1280px) {
+    .fb-topbar {
+        padding-left: clamp(16px, 2vw, 28px);
+        padding-right: clamp(16px, 2vw, 28px);
+    }
+    .fb-topbar-right {
+        gap: clamp(8px, 1.2vw, 16px);
+    }
+}
+@media (max-width: 960px) {
+    .fb-workspace {
+        margin-left: 0 !important;
+        width: 100%;
+        max-width: 100%;
+    }
+    .fb-topbar {
+        min-width: 0;
+        gap: 10px;
+        padding-inline: clamp(12px, 3vw, 24px);
+    }
+    .fb-topbar-left,
+    .fb-topbar-right {
+        min-width: 0;
+    }
+    .fb-sidebar {
+        max-width: min(88vw, 340px);
+        overscroll-behavior: contain;
+    }
+    .fb-menu-toggle {
+        min-width: 44px;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .fb-workspace :is(.fb-table-wrap, .table-responsive, .table-container) {
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .fb-workspace :is(.fb-filter-row, .fb-filters, .filter-row, .toolbar-actions) {
+        flex-wrap: wrap;
+        min-width: 0;
+    }
+}
+@media (max-width: 600px) {
+    .fb-topbar {
+        padding-inline: 12px;
+        gap: 8px;
+    }
+    .fb-topbar-right {
+        gap: 8px;
+        min-width: 0;
+    }
+    .fb-breadcrumb {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .fb-topbar-tag {
+        display: none;
+    }
+    .fb-workspace :is(input, select, textarea) {
+        font-size: max(16px, 1rem);
+    }
+    .fb-workspace :is(.fb-btn, .btn-primary, .btn-secondary) {
+        max-width: 100%;
+    }
+    .fb-workspace :is(.fb-card, .fb-panel, .stat-card) {
+        min-width: 0;
+    }
+}
+@media (max-width: 360px) {
+    .fb-topbar {
+        padding-inline: 8px;
+    }
+    .fb-topbar-right {
+        gap: 5px;
+    }
+    .fb-sidebar {
+        max-width: calc(100vw - 28px);
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .fb-workspace *,
+    .fb-sidebar * {
+        scroll-behavior: auto !important;
+    }
+}

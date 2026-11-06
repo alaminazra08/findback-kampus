@@ -1,0 +1,51 @@
+/* FINDBACK - DETAIL KLAIM PREMIUM */
+/* Jarak rapi, kolom independen, mobile responsif */
+
+@media (min-width: 1001px) {
+    .fb-claim-detail-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 18px;
+        align-items: start;
+    }
+
+    .fb-claim-detail-grid > .fb-claim-left,
+    .fb-claim-detail-grid > .fb-claim-right {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        min-width: 0;
+    }
+}
+
+/* TABLET */
+@media (min-width: 701px) and (max-width: 1000px) {
+    .fb-claim-detail-grid {
+        gap: 14px;
+    }
+
+    .fb-claim-detail-grid > .fb-claim-left,
+    .fb-claim-detail-grid > .fb-claim-right {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+/* MOBILE */
+@media (max-width: 700px) {
+    .fb-claim-detail-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .fb-claim-detail-grid > .fb-claim-left,
+    .fb-claim-detail-grid > .fb-claim-right {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+        min-width: 0;
+    }
+}

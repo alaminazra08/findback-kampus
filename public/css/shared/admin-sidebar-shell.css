@@ -1,0 +1,103 @@
+.fb-sidebar {
+    width: 268px;
+    padding: 0 13px;
+    overflow: hidden;
+    background: #420d25;
+}
+.fb-sidebar .fb-brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    position: relative;
+    top: auto;
+    flex: 0 0 108px;
+    height: 108px;
+    min-height: 108px;
+    width: calc(100% + 26px);
+    margin: 0 -13px;
+    padding: 19px 26px;
+    background: #420d25;
+    border: 0;
+    box-shadow: none;
+    text-decoration: none;
+}
+.fb-sidebar .fb-brand-mark {
+    display: grid;
+    place-items: center;
+    flex: 0 0 46px;
+    width: 46px;
+    min-width: 46px;
+    height: 46px;
+    padding: 5px;
+    border-radius: 14px;
+    background: #fff;
+    overflow: hidden;
+    transform: none !important;
+    transition: none !important;
+}
+.fb-sidebar .fb-brand-mark img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.fb-sidebar .fb-brand-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+.fb-sidebar .fb-brand-copy strong {
+    font-size: 20px;
+    line-height: 1.05;
+    letter-spacing: -0.7px;
+    font-weight: 800;
+}
+.fb-sidebar .fb-brand-copy small {
+    font-size: 11px;
+    line-height: 1.3;
+    letter-spacing: 0.1px;
+    font-weight: 650;
+}
+.fb-sidebar-nav-scroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 14px;
+}
+.fb-sidebar-nav-scroll .fb-nav-label:first-of-type {
+    margin-top: 18px;
+}
+.fb-sidebar .fb-nav {
+    gap: 5px;
+}
+.fb-sidebar .fb-nav-link {
+    min-height: 44px;
+    padding: 10px 13px;
+    border-radius: 9px;
+    gap: 12px;
+}
+.fb-sidebar .fb-nav-icon {
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+}
+.fb-sidebar .fb-nav-icon svg {
+    display: block;
+    width: 17px;
+    height: 17px;
+}
+.fb-sidebar .fb-sidebar-bottom {
+    flex: 0 0 auto;
+    margin-top: 0;
+    padding: 12px 0 max(16px, env(safe-area-inset-bottom));
+    background: #420d25;
+}
+.fb-sidebar .fb-sidebar-help {
+    padding: 11px 10px;
+}
+.fb-sidebar .fb-sidebar-logout {
+    margin-top: 6px;
+    padding: 11px 13px;
+}

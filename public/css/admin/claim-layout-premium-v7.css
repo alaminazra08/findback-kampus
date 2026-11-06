@@ -1,0 +1,43 @@
+/* FindBack V7: balanced claim details. Visual layout only. */
+.fb-claim-detail-grid {
+    align-items: start;
+}
+.fb-claim-detail-grid > .fb-claim-left,
+.fb-claim-detail-grid > .fb-claim-right {
+    min-width: 0;
+    align-self: start;
+}
+.fb-claim-detail-grid .fb-claim-panel {
+    min-width: 0;
+}
+.fb-claim-detail-grid .fb-claim-details dd,
+.fb-claim-detail-grid .fb-claim-description {
+    overflow-wrap: anywhere;
+}
+@media (min-width: 1001px) {
+    .fb-claim-detail-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+        gap: 20px;
+    }
+    .fb-claim-detail-grid > .fb-claim-left,
+    .fb-claim-detail-grid > .fb-claim-right {
+        gap: 18px;
+    }
+}
+@media (min-width: 701px) and (max-width: 1000px) {
+    .fb-claim-detail-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 15px;
+    }
+}
+@media (max-width: 700px) {
+    .fb-claim-detail-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+    .fb-claim-detail-grid > .fb-claim-left,
+    .fb-claim-detail-grid > .fb-claim-right {
+        width: 100%;
+    }
+}

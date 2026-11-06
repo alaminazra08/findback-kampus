@@ -1,0 +1,89 @@
+@page {
+    margin: 28pt 30pt 36pt;
+}
+body {
+    font-family: "DejaVu Sans", sans-serif;
+    font-size: 9pt;
+    color: #35222f;
+}
+h1 {
+    font-size: 21pt;
+    margin: 4pt 0;
+    color: #731d44;
+}
+h2 {
+    page-break-after: avoid;
+    font-size: 12pt;
+    color: #731d44;
+    margin: 16pt 0 7pt;
+}
+.eyebrow {
+    font-size: 8pt;
+    color: #9b3864;
+    letter-spacing: 1pt;
+}
+.header {
+    border-bottom: 3pt solid #731d44;
+    padding-bottom: 12pt;
+}
+.muted {
+    color: #7a6874;
+    font-size: 8pt;
+}
+.summary {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 5pt;
+    margin: 12pt 0;
+}
+.summary td {
+    border: 1pt solid #e7d4de;
+    background: #fcf6f9;
+    padding: 10pt;
+    width: 33%;
+}
+.summary strong {
+    display: block;
+    font-size: 21pt;
+    color: #731d44;
+}
+.summary span {
+    font-size: 8pt;
+}
+table.data {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8pt;
+    table-layout: fixed;
+}
+table.data th {
+    background: #731d44;
+    color: white;
+    text-align: left;
+    padding: 7pt;
+}
+table.data td {
+    border-bottom: 1pt solid #e5d9df;
+    padding: 7pt;
+    word-wrap: break-word;
+    vertical-align: top;
+}
+thead {
+    display: table-header-group;
+}
+tr {
+    page-break-inside: avoid;
+}
+.recaps {
+    width: 100%;
+}
+.recaps > tbody > tr > td {
+    width: 50%;
+    vertical-align: top;
+    padding-right: 12pt;
+}
+.note {
+    font-size: 7pt;
+    color: #7a6874;
+    margin-top: 12pt;
+}

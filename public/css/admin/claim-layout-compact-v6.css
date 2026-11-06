@@ -1,0 +1,102 @@
+/* FindBack detail klaim premium compact v6: layout only, scoped. */
+@media (min-width: 1001px) {
+    .fb-claim-detail-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+        align-items: start;
+        gap: 18px;
+    }
+    .fb-claim-detail-grid > .fb-claim-left,
+    .fb-claim-detail-grid > .fb-claim-right {
+        gap: 16px;
+    }
+    .fb-claim-detail-grid .fb-claim-panel {
+        padding: 22px 24px;
+        border-radius: 19px;
+    }
+    .fb-claim-detail-grid .fb-claim-panel-head {
+        padding-bottom: 14px;
+        margin-bottom: 12px;
+    }
+    .fb-claim-detail-grid .fb-claim-photo {
+        max-height: 260px;
+        margin-top: 13px;
+    }
+    .fb-claim-detail-grid .fb-claim-details {
+        margin-top: 11px;
+    }
+    .fb-claim-detail-grid .fb-claim-details > div {
+        padding: 10px 0;
+    }
+    .fb-claim-detail-grid .fb-claim-form {
+        gap: 8px;
+        margin-top: 12px;
+    }
+    .fb-claim-detail-grid .fb-claim-form p {
+        line-height: 1.45;
+    }
+    .fb-claim-detail-grid .fh-form {
+        gap: 8px;
+    }
+    .fb-claim-detail-grid .fh-form input:not([type="checkbox"]),
+    .fb-claim-detail-grid .fh-form textarea {
+        padding: 9px 11px;
+    }
+    .fb-claim-detail-grid .fh-form small {
+        line-height: 1.4;
+    }
+    .fb-claim-detail-grid .fh-auto {
+        padding: 9px 11px;
+    }
+    .fb-claim-detail-grid .fh-form .fh-confirm {
+        padding: 10px 12px;
+        line-height: 1.45;
+    }
+    .fb-claim-detail-grid .fb-claim-button {
+        min-height: 42px;
+    }
+    .fb-claim-detail-grid .fb-claim-evidence-head {
+        margin-bottom: 13px;
+        padding-bottom: 12px;
+    }
+}
+@media (min-width: 701px) and (max-width: 1000px) {
+    .fb-claim-detail-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 14px;
+    }
+    .fb-claim-detail-grid .fb-claim-panel {
+        padding: 19px;
+    }
+    .fb-claim-detail-grid .fb-claim-form {
+        gap: 9px;
+    }
+    .fb-claim-detail-grid .fb-claim-photo {
+        max-height: 235px;
+    }
+}
+@media (max-width: 700px) {
+    .fb-claim-detail-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+    .fb-claim-detail-grid > .fb-claim-left,
+    .fb-claim-detail-grid > .fb-claim-right {
+        width: 100%;
+        gap: 14px;
+    }
+    .fb-claim-detail-grid .fb-claim-panel {
+        padding: 18px 16px;
+        border-radius: 17px;
+    }
+    .fb-claim-detail-grid .fb-claim-form {
+        gap: 10px;
+    }
+    .fb-claim-detail-grid .fh-form input:not([type="checkbox"]),
+    .fb-claim-detail-grid .fh-form textarea {
+        padding: 11px;
+    }
+    .fb-claim-detail-grid .fb-claim-details > div {
+        gap: 8px;
+    }
+}

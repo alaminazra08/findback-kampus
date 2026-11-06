@@ -1,0 +1,162 @@
+@page {
+    margin: 0;
+}
+* {
+    box-sizing: border-box;
+}
+body {
+    font-family: "DejaVu Sans", sans-serif;
+    margin: 0;
+    color: #271421;
+}
+.page {
+    width: 607.5pt;
+    height: 1080pt;
+    position: relative;
+    overflow: hidden;
+    background: #f8f4f6;
+    page-break-after: always;
+}
+.page.last {
+    page-break-after: avoid;
+}
+.header {
+    background: #450d28;
+    color: #fff;
+    height: 112pt;
+    padding: 27pt 29pt;
+}
+.brand {
+    font-size: 11pt;
+    letter-spacing: 2pt;
+    color: #efbad0;
+    margin: 0 0 9pt;
+}
+.header h1 {
+    font-size: 28pt;
+    line-height: 1.18;
+    margin: 0;
+    font-weight: bold;
+}
+.institution {
+    font-size: 10pt;
+    margin: 10pt 0 0;
+    color: #f3d6e2;
+}
+.strip {
+    padding: 12pt 29pt;
+    background: #e8c8d6;
+    font-size: 10pt;
+    font-weight: bold;
+    color: #621c3c;
+}
+.content {
+    padding: 14pt 26pt 0;
+}
+.card {
+    background: #fff;
+    border: 1pt solid #e7d7df;
+    border-radius: 10pt;
+    height: 148pt;
+    margin-bottom: 13pt;
+    padding: 12pt;
+}
+.card table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+.picture {
+    width: 151pt;
+    vertical-align: top;
+}
+.photo-frame {
+    height: 148pt;
+    width: 140pt;
+    background: #f2e9ee;
+    text-align: center;
+}
+.photo-frame img {
+    max-width: 138pt;
+    max-height: 146pt;
+}
+.no-photo {
+    font-size: 12pt;
+    color: #916579;
+    padding-top: 53pt;
+    line-height: 1.5;
+}
+.details {
+    vertical-align: top;
+    padding-left: 9pt;
+}
+.badge {
+    font-size: 9pt;
+    letter-spacing: 0.6pt;
+    font-weight: bold;
+    padding: 5pt 9pt;
+    display: inline-block;
+    background: #f9e2e8;
+    color: #982d49;
+}
+.badge.found {
+    background: #e1eee8;
+    color: #1a644e;
+}
+.title {
+    font-size: 18pt;
+    line-height: 1.15;
+    margin: 8pt 0 7pt;
+    font-weight: bold;
+    color: #3f1830;
+}
+.meta {
+    font-size: 11pt;
+    line-height: 1.5;
+    color: #715363;
+    margin: 0;
+}
+.report-id {
+    font-size: 9pt;
+    color: #a08192;
+    margin-top: 8pt;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80pt;
+    background: #450d28;
+    color: #fff;
+    padding: 15pt 29pt;
+}
+.footer h2 {
+    font-size: 17pt;
+    margin: 0 0 5pt;
+}
+.footer p {
+    font-size: 10pt;
+    margin: 0 0 6pt;
+    line-height: 1.4;
+}
+.update {
+    font-size: 8pt;
+    color: #edbfd2;
+}
+.empty {
+    margin: 80pt 24pt;
+    text-align: center;
+    border: 1pt solid #e7d7df;
+    background: white;
+    padding: 45pt 20pt;
+}
+.empty h2 {
+    font-size: 25pt;
+    color: #651735;
+}
+.empty p {
+    font-size: 14pt;
+    line-height: 1.6;
+    color: #7e5e70;
+}

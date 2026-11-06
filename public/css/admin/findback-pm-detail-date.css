@@ -1,0 +1,146 @@
+/* FindBack PM UI polish — presentation only; no workflow changes */
+/* Header date: a refined informational date chip, not an interactive calendar */
+.fb-page-heading .fb-pm-date,
+.fb-page-heading .fb-date-premium.fb-pm-date {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 11px !important;
+    padding: 12px 17px !important;
+    min-height: 49px !important;
+    border-radius: 15px !important;
+    border: 1px solid #e8ccd8 !important;
+    background: linear-gradient(135deg, #fff 0%, #fff8fb 100%) !important;
+    color: #633047 !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.05px;
+    box-shadow:
+        0 6px 22px rgba(95, 21, 49, 0.06),
+        inset 0 1px #fff !important;
+    white-space: nowrap;
+    max-width: 100%;
+    line-height: 1.35 !important;
+}
+.fb-page-heading .fb-pm-date svg {
+    width: 19px;
+    height: 19px;
+    flex: 0 0 19px;
+    color: #850c2d;
+}
+.fb-page-heading .fb-pm-date .fb-date-text {
+    font-weight: 700;
+    color: #633047;
+}
+/* Detail: compact image, balanced panels, readable facts and timeline */
+@media (min-width: 1050px) {
+    .fb-v-detail-grid {
+        grid-template-columns: minmax(0, 1.45fr) minmax(320px, 1fr) !important;
+        gap: 22px !important;
+        align-items: start !important;
+    }
+    .fb-v-detail-grid > .fb-v-detail-panel,
+    .fb-v-detail-grid > .fb-v-decision {
+        width: 100%;
+        min-width: 0;
+    }
+    .fb-v-detail-panel .fb-v-photo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 210px;
+        max-height: 285px;
+        overflow: hidden;
+        border: 1px solid #f0e2e8;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #fffafd, #f9f4f6);
+        margin: 15px 0 7px;
+        padding: 13px;
+    }
+    .fb-v-detail-panel .fb-v-photo img {
+        width: auto !important;
+        height: auto !important;
+        max-height: 255px !important;
+        max-width: 100% !important;
+        object-fit: contain !important;
+        margin: 0 !important;
+        background: transparent !important;
+        border-radius: 9px !important;
+    }
+    .fb-v-detail-panel .fb-v-facts {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px 20px !important;
+        margin-top: 8px !important;
+        padding: 15px 0 !important;
+    }
+    .fb-v-detail-panel .fb-v-description h3 {
+        margin-top: 16px !important;
+    }
+}
+.fb-v-detail-grid .fb-panel {
+    border: 1px solid #ebdce3;
+    border-radius: 19px;
+    box-shadow: 0 9px 30px rgba(60, 19, 38, 0.035);
+}
+.fb-v-detail-panel .fb-v-facts dt {
+    font-size: 12px !important;
+    line-height: 1.45;
+    color: #947684;
+}
+.fb-v-detail-panel .fb-v-facts dd {
+    font-size: 13px !important;
+    line-height: 1.55;
+}
+.fb-v-detail-panel .fb-v-description p {
+    font-size: 13px !important;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+.fb-v-detail-grid .fb-v-decision {
+    align-self: start;
+}
+.fb-v-detail-grid .fb-v-status.status-rejected {
+    border: 1px solid #ffc1cc;
+    color: #a01f42;
+    background: #fff0f3;
+}
+.fb-cycle-history {
+    border-radius: 18px !important;
+    overflow-wrap: anywhere;
+}
+@media (max-width: 1049px) {
+    .fb-v-detail-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 16px !important;
+    }
+    .fb-v-detail-panel .fb-v-photo {
+        display: flex;
+        justify-content: center;
+        padding: 12px;
+        background: #fff9fb;
+        border-radius: 14px;
+    }
+    .fb-v-detail-panel .fb-v-photo img {
+        max-height: 280px !important;
+        margin: 0 !important;
+    }
+}
+@media (max-width: 600px) {
+    .fb-page-heading .fb-pm-date,
+    .fb-page-heading .fb-date-premium.fb-pm-date {
+        min-height: 43px !important;
+        padding: 10px 13px !important;
+        font-size: 12px !important;
+    }
+    .fb-v-detail-panel .fb-v-facts {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 12px !important;
+    }
+    .fb-v-detail-panel .fb-v-photo img {
+        max-height: 230px !important;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .fb-page-heading .fb-pm-date {
+        transition: none;
+    }
+}

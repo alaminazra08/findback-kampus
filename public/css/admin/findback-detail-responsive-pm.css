@@ -1,0 +1,137 @@
+/* FindBack PM: desktop/tablet/mobile verification detail; scoped, visual-only. */
+.fb-v-detail-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.35fr) minmax(330px, 1fr) !important;
+    align-items: start !important;
+    gap: clamp(14px, 1.5vw, 24px) !important;
+    max-width: 100% !important;
+}
+.fb-v-detail-grid > .fb-v-detail-panel,
+.fb-v-detail-grid > .fb-v-decision {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+.fb-v-detail-panel {
+    overflow: hidden;
+}
+.fb-v-repair-stack {
+    display: grid;
+    gap: 16px;
+    margin-top: 22px;
+    min-width: 0;
+}
+.fb-v-repair-stack .fb-repair-premium {
+    margin: 0 !important;
+    padding: clamp(15px, 1.5vw, 23px) !important;
+    border-radius: 16px !important;
+    box-shadow: none !important;
+}
+.fb-v-repair-stack .fb-repair-head h2 {
+    font-size: clamp(17px, 1.35vw, 22px) !important;
+    line-height: 1.35 !important;
+}
+.fb-v-repair-stack .fb-repair-head {
+    gap: 10px;
+    margin-bottom: 14px;
+}
+.fb-v-repair-stack .fb-repair-changes {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 12px !important;
+}
+.fb-v-repair-stack .fb-repair-change {
+    padding: 12px !important;
+    min-width: 0;
+}
+.fb-v-repair-stack .fb-repair-compare {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+}
+.fb-v-repair-stack .fb-repair-value {
+    padding: 9px !important;
+    min-width: 0 !important;
+}
+.fb-v-repair-stack .fb-repair-photo-link img {
+    height: clamp(115px, 13vw, 185px) !important;
+    width: 100% !important;
+    object-fit: contain !important;
+}
+.fb-v-repair-stack .fb-repair-note {
+    margin-bottom: 14px !important;
+}
+.fb-v-repair-stack .fb-repair-meta {
+    gap: 9px 15px !important;
+    padding: 12px !important;
+}
+.fb-v-side-history {
+    min-width: 0 !important;
+}
+.fb-v-side-history .fb-cycle-history {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+.fb-v-detail-grid img {
+    max-width: 100%;
+}
+.fb-v-detail-grid a,
+.fb-v-detail-grid p,
+.fb-v-detail-grid dd {
+    overflow-wrap: anywhere;
+}
+@media (max-width: 1100px) {
+    .fb-v-detail-grid {
+        grid-template-columns: minmax(0, 1.15fr) minmax(300px, 1fr) !important;
+    }
+    .fb-v-repair-stack .fb-repair-photo-link img {
+        height: 140px !important;
+    }
+}
+@media (max-width: 900px) {
+    .fb-v-detail-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+    .fb-v-detail-grid > .fb-v-detail-panel,
+    .fb-v-detail-grid > .fb-v-decision {
+        width: 100% !important;
+    }
+    .fb-v-repair-stack .fb-repair-photo-link img {
+        height: 180px !important;
+    }
+}
+@media (max-width: 600px) {
+    .fb-v-detail-grid {
+        gap: 14px !important;
+    }
+    .fb-v-repair-stack {
+        margin-top: 16px;
+    }
+    .fb-v-repair-stack .fb-repair-premium {
+        padding: 14px !important;
+    }
+    .fb-v-repair-stack .fb-repair-head {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .fb-v-repair-stack .fb-repair-meta {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+    .fb-v-repair-stack .fb-repair-photo-link img {
+        height: 135px !important;
+    }
+    .fb-v-repair-stack .fb-repair-value {
+        padding: 7px !important;
+    }
+    .fb-v-repair-stack .fb-repair-compare {
+        gap: 7px !important;
+    }
+}
+@media (max-width: 370px) {
+    .fb-v-repair-stack .fb-repair-compare {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+    .fb-v-repair-stack .fb-repair-photo-link img {
+        height: 170px !important;
+    }
+}

@@ -1,0 +1,230 @@
+/* FindBack Detail Klaim V14 - scoped visual styles; no behavioral changes */
+.fb-claim-heading .fb-claim-back-v14 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 46px;
+    padding: 10px 17px;
+    border: 1px solid #ecd9e2;
+    border-radius: 14px;
+    background: #fff;
+    color: #850c2d;
+    font-size: 13px;
+    font-weight: 750;
+    line-height: 1.3;
+    text-decoration: none;
+    white-space: nowrap;
+    box-shadow: 0 5px 18px rgba(65, 17, 38, 0.035);
+    transition:
+        background 0.2s,
+        border-color 0.2s,
+        transform 0.2s;
+}
+.fb-claim-heading .fb-claim-back-v14:hover {
+    background: #fff4f8;
+    border-color: #dcb9c8;
+    transform: translateY(-1px);
+}
+.fb-claim-heading .fb-claim-back-v14:focus-visible {
+    outline: 3px solid #e9b5cc;
+    outline-offset: 3px;
+}
+.fb-claim-heading .fb-claim-back-v14 svg {
+    flex: none;
+}
+.fb-claim-detail-grid .fh-intro-v14 {
+    padding: 22px 23px;
+    border: 1px solid #ecd6e0;
+    border-radius: 18px;
+    background: linear-gradient(140deg, #fffafd, #fcf5f8);
+    margin-top: 16px;
+}
+.fh-intro-v14 .fh-stage-head-v14 {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+}
+.fh-intro-v14 .fh-stage-label-v14 {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+    font-size: 11px;
+    font-weight: 850;
+    letter-spacing: 0.65px;
+    line-height: 1.5;
+    color: #850c2d;
+}
+.fh-intro-v14 .fh-stage-label-v14 svg {
+    flex: none;
+}
+.fh-intro-v14 .fb-handover-stage {
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    white-space: normal;
+    line-height: 1.4;
+    padding: 7px 11px;
+    border: 1px solid #c8d9fa;
+    border-radius: 9px;
+    background: #eef5ff;
+    color: #28509a;
+    font-size: 11px;
+    font-weight: 750;
+    letter-spacing: 0;
+}
+.fh-intro-v14 .fh-intro-body-v14 {
+    margin-top: 20px;
+}
+.fh-intro-v14 .fh-intro-body-v14 h3 {
+    margin: 0 0 7px;
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.4;
+    color: #421528;
+}
+.fh-intro-v14 .fh-intro-body-v14 p {
+    margin: 0;
+    color: #795c6a;
+    font-size: 13px;
+    line-height: 1.75;
+}
+.fh-intro-v14 .fh-intro-note-v14 {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    margin-top: 15px;
+    padding-top: 13px;
+    border-top: 1px solid #eddee5;
+    color: #886775;
+    font-size: 12px;
+    line-height: 1.6;
+}
+.fh-intro-v14 .fh-intro-note-v14 svg {
+    flex: none;
+    margin-top: 2px;
+}
+@media (min-width: 1001px) {
+    .fb-claim-heading .fb-claim-back-v14 {
+        align-self: center;
+    }
+}
+@media (max-width: 700px) {
+    .fb-claim-heading {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+    }
+    .fb-claim-heading > div:first-child {
+        min-width: 0;
+        width: 100%;
+    }
+    .fb-claim-heading .fb-claim-back-v14 {
+        align-self: flex-start !important;
+        width: auto !important;
+        max-width: 100%;
+        min-height: 42px;
+        padding: 9px 13px;
+        border-radius: 12px;
+        font-size: 12px;
+    }
+    .fb-claim-detail-grid .fh-intro-v14 {
+        padding: 17px 16px;
+        border-radius: 15px;
+    }
+    .fh-intro-v14 .fh-stage-head-v14 {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 9px;
+    }
+    .fh-intro-v14 .fh-stage-label-v14 {
+        font-size: 10px;
+        letter-spacing: 0.45px;
+    }
+    .fh-intro-v14 .fh-intro-body-v14 {
+        margin-top: 16px;
+    }
+    .fh-intro-v14 .fh-intro-body-v14 h3 {
+        font-size: 16px;
+    }
+    .fh-intro-v14 .fh-intro-body-v14 p {
+        font-size: 12px;
+    }
+    .fh-intro-v14 .fh-intro-note-v14 {
+        font-size: 11px;
+    }
+}
+@media (max-width: 360px) {
+    .fb-claim-heading .fb-claim-back-v14 {
+        font-size: 11px;
+    }
+    .fh-intro-v14 .fh-stage-label-v14 {
+        font-size: 9px;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .fb-claim-heading .fb-claim-back-v14 {
+        transition: none;
+    }
+}
+
+/* ==============================================
+   FINDBACK - FIX TOMBOL KEMBALI PREMIUM
+   Desktop & Mobile - Satu Ikon Panah
+   ============================================== */
+
+/* Hilangkan ikon otomatis dari CSS lama */
+.fb-claim-heading .fb-claim-back-v14::before {
+    content: none !important;
+    display: none !important;
+}
+
+/* Tampilan tombol yang konsisten */
+.fb-claim-heading .fb-claim-back-v14 {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: auto;
+    min-height: 46px;
+    padding: 11px 18px;
+    background: #ffffff;
+    border: 1px solid #ead5df;
+    border-radius: 14px;
+    color: #850c2d;
+    font-size: 13px;
+    font-weight: 750;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+/* Ikon SVG tunggal */
+.fb-claim-heading .fb-claim-back-v14 svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/* Efek hover premium */
+.fb-claim-heading .fb-claim-back-v14:hover {
+    background: #fff3f7;
+    border-color: #dca9be;
+}
+
+/* Tampilan mobile */
+@media (max-width: 700px) {
+    .fb-claim-heading .fb-claim-back-v14 {
+        width: fit-content !important;
+        max-width: 100%;
+        min-height: 44px;
+        padding: 10px 15px;
+        font-size: 12px;
+    }
+}

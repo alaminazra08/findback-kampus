@@ -1,0 +1,436 @@
+/* =====================================================
+   FINDBACK KAMPUS
+   USER CLAIMS - PREMIUM MAROON
+===================================================== */
+
+.fb-claim-main {
+    padding-top: 30px;
+}
+
+.fb-claim-nav {
+    display: flex;
+    gap: 20px;
+}
+
+.fb-claim-nav a {
+    color: #810e38;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.fb-claim-hero {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 205px;
+    padding: 35px 45px;
+    border-radius: 22px;
+    color: #fff;
+    background: linear-gradient(112deg, #590b29, #82113d 68%, #a5275a);
+    box-shadow: 0 15px 35px #670e321c;
+}
+
+.fb-claim-hero > div:first-child {
+    max-width: 700px;
+    position: relative;
+    z-index: 1;
+}
+
+.fb-claim-kicker {
+    display: inline-block;
+    padding: 8px 12px;
+    border: 1px solid #ffffff40;
+    border-radius: 30px;
+    background: #ffffff17;
+    color: #ffdae8;
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: 1.3px;
+}
+
+.fb-claim-hero h1 {
+    margin: 18px 0 10px;
+    font-size: clamp(26px, 3vw, 36px);
+}
+
+.fb-claim-hero p {
+    max-width: 650px;
+    margin: 0;
+    color: #f8dce8;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.fb-claim-hero-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 125px;
+    width: 125px;
+    height: 125px;
+    border: 1px solid #ffffff45;
+    border-radius: 50%;
+    color: white;
+    font-size: 75px;
+    box-shadow:
+        0 0 0 18px #ffffff0a,
+        0 0 0 36px #ffffff08;
+}
+
+.fb-claim-section {
+    margin-top: 35px;
+}
+
+.fb-claim-heading > span,
+.fb-claim-list-heading > div > span {
+    color: #a21d51;
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: 1.7px;
+}
+
+.fb-claim-heading h2,
+.fb-claim-list-heading h2 {
+    margin: 8px 0;
+    color: #40192c;
+    font-size: 23px;
+}
+
+.fb-claim-heading p,
+.fb-claim-list-heading p {
+    margin: 0;
+    color: #98828d;
+    font-size: 12px;
+}
+
+.fb-claim-stats {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 15px;
+    margin-top: 22px;
+}
+
+.fb-claim-stats article {
+    min-width: 0;
+    padding: 22px;
+    border: 1px solid #efdee6;
+    border-radius: 17px;
+    background: #fff;
+    box-shadow: 0 10px 28px #5b0d2b08;
+}
+
+.fb-claim-stats article span {
+    display: block;
+    color: #8d7883;
+    font-size: 11px;
+    font-weight: 650;
+}
+
+.fb-claim-stats article strong {
+    display: block;
+    margin: 13px 0 8px;
+    color: #850c3c;
+    font-size: 29px;
+}
+
+.fb-claim-stats article small {
+    color: #a18b96;
+    font-size: 10px;
+}
+
+.fb-claim-list-panel {
+    margin-top: 27px;
+    padding: 28px;
+    border: 1px solid #efdee6;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 12px 35px #5b0d2b08;
+}
+
+.fb-claim-list-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.fb-claim-back {
+    padding: 12px 17px;
+    border: 1px solid #ead1dc;
+    border-radius: 11px;
+    color: #850c3c;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.fb-claim-filter {
+    display: grid;
+    grid-template-columns: minmax(180px, 1.6fr) minmax(150px, 1fr) auto auto;
+    gap: 11px;
+}
+
+.fb-claim-filter input,
+.fb-claim-filter select {
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+    padding: 0 13px;
+    border: 1px solid #ead9e1;
+    border-radius: 11px;
+    background: #fff;
+    color: #40192c;
+    font: inherit;
+    font-size: 12px;
+    outline: none;
+}
+
+.fb-claim-filter input:focus,
+.fb-claim-filter select:focus {
+    border-color: #a21d51;
+    box-shadow: 0 0 0 3px #a21d5112;
+}
+
+.fb-claim-filter button,
+.fb-claim-filter a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 46px;
+    padding: 0 20px;
+    border: 1px solid #850c3c;
+    border-radius: 11px;
+    background: #850c3c;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 750;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.fb-claim-filter a {
+    border-color: #ead1dc;
+    background: #fff;
+    color: #850c3c;
+}
+
+.fb-claim-result {
+    margin-top: 23px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0e3e9;
+    color: #98828d;
+    font-size: 11px;
+}
+
+.fb-claim-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 5px;
+    border-bottom: 1px solid #f3e8ed;
+}
+
+.fb-claim-item-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: #f8e8ef;
+    color: #941746;
+    font-size: 26px;
+}
+
+.fb-claim-item-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.fb-claim-item-content h3 {
+    margin: 0 0 7px;
+    color: #40192c;
+    font-size: 14px;
+}
+
+.fb-claim-item-content p {
+    margin: 0 0 7px;
+    color: #8e7883;
+    font-size: 11px;
+}
+
+.fb-claim-item-content small {
+    color: #a21d51;
+    font-size: 10px;
+}
+
+.fb-claim-status {
+    display: inline-flex;
+    padding: 8px 12px;
+    border-radius: 30px;
+    font-size: 10px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.status-pending {
+    background: #fff4df;
+    color: #98651a;
+}
+
+.status-approved {
+    background: #e8f7ef;
+    color: #21804c;
+}
+
+.status-rejected {
+    background: #fff0f1;
+    color: #b52c45;
+}
+
+.status-returned {
+    background: #eaf0ff;
+    color: #3659a0;
+}
+
+.fb-claim-rejection,
+.fb-claim-completed {
+    margin-top: 10px;
+    padding: 11px;
+    border-radius: 9px;
+    background: #fcf5f8;
+    color: #806b76;
+    font-size: 11px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.fb-claim-rejection strong {
+    color: #a32b43;
+}
+
+.fb-claim-empty {
+    padding: 65px 20px;
+    text-align: center;
+}
+
+.fb-claim-empty > div {
+    display: grid;
+    place-items: center;
+    width: 65px;
+    height: 65px;
+    margin: auto;
+    border-radius: 18px;
+    background: #f8e8ef;
+    color: #941746;
+    font-size: 36px;
+}
+
+.fb-claim-empty h3 {
+    margin: 20px 0 9px;
+    color: #40192c;
+    font-size: 17px;
+}
+
+.fb-claim-empty p {
+    max-width: 450px;
+    margin: auto;
+    color: #98828d;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.fb-claim-empty a {
+    display: inline-block;
+    margin-top: 22px;
+    color: #a21d51;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.fb-claim-pagination {
+    margin-top: 22px;
+}
+
+.fb-claim-footer {
+    padding: 30px 10px;
+    color: #a18b96;
+    text-align: center;
+    font-size: 11px;
+}
+
+@media (max-width: 900px) {
+    .fb-claim-stats {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .fb-claim-filter {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .fb-claim-hero {
+        min-height: 0;
+        padding: 27px 22px;
+        border-radius: 17px;
+    }
+
+    .fb-claim-hero-icon {
+        display: none;
+    }
+
+    .fb-claim-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .fb-claim-stats article {
+        padding: 17px;
+    }
+
+    .fb-claim-list-panel {
+        padding: 20px 16px;
+    }
+
+    .fb-claim-list-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .fb-claim-filter {
+        grid-template-columns: 1fr;
+    }
+
+    .fb-claim-filter button,
+    .fb-claim-filter a {
+        width: 100%;
+    }
+
+    .fb-claim-item {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .fb-claim-status {
+        margin-left: 64px;
+    }
+
+    .fb-claim-nav {
+        gap: 10px;
+    }
+
+    .fb-claim-nav a {
+        font-size: 11px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+    }
+}

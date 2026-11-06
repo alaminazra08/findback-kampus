@@ -1,0 +1,84 @@
+/* FindBack claim-chat polish: scoped, responsive, no layout overrides elsewhere */
+.fb-chat-page .chat-container {
+    max-width: 1100px !important;
+}
+.fb-chat-page .chat-heading {
+    margin-bottom: 16px !important;
+}
+.fb-chat-page .chat-heading h1 {
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    margin: 5px 0;
+}
+.fb-chat-page .chat-panel {
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 14px 40px rgba(80, 12, 38, 0.06);
+}
+.fb-chat-page .chat-panel-header {
+    padding: 16px 22px;
+    gap: 12px;
+}
+.fb-chat-page .chat-messages {
+    min-height: 320px !important;
+    max-height: min(54vh, 560px) !important;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 20px !important;
+    background: linear-gradient(180deg, #fffbfd, #fff);
+}
+.fb-chat-page .chat-empty {
+    padding: 42px 16px;
+}
+.fb-chat-page .chat-form {
+    padding: 16px 20px;
+    gap: 12px;
+}
+.fb-chat-page .chat-form textarea {
+    min-width: 0;
+    resize: vertical;
+}
+.fb-chat-archive-note {
+    padding: 15px 20px;
+    background: #fff7f9;
+    color: #7d2440;
+    font-size: 14px;
+    border-top: 1px solid #f1dce3;
+    line-height: 1.6;
+}
+.cu-chat .cu-chat-stream {
+    min-height: 280px;
+    max-height: 55vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+}
+.cu-chat .cu-chat-form {
+    gap: 12px;
+}
+.cu-chat .cu-chat-form textarea {
+    min-width: 0;
+    max-width: 100%;
+}
+@media (max-width: 700px) {
+    .fb-chat-page .chat-panel-header {
+        padding: 12px 14px;
+        flex-wrap: wrap;
+    }
+    .fb-chat-page .chat-messages {
+        min-height: 280px !important;
+        max-height: 52vh !important;
+        padding: 12px !important;
+    }
+    .fb-chat-page .chat-form {
+        padding: 12px;
+        gap: 8px;
+    }
+    .fb-chat-page .chat-container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .cu-chat .cu-chat-stream {
+        min-height: 260px;
+        max-height: 50vh;
+    }
+}

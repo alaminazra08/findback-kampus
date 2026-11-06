@@ -45,7 +45,7 @@
                                     class="fb-users-pill {{ $user->role === 'admin' ? 'is-admin' : '' }}">{{ $user->role === 'admin' ? 'Administrator' : 'Pengguna' }}</span>
                             </div>
                             <p>{{ $user->email }}</p>
-                            <span class="fb40-id">ID akun #{{ $user->id }}</span>
+                            <span class="fb40-id">ID akun {{ $user->id }}</span>
                         </div>
                     </div>
                 </section>

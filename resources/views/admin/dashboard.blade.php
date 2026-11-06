@@ -138,7 +138,8 @@
                     <div>
                         <p class="fb-eyebrow">OVERVIEW · FINDBACK KAMPUS</p>
                         <h1>Dashboard <span>Admin</span></h1>
-                        <p class="fb-heading-text">Pusat pengelolaan laporan dan aktivitas barang kampus.</p>
+                        {{-- Deskripsi dinamis dari Admin > Pengaturan Sistem --}}
+                        <p class="fb-heading-text" style="overflow-wrap:anywhere">{{ trim((string) ($adminSettings['site_description'] ?? '')) ?: 'Pusat pengelolaan laporan dan aktivitas barang kampus.' }}</p>
                     </div>
                     <span class="fb-date-label fb-date-premium fb-pm-date" id="fb-live-date"
                         aria-label="Tanggal hari ini">

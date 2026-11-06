@@ -6,8 +6,8 @@
             <div class="cu-hero-copy"><span class="cu-kicker">SALING PEDULI, SALING TEMUKAN</span>
                 <p class="cu-greeting">Selamat datang kembali,</p>
                 <h1>{{ auth()->user()->name }}<span>.</span></h1>
-                <p>Bersama {{ $fbBrand['site_name'] }}, temukan kembali barangmu<br class="cu-desktop"> dan bantu barang orang lain
-                    kembali ke pemiliknya.</p>
+                {{-- Deskripsi dinamis dari Admin > Pengaturan Sistem --}}
+                <p style="overflow-wrap:anywhere">{{ trim((string) ($fbBrand['site_description'] ?? '')) ?: 'Bersama FindBack Kampus, temukan kembali barangmu dan bantu barang orang lain kembali ke pemiliknya.' }}</p>
                 <form class="cu-hero-search" action="{{ route('user.items.index') }}"><label class="cu-sr"
                         for="hero-search">Cari barang atau lokasi</label>@include('user.components.icon', ['icon' => 'search'])<input id="hero-search"
                         name="search" maxlength="100" placeholder="Cari barang, lokasi, atau kata kunci..."><button

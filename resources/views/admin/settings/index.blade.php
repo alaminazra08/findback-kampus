@@ -97,6 +97,7 @@
 
                     <label class="fb-settings-field full">
                         <span>Deskripsi aplikasi</span>
+                        <small style="display:block;color:#796875;margin:3px 0 7px;font-weight:400">Ditampilkan pada halaman utama publik, dashboard pengguna, dan dashboard admin setelah disimpan.</small>
 
                         <textarea
                             name="site_description"

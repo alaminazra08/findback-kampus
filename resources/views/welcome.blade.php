@@ -7,7 +7,7 @@
 
     <meta name="theme-color" content="#7A0F2B">
     <meta name="description"
-        content="FindBack Kampus membantu Civitas akademika Fakultas Sains dan Teknologi UIN Imam Bonjol Padang melaporkan dan mencari informasi barang hilang maupun barang yang ditemukan.">
+        content="{{ trim((string) ($fbBrand['site_description'] ?? '')) ?: 'Sistem informasi barang hilang dan ditemukan di kampus' }}">
 
     <title>FindBack Kampus | UIN Imam Bonjol Padang</title>
 
@@ -139,10 +139,9 @@
                         Bersama <span>FindBack.</span>
                     </h1>
 
-                    <p class="hero-description">
-                        Kehilangan atau menemukan barang di lingkungan Fakultas Sains dan Teknologi?
-                        FindBack Kampus membantu civitas akademika melaporkan, mencari, dan
-                        menelusuri informasi barang melalui satu platform yang terorganisir.
+                    {{-- Deskripsi publik mengikuti Admin > Pengaturan Sistem --}}
+                    <p class="hero-description" style="overflow-wrap:anywhere">
+                        {{ trim((string) ($fbBrand['site_description'] ?? '')) ?: 'FindBack Kampus membantu civitas akademika melaporkan, mencari, dan menemukan barang yang hilang maupun ditemukan.' }}
                     </p>
 
                     <div class="hero-actions">
@@ -636,11 +635,8 @@
                             FindBack Kampus
                         </a>
 
-                        <p class="footer-description">
-                            Sistem informasi untuk mendukung pelaporan,
-                            pencarian, dan pengelolaan informasi barang hilang
-                            maupun ditemukan di lingkungan Fakultas Sains dan
-                            Teknologi UIN Imam Bonjol Padang.
+                        <p class="footer-description" style="overflow-wrap:anywhere">
+                            {{ trim((string) ($fbBrand['site_description'] ?? '')) ?: 'Sistem informasi untuk mendukung pelaporan, pencarian, dan pengelolaan barang hilang dan ditemukan di lingkungan kampus.' }}
                         </p>
 
                         <p class="footer-description footer-programs">

@@ -81,21 +81,6 @@
                     <span>Beranda</span>
                 </a>
 
-                {{-- CARI BARANG --}}
-                <a
-                    class="{{ request()->routeIs('user.items.*') ? 'active' : '' }}"
-                    href="{{ route('user.items.index') }}"
-                >
-                    <svg class="fb-nav-icon" viewBox="0 0 24 24"
-                         fill="none" stroke="currentColor"
-                         stroke-width="1.8" stroke-linecap="round"
-                         stroke-linejoin="round" aria-hidden="true">
-                        <circle cx="11" cy="11" r="7" />
-                        <path d="m20 20-4-4" />
-                    </svg>
-                    <span>Cari Barang</span>
-                </a>
-
                 {{-- LAPOR BARANG --}}
                 <details class="cu-dropdown">
                     <summary class="{{ request()->routeIs('user.reports.*create') ? 'active' : '' }}">
@@ -122,6 +107,7 @@
                         <a href="{{ route('user.reports.lost.create') }}">
                             Barang hilang
                         </a>
+
                         <a href="{{ route('user.reports.found.create') }}">
                             Barang ditemukan
                         </a>
@@ -141,20 +127,6 @@
                         <path d="M12 7v5l4 3" />
                     </svg>
                     <span>Aktivitas Saya</span>
-                </a>
-
-                {{-- CHAT ADMIN --}}
-                <a
-                    class="{{ request()->routeIs('user.chat.*') ? 'active' : '' }}"
-                    href="{{ route('user.chat.index') }}"
-                >
-                    <svg class="fb-nav-icon" viewBox="0 0 24 24"
-                         fill="none" stroke="currentColor"
-                         stroke-width="1.8" stroke-linecap="round"
-                         stroke-linejoin="round" aria-hidden="true">
-                        <path d="M20 11a8 8 0 0 1-8 8H7l-4 2 1.5-4A8 8 0 1 1 20 11z" />
-                    </svg>
-                    <span>Chat Admin</span>
                 </a>
 
             </nav>

@@ -1,4 +1,4 @@
-/* FindBack Kampus — Klaim Barang Admin v1 saada (scoped, no sidebar overrides) */
+/* FindBack Kampus — Klaim Barang Admin v1 (scoped, no sidebar overrides) */
 .fb-claim-stats {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));

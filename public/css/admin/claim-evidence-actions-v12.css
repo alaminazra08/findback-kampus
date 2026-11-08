@@ -1,0 +1,51 @@
+/* FindBack V12 — ikon outline premium khusus area Tindakan Pemeriksaan */
+.fb-v11-actions .fb-v12-icon {
+    display: block;
+    flex: 0 0 19px;
+    width: 19px;
+    height: 19px;
+    stroke: currentColor;
+    vertical-align: middle;
+    transition: transform 0.18s ease;
+}
+.fb-v11-actions .fb-v11-btn {
+    gap: 11px !important;
+    letter-spacing: 0.005em;
+    font-size: 13px !important;
+    min-height: 52px !important;
+    border-radius: 13px !important;
+}
+.fb-v11-actions .fb-v11-chat {
+    background: linear-gradient(135deg, #850c2d, #a31143) !important;
+    box-shadow: 0 7px 16px rgba(133, 12, 45, 0.13) !important;
+}
+.fb-v11-actions .fb-v11-chat:hover {
+    background: linear-gradient(135deg, #700925, #8f0b38) !important;
+    box-shadow: 0 10px 24px rgba(133, 12, 45, 0.2) !important;
+}
+.fb-v11-actions .fb-v11-photo {
+    background: #fff !important;
+    border-color: #e4c6d3 !important;
+    box-shadow: 0 3px 10px rgba(133, 12, 45, 0.04) !important;
+}
+.fb-v11-actions .fb-v11-photo:hover {
+    border-color: #b95175 !important;
+    background: #fff6f9 !important;
+}
+.fb-v11-actions .fb-v11-btn:not(.fb-v11-disabled):hover .fb-v12-icon {
+    transform: translateY(-1px);
+}
+.fb-v11-actions .fb-v11-btn:focus-visible {
+    outline: 3px solid rgba(133, 12, 45, 0.22);
+    outline-offset: 3px;
+}
+@media (max-width: 510px) {
+    .fb-v11-actions .fb-v11-btn {
+        min-height: 50px !important;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .fb-v11-actions .fb-v12-icon {
+        transition: none;
+    }
+}

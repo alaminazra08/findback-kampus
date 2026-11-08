@@ -1,0 +1,210 @@
+/* FindBack V44 - unified sidebar, desktop compact + mobile drawer */
+:root {
+    --fb44-wide: 268px;
+    --fb44-compact: 76px;
+}
+.fb-sidebar {
+    background: linear-gradient(165deg, #430b25, #35091e 85%) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+.fb-sidebar .fb-brand {
+    border-radius: 16px !important;
+    box-shadow: none !important;
+}
+.fb-sidebar .fb-nav-link {
+    border-radius: 11px !important;
+    min-height: 45px !important;
+    margin: 1px 0 !important;
+    padding: 10px 12px !important;
+    transition:
+        background 0.18s,
+        border-color 0.18s !important;
+}
+.fb-sidebar .fb-nav-link.is-active {
+    background: linear-gradient(115deg, #a51b50, #85103b) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 5px 14px rgba(21, 2, 12, 0.15) !important;
+}
+.fb-sidebar .fb-nav-link:not(.is-active):hover {
+    background: rgba(255, 255, 255, 0.085) !important;
+    transform: none !important;
+}
+.fb-sidebar .fb-sidebar-help {
+    border-radius: 13px !important;
+    padding: 10px 11px !important;
+}
+.fb-sidebar .fb-sidebar-logout {
+    border-radius: 11px !important;
+    min-height: 43px !important;
+}
+.fb-sidebar .fb-nav-label {
+    margin-top: 14px !important;
+    margin-bottom: 8px !important;
+}
+.fb-sidebar .fb-nav-label-secondary {
+    margin-top: 18px !important;
+}
+.fb-sidebar a:focus-visible,
+.fb-sidebar button:focus-visible {
+    outline: 2px solid #ffe2ed !important;
+    outline-offset: 2px !important;
+}
+.fb44-collapse {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    flex: 0 0 35px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 10px;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.09);
+    cursor: pointer;
+    position: absolute;
+    top: 37px;
+    right: 18px;
+    z-index: 4;
+}
+.fb44-collapse:hover {
+    background: rgba(255, 255, 255, 0.17);
+}
+.fb44-collapse svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.fb-sidebar .fb-brand {
+    padding-right: 45px !important;
+}
+@media (min-width: 961px) {
+    body.fb44-compact .fb-sidebar {
+        width: var(--fb44-compact) !important;
+        padding-left: 9px !important;
+        padding-right: 9px !important;
+        overflow: visible !important;
+    }
+    body.fb44-compact .fb-workspace {
+        margin-left: var(--fb44-compact) !important;
+    }
+    body.fb44-compact .fb-sidebar .fb-brand {
+        width: 58px !important;
+        min-width: 58px !important;
+        height: 78px !important;
+        min-height: 78px !important;
+        flex: 0 0 78px !important;
+        margin: 8px 0 8px !important;
+        padding: 10px 5px !important;
+        justify-content: center !important;
+    }
+    body.fb44-compact .fb-sidebar .fb-brand-mark {
+        flex: 0 0 43px !important;
+        width: 43px !important;
+        height: 43px !important;
+    }
+    body.fb44-compact .fb-sidebar .fb-brand-copy,
+    body.fb44-compact .fb-sidebar .fb-nav-label,
+    body.fb44-compact .fb-sidebar .fb-nav-text,
+    body.fb44-compact .fb-sidebar .fb-sidebar-help,
+    body.fb44-compact .fb-sidebar .fb-sidebar-logout span,
+    body.fb44-compact .fb-sidebar .fb-sidebar-divider {
+        display: none !important;
+    }
+    body.fb44-compact .fb-sidebar .fb-nav-link {
+        justify-content: center !important;
+        gap: 0 !important;
+        padding: 12px !important;
+        min-height: 48px !important;
+    }
+    body.fb44-compact .fb-sidebar .fb-nav-icon {
+        margin: 0 !important;
+        flex: 0 0 20px !important;
+    }
+    body.fb44-compact .fb-sidebar .fb-sidebar-nav-scroll {
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+    }
+    body.fb44-compact .fb-sidebar .fb-sidebar-logout {
+        justify-content: center !important;
+        padding: 11px !important;
+    }
+    body.fb44-compact .fb44-collapse {
+        top: 81px !important;
+        right: 19px !important;
+        width: 30px !important;
+        height: 28px !important;
+    }
+    body.fb44-compact .fb-sidebar .fb-sidebar-bottom {
+        padding-top: 4px !important;
+    }
+    body.fb44-compact .fb-sidebar .fb-nav-link.is-active::before {
+        display: none !important;
+    }
+}
+@media (max-width: 960px) {
+    .fb44-collapse {
+        display: none !important;
+    }
+    .fb-sidebar {
+        width: min(84vw, 326px) !important;
+        max-width: 326px !important;
+        max-height: 100dvh !important;
+        height: 100dvh !important;
+        box-shadow: 14px 0 40px rgba(23, 3, 13, 0.28) !important;
+    }
+    .fb-sidebar .fb-brand {
+        min-height: 77px !important;
+        height: 77px !important;
+        flex-basis: 77px !important;
+        margin: 9px 0 8px !important;
+        padding: 10px 46px 10px 11px !important;
+    }
+    .fb-sidebar .fb-v43-close {
+        top: 28px !important;
+        right: 17px !important;
+        width: 33px !important;
+        height: 33px !important;
+    }
+    .fb-sidebar .fb-nav-link {
+        min-height: 44px !important;
+        padding: 9px 12px !important;
+    }
+    .fb-sidebar .fb-nav-label {
+        margin-top: 10px !important;
+        margin-bottom: 6px !important;
+    }
+    .fb-sidebar .fb-nav-label-secondary {
+        margin-top: 14px !important;
+    }
+    .fb-sidebar .fb-sidebar-bottom {
+        padding: 8px 0 max(10px, env(safe-area-inset-bottom)) !important;
+    }
+    .fb-sidebar .fb-sidebar-help {
+        padding: 9px 10px !important;
+    }
+    .fb-sidebar .fb-sidebar-logout {
+        margin-top: 6px !important;
+    }
+    .fb-sidebar-backdrop:not([hidden]) {
+        background: rgba(22, 6, 14, 0.54) !important;
+        backdrop-filter: blur(3px) !important;
+    }
+}
+@media (max-width: 370px) {
+    .fb-sidebar {
+        width: min(88vw, 310px) !important;
+    }
+    .fb-sidebar .fb-nav-link {
+        min-height: 42px !important;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .fb-sidebar * {
+        animation: none !important;
+        transition: none !important;
+    }
+}

@@ -1,0 +1,329 @@
+/* ======================================================================
+   FINDBACK KAMPUS — PREMIUM PASSWORD RECOVERY MODAL
+   Lokasi : public/css/login-recovery-modal.css
+   Urutan : auth.css -> login.css -> login-recovery-modal.css
+   Scope  : halaman Login dan modal Lupa Kata Sandi
+   ====================================================================== */
+
+/* 01 — Pemicu modal pada baris "Ingat saya" */
+.fb-login-page .fb-login-forgot-trigger {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    padding: 4px 0;
+    color: #850c2d;
+    font: inherit;
+    font-size: inherit;
+    font-weight: 750;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.fb-login-page .fb-login-forgot-trigger:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.fb-login-page .fb-login-forgot-trigger:focus-visible {
+    outline: 3px solid #d78ca8;
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+
+/* 02 — Backdrop blur dan posisi dialog */
+body.fb-recovery-is-open {
+    overflow: hidden;
+}
+
+.fb-recovery-overlay[hidden] {
+    display: none !important;
+}
+
+.fb-recovery-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    overflow-y: auto;
+    background: rgba(37, 11, 24, 0.47);
+    -webkit-backdrop-filter: blur(9px);
+    backdrop-filter: blur(9px);
+}
+
+.fb-recovery-dialog {
+    position: relative;
+    width: min(100%, 470px);
+    max-height: calc(100svh - 40px);
+    overflow-y: auto;
+    padding: clamp(26px, 5vw, 42px);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 26px;
+    background: #fff;
+    color: #401323;
+    box-shadow: 0 28px 95px rgba(39, 8, 21, 0.25);
+    animation: fb-recovery-arrive 250ms ease-out both;
+}
+
+/* 03 — Tombol tutup, ikon, judul dan deskripsi */
+.fb-recovery-dialog .fb-recovery-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid #f0dbe3;
+    border-radius: 50%;
+    background: #fff;
+    color: #850c2d;
+    cursor: pointer;
+}
+
+.fb-recovery-close svg {
+    width: 18px;
+    height: 18px;
+}
+
+.fb-recovery-symbol {
+    display: grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    margin-bottom: 22px;
+    border-radius: 17px;
+    background: #f8e9ef;
+    color: #850c2d;
+}
+
+.fb-recovery-symbol svg {
+    width: 26px;
+    height: 26px;
+}
+
+.fb-recovery-eyebrow {
+    margin: 0 0 8px;
+    color: #981540;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+}
+
+.fb-recovery-dialog h2 {
+    margin: 0;
+    color: #401323;
+    font-size: clamp(27px, 5vw, 34px);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+}
+
+.fb-recovery-description {
+    margin: 13px 0 26px;
+    color: #806e75;
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+/* 04 — Form dan input email: satu border saja saat aktif */
+.fb-recovery-modal-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.fb-recovery-modal-form label {
+    margin-bottom: 9px;
+    color: #401323;
+    font-size: 13px;
+    font-weight: 750;
+}
+
+.fb-recovery-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 56px;
+    padding: 0 16px;
+    border: 1px solid #e5cbd5;
+    border-radius: 14px;
+    background: #fff;
+    transition:
+        border-color 200ms ease,
+        box-shadow 200ms ease;
+}
+
+/* Hanya pembungkus yang menerima ring fokus. */
+.fb-recovery-input-wrap:focus-within {
+    border-color: #9b1741;
+    box-shadow: 0 0 0 4px rgba(133, 12, 45, 0.09);
+}
+
+.fb-recovery-input-wrap > svg {
+    display: block;
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
+    color: #850c2d;
+}
+
+/* Lebih spesifik dari aturan umum auth.css dan login.css.
+   Menghapus kotak persegi yang muncul DI DALAM field ketika diklik. */
+.fb-login-page
+    .fb-recovery-overlay
+    .fb-recovery-dialog
+    .fb-recovery-input-wrap
+    input[type="email"] {
+    display: block;
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    height: 54px;
+    margin: 0;
+    padding: 0;
+    border: 0 !important;
+    border-radius: 0;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent;
+    color: #401323;
+    font: inherit;
+    font-size: 16px;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.fb-login-page
+    .fb-recovery-overlay
+    .fb-recovery-dialog
+    .fb-recovery-input-wrap
+    input[type="email"]:is(:focus, :focus-visible, :active) {
+    border: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent;
+}
+
+.fb-recovery-input-wrap input::placeholder {
+    color: #aa99a0;
+}
+
+/* 05 — Tombol kirim dan kembali */
+.fb-recovery-send {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 56px;
+    margin-top: 20px;
+    border: 0;
+    border-radius: 14px;
+    background: linear-gradient(105deg, #780a29, #a10e43);
+    color: #fff;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 750;
+    cursor: pointer;
+    box-shadow: 0 12px 26px rgba(133, 12, 45, 0.18);
+    transition:
+        transform 200ms ease,
+        filter 200ms ease;
+}
+
+.fb-recovery-send:hover {
+    filter: brightness(1.07);
+    transform: translateY(-1px);
+}
+
+.fb-recovery-send svg {
+    width: 18px;
+    height: 18px;
+}
+
+.fb-recovery-return {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 22px auto 0;
+    padding: 6px 10px;
+    border: 0;
+    background: transparent;
+    color: #850c2d;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 750;
+    cursor: pointer;
+}
+
+.fb-recovery-return:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* 06 — Pesan berhasil / error */
+.fb-recovery-feedback {
+    margin: 0 0 18px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.fb-recovery-feedback--success {
+    border: 1px solid #bee1c6;
+    background: #edf8f0;
+    color: #23623b;
+}
+
+.fb-recovery-feedback--error {
+    border: 1px solid #f0c9cc;
+    background: #fff1f1;
+    color: #982838;
+}
+
+/* 07 — Aksesibilitas: fokus pada tombol, bukan border ganda input */
+.fb-recovery-dialog button:focus-visible {
+    outline: 3px solid #d78ca8;
+    outline-offset: 3px;
+}
+
+/* 08 — Motion dan responsive */
+@keyframes fb-recovery-arrive {
+    from {
+        opacity: 0;
+        transform: translateY(13px) scale(0.985);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 600px) {
+    .fb-recovery-overlay {
+        padding: 16px;
+    }
+    .fb-recovery-dialog {
+        max-height: calc(100svh - 32px);
+        padding: 28px 23px;
+        border-radius: 23px;
+    }
+    .fb-recovery-description {
+        font-size: 13px;
+    }
+    .fb-recovery-send {
+        min-height: 55px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fb-recovery-dialog {
+        animation: none;
+    }
+    .fb-recovery-input-wrap,
+    .fb-recovery-send {
+        transition: none;
+    }
+}

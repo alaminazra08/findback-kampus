@@ -1,0 +1,121 @@
+/* FindBack Aksi Cepat V18 - final compact polish, desktop + mobile */
+/* Override scoped to Aksi Cepat only. Navigation, numbers and HTML unchanged. */
+.fb-quick-section .fb-quick-grid {
+    gap: 14px;
+    align-items: stretch;
+}
+.fb-quick-section .fb-quick-card {
+    min-height: 178px;
+    border-radius: 19px;
+}
+.fb-quick-section .fb-quick-card-verification {
+    padding: 16px;
+    gap: 12px;
+}
+.fb-quick-section a.fb-quick-card {
+    padding: 18px;
+    gap: 12px;
+}
+.fb-quick-section .fb-quick-primary {
+    min-height: 48px;
+}
+.fb-quick-section .fb-quick-icon,
+.fb-quick-section .fb-quick-primary .fb-quick-icon {
+    width: 44px;
+    height: 44px;
+    flex-basis: 44px;
+    border-radius: 13px;
+}
+.fb-quick-section .fb-quick-copy {
+    gap: 4px;
+}
+.fb-quick-section .fb-quick-verification-stats {
+    gap: 9px;
+    margin-top: auto;
+}
+.fb-quick-section .fb-quick-status {
+    min-height: 60px;
+    padding: 10px 12px;
+    border-radius: 13px;
+}
+.fb-quick-section .fb-quick-status-label {
+    font-size: 11px;
+}
+.fb-quick-section .fb-quick-status-number {
+    font-size: 21px;
+}
+.fb-quick-section .fb-quick-arrow {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+}
+@media (min-width: 1101px) {
+    .fb-quick-section .fb-quick-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .fb-quick-section .fb-quick-card {
+        min-height: 178px;
+    }
+}
+@media (min-width: 701px) and (max-width: 1100px) {
+    .fb-quick-section .fb-quick-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .fb-quick-section .fb-quick-card-verification {
+        grid-column: 1/-1;
+        min-height: 0;
+    }
+    .fb-quick-section .fb-quick-card:not(.fb-quick-card-verification) {
+        min-height: 132px;
+    }
+}
+@media (max-width: 700px) {
+    .fb-quick-section .fb-quick-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+    }
+    .fb-quick-section .fb-quick-card,
+    .fb-quick-section .fb-quick-card-verification {
+        min-height: 0;
+        border-radius: 18px;
+    }
+    .fb-quick-section a.fb-quick-card {
+        min-height: 100px;
+        padding: 16px;
+        gap: 11px;
+    }
+    .fb-quick-section .fb-quick-card-verification {
+        padding: 16px;
+        gap: 12px;
+    }
+    .fb-quick-section .fb-quick-icon,
+    .fb-quick-section .fb-quick-primary .fb-quick-icon {
+        width: 43px;
+        height: 43px;
+        flex-basis: 43px;
+    }
+    .fb-quick-section .fb-quick-status {
+        min-height: 58px;
+        padding: 10px;
+    }
+}
+@media (max-width: 360px) {
+    .fb-quick-section .fb-quick-verification-stats {
+        gap: 7px;
+    }
+    .fb-quick-section .fb-quick-status {
+        padding: 9px;
+        min-height: 55px;
+    }
+    .fb-quick-section .fb-quick-status-label {
+        font-size: 10px;
+    }
+    .fb-quick-section .fb-quick-status-number {
+        font-size: 19px;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .fb-quick-section .fb-quick-card {
+        transition: none;
+    }
+}

@@ -1,0 +1,405 @@
+/* =========================================================
+   FINDBACK KAMPUS
+   USER - LOST REPORT
+   Premium Maroon Design
+========================================================= */
+
+.fb-report-main {
+    padding-top: 30px;
+}
+
+.fb-report-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.fb-report-nav a {
+    color: #800d37;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.fb-report-nav a:hover {
+    color: #b52b60;
+}
+
+.fb-report-hero {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 205px;
+    padding: 35px 45px;
+    border-radius: 22px;
+    color: white;
+    background: linear-gradient(112deg, #590b29, #82113d 68%, #a5275a);
+    box-shadow: 0 15px 35px #670e321c;
+}
+
+.fb-report-hero > div:first-child {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+}
+
+.fb-report-kicker {
+    display: inline-block;
+    padding: 8px 12px;
+    border: 1px solid #ffffff40;
+    border-radius: 30px;
+    background: #ffffff17;
+    color: #ffdae8;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+
+.fb-report-hero h1 {
+    margin: 17px 0 10px;
+    font-size: clamp(25px, 3vw, 35px);
+    letter-spacing: -0.8px;
+}
+
+.fb-report-hero p {
+    max-width: 600px;
+    margin: 0;
+    color: #f8dce8;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.fb-report-hero-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 130px;
+    width: 130px;
+    height: 130px;
+    border: 1px solid #ffffff40;
+    border-radius: 50%;
+    color: #ffeaf2;
+    font-size: 85px;
+    box-shadow:
+        0 0 0 20px #ffffff0a,
+        0 0 0 40px #ffffff08;
+}
+
+.fb-report-card {
+    margin-top: 25px;
+    padding: 32px;
+    border: 1px solid #efdee6;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 12px 35px #5b0d2b08;
+}
+
+.fb-report-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 28px;
+}
+
+.fb-report-eyebrow {
+    display: block;
+    margin-bottom: 8px;
+    color: #a21d51;
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: 1.6px;
+}
+
+.fb-report-heading h2 {
+    margin: 0;
+    color: #40192c;
+    font-size: 23px;
+    letter-spacing: -0.5px;
+}
+
+.fb-report-heading p {
+    margin: 8px 0 0;
+    color: #967f8a;
+    font-size: 12px;
+}
+
+.fb-report-required {
+    color: #9a3159;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.fb-report-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 18px;
+}
+
+.fb-report-field {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 9px;
+}
+
+.fb-report-field.full {
+    grid-column: 1 / -1;
+}
+
+.fb-report-field label {
+    color: #512139;
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.fb-report-field label span {
+    color: #c1285c;
+}
+
+.fb-report-field input,
+.fb-report-field select,
+.fb-report-field textarea {
+    width: 100%;
+    min-width: 0;
+    padding: 13px 15px;
+    border: 1px solid #ead9e1;
+    border-radius: 11px;
+    outline: none;
+    background: #fff;
+    color: #40192c;
+    font: inherit;
+    font-size: 12px;
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+}
+
+.fb-report-field input,
+.fb-report-field select {
+    min-height: 47px;
+}
+
+.fb-report-field textarea {
+    resize: vertical;
+    line-height: 1.7;
+}
+
+.fb-report-field input:focus,
+.fb-report-field select:focus,
+.fb-report-field textarea:focus {
+    border-color: #a21d51;
+    box-shadow: 0 0 0 3px #a21d5114;
+}
+
+.fb-report-field input::placeholder,
+.fb-report-field textarea::placeholder {
+    color: #b5a2ab;
+}
+
+.fb-report-field > small {
+    color: #a18b96;
+    font-size: 10px;
+}
+
+.fb-report-upload {
+    padding: 20px;
+    border: 1px dashed #d9a9bd;
+    border-radius: 13px;
+    background: #fdf8fa;
+    text-align: center;
+}
+
+.fb-report-upload input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.fb-upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.fb-upload-icon {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+    background: #f8e8ef;
+    color: #941746;
+    font-size: 24px;
+}
+
+.fb-upload-label strong {
+    color: #701039;
+    font-size: 12px;
+}
+
+.fb-upload-label small {
+    color: #a18b96;
+    font-size: 10px;
+}
+
+.fb-report-upload p {
+    margin: 13px 0 0;
+    color: #967f8a;
+    font-size: 11px;
+    overflow-wrap: anywhere;
+}
+
+.fb-report-notice {
+    margin-top: 25px;
+    padding: 17px 19px;
+    border: 1px solid #f1dce5;
+    border-radius: 12px;
+    background: #fcf5f8;
+}
+
+.fb-report-notice strong {
+    color: #85123c;
+    font-size: 12px;
+}
+
+.fb-report-notice p {
+    margin: 7px 0 0;
+    color: #876f7b;
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+.fb-report-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 27px;
+}
+
+.fb-report-cancel,
+.fb-report-submit {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    min-height: 45px;
+    padding: 0 22px;
+    border-radius: 11px;
+    font-size: 12px;
+    font-weight: 750;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.fb-report-cancel {
+    border: 1px solid #ead1dc;
+    background: white;
+    color: #85123c;
+}
+
+.fb-report-submit {
+    border: 1px solid #850c3c;
+    background: linear-gradient(110deg, #750d34, #a51b52);
+    color: white;
+}
+
+.fb-report-submit:hover {
+    background: #590b29;
+}
+
+.fb-report-alert {
+    margin-top: 20px;
+    padding: 15px 18px;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.fb-report-alert.error {
+    border: 1px solid #f0c6ce;
+    background: #fff4f5;
+    color: #a32b43;
+}
+
+.fb-report-alert ul {
+    margin: 7px 0 0;
+    padding-left: 20px;
+}
+
+.fb-report-main .fb-user-breadcrumb a {
+    color: #a21d51;
+    text-decoration: none;
+}
+
+@media (max-width: 760px) {
+    .fb-report-hero {
+        padding: 28px 24px;
+        min-height: 0;
+    }
+
+    .fb-report-hero-icon {
+        display: none;
+    }
+
+    .fb-report-card {
+        padding: 23px 19px;
+    }
+
+    .fb-report-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .fb-report-field.full {
+        grid-column: auto;
+    }
+
+    .fb-report-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .fb-report-nav {
+        gap: 9px;
+    }
+}
+
+@media (max-width: 440px) {
+    .fb-report-main {
+        padding: 22px 16px;
+    }
+
+    .fb-report-hero {
+        border-radius: 17px;
+        padding: 25px 20px;
+    }
+
+    .fb-report-hero h1 {
+        font-size: 25px;
+    }
+
+    .fb-report-actions {
+        flex-direction: column-reverse;
+    }
+
+    .fb-report-cancel,
+    .fb-report-submit {
+        width: 100%;
+    }
+
+    .fb-report-nav a {
+        font-size: 10px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+    }
+}

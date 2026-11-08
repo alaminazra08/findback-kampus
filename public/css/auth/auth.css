@@ -1,0 +1,653 @@
+/* ============================================================================
+   FINDBACK KAMPUS — AUTHENTICATION STYLESHEET
+   File: public/css/auth.css
+   Version: 2.3.0
+   Scope: .fb-auth-page | Form geometry preserved, controls refined
+   ============================================================================ */
+
+/* 01. Design tokens --------------------------------------------------------- */
+:root {
+    --fb-maroon: #850c2d;
+    --fb-maroon-dark: #51091e;
+    --fb-rose: #f8e8ee;
+    --fb-border: #ead9df;
+    --fb-text: #40121f;
+    --fb-muted: #806e75;
+    --fb-white: #ffffff;
+    --fb-shadow: 0 24px 80px rgb(68 14 33 / 11%);
+    --fb-poster: url("/images/register-banner.jpg");
+}
+
+/* 02. Page reset ------------------------------------------------------------ */
+.fb-auth-page,
+.fb-auth-page *,
+.fb-auth-page *::before,
+.fb-auth-page *::after {
+    box-sizing: border-box;
+}
+
+.fb-auth-page {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    color: var(--fb-text);
+    background: radial-gradient(circle at 8% 8%, #f9e8ee, transparent 42%), #fcf9fa;
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        "Segoe UI",
+        sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+.fb-auth-page a {
+    color: var(--fb-maroon);
+    text-decoration: none;
+}
+.fb-auth-page a:hover {
+    text-decoration: underline;
+}
+
+/* 03. Split layout ---------------------------------------------------------- */
+.fb-auth-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    align-items: stretch;
+    width: min(1160px, calc(100% - 48px));
+    min-height: 0;
+    margin: 32px auto;
+    overflow: hidden;
+    border: 1px solid var(--fb-border);
+    border-radius: 26px;
+    background: var(--fb-white);
+    box-shadow: var(--fb-shadow);
+}
+
+/* 04. Poster: never crop the printed text ----------------------------------- */
+.fb-auth-brand {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    isolation: isolate;
+    background: #680a24;
+}
+.fb-auth-brand::before {
+    position: absolute;
+    z-index: -1;
+    inset: -18px;
+    background-image: var(--fb-poster);
+    background-position: center;
+    background-size: cover;
+    filter: blur(20px) brightness(0.68);
+    content: "";
+    pointer-events: none;
+}
+.fb-auth-brand::after {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    background: linear-gradient(
+        115deg,
+        transparent 26%,
+        rgb(255 255 255 / 7%) 43%,
+        transparent 57%
+    );
+    background-size: 240% 100%;
+    opacity: 0.42;
+    content: "";
+    pointer-events: none;
+    animation: fb-shine 12s ease-in-out infinite;
+}
+.fb-auth-brand__poster {
+    display: block;
+    width: 100%;
+    height: auto;
+    flex: 0 0 auto;
+    object-fit: contain;
+    object-position: top center;
+}
+@keyframes fb-shine {
+    0%,
+    25% {
+        background-position: 120% center;
+    }
+    60%,
+    100% {
+        background-position: -70% center;
+    }
+}
+
+/* 05. Form panel — existing spacing retained ------------------------------- */
+.fb-auth-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    padding: 20px clamp(24px, 3.6vw, 52px);
+    background: var(--fb-white);
+}
+.fb-auth-form-wrap {
+    width: 100%;
+    max-width: 410px;
+}
+/* Premium secondary navigation — back to home */
+.fb-auth-page .fb-auth-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: fit-content;
+    min-height: 46px;
+    margin-bottom: 15px;
+    padding: 7px 15px 7px 8px;
+    border: 1px solid #ead2db;
+    border-radius: 13px;
+    color: var(--fb-maroon);
+    background: rgb(255 255 255 / 88%);
+    box-shadow: 0 3px 12px rgb(68 14 33 / 4%);
+    font-size: 13px;
+    font-weight: 750;
+    line-height: 1.35;
+    text-decoration: none;
+    transition:
+        background-color 0.22s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease,
+        transform 0.22s ease;
+}
+
+.fb-auth-back__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 30px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--fb-rose);
+    transition:
+        background-color 0.22s ease,
+        transform 0.22s ease;
+}
+
+.fb-auth-back__icon svg {
+    display: block;
+    width: 16px;
+    height: 16px;
+}
+
+.fb-auth-back__label {
+    white-space: nowrap;
+}
+
+@media (hover: hover) {
+    .fb-auth-page .fb-auth-back:hover {
+        color: var(--fb-maroon-dark);
+        background: #fff6f9;
+        border-color: #dba9ba;
+        box-shadow: 0 7px 18px rgb(133 12 45 / 8%);
+        transform: translateY(-1px);
+        text-decoration: none;
+    }
+
+    .fb-auth-back:hover .fb-auth-back__icon {
+        background: #f3d6e0;
+        transform: translateX(-3px);
+    }
+}
+
+.fb-auth-page .fb-auth-back:focus-visible {
+    outline: 3px solid #d15b80;
+    outline-offset: 3px;
+}
+
+/* 06. Heading --------------------------------------------------------------- */
+.fb-auth-heading__eyebrow {
+    color: var(--fb-maroon);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+}
+.fb-auth-heading h1 {
+    margin: 8px 0 7px;
+    font-size: clamp(26px, 3vw, 34px);
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+}
+.fb-auth-heading p {
+    margin: 0 0 16px;
+    color: var(--fb-muted);
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+/* 07. Validation ------------------------------------------------------------ */
+.fb-auth-alert {
+    margin-bottom: 13px;
+    padding: 11px 13px;
+    border: 1px solid #e8b8c4;
+    border-radius: 10px;
+    color: #86112f;
+    background: #fff2f5;
+    font-size: 13px;
+    line-height: 1.5;
+}
+.fb-auth-error {
+    margin: 6px 0 0;
+    color: #bb2545;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* 08. Form and inputs ------------------------------------------------------- */
+.fb-auth-form {
+    display: grid;
+    gap: 11px;
+}
+.fb-auth-field label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 13px;
+    font-weight: 750;
+}
+.fb-auth-input-wrap {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    border: 1px solid #dbc5cd;
+    border-radius: 11px;
+    background: var(--fb-white);
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+.fb-auth-input-wrap:hover {
+    border-color: #c99daa;
+}
+.fb-auth-input-wrap:focus-within {
+    border-color: var(--fb-maroon);
+    box-shadow: 0 0 0 4px rgb(133 12 45 / 9%);
+}
+.fb-auth-input-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 40px;
+    color: var(--fb-maroon);
+}
+.fb-auth-input-icon svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+}
+.fb-auth-input-wrap input {
+    width: 100%;
+    min-width: 0;
+    height: 42px;
+    padding: 0 6px 0 0;
+    border: 0;
+    outline: none;
+    color: var(--fb-text);
+    background: transparent;
+    font: inherit;
+    font-size: 14px;
+}
+.fb-auth-input-wrap input::placeholder {
+    color: #a99aa0;
+}
+.fb-auth-input-wrap:has(input[aria-invalid="true"]) {
+    border-color: #c92d4f;
+}
+
+/* 09. Eye toggles — accessible, no label-width jumping ---------------------- */
+.fb-auth-password-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+    margin: 0 7px;
+    padding: 0;
+    border: 0;
+    border-radius: 9px;
+    color: var(--fb-maroon);
+    background: transparent;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+.fb-auth-password-toggle svg {
+    display: block;
+    width: 19px;
+    height: 19px;
+}
+.fb-auth-password-toggle .fb-eye-closed {
+    display: none;
+}
+.fb-auth-password-toggle[aria-pressed="true"] .fb-eye-open {
+    display: none;
+}
+.fb-auth-password-toggle[aria-pressed="true"] .fb-eye-closed {
+    display: block;
+}
+.fb-auth-password-toggle:hover {
+    background: var(--fb-rose);
+    transform: scale(1.05);
+}
+.fb-auth-password-toggle:active {
+    transform: scale(0.96);
+}
+
+/* 10. Premium primary button ------------------------------------------------ */
+.fb-auth-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 46px;
+    margin-top: 5px;
+    padding: 8px 20px;
+    border: 0;
+    border-radius: 11px;
+    color: var(--fb-white);
+    background: linear-gradient(110deg, #780c2a, #a0103c);
+    box-shadow: 0 10px 24px rgb(133 12 45 / 19%);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
+}
+.fb-auth-submit__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 29px;
+    height: 29px;
+    flex: 0 0 29px;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 16%);
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+.fb-auth-submit__arrow svg {
+    width: 16px;
+    height: 16px;
+}
+.fb-auth-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgb(133 12 45 / 25%);
+    filter: brightness(1.05);
+}
+.fb-auth-submit:hover .fb-auth-submit__arrow {
+    background: rgb(255 255 255 / 25%);
+    transform: translate(2px, -2px);
+}
+.fb-auth-submit:active {
+    transform: translateY(0);
+}
+.fb-auth-submit:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/* 11. Supporting copy ------------------------------------------------------- */
+.fb-auth-switch {
+    margin: 13px 0 0;
+    color: var(--fb-muted);
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: center;
+}
+.fb-auth-switch a {
+    font-weight: 800;
+}
+.fb-auth-footnote {
+    margin: 14px 0 0;
+    color: #98858c;
+    font-size: 11px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+/* 12. Keyboard accessibility ------------------------------------------------ */
+.fb-auth-submit:focus-visible,
+.fb-auth-password-toggle:focus-visible,
+.fb-auth-page a:focus-visible {
+    outline: 3px solid #d15b80;
+    outline-offset: 3px;
+}
+
+/* 13. Responsive branding -------------------------------------------------- */
+.fb-auth-mobile-brand {
+    display: none;
+}
+
+/* 14. Medium desktop: retain two panels without squeezing the form ---------- */
+@media (min-width: 981px) and (max-width: 1199px) {
+    .fb-auth-shell {
+        width: calc(100% - 40px);
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        margin-block: 24px;
+    }
+
+    .fb-auth-content {
+        padding: 22px clamp(22px, 3vw, 38px);
+    }
+}
+
+/* 15. Tablet: stacked, full poster preserved -------------------------------- */
+@media (min-width: 601px) and (max-width: 980px) {
+    .fb-auth-shell {
+        grid-template-columns: minmax(0, 1fr);
+        width: min(600px, calc(100% - 40px));
+        margin: 20px auto;
+        border-radius: 22px;
+    }
+
+    .fb-auth-brand {
+        min-height: 0;
+        display: block;
+    }
+
+    .fb-auth-brand::before {
+        display: none;
+    }
+
+    .fb-auth-brand__poster {
+        width: 100%;
+        height: auto;
+    }
+
+    .fb-auth-content {
+        padding: 36px clamp(28px, 6vw, 60px) 44px;
+    }
+
+    .fb-auth-form-wrap {
+        max-width: 460px;
+    }
+
+    .fb-auth-form {
+        gap: 14px;
+    }
+
+    .fb-auth-input-wrap {
+        min-height: 48px;
+    }
+    .fb-auth-input-wrap input {
+        height: 46px;
+    }
+    .fb-auth-submit {
+        min-height: 50px;
+    }
+}
+
+/* 16. Smartphones: form first, compact branding, comfortable tap targets ---- */
+@media (max-width: 600px) {
+    .fb-auth-page {
+        min-width: 0;
+        background: #ffffff;
+    }
+
+    .fb-auth-shell {
+        display: block;
+        width: 100%;
+        min-height: 100svh;
+        margin: 0;
+        overflow: visible;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    /* Avoid placing a tall poster above the registration form on a phone. */
+    .fb-auth-brand {
+        display: none;
+    }
+
+    .fb-auth-content {
+        display: block;
+        min-height: 100svh;
+        padding: clamp(22px, 5vw, 30px) clamp(20px, 5vw, 28px) 40px;
+    }
+
+    .fb-auth-form-wrap {
+        max-width: 440px;
+        margin: 0 auto;
+    }
+
+    .fb-auth-page .fb-auth-back {
+        min-height: 44px;
+        margin-bottom: 28px;
+    }
+
+    .fb-auth-mobile-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 11px;
+        margin-bottom: 22px;
+        color: var(--fb-maroon);
+    }
+
+    .fb-auth-mobile-brand__icon {
+        display: grid;
+        place-items: center;
+        width: 42px;
+        height: 42px;
+        border: 1px solid #f0d1dc;
+        border-radius: 13px;
+        background: var(--fb-rose);
+    }
+
+    .fb-auth-mobile-brand__icon svg {
+        width: 25px;
+        height: 25px;
+    }
+
+    .fb-auth-mobile-brand strong,
+    .fb-auth-mobile-brand small {
+        display: block;
+    }
+
+    .fb-auth-mobile-brand strong {
+        font-size: 17px;
+        line-height: 1.1;
+    }
+
+    .fb-auth-mobile-brand small {
+        margin-top: 4px;
+        color: var(--fb-muted);
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+    }
+
+    .fb-auth-heading h1 {
+        font-size: clamp(26px, 7vw, 32px);
+    }
+
+    .fb-auth-heading p {
+        margin-bottom: 22px;
+    }
+
+    .fb-auth-form {
+        gap: 17px;
+    }
+    .fb-auth-field label {
+        margin-bottom: 7px;
+    }
+    .fb-auth-input-wrap {
+        min-height: 50px;
+    }
+    .fb-auth-input-wrap input {
+        height: 48px;
+        font-size: 16px;
+    }
+
+    .fb-auth-password-toggle {
+        width: 44px;
+        height: 44px;
+        flex-basis: 44px;
+        margin-inline: 3px;
+    }
+
+    .fb-auth-submit {
+        min-height: 52px;
+        margin-top: 6px;
+    }
+    .fb-auth-switch {
+        margin-top: 20px;
+    }
+    .fb-auth-footnote {
+        margin-top: 18px;
+        font-size: 12px;
+    }
+}
+
+/* 17. Very narrow phones ---------------------------------------------------- */
+@media (max-width: 360px) {
+    .fb-auth-content {
+        padding-inline: 16px;
+    }
+    .fb-auth-page .fb-auth-back {
+        gap: 7px;
+        padding-right: 11px;
+    }
+    .fb-auth-heading__eyebrow {
+        font-size: 10px;
+    }
+    .fb-auth-heading h1 {
+        font-size: 26px;
+    }
+}
+
+/* 18. Short desktops: let normal scrolling reveal every field --------------- */
+@media (min-width: 981px) and (max-height: 700px) {
+    .fb-auth-shell {
+        margin-block: 16px;
+    }
+}
+
+/* 19. Accessibility and reduced motion -------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    .fb-auth-page *,
+    .fb-auth-page *::before,
+    .fb-auth-page *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+}

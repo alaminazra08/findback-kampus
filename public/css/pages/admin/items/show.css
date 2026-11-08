@@ -1,0 +1,72 @@
+.fb-v19-history {
+    margin-top: 22px;
+    padding: 25px;
+}
+.fb-v19-timeline {
+    margin: 22px 0 0;
+    padding: 0 0 0 7px;
+    list-style: none;
+}
+.fb-v19-event {
+    position: relative;
+    display: flex;
+    gap: 16px;
+    padding: 0 0 25px;
+}
+.fb-v19-event:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 18px;
+    bottom: 0;
+    width: 2px;
+    background: #eadde3;
+}
+.fb-v19-dot {
+    position: relative;
+    z-index: 1;
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    border: 4px solid white;
+    outline: 1px solid #e7cbd5;
+    border-radius: 50%;
+    background: #850c2d;
+    box-shadow: 0 0 0 2px #f9ebf0;
+}
+.fb-v19-verified .fb-v19-dot,
+.fb-v19-returned .fb-v19-dot {
+    background: #047857;
+}
+.fb-v19-rejected .fb-v19-dot {
+    background: #b42342;
+}
+.fb-v19-claim .fb-v19-dot {
+    background: #2563eb;
+}
+.fb-v19-event strong {
+    display: block;
+    color: #340b20;
+    font-size: 15px;
+}
+.fb-v19-event small {
+    display: block;
+    color: #946c7c;
+    margin-top: 5px;
+}
+.fb-v19-event p {
+    margin: 6px 0 0;
+    color: #745665;
+    line-height: 1.6;
+    font-size: 13px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+.fb-v19-legacy {
+    background: #fff7ed;
+    border: 1px solid #f2ddba;
+    padding: 12px;
+    border-radius: 10px;
+    color: #83530e;
+    font-size: 12px;
+}

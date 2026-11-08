@@ -1,0 +1,280 @@
+/* Scoped verification-cycle additions; existing premium layouts stay intact. */
+.fb-cycle-form,
+.fb-cycle-history {
+    background: #fff;
+    border: 1px solid #eadde2;
+    border-radius: 18px;
+    padding: 24px;
+    margin: 24px 0;
+    min-width: 0;
+    color: #392331;
+}
+.fb-cycle-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+.fb-cycle-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    font-weight: 600;
+    font-size: 14px;
+}
+.fb-cycle-form input:not([type="checkbox"]),
+.fb-cycle-form textarea {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 44px;
+    border: 1px solid #d9c7ce;
+    border-radius: 9px;
+    padding: 12px;
+    font: inherit;
+    background: #fff;
+    color: #392331;
+}
+.fb-cycle-form .wide {
+    grid-column: 1/-1;
+}
+.fb-cycle-form .check {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    font-weight: 400;
+    line-height: 1.6;
+    margin: 18px 0;
+}
+.fb-cycle-form button {
+    min-height: 44px;
+    padding: 12px 20px;
+    background: #850c2d;
+    color: #fff;
+    border: 0;
+    border-radius: 9px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.fb-cycle-form button:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+.fb-cycle-form :focus-visible {
+    outline: 3px solid #bc8d36;
+    outline-offset: 3px;
+}
+.fb-cycle-history li {
+    margin: 16px 0;
+    padding-left: 10px;
+    overflow-wrap: anywhere;
+}
+.fb-cycle-history strong,
+.fb-cycle-history small {
+    display: block;
+}
+.fb-cycle-history small {
+    color: #715a64;
+    margin-top: 6px;
+}
+.fb-cycle-history p {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    line-height: 1.6;
+}
+.fb-cycle-notice {
+    border-left: 3px solid #b77b1c;
+    background: #fff8e8;
+    padding: 14px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+.fb-cycle-summary {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 15px 0;
+}
+.fb-cycle-summary a {
+    color: #850c2d;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+}
+.fb-cycle-diff {
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+.fb-cycle-diff dl {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 12px;
+}
+.fb-cycle-diff dd {
+    margin: 4px 0;
+    white-space: pre-wrap;
+}
+@media (max-width: 600px) {
+    .fb-cycle-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .fb-cycle-form,
+    .fb-cycle-history {
+        padding: 16px;
+    }
+    .fb-cycle-form input,
+    .fb-cycle-form textarea {
+        font-size: 16px !important;
+    }
+    .fb-cycle-form button {
+        width: 100%;
+    }
+    .fb-cycle-diff dl {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 760px) {
+    .fb-cycle-report-list .cu-table-wrap {
+        overflow: visible;
+    }
+    .fb-cycle-report-list table {
+        display: block;
+        width: 100%;
+        min-width: 0;
+    }
+    .fb-cycle-report-list thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+    }
+    .fb-cycle-report-list tbody {
+        display: block;
+    }
+    .fb-cycle-report-list tr {
+        display: block;
+        margin: 14px 0;
+        border: 1px solid #eadde2;
+        border-radius: 12px;
+        padding: 10px;
+    }
+    .fb-cycle-report-list td {
+        display: grid;
+        grid-template-columns: 75px minmax(0, 1fr);
+        gap: 8px;
+        padding: 8px;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+    .fb-cycle-report-list td::before {
+        content: attr(data-label);
+        font-size: 12px;
+        color: #715a64;
+    }
+    .fb-cycle-report-list td small {
+        grid-column: 2;
+    }
+    .fb-cycle-report-list td[colspan] {
+        display: block;
+    }
+    .fb-cycle-report-list td[colspan]::before {
+        content: none;
+    }
+    .fb-cycle-report-list td .cu-btn {
+        min-height: 44px;
+    }
+    .fb-cycle-report-list .cu-inline-filter {
+        min-width: 0;
+    }
+    .fb-cycle-report-list input,
+    .fb-cycle-report-list select {
+        min-width: 0;
+        max-width: 100%;
+        font-size: 16px;
+    }
+}
+
+/* FindBack Dashboard - indikator tindak lanjut, rapi dan responsif */
+.fb-cycle-summary.fb-cycle-overview {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    padding: 0;
+    margin: 22px 0 24px;
+    max-width: 760px;
+}
+.fb-cycle-overview .fb-cycle-status-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 0;
+    gap: 12px;
+    padding: 15px 18px;
+    border: 1px solid #ecdce2;
+    border-radius: 16px;
+    background: #fff;
+    color: #4b1830;
+    text-decoration: none;
+    min-height: 84px;
+    box-shadow: 0 6px 18px rgba(85, 20, 49, 0.035);
+    transition:
+        border-color 0.16s,
+        transform 0.16s,
+        box-shadow 0.16s;
+}
+.fb-cycle-overview .fb-cycle-status-card:hover {
+    transform: translateY(-1px);
+    border-color: #bc8aa2;
+    box-shadow: 0 9px 24px rgba(85, 20, 49, 0.09);
+}
+.fb-cycle-overview .fb-cycle-status-card:focus-visible {
+    outline: 3px solid #850c2d;
+    outline-offset: 2px;
+}
+.fb-cycle-overview .fb-cycle-status-copy {
+    display: grid;
+    gap: 5px;
+    min-width: 0;
+}
+.fb-cycle-overview .fb-cycle-status-label {
+    font-size: 14px;
+    font-weight: 750;
+    line-height: 1.4;
+    color: #4b1830;
+}
+.fb-cycle-overview .fb-cycle-status-copy small {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #886a78;
+}
+.fb-cycle-overview .fb-cycle-status-count {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 5px 10px;
+    border-radius: 12px;
+    background: #f7eaf0;
+    color: #850c2d;
+    font-size: 22px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+.fb-cycle-overview .fb-cycle-status-card.is-revision .fb-cycle-status-count {
+    background: #fff3e1;
+    color: #9b5b06;
+}
+@media (max-width: 640px) {
+    .fb-cycle-summary.fb-cycle-overview {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 10px;
+        margin: 16px 0 20px;
+    }
+    .fb-cycle-overview .fb-cycle-status-card {
+        min-height: 76px;
+        padding: 13px 15px;
+    }
+}

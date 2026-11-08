@@ -1,0 +1,134 @@
+/* FindBack V11: dua aksi dalam satu blok pemeriksaan. Tidak mengubah modal Chat. */
+.fb-v11-evidence {
+    margin-top: 22px;
+}
+.fb-v11-heading {
+    margin-bottom: 13px;
+}
+.fb-v11-kicker {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: #9b1646;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+.fb-v11-heading h3 {
+    color: #351522;
+    font-size: 17px;
+    margin: 0;
+    font-weight: 800;
+}
+.fb-v11-statement {
+    margin: 0 0 18px;
+    background: #faf6f8;
+    border: 1px solid #ecdee5;
+    border-left: 3px solid #94143f;
+    border-radius: 13px;
+    padding: 17px 18px;
+    color: #614b56;
+    font-size: 13px;
+    line-height: 1.75;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+.fb-v11-action-area {
+    border: 1px solid #f0dce5;
+    background: linear-gradient(120deg, #fff9fb, #fff4f8);
+    padding: 17px 18px;
+    border-radius: 17px;
+}
+.fb-v11-action-heading {
+    margin-bottom: 13px;
+}
+.fb-v11-action-heading strong {
+    display: block;
+    color: #371724;
+    font-weight: 800;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+.fb-v11-action-heading small {
+    display: block;
+    color: #967986;
+    font-size: 12px;
+    line-height: 1.5;
+}
+.fb-v11-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    align-items: stretch;
+}
+.fb-v11-actions .fb-v11-btn {
+    appearance: none;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 48px;
+    margin: 0 !important;
+    padding: 11px 10px !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    line-height: 1.4;
+    border-radius: 12px !important;
+    text-align: center;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    white-space: normal;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        background-color 0.2s,
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+.fb-v11-actions .fb-v11-chat {
+    color: #fff !important;
+    border: 1px solid #850c2d !important;
+    background: #850c2d !important;
+    box-shadow: 0 5px 15px #850c2d1b;
+}
+.fb-v11-actions .fb-v11-chat:hover {
+    background: #690823 !important;
+    transform: translateY(-1px);
+}
+.fb-v11-actions .fb-v11-photo {
+    color: #850c2d !important;
+    border: 1px solid #e7cbd7 !important;
+    background: #fff !important;
+    box-shadow: none;
+}
+.fb-v11-actions .fb-v11-photo:hover {
+    background: #fff0f5 !important;
+    transform: translateY(-1px);
+}
+.fb-v11-actions .fb-v11-chat.is-archive {
+    color: #705666 !important;
+    background: #fff !important;
+    border-color: #e8d8df !important;
+    box-shadow: none;
+}
+.fb-v11-actions .fb-v11-disabled {
+    cursor: not-allowed;
+    color: #806e76;
+    background: #f5eef1;
+    border: 1px solid #e9dfe4;
+}
+@media (max-width: 510px) {
+    .fb-v11-action-area {
+        padding: 15px;
+    }
+    .fb-v11-actions {
+        grid-template-columns: 1fr;
+    }
+    .fb-v11-statement {
+        padding: 14px;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .fb-v11-actions .fb-v11-btn {
+        transition: none !important;
+    }
+}

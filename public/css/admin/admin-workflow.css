@@ -1,0 +1,188 @@
+/* Shared operational styles. Does not replace the existing premium layouts. */
+.fb-main,
+.fb-content,
+.fb-items-panel,
+.fb-panel {
+    min-width: 0;
+}
+.fb-workflow-note {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #6b5360;
+    margin: 14px 0 22px;
+    overflow-wrap: anywhere;
+}
+.fb-workflow-actions,
+.fb-v15-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.fb-items-table th:last-child,
+.fb-items-table td:last-child {
+    text-align: center;
+}
+.fb-workflow-action,
+.fb-items-table .fb-v16-detail {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 36px;
+    padding: 0 10px;
+    border: 1px solid #ead6df;
+    border-radius: 9px;
+    background: white;
+    color: #850c2d;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+.fb-workflow-action svg,
+.fb-v16-detail svg {
+    width: 15px;
+    height: 15px;
+    flex: none;
+}
+.fb-workflow-action:hover,
+.fb-v16-detail:hover {
+    background: #f9eef2;
+}
+.fb-workflow-action.is-disabled {
+    color: #74656c;
+    background: #f5f2f3;
+    white-space: normal;
+    height: auto;
+    min-height: 36px;
+}
+.fb-v16-date {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+.fb-handover-stage {
+    display: inline-block;
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-weight: 700;
+}
+:is(.fb-items-badge, .fb-v-status, .fb-claim-status, .fb-report-status).status-pending {
+    background: #fff7df !important;
+    color: #855300 !important;
+    border: 1px solid #f59e0b;
+}
+:is(.fb-items-badge, .fb-v-status, .fb-report-status).status-verified {
+    background: #eaf7ef !important;
+    color: #16804a !important;
+    border: 1px solid #16804a;
+}
+:is(.fb-items-badge, .fb-v-status, .fb-claim-status, .fb-report-status).status-rejected {
+    background: #fff0f1 !important;
+    color: #dc3545 !important;
+    border: 1px solid #dc3545;
+}
+:is(.fb-items-badge, .fb-v-status, .fb-claim-status, .fb-report-status).status-returned {
+    background: #e5f5ef !important;
+    color: #047857 !important;
+    border: 1px solid #047857;
+}
+.fb-claim-status.status-approved {
+    background: #f4edff !important;
+    color: #7c3aed !important;
+    border: 1px solid #7c3aed;
+}
+:is(.fb-items-badge, .fb-v-status).status-claimed {
+    background: #eff6ff !important;
+    color: #2563eb !important;
+    border: 1px solid #2563eb;
+}
+.match-pill.pending {
+    background: #fff7df !important;
+    color: #855300 !important;
+    border: 1px solid #f59e0b;
+}
+.match-pill.confirmed {
+    background: #eaf7ef !important;
+    color: #16804a !important;
+}
+.match-pill.rejected {
+    background: #fff0f1 !important;
+    color: #dc3545 !important;
+}
+.fb-workflow-pages {
+    padding: 12px 20px;
+}
+.fb-workflow-pages svg {
+    max-width: 22px;
+    max-height: 22px;
+}
+.fb-items-table-wrap,
+.fb-table-scroll {
+    max-width: 100%;
+    overflow-x: auto;
+}
+.fb-claim-status,
+.fb-v-status,
+.fb-items-badge,
+.match-pill {
+    max-width: 100%;
+    white-space: normal !important;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+.fb-claim-details dd,
+.fb-v-facts dd,
+.fb-items-details-aside dd {
+    overflow-wrap: anywhere;
+    min-width: 0;
+}
+.fb-analytics-intro-mark {
+    display: none !important;
+}
+@media (max-width: 800px) {
+    .fb-workflow-action,
+    .fb-items-table .fb-v16-detail {
+        min-height: 44px;
+        height: auto;
+        padding: 8px 10px;
+    }
+    .fb-items-detail-layout,
+    .fb-claim-detail-grid {
+        min-width: 0;
+    }
+    .fb-v16-date {
+        white-space: normal;
+    }
+    .fb-claim-status,
+    .fb-v-status {
+        font-size: 12px;
+    }
+    .fb-v-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .fb-notif-panel {
+        max-width: calc(100vw - 24px);
+    }
+    .fb-v-filters {
+        grid-template-columns: 1fr !important;
+    }
+    .fb-v-filters > * {
+        min-width: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+@media (max-width: 400px) {
+    .fb-v-stats {
+        grid-template-columns: 1fr;
+    }
+    .fb-breadcrumb {
+        overflow-wrap: anywhere;
+    }
+}

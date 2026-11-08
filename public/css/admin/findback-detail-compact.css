@@ -1,0 +1,272 @@
+/* FindBack detail verification layout refinement. Presentation only. */
+.fb-v-detail-grid {
+    align-items: start !important;
+    gap: 20px !important;
+}
+.fb-v-detail-grid > .fb-v-detail-panel,
+.fb-v-detail-grid > .fb-v-decision {
+    min-width: 0 !important;
+    width: 100% !important;
+}
+.fb-v-detail-panel .fb-v-photo {
+    min-height: 160px !important;
+    max-height: 260px !important;
+    padding: 12px !important;
+}
+.fb-v-detail-panel .fb-v-photo img {
+    max-height: 230px !important;
+    object-fit: contain !important;
+}
+.fb-v-detail-panel .fb-v-facts {
+    margin: 8px 0 !important;
+    padding: 12px 0 !important;
+    gap: 10px 16px !important;
+}
+.fb-v-detail-panel .fb-v-description {
+    margin-top: 8px !important;
+}
+.fb-v-detail-panel .fb-v-description h3 {
+    margin: 8px 0 !important;
+}
+.fb-v-detail-panel .fb-v-description p {
+    margin: 5px 0 !important;
+}
+.fb-v-side-history {
+    margin-top: 18px;
+    min-width: 0;
+}
+.fb-v-side-history > section,
+.fb-v-side-history > .fb-panel,
+.fb-v-side-history > div {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+.fb-v-side-history h2 {
+    font-size: 19px !important;
+    line-height: 1.35 !important;
+}
+.fb-v-side-history .fb-cycle-history {
+    margin: 0 !important;
+    padding: 15px !important;
+    box-shadow: none !important;
+    border-radius: 14px !important;
+}
+.fb-v-side-history * {
+    overflow-wrap: anywhere;
+}
+@media (min-width: 1050px) {
+    .fb-v-detail-grid {
+        grid-template-columns: minmax(0, 1.35fr) minmax(350px, 1fr) !important;
+    }
+    .fb-v-detail-grid > .fb-v-decision {
+        align-self: start !important;
+    }
+}
+@media (max-width: 1049px) {
+    .fb-v-detail-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+    .fb-v-side-history {
+        margin-top: 16px;
+    }
+}
+@media (max-width: 600px) {
+    .fb-v-detail-panel .fb-v-photo {
+        min-height: 140px !important;
+        max-height: 225px !important;
+    }
+    .fb-v-detail-panel .fb-v-photo img {
+        max-height: 200px !important;
+    }
+    .fb-v-side-history h2 {
+        font-size: 17px !important;
+    }
+}
+
+/* FindBack PM - premium revision comparison (desktop and mobile) */
+.fb-repair-premium {
+    margin: 20px 0 28px !important;
+    padding: 26px !important;
+    background: #fff !important;
+    border: 1px solid #ead9df !important;
+    border-radius: 20px !important;
+    box-shadow: 0 12px 30px rgba(75, 14, 39, 0.045) !important;
+}
+.fb-repair-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+.fb-repair-kicker {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    color: #9a2448;
+}
+.fb-repair-head h2 {
+    font-size: 23px !important;
+    line-height: 1.25 !important;
+    margin: 8px 0 !important;
+    color: #351423;
+}
+.fb-repair-subtitle {
+    font-size: 13px;
+    color: #806575;
+    line-height: 1.6;
+    margin: 0 !important;
+}
+.fb-repair-pill {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #cbe7d9;
+    background: #eff9f3;
+    color: #17613c;
+    border-radius: 999px;
+    padding: 8px 13px;
+    font-weight: 750;
+    font-size: 12px;
+    white-space: nowrap;
+}
+.fb-repair-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+    padding: 13px 16px;
+    border-radius: 12px;
+    background: #fbf7f9;
+    font-size: 12px;
+    color: #725764;
+    margin-bottom: 18px;
+}
+.fb-repair-meta strong {
+    color: #45192c;
+    margin-right: 8px;
+}
+.fb-repair-note {
+    border-left: 3px solid #850c2d;
+    background: #fbf5f7;
+    padding: 13px 16px;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 20px;
+}
+.fb-repair-note strong {
+    font-size: 13px;
+    color: #55162f;
+}
+.fb-repair-note p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 6px 0 0 !important;
+}
+.fb-repair-changes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+.fb-repair-change {
+    min-width: 0;
+    border: 1px solid #eee0e5;
+    border-radius: 15px;
+    padding: 16px;
+    background: #fff;
+}
+.fb-repair-change h3 {
+    margin: 0 0 13px !important;
+    font-size: 15px !important;
+    color: #47182e;
+}
+.fb-repair-compare {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+.fb-repair-value {
+    min-width: 0;
+    background: #faf8f9;
+    border: 1px solid #f0e5e9;
+    border-radius: 12px;
+    padding: 12px;
+}
+.fb-repair-value.is-after {
+    background: #f4faf6;
+    border-color: #d5eadd;
+}
+.fb-repair-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 800;
+    color: #886878;
+    margin-bottom: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.fb-repair-value.is-after .fb-repair-label {
+    color: #23744b;
+}
+.fb-repair-text {
+    margin: 0 !important;
+    font-size: 13px;
+    line-height: 1.55;
+    color: #3f2933;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+.fb-repair-photo-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    text-decoration: none !important;
+    color: #850c2d;
+    font-size: 12px;
+    font-weight: 700;
+}
+.fb-repair-photo-link img {
+    display: block;
+    width: 100%;
+    height: 160px;
+    object-fit: contain;
+    border-radius: 9px;
+    background: #fff;
+    border: 1px solid #eee4e8;
+}
+.fb-repair-empty {
+    font-size: 12px;
+    color: #9a8490;
+}
+@media (max-width: 1100px) {
+    .fb-repair-changes {
+        grid-template-columns: 1fr;
+    }
+}
+@media (max-width: 640px) {
+    .fb-repair-premium {
+        padding: 16px !important;
+    }
+    .fb-repair-head h2 {
+        font-size: 20px !important;
+    }
+    .fb-repair-compare {
+        gap: 8px;
+    }
+    .fb-repair-value {
+        padding: 9px;
+    }
+    .fb-repair-photo-link img {
+        height: 120px;
+    }
+    .fb-repair-meta {
+        display: grid;
+        gap: 8px;
+    }
+}
+@media (max-width: 370px) {
+    .fb-repair-compare {
+        grid-template-columns: 1fr;
+    }
+}

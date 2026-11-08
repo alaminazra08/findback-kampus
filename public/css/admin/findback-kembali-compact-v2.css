@@ -1,0 +1,40 @@
+/* FindBack - tombol kembali ringkas, khusus halaman detail verifikasi */
+.fb-page-heading .fb-v-back-compact {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    flex: 0 0 auto !important;
+    width: max-content !important;
+    max-width: 100% !important;
+    min-height: 42px;
+    margin: 0 !important;
+    padding: 10px 16px !important;
+    border: 1px solid #ead6df !important;
+    border-radius: 12px !important;
+    background: #fff !important;
+    color: #850c2d !important;
+    font-size: 13px !important;
+    line-height: 1.35;
+    font-weight: 700 !important;
+    white-space: nowrap;
+    text-decoration: none !important;
+    box-shadow: 0 3px 12px rgba(71, 14, 39, 0.035);
+}
+.fb-page-heading .fb-v-back-compact:hover {
+    background: #fff6f9 !important;
+    border-color: #d9abbc !important;
+}
+.fb-page-heading .fb-v-back-compact:focus-visible {
+    outline: 3px solid #d5a0b5 !important;
+    outline-offset: 3px;
+}
+@media (max-width: 720px) {
+    .fb-page-heading .fb-v-back-compact {
+        width: max-content !important;
+        align-self: flex-start !important;
+        justify-self: start !important;
+        padding: 10px 13px !important;
+        font-size: 12px !important;
+    }
+}

@@ -81,20 +81,6 @@
                     <span>Beranda</span>
                 </a>
 
-                {{-- CARI BARANG --}}
-                <a
-                    class="{{ request()->routeIs('user.items.*') ? 'active' : '' }}"
-                    href="{{ route('user.items.index') }}"
-                >
-                    <svg class="fb-nav-icon" viewBox="0 0 24 24"
-                         fill="none" stroke="currentColor"
-                         stroke-width="1.8" stroke-linecap="round"
-                         stroke-linejoin="round" aria-hidden="true">
-                        <circle cx="11" cy="11" r="7" />
-                        <path d="m20 20-4-4" />
-                    </svg>
-                    <span>Cari Barang</span>
-                </a>
 
                 {{-- LAPOR BARANG --}}
                 <details class="cu-dropdown">

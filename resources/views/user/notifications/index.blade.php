@@ -1,4 +1,3 @@
-
 @extends('user.layouts.campus')
 
 @section('title', 'Notifikasi')

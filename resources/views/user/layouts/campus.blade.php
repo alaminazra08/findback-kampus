@@ -13,7 +13,7 @@
     <link rel="icon" href="{{ asset('images/logo-findback.png') }}">
 
     {{-- CSS USER --}}
-    <link rel="stylesheet" href="{{ asset('css/user/campus.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/user/campus.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/user/navbar-premium-v3.css') }}?v=3">
     <link rel="stylesheet" href="{{ asset('css/shared/view-utilities.css') }}">
 

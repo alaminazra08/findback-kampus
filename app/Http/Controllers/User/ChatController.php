@@ -30,7 +30,7 @@ class ChatController extends Controller
             ->latest('id')
             ->get();
         $selectedClaim = $claimOptions->firstWhere('id', $request->integer('claim_id'));
-        if (!$selectedClaim && !$request->filled('claim_id')) {
+        if (!$selectedClaim && !$request->filled('claim_id') && !$request->boolean('legacy')) {
             $selectedClaim = $activeClaims->count() === 1 ? $activeClaims->first() : null;
         }
         $legacyMode = !$selectedClaim && $request->boolean('legacy');
@@ -46,7 +46,7 @@ class ChatController extends Controller
             ->latest('id')
             ->paginate(50)
             ->withQueryString();
-        if ($canChat) {
+        if ($selectedClaim || $legacyMode) {
             ChatMessage::where('user_id', auth()->id())
                 ->where('sender_id', '!=', auth()->id())
                 ->whereIn('id', $messages->pluck('id'))
@@ -97,19 +97,9 @@ class ChatController extends Controller
             ],
         );
 
-        $path = null;
-
-        if ($request->hasFile('attachment')) {
-            $path = $request->file('attachment')->store('chat-attachments', 'public');
-        }
-
-        ChatMessage::create([
-            'user_id' => auth()->id(),
-            'claim_id' => $claim->id,
-            'sender_id' => auth()->id(),
-            'message' => $validated['message'] ?? null,
-            'attachment_path' => $path,
-        ]);
+        app(\App\Services\ClaimChatService::class)->send(
+            $claim, $request->user(), $validated, $request->file('attachment'),
+        );
 
         return redirect()
             ->route('user.chat.index', ['claim_id' => $claim->id])

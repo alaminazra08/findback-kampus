@@ -7,7 +7,7 @@
                 <p class="cu-greeting">Selamat datang kembali,</p>
                 <h1>{{ auth()->user()->name }}<span>.</span></h1>
                 {{-- Deskripsi dinamis dari Admin > Pengaturan Sistem --}}
-                <p style="overflow-wrap:anywhere">{{ trim((string) ($fbBrand['site_description'] ?? '')) ?: 'Bersama FindBack Kampus, temukan kembali barangmu dan bantu barang orang lain kembali ke pemiliknya.' }}</p>
+                <p class="fb-wrap-anywhere">{{ trim((string) ($fbBrand['site_description'] ?? '')) ?: 'Bersama FindBack Kampus, temukan kembali barangmu dan bantu barang orang lain kembali ke pemiliknya.' }}</p>
                 <form class="cu-hero-search" action="{{ route('user.items.index') }}"><label class="cu-sr"
                         for="hero-search">Cari barang atau lokasi</label>@include('user.components.icon', ['icon' => 'search'])<input id="hero-search"
                         name="search" maxlength="100" placeholder="Cari barang, lokasi, atau kata kunci..."><button

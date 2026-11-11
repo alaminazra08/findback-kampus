@@ -105,8 +105,7 @@
                     <div class="fb-v11-heading"><span class="fb-v11-kicker">KETERANGAN PENGKLAIM</span>
                         <h3>Penjelasan Pengaju</h3>
                     </div>
-                    <blockquote class="fb-v11-statement">
-                        {{ $claim->proof_description ?: 'Belum ada penjelasan dari pengaju.' }}</blockquote>
+                    <blockquote class="fb-v11-statement">{{ $claim->proof_description ?: 'Belum ada penjelasan dari pengaju.' }}</blockquote>
                     <div class="fb-v11-action-area">
                         <div class="fb-v11-action-heading">
                             <div><strong>Tindakan Pemeriksaan</strong><small>Periksa foto bukti dan koordinasikan serah

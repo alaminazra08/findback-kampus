@@ -3540,14 +3540,16 @@ a {
         font-size: 11.5px !important;
         line-height: 1.35 !important;
     }
+
     .fb-recent-reports .fb-report-table tr.fb-v35-report-row td:nth-child(3)::before {
-        content: "Lokasi Â· ";
+        content: "Lokasi: ";
         display: inline !important;
         font-size: 11px !important;
         letter-spacing: 0 !important;
         text-transform: none !important;
         font-weight: 500 !important;
     }
+
     .fb-recent-reports .fb-report-table tr.fb-v35-report-row td:nth-child(4) {
         grid-column: 1 !important;
         grid-row: 4 !important;

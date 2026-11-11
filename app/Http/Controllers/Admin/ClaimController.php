@@ -167,17 +167,6 @@ class ClaimController extends Controller
             ]);
         }, 3);
 
-        $claim->refresh();
-        if ($claim->claimant) {
-            \App\Support\AdminAlerts::notify(
-                $claim->claimant,
-                new \App\Notifications\ClaimReviewResultNotification(
-                    $claim->id,
-                    $claim->status,
-                    $claim->rejection_reason,
-                ),
-            );
-        }
 
         return redirect()
             ->route('admin.claims.show', $claim)

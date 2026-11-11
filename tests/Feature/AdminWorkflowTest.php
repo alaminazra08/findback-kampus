@@ -73,7 +73,7 @@ class AdminWorkflowTest extends TestCase
     public function test_navigation_and_codes_are_shared_no_raw_blade(): void
     {
         $admin = $this->user('admin');
-        $item = $this->item();
+        $item = $this->item(['status' => 'verified']);
         $this->actingAs($admin);
         foreach (
             [
@@ -102,7 +102,7 @@ class AdminWorkflowTest extends TestCase
             ]),
         )
             ->assertViewHas('items', fn ($p) => $p->total() === 1)
-            ->assertSee(route('admin.chat.show', $item->user_id), false);
+            ->assertSee(route('admin.items.show', $item), false);
     }
 
     public function test_matching_v2_ignores_category_and_keeps_historical_scores(): void
@@ -156,8 +156,8 @@ class AdminWorkflowTest extends TestCase
         $other = $this->user();
         $this->item(['user_id' => $u->id]);
         $this->actingAs($u)
-            ->post(route('user.chat.store'), ['message' => 'Koordinasi laporan tanpa klaim'])
-            ->assertRedirect();
+            ->postJson(route('user.chat.store'), ['message' => 'Koordinasi laporan tanpa klaim'])
+            ->assertUnprocessable();
         for ($i = 0; $i < 55; $i++) {
             ChatMessage::create([
                 'user_id' => $u->id,
@@ -167,12 +167,12 @@ class AdminWorkflowTest extends TestCase
         }
         $first = ChatMessage::where('user_id', $u->id)->oldest('id')->first();
         $this->actingAs($admin)
-            ->get(route('admin.chat.show', $u))
+            ->get(route('admin.chat.show', [$u, 'legacy' => 1]))
             ->assertOk()
             ->assertSee('Pesan 54');
         $this->assertNull($first->fresh()->read_at);
         $this->assertSame(50, ChatMessage::whereNotNull('read_at')->count());
-        $this->get(route('admin.chat.show', [$u, 'page' => 2]))->assertOk();
+        $this->get(route('admin.chat.show', [$u, 'page' => 2, 'legacy' => 1]))->assertOk();
         $this->assertNotNull($first->fresh()->read_at);
         $this->actingAs($other)->get(route('admin.chat.show', $u))->assertForbidden();
         $this->getJson(route('user.chat.messages'))->assertForbidden();

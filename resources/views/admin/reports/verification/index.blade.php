@@ -65,7 +65,7 @@
                 </select>
             </label>
             @if ($revisionMode === 'history')
-                <input type="hidden" name="revision" value="open">
+                <input type="hidden" name="revision" value="history">
             @endif
             <button type="submit" class="fb-v30-apply"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="1.9" stroke-linejoin="round" aria-hidden="true">

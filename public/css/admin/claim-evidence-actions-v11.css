@@ -132,3 +132,6 @@
         transition: none !important;
     }
 }
+
+/* FIX: penjelasan pengaju rata kiri dan tidak menyimpan indentasi Blade. */
+.fb-v11-statement { display: block; text-align: left !important; white-space: pre-line; overflow-wrap: anywhere; word-break: normal; }

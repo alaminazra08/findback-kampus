@@ -31,14 +31,16 @@ class ReportRevisionTest extends TestCase
         [$admin, $user, $item] = $this->setupItem();
         $this->actingAs($admin);
         $url = route('admin.reports.verification.revision', $item);
-        $this->post($url, [
-            'note' => 'Lengkapi lokasi kehilangan barang.',
-        ])->assertSessionHasNoErrors();
+        $this->post($url, ['note' => 'Lengkapi lokasi kehilangan barang.'])->assertGone();
+        // Historic requests remain readable/cancellable; new requests use rejection.
+        $item->revisions()->create(['requested_by' => $admin->id,
+            'requester_name' => $admin->name, 'note' => 'Lengkapi lokasi kehilangan barang.']);
+        $user->notify(new \App\Notifications\ReportRevisionNotification(
+            $item->id, $item->title, 'Lengkapi lokasi kehilangan barang.'));
+
         $this->assertSame(1, $item->revisions()->count());
         $this->assertSame(1, $user->notifications()->count());
-        $this->post($url, ['note' => 'Permintaan duplikat tidak boleh.'])->assertSessionHasErrors(
-            'note',
-        );
+        $this->post($url, ['note' => 'Permintaan duplikat tidak boleh.'])->assertGone();
         $this->post(route('admin.reports.verification.review', $item), [
             'decision' => 'verified',
         ])->assertSessionHas('warning');
@@ -47,7 +49,7 @@ class ReportRevisionTest extends TestCase
             ->assertOk()
             ->assertSee('Menunggu Perbaikan')
             ->assertSee('Lengkapi lokasi');
-        $this->get(route('admin.reports.verification', ['revision' => 'open']))
+        $this->get(route('admin.reports.verification'))
             ->assertOk()
             ->assertSee('Tas uji');
         $cancel = route('admin.reports.verification.revision.cancel', $item);
@@ -66,7 +68,7 @@ class ReportRevisionTest extends TestCase
         $this->assertSame('verified', $item->fresh()->status);
         $this->post($url, [
             'note' => 'Tidak boleh mengubah laporan terverifikasi.',
-        ])->assertSessionHasErrors('note');
+        ])->assertGone();
     }
 
     public function test_access_validation_and_scoping(): void
@@ -79,11 +81,11 @@ class ReportRevisionTest extends TestCase
             ->assertForbidden();
         $this->actingAs($admin)
             ->post($url, ['note' => '  '])
-            ->assertSessionHasErrors('note');
-        $this->post($url, ['note' => str_repeat('x', 2001)])->assertSessionHasErrors('note');
-        $this->post($url, [
-            'note' => 'Lengkapi detail barang terlebih dahulu.',
-        ])->assertSessionHasNoErrors();
+            ->assertGone();
+        $this->post($url, ['note' => str_repeat('x', 2001)])->assertGone();
+        $this->post($url, ['note' => 'Lengkapi detail barang terlebih dahulu.'])->assertGone();
+        $item->revisions()->create(['requested_by' => $admin->id,
+            'requester_name' => $admin->name, 'note' => 'Lengkapi detail barang terlebih dahulu.']);
         [, $other, $another] = $this->setupItem();
         $this->post(route('admin.reports.verification.revision.cancel', $another), [
             'revision_id' => $item->revisions()->first()->id,

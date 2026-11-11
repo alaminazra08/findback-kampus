@@ -20,7 +20,7 @@
 
         </div>
 
-        <button type="button" class="fb-items-tag fb-admin-add-button" onclick="document.getElementById('fb-admin-add-dialog').showModal()">＋ Tambah Barang</button>
+        <button type="button" class="fb-items-tag fb-admin-add-button" data-dialog-open="fb-admin-add-dialog">＋ Tambah Barang</button>
 
     </div>
 
@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <button type="button" class="fb-add-close" aria-label="Tutup formulir"
-                        onclick="document.getElementById('fb-admin-add-dialog').close()">
+                        data-dialog-close="fb-admin-add-dialog">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                          stroke-width="2" stroke-linecap="round" aria-hidden="true">
                         <path d="M5 5l14 14M19 5L5 19" />
@@ -175,7 +175,7 @@
             {{-- 05. TOMBOL AKSI --}}
             <footer class="fb-admin-add-actions">
                 <button type="button" class="fb-add-cancel"
-                        onclick="document.getElementById('fb-admin-add-dialog').close()">Batal</button>
+                        data-dialog-close="fb-admin-add-dialog">Batal</button>
                 <button type="submit" class="fb-add-submit">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
                          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

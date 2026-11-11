@@ -16,7 +16,7 @@
     <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
 </head>
 
-<body class="fb-auth-page fb-login-page">
+<body class="fb-responsive fb-auth-page fb-login-page">
     <main class="fb-auth-shell">
         {{-- Panel kiri khusus Login; gambar tidak berisi teks bawaan. --}}
         <section class="fb-auth-brand fb-login-visual" aria-label="Fakultas Sains dan Teknologi UIN Imam Bonjol Padang">
@@ -239,6 +239,8 @@
     <script src="{{ asset('js/pages/auth/login.js') }}"></script>
 
     <script src="{{ asset('js/pages/auth/recovery-modal.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
+    <script src="{{ asset('js/shared/responsive-viewport.js') }}?v=20261111" defer></script>
 </body>
 
 </html>

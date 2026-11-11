@@ -18,7 +18,7 @@
     <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
 </head>
 
-<body class="loading">
+<body class="fb-responsive loading">
 
     <a class="skip-link" href="#konten-utama">Lewati ke konten utama</a>
 
@@ -707,6 +707,8 @@
     =================================================== -->
         <script src="{{ asset('js/pages/welcome.js') }}"></script>
 
+    <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
+    <script src="{{ asset('js/shared/responsive-viewport.js') }}?v=20261111" defer></script>
 </body>
 
 </html>

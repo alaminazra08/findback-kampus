@@ -24,6 +24,9 @@ class RefactorRenderTest extends TestCase
             $r->assertOk();
             file_put_contents($folder . '/' . $route . '.html', $r->getContent());
         }
+        $reset = $this->get(route('password.reset', ['token' => 'render-token', 'email' => 'test@example.test']));
+        $reset->assertOk();
+        file_put_contents($folder . '/password-reset.html', $reset->getContent());
         $a = User::factory()->create([
             'name' => 'Admin Pengujian',
             'email' => 'admin@example.test',
@@ -112,7 +115,9 @@ class RefactorRenderTest extends TestCase
         }
         $details = [
             'verification-detail' => ['admin.reports.verification.show', $items['pending']],
-            'rejected' => ['admin.reports.verification', ['status' => 'rejected']],
+            'rejected' => ['admin.reports.verification', ['revision' => 'history']],
+            'chat-selected' => ['admin.chat.index', ['user' => $u->id, 'claim_id' => $claims['approved']->id]],
+            'chat-legacy' => ['admin.chat.show', ['user' => $u->id, 'legacy' => 1]],
             'item-detail' => ['admin.items.show', $items['verified']],
             'match-detail' => ['admin.matching.show', $match],
             'user-detail' => ['admin.users.show', $u],
@@ -138,13 +143,19 @@ class RefactorRenderTest extends TestCase
             $this->assertStringStartsWith('%PDF-', $r->getContent());
             file_put_contents($folder . '/' . $route . '.pdf', $r->getContent());
         }
+        $unclaimed = LostFoundItem::create([
+            'user_id' => $a->id, 'title' => 'Barang tersedia untuk pengajuan',
+            'type' => 'found', 'status' => 'verified', 'location' => 'FST',
+        ]);
         $this->actingAs($u);
         foreach (
             [
                 'user-dashboard' => route('dashboard'),
                 'user-items' => route('user.items.index'),
                 'user-item' => route('user.items.show', $items['verified']),
-                'user-claim-create' => route('user.claims.create', $items['verified']),
+                'user-claim-create' => route('user.claims.create', $unclaimed),
+                'user-chat-selector' => route('user.chat.index'),
+                'user-chat-legacy' => route('user.chat.index', ['legacy' => 1]),
                 'user-chat' => route('user.chat.index', ['claim_id' => $claims['approved']->id]),
                 'user-report' => route('user.reports.show', $items['rejected']),
                 'user-reports' => route('user.reports.index'),
@@ -155,9 +166,6 @@ class RefactorRenderTest extends TestCase
                 'user-found' => route('user.reports.found.create'),
             ] as $name => $url
         ) {
-            if ($name === 'user-claim-create') {
-                continue;
-            } // Existing owner/duplicate claim redirects are intentional.
             $r = $this->get($url);
             $r->assertOk();
             file_put_contents($folder . '/' . $name . '.html', $r->getContent());
@@ -165,5 +173,10 @@ class RefactorRenderTest extends TestCase
         $this->get(route('user.reports.index'))->assertDontSee('@include(');
         $this->get(route('user.reports.show', $items['rejected']))->assertDontSee('@include(');
         $this->get(route('admin.dashboard'))->assertForbidden();
+        foreach (glob($folder . '/*.html') as $file) {
+            $html = file_get_contents($file);
+            $this->assertSame(1, substr_count($html, 'css/shared/responsive-all-devices.css'), basename($file));
+            $this->assertStringContainsString('fb-responsive', $html, basename($file));
+        }
     }
 }

@@ -298,7 +298,6 @@
 @media (max-width: 700px) {
     .fb-register-page {
         background: linear-gradient(160deg, #f7f0f2, #f4e7ec 50%, #f9f5f7);
-        overflow-x: hidden;
     }
     .fb-register-page .fb-auth-shell {
         display: flex;

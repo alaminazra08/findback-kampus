@@ -1,0 +1,332 @@
+/* Shared screen layout constraints. Loaded once after page styles in each active shell. */
+@media screen {
+    .fb-responsive {
+        min-inline-size: 0;
+    }
+
+    .fb-responsive :where(main, section, article, form, fieldset, figure, aside, header, footer) {
+        min-inline-size: 0;
+    }
+
+    .fb-responsive :where(h1, h2, h3, h4, p, dd, dt, label, small, a, strong) {
+        overflow-wrap: anywhere;
+    }
+
+    .fb-responsive :where(fieldset, figure) {
+        max-inline-size: 100%;
+    }
+
+    .fb-responsive :is(input:not([type="hidden"]), select, textarea) {
+        min-inline-size: 0;
+        max-inline-size: 100%;
+        box-sizing: border-box;
+    }
+
+    .fb-responsive :is(button, .cu-btn, .fb-btn, .fb-claim-button, .fs-export-button) {
+        max-inline-size: 100%;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        touch-action: manipulation;
+    }
+
+    .fb-responsive :is(.fb-workspace, .fb-main, .cu-main, .profile-content, .fb40-side,
+        .fb-claim-left, .fb-claim-right, .fs-page, .fb-inbox-main, .fb-inbox-side) {
+        min-inline-size: 0;
+    }
+
+    /* Keep wide tables scrollable inside their existing containers at every breakpoint. */
+    .fb-responsive :is(.fb-table-scroll, .fb-items-table-wrap, .fb-claim-table-scroll,
+        .fs-table-scroll, .match-table-scroll, .fb-users-table-scroll, .cu-table-wrap, .fb-responsive-print .table-wrap) {
+        min-inline-size: 0;
+        max-inline-size: 100%;
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .fb-responsive :is(.fb-chart, .fb-chart-wrap, .fs-chart, .fs-chart-wrap) {
+        min-inline-size: 0;
+        max-inline-size: 100%;
+    }
+
+    .fb-responsive :is(.fb-main, .cu-main) canvas {
+        max-inline-size: 100%;
+    }
+
+    .fb-responsive-print :is(.summary, .recaps) > * {
+        min-inline-size: 0;
+    }
+
+    .fb-responsive-print .table-wrap {
+        max-inline-size: 100%;
+        overflow-x: auto;
+    }
+
+    /* Dialog dimensions follow the visible viewport, including an open virtual keyboard. */
+    .fb-responsive :is(.fcp-dialog, .fb-proof-dialog, .fb-admin-add-dialog) {
+        max-inline-size: calc(100% - 24px);
+        max-block-size: calc(var(--fb-viewport-height, 100dvh) - 24px);
+        box-sizing: border-box;
+    }
+
+    .fb-responsive .fcp-dialog-shell {
+        max-block-size: calc(var(--fb-viewport-height, 100dvh) - 24px);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    .fb-responsive .fcp-dialog-close {
+        position: sticky;
+        display: block;
+        top: 12px;
+        margin: 12px 12px -56px auto;
+        min-inline-size: 44px;
+        min-block-size: 44px;
+    }
+
+    .fb-responsive .fcp-dialog .fcp-messages {
+        block-size: clamp(96px, 36dvh, 420px);
+        min-block-size: 0;
+        max-block-size: max(96px, calc(var(--fb-viewport-height, 100dvh) - 250px));
+        overscroll-behavior: contain;
+    }
+
+    .fb-responsive .fcp-dialog .fcp-compose {
+        position: sticky;
+        bottom: 0;
+        z-index: 2;
+        padding-block-end: max(12px, env(safe-area-inset-bottom));
+    }
+
+    .fb-responsive :is(.fcp-head-copy, .fcp-contact > div, .fcp-context, .fcp-message,
+        .fcp-bubble, .chat-bubble, .cu-message > div, .fb-inbox-bubble) {
+        min-inline-size: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .fb-responsive :is(.fcp-bubble, .chat-bubble, .cu-message > div, .fb-inbox-bubble) img {
+        max-inline-size: 100%;
+        block-size: auto;
+        object-fit: contain;
+    }
+
+    /* Keep the attachment input reachable by keyboard as well as touch. */
+    .fb-responsive .fcp-attach {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .fb-responsive .fcp-attach input {
+        display: block;
+        position: absolute;
+        inset: 0;
+        inline-size: 100%;
+        block-size: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .fb-responsive .fcp-attach:focus-within {
+        outline: 3px solid #ad4770;
+        outline-offset: 3px;
+    }
+
+    .fb-responsive .fb-proof-shell {
+        max-block-size: calc(var(--fb-viewport-height, 100dvh) - 24px);
+        min-block-size: 0;
+    }
+
+    .fb-responsive :is(.fb-proof-head, .fb-proof-footer) {
+        flex: 0 0 auto;
+    }
+
+    .fb-responsive .fb-proof-content {
+        min-block-size: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    .fb-responsive .fb-proof-image {
+        max-block-size: min(52dvh, calc(var(--fb-viewport-height, 100dvh) - 180px));
+    }
+
+    .fb-responsive .fb-proof-footer {
+        flex-wrap: wrap;
+    }
+
+    .fb-responsive .fb-recovery-overlay {
+        top: var(--fb-viewport-top, 0px);
+        bottom: auto;
+        block-size: var(--fb-viewport-height, 100dvh);
+        padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom));
+        box-sizing: border-box;
+    }
+
+    .fb-responsive .fb-recovery-dialog {
+        max-block-size: calc(var(--fb-viewport-height, 100dvh) - 24px);
+        min-inline-size: 0;
+        box-sizing: border-box;
+    }
+
+    .fb-responsive :is(.fb-recovery-close, .fb-proof-close, .fb-add-close) {
+        min-inline-size: 44px;
+        min-block-size: 44px;
+    }
+
+    .fb-responsive :is(.cu-chat .cu-chat-stream, .fb-inbox-messages, .fb-chat-page .chat-messages) {
+        min-block-size: min(160px, 25dvh);
+        max-block-size: min(55dvh, 560px);
+    }
+
+    .fb-responsive .fb-sidebar {
+        block-size: 100dvh;
+    }
+
+    @media (max-width: 1100px) {
+        .fb-responsive :is(.fb-topbar, .fb-topbar-left, .fb-topbar-right,
+            .fs-header, .fs-header-actions, .fs-filter, .fs-export-actions) {
+            flex-wrap: wrap;
+            min-inline-size: 0;
+        }
+
+        .fb-responsive .fb-topbar {
+            block-size: auto;
+            min-block-size: 74px;
+            padding-block: 12px;
+        }
+    }
+
+    @media (max-width: 960px) {
+        .fb-responsive .fb-workspace {
+            margin-inline-start: 0;
+            inline-size: 100%;
+            max-inline-size: 100%;
+        }
+
+        .fb-responsive .fb-sidebar {
+            max-inline-size: min(88vw, 340px);
+            max-block-size: var(--fb-viewport-height, 100dvh);
+        }
+
+        .fb-responsive .fb-main {
+            padding-inline: clamp(12px, 3vw, 28px);
+        }
+
+        .fb-responsive .cu-nav.open {
+            max-block-size: calc(var(--fb-viewport-height, 100dvh) - 96px);
+            overflow-y: auto;
+            overscroll-behavior: contain;
+        }
+    }
+
+    @media (max-width: 700px) {
+        .fb-responsive :is(.profile-layout, .profile-form, .fb-settings-matching-layout) {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .fb-responsive :is(.profile-card-header, .profile-card-heading, .profile-card-footer,
+            .fb40-title-row, .fb40-profile, .fb-settings-footer-actions, .cu-chat > header,
+            .cu-section-title, .cu-title-row, .fb-claim-heading, .fb-claim-actions) {
+            flex-wrap: wrap;
+            min-inline-size: 0;
+        }
+
+        .fb-responsive :is(.profile-card-header, .profile-form, .profile-card-footer) {
+            padding-inline: 16px;
+        }
+
+        .fb-responsive :is(.profile-card-heading > div, .profile-user, .profile-field,
+            .fb40-profile-text, .fb-settings-score-heading, .cu-brand > span) {
+            min-inline-size: 0;
+        }
+
+        .fb-responsive :is(.profile-label, .fb-claim-back-v14) {
+            white-space: normal;
+        }
+
+        .fb-responsive :is(.fcp-compose, .chat-form, .fb-inbox-compose, .cu-chat-form) {
+            flex-wrap: wrap;
+            min-inline-size: 0;
+        }
+
+        .fb-responsive :is(.fcp-compose textarea, .chat-form textarea,
+            .fb-inbox-compose textarea, .cu-chat-form textarea) {
+            flex: 1 1 100%;
+            inline-size: 100%;
+            min-inline-size: 0;
+        }
+
+        .fb-responsive :is(.chat-form input[type="file"], .fb-inbox-compose input[type="file"], .cu-chat-file) {
+            flex: 1 1 100%;
+            min-inline-size: 0;
+            inline-size: 100%;
+            max-inline-size: 100%;
+        }
+
+        .fb-responsive :is(.fcp-compose button, .chat-form button, .fb-inbox-compose button) {
+            min-block-size: 44px;
+        }
+
+        .fb-responsive :is(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), select, textarea) {
+            font-size: 16px;
+        }
+
+        .fb-responsive :is(.cu-btn, .fb-btn, .fb-menu-toggle, .cu-menu,
+            .fb-claim-button, .profile-button, .fs-export-button) {
+            min-block-size: 44px;
+        }
+
+        .fb-responsive .fb-notif-panel {
+            position: fixed;
+            top: 80px;
+            inset-inline: 12px;
+            inline-size: auto;
+            max-block-size: calc(var(--fb-viewport-height, 100dvh) - 100px);
+        }
+
+        .fb-responsive .fs-export-actions {
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr));
+        }
+    }
+
+    @media (max-width: 960px), (max-height: 600px) {
+        .fb-responsive :is(.fcp-dialog, .fb-proof-dialog, .fb-admin-add-dialog) {
+            inset-block-start: calc(var(--fb-viewport-top, 0px) + 12px);
+            inset-block-end: auto;
+            margin-block: 0;
+        }
+    }
+
+    @media (max-height: 600px) {
+        .fb-responsive .fcp-dialog .fcp-head {
+            padding-block: 14px;
+        }
+
+        .fb-responsive .fcp-dialog .fcp-contact {
+            padding-block: 10px;
+        }
+
+        .fb-responsive .fcp-dialog .fcp-messages {
+            block-size: 120px;
+            max-block-size: 32dvh;
+        }
+
+        .fb-responsive .fb-proof-head {
+            padding-block: 12px;
+        }
+
+        .fb-responsive .fb-proof-footer {
+            padding-block: 10px;
+        }
+
+        .fb-responsive .fb-sidebar .fb-sidebar-bottom {
+            padding-block: 8px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .fb-responsive :is(.fcp-messages, .cu-chat-stream, .fb-inbox-messages) {
+            scroll-behavior: auto;
+        }
+    }
+}

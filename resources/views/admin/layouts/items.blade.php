@@ -31,10 +31,6 @@
     <link rel="stylesheet"
         href="{{ asset('css/admin/admin-workflow.css') }}?v=1">
 
-    {{-- CSS khusus popup unggah laporan barang --}}
-    <link rel="stylesheet"
-        href="{{ asset('css/admin/admin-items-upload.css') }}?v=1">
-
     {{-- SIDEBAR --}}
     <link rel="stylesheet"
         href="{{ asset('css/admin/admin-sidebar-v43.css') }}?v=43">
@@ -57,7 +53,7 @@
     <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
 </head>
 
-<body class="fb-admin-body">
+<body class="fb-responsive fb-admin-body">
 
     <div class="fb-admin-shell">
 
@@ -348,14 +344,10 @@
     </script>
 
     {{-- SIDEBAR MOBILE --}}
-    <script src="{{ asset('js/admin/sidebar-mobile.js') }}"></script>
+    <script src="{{ asset('js/admin/sidebar-mobile.js') }}?v=20261111"></script>
 
     {{-- ANIMASI LOGO --}}
     <script src="{{ asset('js/admin/sidebar-brand.js') }}"></script>
-
-    {{-- CSS khusus popup unggah laporan barang --}}
-    <link rel="stylesheet"
-        href="{{ asset('css/admin/admin-items-upload.css') }}?v=1">
 
     {{-- SIDEBAR --}}
     <script
@@ -365,6 +357,8 @@
 
     {{-- JavaScript popup unggah laporan barang --}}
     <script src="{{ asset('js/admin/admin-items-upload.js') }}?v=1" defer></script>
+    <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
+    <script src="{{ asset('js/shared/responsive-viewport.js') }}?v=20261111" defer></script>
 </body>
 
 </html>

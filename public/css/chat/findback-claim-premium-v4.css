@@ -383,8 +383,8 @@
     padding: 20px 24px !important;
 }
 .fb-chat-page .chat-messages {
-    min-height: 420px !important;
-    max-height: 55vh !important;
+    min-height: 420px;
+    max-height: 55vh;
     background: linear-gradient(160deg, #fff5f9, #fff 60%) !important;
     padding: 24px !important;
 }
@@ -413,7 +413,7 @@
         padding: 14px !important;
     }
     .fb-chat-page .chat-messages {
-        min-height: 300px !important;
+        min-height: 300px;
         padding: 13px !important;
     }
     .fb-chat-page .chat-bubble {

@@ -16,13 +16,13 @@
 
     <link rel="stylesheet" href="{{ asset('css/auth/auth.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('css/auth/register.css') }}?v=7">
+    <link rel="stylesheet" href="{{ asset('css/auth/register.css') }}?v=20261111">
 
     <link rel="stylesheet" href="{{ asset('css/shared/view-utilities.css') }}">
     <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
 </head>
 
-<body class="fb-auth-page fb-register-page">
+<body class="fb-responsive fb-auth-page fb-register-page">
 
     <main class="fb-auth-shell">
 
@@ -351,6 +351,8 @@
 
     <script src="{{ asset('js/pages/auth/register.js') }}"></script>
 
+    <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
+    <script src="{{ asset('js/shared/responsive-viewport.js') }}?v=20261111" defer></script>
 </body>
 
 </html>

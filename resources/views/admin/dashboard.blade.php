@@ -27,7 +27,7 @@
     <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
 </head>
 
-<body class="fb-admin-body">
+<body class="fb-responsive fb-admin-body">
     <div class="fb-admin-shell">
         <aside class="fb-sidebar" id="fb-sidebar" aria-label="Navigasi administrator">
             <button type="button" class="fb-v43-close" aria-label="Tutup navigasi" data-close-admin-nav>&#215;</button>
@@ -487,11 +487,13 @@
     </div>
     <script src="{{ asset('js/admin/admin-notifications.js') }}?v=1" defer></script>
     <script src="{{ asset('js/admin/admin-analytics.js') }}?v=1" defer></script>
-    <script src="{{ asset('js/admin/sidebar-mobile.js') }}"></script>
+    <script src="{{ asset('js/admin/sidebar-mobile.js') }}?v=20261111"></script>
     <script src="{{ asset('js/admin/dashboard-date.js') }}"></script>
     {{-- Animasi klik logo saja; menu lain tetap menggunakan navigasi normal. --}}
     <script src="{{ asset('js/admin/sidebar-brand.js') }}"></script>
     <script src="{{ asset('js/admin/admin-sidebar-v44.js') }}?v=48" defer></script>
+    <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
+    <script src="{{ asset('js/shared/responsive-viewport.js') }}?v=20261111" defer></script>
 </body>
 
 </html>

@@ -1,0 +1,40 @@
+/* FindBack Header Consistency v2: eight admin index pages only */
+.fb-page-heading > div:first-child > .fb-eyebrow,
+.fb-items-heading > div:first-child > .fb-eyebrow,
+.match-index-heading > div:first-child > .match-kicker,
+.fb-claim-executive .fb-page-heading > div:first-child > .fb-eyebrow,
+.fs-header > div:first-child > .fs-eyebrow,
+.fb-users-heading > div:first-child > .fb-users-eyebrow,
+.fb-settings-hero > div:first-child > .fb-settings-eyebrow {
+  font-size: 12px !important; font-weight: 800 !important; letter-spacing: .13em !important;
+  line-height: 1.5 !important; text-transform: uppercase !important; margin: 0 0 12px !important;
+}
+.fb-page-heading > div:first-child > h1,
+.fb-items-heading > div:first-child > h1,
+.match-index-heading > div:first-child > h1,
+.fb-claim-executive .fb-page-heading > div:first-child > h1,
+.fs-header > div:first-child > h1,
+.fb-users-heading > div:first-child > h1,
+.fb-settings-hero > div:first-child > h1 {
+  font-size: clamp(30px, 3.2vw, 46px) !important; line-height: 1.13 !important;
+  font-weight: 800 !important; letter-spacing: -.035em !important; margin: 0 0 12px !important;
+}
+.fb-page-heading > div:first-child > h1 span,
+.fb-items-heading > div:first-child > h1 span,
+.match-index-heading > div:first-child > h1 span,
+.fs-header > div:first-child > h1 span,
+.fb-users-heading > div:first-child > h1 span,
+.fb-settings-hero > div:first-child > h1 span { color: #9b174b; }
+.fb-page-heading > div:first-child > p:not(.fb-eyebrow),
+.fb-items-heading > div:first-child > p:not(.fb-eyebrow),
+.match-index-heading > div:first-child > p:not(.match-kicker),
+.fs-header > div:first-child > p:not(.fs-eyebrow),
+.fb-users-heading > div:first-child > p:not(.fb-users-eyebrow),
+.fb-settings-hero > div:first-child > p:not(.fb-settings-eyebrow) {
+  font-size: 14px !important; line-height: 1.7 !important; margin-top: 0 !important;
+}
+@media(max-width: 600px) {
+ .fb-page-heading > div:first-child > h1, .fb-items-heading > div:first-child > h1,
+ .match-index-heading > div:first-child > h1, .fs-header > div:first-child > h1,
+ .fb-users-heading > div:first-child > h1, .fb-settings-hero > div:first-child > h1 {font-size: clamp(28px, 8vw, 34px) !important;}
+}

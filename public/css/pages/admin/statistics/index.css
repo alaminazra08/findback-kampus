@@ -6,3 +6,32 @@
         grid-template-columns: 1fr !important;
     }
 }
+
+/* FindBack: laporan terbaru as mobile cards; scoped only to statistics recent panel. */
+.fs-mobile-reports { display: none; }
+@media (max-width: 640px) {
+    .fs-page .fs-recent-head { align-items: flex-start; gap: 12px; }
+    .fs-page .fs-mobile-reports { display: grid; gap: 12px; min-width: 0; }
+    .fs-page .fs-mobile-reports + .fs-table-scroll { display: none !important; }
+    .fs-page .fs-mobile-report-card { min-width: 0; padding: 14px; border: 1px solid #efdbe4; border-radius: 18px; background: #fff; box-shadow: 0 4px 14px rgba(90,23,49,.035); }
+    .fs-page .fs-mobile-report-top { display:flex; align-items:center; gap:12px; min-width:0; }
+    .fs-page .fs-mobile-report-photo { width:60px; height:60px; flex:0 0 60px; display:grid; place-items:center; border:1px solid #eedce4; border-radius:12px; overflow:hidden; color:#9c5570; background:#fcf5f8; }
+    .fs-page .fs-mobile-report-photo img { width:100%; height:100%; object-fit:cover; }
+    .fs-page .fs-mobile-report-photo-fallback { display:grid; place-items:center; width:100%; height:100%; }
+    .fs-page .fs-mobile-report-photo-fallback[hidden] { display:none !important; }
+    .fs-page .fs-mobile-report-photo-fallback svg { width:25px; height:25px; }
+    .fs-page .fs-mobile-report-title { display:flex; align-items:flex-start; flex-direction:column; gap:8px; min-width:0; }
+    .fs-page .fs-mobile-report-title strong { font-size:15px; line-height:1.35; color:#2c1222; overflow-wrap:anywhere; }
+    .fs-page .fs-mobile-report-details { display:flex; flex-wrap:wrap; justify-content:space-between; gap:6px 12px; margin-top:12px; padding-top:12px; border-top:1px solid #f0e5eb; color:#806e79; font-size:12px; overflow-wrap:anywhere; }
+    .fs-page .fs-mobile-report-details strong { font-weight:600; color:#503445; }
+    .fs-page .fs-mobile-report-footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-top:12px; }
+    .fs-page .fs-mobile-report-footer .fs-detail-link { display:inline-flex; align-items:center; justify-content:center; gap:7px; min-height:42px; width:auto; max-width:100%; margin-left:auto; padding:9px 12px; white-space:nowrap; }
+    .fs-page .fs-mobile-report-footer .fs-detail-link svg { width:18px; height:18px; flex-shrink:0; }
+    .fs-page .fs-mobile-reports-empty { padding:18px; text-align:center; color:#806e79; }
+}
+@media (max-width: 350px) {
+    .fs-page .fs-mobile-report-card { padding:11px; }
+    .fs-page .fs-mobile-report-photo { width:52px; height:52px; flex-basis:52px; }
+    .fs-page .fs-mobile-report-footer { align-items:stretch; }
+    .fs-page .fs-mobile-report-footer .fs-detail-link { margin-left:0; width:100%; }
+}

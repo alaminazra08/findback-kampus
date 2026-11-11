@@ -3,6 +3,8 @@
 @section('title', 'Laporan Barang')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
+
 
     {{-- FINDBACK_ADMIN_ITEMS_V16 --}}
 

@@ -305,3 +305,42 @@
         width: 26px; height: 26px;
     }
 }
+
+/* FIX 2026-11-11: ukuran ikon dan tata letak dialog desktop/mobile. */
+.fb-admin-add-dialog {
+    width: min(calc(100vw - 32px), 660px);
+    max-width: calc(100vw - 20px);
+    max-height: min(88dvh, 820px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+}
+.fb-admin-add-dialog .fb-admin-add-form { min-width: 0; }
+.fb-admin-add-dialog .fb-add-title-icon svg { width: 28px; height: 28px; max-width: 28px; max-height: 28px; }
+.fb-admin-add-dialog .fb-add-close svg { width: 18px; height: 18px; max-width: 18px; max-height: 18px; }
+.fb-admin-add-dialog .fb-add-label svg { width: 18px; height: 18px; max-width: 18px; max-height: 18px; flex: 0 0 18px; }
+.fb-admin-add-dialog .fb-add-upload-illustration svg { width: 32px; height: 32px; max-width: 32px; max-height: 32px; }
+.fb-admin-add-dialog .fb-admin-add-note svg { width: 19px; height: 19px; max-width: 19px; max-height: 19px; }
+.fb-admin-add-dialog .fb-add-submit svg { width: 18px; height: 18px; max-width: 18px; max-height: 18px; flex: 0 0 18px; }
+.fb-admin-add-dialog .fb-add-fields, .fb-admin-add-dialog .fb-admin-add-top, .fb-admin-add-dialog .fb-admin-add-actions { min-width: 0; }
+.fb-admin-add-dialog .fb-admin-add-actions button { white-space: nowrap; }
+@media (max-width: 650px) {
+    .fb-admin-add-dialog { width: calc(100vw - 16px); max-width: calc(100vw - 16px); max-height: calc(100dvh - 24px); border-radius: 16px; scrollbar-gutter: auto; }
+    .fb-admin-add-dialog .fb-admin-add-top { padding: 16px 15px; gap: 10px; align-items: flex-start; }
+    .fb-admin-add-dialog .fb-add-title-row { gap: 10px; }
+    .fb-admin-add-dialog .fb-add-title-icon { width: 42px; height: 42px; flex-basis: 42px; border-radius: 12px; }
+    .fb-admin-add-dialog .fb-add-title-icon svg { width: 23px; height: 23px; }
+    .fb-admin-add-dialog .fb-admin-add-top h2 { font-size: 17px; }
+    .fb-admin-add-dialog .fb-admin-add-top p { font-size: 12px; }
+    .fb-admin-add-dialog .fb-add-close { width: 36px; height: 36px; flex-basis: 36px; }
+    .fb-admin-add-dialog .fb-add-fields { padding: 17px 15px; gap: 15px; }
+    .fb-admin-add-dialog .fb-add-actions { gap: 9px; }
+    .fb-admin-add-dialog .fb-admin-add-actions { padding: 14px 15px; flex-wrap: nowrap; }
+    .fb-admin-add-dialog .fb-admin-add-actions button { min-width: 0; flex: 1 1 0; padding: 11px 8px; }
+    .fb-admin-add-dialog .fb-add-upload-zone { min-height: 160px; }
+}
+@media (max-width: 360px) {
+    .fb-admin-add-dialog .fb-add-title-icon { display: none; }
+    .fb-admin-add-dialog .fb-admin-add-actions { flex-wrap: wrap; }
+    .fb-admin-add-dialog .fb-admin-add-actions button { flex-basis: 100%; }
+}

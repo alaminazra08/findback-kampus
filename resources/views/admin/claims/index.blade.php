@@ -2,6 +2,8 @@
 @section('title', 'Klaim Barang')
 @section('breadcrumb', 'Klaim Barang')
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
+
     <link rel="stylesheet" href="{{ asset('css/admin/admin-claims.css') }}?v=20261101-executive">
     <section class="fb-claim-executive" aria-label="Ringkasan Klaim Barang">
         <div class="fb-page-heading">

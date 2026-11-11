@@ -25,6 +25,9 @@
     <link rel="stylesheet"
         href="{{ asset('css/admin/admin-items.css') }}?v=34">
 
+    {{-- CSS khusus popup Tambah Barang, dibatasi pada komponen dialog --}}
+    <link rel="stylesheet" href="{{ asset('css/admin/admin-items-upload.css') }}?v=20261111-2">
+
     <link rel="stylesheet"
         href="{{ asset('css/pages/admin/layouts/items.css') }}">
 
@@ -254,10 +257,10 @@
 
                     {{-- BRAND MOBILE DINAMIS --}}
                     <div class="fb-mobile-brand"
-                        aria-label="{{ $adminSettings['site_name'] }}, panel admin">
+                        aria-label="FindBack, panel admin">
 
                         <strong>
-                            {{ $adminSettings['site_name'] }}
+                            FindBack
                         </strong>
 
                         <small>ADMIN PANEL</small>
@@ -351,7 +354,7 @@
 
     {{-- SIDEBAR --}}
     <script
-        src="{{ asset('js/admin/admin-sidebar-v44.js') }}?v=48"
+        src="{{ asset('js/admin/admin-sidebar-v44.js') }}?v=49"
         defer>
     </script>
 

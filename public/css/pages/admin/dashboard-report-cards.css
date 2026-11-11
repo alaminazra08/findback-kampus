@@ -1,0 +1,49 @@
+/* FindBack: consistent report cards for Dashboard Admin mobile only. */
+.fb-dashboard-mobile-reports { display:none; }
+@media (max-width:768px) {
+ .fb-recent-reports .fb-dashboard-mobile-reports {display:grid;gap:12px;min-width:0}
+ .fb-recent-reports .fb-table-scroll {display:none!important}
+ .fb-recent-reports .fb-dashboard-mobile-card {display:block;min-width:0;padding:14px;border:1px solid #efdbe4;border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(90,23,49,.035)}
+ .fb-dashboard-mobile-top {display:flex;align-items:center;gap:12px;min-width:0}
+ .fb-dashboard-mobile-photo {width:60px;height:60px;flex:0 0 60px;display:grid;place-items:center;border:1px solid #eedce4;border-radius:12px;overflow:hidden;color:#9c5570;background:#fcf5f8}
+ .fb-dashboard-mobile-photo img {width:100%;height:100%;object-fit:cover;display:block}
+ .fb-dashboard-mobile-placeholder {display:grid;place-items:center;width:100%;height:100%}
+ .fb-dashboard-mobile-placeholder[hidden],.fb-dashboard-mobile-photo img[hidden] {display:none!important}
+ .fb-dashboard-mobile-placeholder svg {width:25px;height:25px}
+ .fb-dashboard-mobile-title {display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:0}
+ .fb-dashboard-mobile-title a {color:#2c1222;text-decoration:none;max-width:100%;overflow-wrap:anywhere}
+ .fb-dashboard-mobile-title strong {font-size:15px;line-height:1.35}
+ .fb-dashboard-mobile-title .fb-report-type {display:inline-flex;align-items:center;width:auto;min-height:30px;padding:6px 12px;border-radius:9px;font-size:12px;white-space:normal}
+ .fb-dashboard-mobile-details {display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px 12px;margin-top:12px;padding-top:12px;border-top:1px solid #f0e5eb;color:#806e79;font-size:12px;overflow-wrap:anywhere}
+ .fb-dashboard-mobile-details strong {color:#503445;font-weight:600}
+ .fb-dashboard-mobile-footer {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:12px}
+ .fb-dashboard-mobile-footer .fb-report-status {display:inline-flex;width:auto!important;max-width:100%!important;min-height:30px!important;padding:6px 12px!important;font-size:12px!important;line-height:1.3!important;white-space:normal}
+ .fb-dashboard-mobile-detail {display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:9px 12px;border:1px solid #efd6e1;border-radius:12px;background:#fcf2f6;color:#8d0736;font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap;margin-left:auto}
+ .fb-dashboard-mobile-detail svg {width:18px;height:18px;flex-shrink:0}
+ .fb-dashboard-mobile-detail:focus-visible {outline:3px solid #a82155;outline-offset:2px}
+ .fb-dashboard-mobile-empty {padding:18px;text-align:center;color:#806e79}
+}
+@media (max-width:360px) {
+ .fb-recent-reports .fb-dashboard-mobile-card {padding:11px}
+ .fb-dashboard-mobile-photo {width:52px;height:52px;flex-basis:52px}
+ .fb-dashboard-mobile-footer .fb-dashboard-mobile-detail {width:100%;margin-left:0}
+}
+
+/* Dashboard: summary only; details remain available on Statistics page. */
+.fb-recent-reports .fb-dashboard-more-wrap { display:flex;justify-content:flex-end;margin-top:18px; }
+.fb-recent-reports .fb-dashboard-more-link { display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:10px 15px;border:1px solid #efd6e1;border-radius:12px;background:#fcf2f6;color:#850c2d;font-weight:700;font-size:13px;line-height:1.4;text-decoration:none; }
+.fb-recent-reports .fb-dashboard-more-link:hover { background:#f8e8ef; }
+.fb-recent-reports .fb-dashboard-more-link:focus-visible { outline:3px solid #a82155;outline-offset:3px; }
+@media (max-width:768px) {
+ .fb-recent-reports .fb-dashboard-mobile-footer { justify-content:flex-start; }
+ .fb-recent-reports .fb-dashboard-more-wrap { margin-top:16px; }
+ .fb-recent-reports .fb-dashboard-more-link { width:100%; }
+}
+
+/* Final polish: concise desktop spacing, accessible navigation icon. */
+.fb-recent-reports .fb-dashboard-more-wrap { margin-top: 12px; }
+.fb-recent-reports .fb-dashboard-more-link { min-height: 44px; gap: 10px; transition: background-color .18s ease, border-color .18s ease; }
+.fb-recent-reports .fb-dashboard-more-icon { width: 18px; height: 18px; flex: 0 0 18px; transition: transform .18s ease; }
+@media (hover:hover) and (pointer:fine) { .fb-recent-reports .fb-dashboard-more-link:hover .fb-dashboard-more-icon { transform: translateX(3px); } }
+@media (max-width:768px) { .fb-recent-reports .fb-dashboard-more-wrap { margin-top: 16px; } }
+@media (prefers-reduced-motion:reduce) { .fb-recent-reports .fb-dashboard-more-link,.fb-recent-reports .fb-dashboard-more-icon { transition: none; } }

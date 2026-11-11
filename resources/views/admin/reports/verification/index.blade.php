@@ -1,6 +1,8 @@
 @extends('admin.layouts.items')
 @section('title', 'Verifikasi Laporan')
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
+
     <link rel="stylesheet" href="{{ asset('css/admin/admin-verification.css') }}?v=31">
     <link rel="stylesheet" href="{{ asset('css/admin/findback-pm-detail-date.css') }}?v=1">
     <div class="fb-page-heading">

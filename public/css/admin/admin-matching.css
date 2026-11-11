@@ -2157,3 +2157,10 @@
     .match-wrap .match-detail-intro { font-size: 13px; }
     .match-wrap .match-detail-hero-score { padding: 16px; }
 }
+
+/* Header alignment fix 2026-11-11 — matching index only; no impact on matching detail. */
+.match-wrap:has(> .match-index-heading) { padding-top: 0; }
+.match-wrap > .match-index-heading { margin-top: 0; margin-bottom: 24px; }
+@media (max-width: 600px) {
+  .match-wrap > .match-index-heading { margin-top: 0; margin-bottom: 20px; }
+}

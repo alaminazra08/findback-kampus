@@ -49,7 +49,12 @@
                                 nomor klaim tetap tersimpan terpisah.</small>
                         @endif
                     </nav>
-                    <div class="fb-inbox-messages" id="fb-inbox-messages">
+                    @if ($selectedClaim)
+                        <a href="{{ route('admin.chat.show', ['user' => $selectedUser->id, 'claim_id' => $selectedClaim->id]) }}">Buka seluruh riwayat percakapan</a>
+                    @endif
+                    <div class="fb-inbox-messages" id="fb-inbox-messages"
+                        data-after="{{ $selectedMessages->max('id') ?? 0 }}"
+                        data-poll="{{ $selectedClaim ? route('admin.chat.messages', ['user' => $selectedUser->id, 'claim_id' => $selectedClaim->id]) : '' }}">
                         @forelse($selectedMessages as $msg)
                             <div class="fb-inbox-bubble {{ (int) $msg->sender_id === (int) auth()->id() ? 'mine' : '' }}">
                                 <strong>{{ (int) $msg->sender_id === (int) auth()->id() ? 'Admin' : $selectedUser->name }}</strong>

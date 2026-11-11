@@ -91,7 +91,7 @@
                 @if ($totalUnread > 0)
                     <form method="POST"
                         action="{{ route('user.notifications.readAll') }}"
-                        onsubmit="return confirm('Tandai semua notifikasi sebagai sudah dibaca?')">
+                        data-confirm-event="submit" data-confirm="Tandai semua notifikasi sebagai sudah dibaca?">
                         @csrf
 
                         <button type="submit" class="cu-btn light fb-notif-read-all">

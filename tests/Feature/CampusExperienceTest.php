@@ -90,8 +90,8 @@ class CampusExperienceTest extends TestCase
         $owner = $this->user();
         $item = $this->item($owner);
         $this->actingAs($u);
-        $this->get('/chat')->assertSee('Chat tersedia untuk laporan atau klaim');
-        $this->post('/chat/send', ['message' => 'Hello'])->assertForbidden();
+        $this->get('/chat')->assertSee('Chat tersedia setelah klaim disetujui');
+        $this->postJson('/chat/send', ['message' => 'Hello'])->assertUnprocessable();
         $this->getJson('/chat/messages')->assertForbidden();
         $this->post('/cari-barang/' . $item->id . '/klaim', [
             'proof_description' => 'Ada tanda nama di bagian dalam.',
@@ -103,16 +103,17 @@ class CampusExperienceTest extends TestCase
             'proof_description' => 'Duplikat kepemilikan barang',
         ])->assertSessionHasErrors('proof_description');
         $this->assertDatabaseCount('item_claims', 1);
-        $this->get('/chat')->assertSee('Klaim yang sedang berlangsung');
-        $this->post('/chat/send', ['message' => 'Tentang klaim saya'])->assertRedirect();
+        $this->get('/chat')->assertSee('Chat tersedia setelah klaim disetujui');
+        $this->post('/chat/send', ['claim_id' => $claim->id, 'message' => 'Pending'])->assertForbidden();
+        $claim->update(['status' => 'approved']);
+        $this->post('/chat/send', ['claim_id' => $claim->id, 'message' => 'Tentang klaim saya'])->assertRedirect();
         $this->assertDatabaseHas('chat_messages', [
             'user_id' => $u->id,
             'message' => 'Tentang klaim saya',
         ]);
         $this->actingAs($owner)
-            ->getJson('/chat/messages')
-            ->assertOk()
-            ->assertJsonCount(0, 'messages');
+            ->getJson('/chat/messages?claim_id=' . $claim->id)
+            ->assertForbidden();
         $claim->update(['status' => 'approved']);
         $this->assertSame(
             1,
@@ -123,7 +124,7 @@ class CampusExperienceTest extends TestCase
         );
         $this->actingAs($u);
         $claim->update(['status' => 'returned']);
-        $this->post('/chat/send', ['message' => 'Selesai'])->assertRedirect();
+        $this->post('/chat/send', ['claim_id' => $claim->id, 'message' => 'Selesai'])->assertForbidden();
     }
 
     public function test_only_eligible_found_items_can_be_claimed(): void

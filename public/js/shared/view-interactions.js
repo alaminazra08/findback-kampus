@@ -4,6 +4,10 @@
  */
 (() => {
     document.addEventListener("click", (event) => {
+        const opener = event.target.closest?.("[data-dialog-open]");
+        const closer = event.target.closest?.("[data-dialog-close]");
+        if (opener) document.getElementById(opener.dataset.dialogOpen)?.showModal();
+        if (closer) document.getElementById(closer.dataset.dialogClose)?.close();
         const target = event.target.closest?.(
             "[data-confirm], [data-close-admin-nav], [data-print-page]",
         );

@@ -14,7 +14,7 @@
 }
 .fb-inbox-layout {
     display: grid;
-    grid-template-columns: minmax(275px, 340px) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
     gap: 18px;
     align-items: stretch;
     min-height: 590px;
@@ -260,4 +260,15 @@
     .fb-inbox-bubble {
         max-width: 90%;
     }
+}
+
+/* Keep claim navigation and contact identity inside the inbox at narrow widths. */
+.fb-inbox-main header { flex-wrap: wrap; }
+.fb-inbox-main header > span:not(.fb-inbox-avatar) { min-width: 0; overflow-wrap: anywhere; }
+.fb-inbox-main nav { min-width: 0; max-width: 100%; overflow-x: auto; }
+.fb-inbox-compose input[type="file"] { min-width: 0; max-width: 100%; }
+@media (max-width: 760px) {
+    .fb-inbox-mobile-back { min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+    .fb-inbox-submit { min-height: 44px; }
+    .fb-inbox-main header { padding: 12px; gap: 8px; }
 }

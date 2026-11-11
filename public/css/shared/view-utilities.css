@@ -498,3 +498,6 @@
 .fb-refactor.fb-percent-100 {
     width: 100%;
 }
+
+.fb-wrap-anywhere { overflow-wrap: anywhere; }
+.fb-svg-symbols { position: absolute; overflow: hidden; }

@@ -1731,3 +1731,6 @@ a.fb-claim-tab:hover {
         grid-column: auto;
     }
 }
+
+/* FIX: placeholder foto hanya muncul jika thumbnail gagal dimuat. */
+.fb-claim-table .fb-claim-item-placeholder.fb-initially-hidden { display: none; }

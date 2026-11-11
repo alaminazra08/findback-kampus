@@ -135,7 +135,7 @@ class CampusController extends Controller
             ->route('user.claims.index')
             ->with(
                 'success',
-                'Klaim berhasil diajukan. Gunakan Chat Klaim untuk berkomunikasi dengan admin.'
+                'Klaim berhasil diajukan. Chat tersedia setelah klaim disetujui admin.'
             );
     }
 

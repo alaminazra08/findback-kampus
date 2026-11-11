@@ -67,7 +67,7 @@ class ReportRevisionController extends Controller
                 $before = $item->only($fields);
                 $item->fill(
                     collect($data)
-                        ->only(['title', 'location', 'event_date', 'description'])
+                        ->only(['title', 'category', 'location', 'event_date', 'description'])
                         ->all(),
                 );
                 if ($request->hasFile('photo')) {

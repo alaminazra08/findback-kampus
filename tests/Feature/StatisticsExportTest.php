@@ -23,7 +23,7 @@ class StatisticsExportTest extends TestCase
         $item = LostFoundItem::create([
             'title' => $title,
             'type' => 'lost',
-            'status' => 'pending',
+            'status' => 'verified',
             'description' => 'Deskripsi; dengan "kutip"',
             'location' => "\t@SUM(1)",
         ]);

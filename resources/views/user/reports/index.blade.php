@@ -46,8 +46,7 @@
                                 @if ($report->status === 'rejected')
                                     <span class="cu-badge amber">Ditolak · Perlu Perbaikan</span>
                                 @elseif($report->status === 'pending' && $report->awaiting_revision)
-                                    <span class="cu-badge amber">Menunggu perbaikan
-                                        Anda</span>
+                                    <span class="cu-badge amber">Menunggu perbaikan Anda</span>
                                 @else
                                     @include('user.components.status', ['status' => $report->status])
                                 @endif

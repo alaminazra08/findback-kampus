@@ -42,3 +42,4 @@ Thumbs.db
 /public/uploads/
 /public/images/uploads/
 /storage/framework/*.lock
+/backup-patch-*/

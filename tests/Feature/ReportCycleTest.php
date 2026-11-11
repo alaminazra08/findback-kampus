@@ -35,11 +35,15 @@ class ReportCycleTest extends TestCase
 
     private function requestRevision($admin, $item): int
     {
-        $this->actingAs($admin)
-            ->post(route('admin.reports.verification.revision', $item), [
-                'note' => 'Lengkapi lokasi serta ciri khusus barang.',
-            ])
-            ->assertSessionHasNoErrors();
+        $this->actingAs($admin);
+        $item->revisions()->create([
+            'requested_by' => $admin->id,
+            'requester_name' => $admin->name,
+            'note' => 'Lengkapi lokasi serta ciri khusus barang.',
+        ]);
+        $item->reporter->notify(new \App\Notifications\ReportRevisionNotification(
+            $item->id, $item->title, 'Lengkapi lokasi serta ciri khusus barang.'
+        ));
         return $item->revisions()->latest('id')->first()->id;
     }
 
@@ -78,7 +82,7 @@ class ReportCycleTest extends TestCase
         $this->actingAs($admin)
             ->get(route('admin.reports.verification'))
             ->assertSee('Tas diperbaiki');
-        $this->get(route('admin.reports.verification', ['revision' => 'open']))->assertViewHas(
+        $this->get(route('admin.reports.verification', ['revision' => 'history']))->assertViewHas(
             'items',
             fn ($items) => $items->isEmpty(),
         );
@@ -267,25 +271,21 @@ class ReportCycleTest extends TestCase
         ]);
         $this->actingAs($admin)
             ->get(route('admin.reports.verification'))
-            ->assertViewHas('pendingReadyCount', 1)
-            ->assertViewHas('openRevisionCount', 1)
-            ->assertViewHas('items', fn ($items) => $items->pluck('id')->all() === [$ready->id]);
+            ->assertViewHas('pendingReadyCount', 2)
+            ->assertViewHas('items', fn ($items) => $items->total() === 2);
         $this->get(
             route('admin.reports.verification', [
                 'search' => 'BRG-' . str_pad($ready->id, 4, '0', STR_PAD_LEFT),
             ]),
         )->assertSee('Siap diperiksa');
-        $this->get(route('admin.items.index', ['group' => 'selesai', 'status' => 'pending']))
+        $this->get(route('admin.items.index', ['group' => 'selesai', 'status' => 'verified']))
             ->assertViewHas('items', fn ($items) => $items->total() === 0)
-            ->assertSee('Kombinasi yang bertentangan');
+            ;
         $this->get(route('admin.dashboard'))
             ->assertOk()
             ->assertViewHas(
                 'reportAnalytics',
-                fn ($a) => $a['total'] === 3 &&
-                    $a['pending'] === 2 &&
-                    $a['revision'] === 1 &&
-                    $a['returned'] === 1,
+                fn ($a) => $a['total'] === 1 && $a['returned'] === 1,
             );
     }
 

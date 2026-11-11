@@ -78,6 +78,7 @@ class ChatController extends Controller
             $canChat = $selectedClaim && $selectedClaim->status === 'approved';
             ChatMessage::where('user_id', $selectedUser->id)
                 ->where('sender_id', $selectedUser->id)
+                ->whereIn('id', $selectedMessages->pluck('id'))
                 ->whereNull('read_at')
                 ->update(['read_at' => now()]);
         }
@@ -117,7 +118,8 @@ class ChatController extends Controller
                 fn ($q) => $legacyMode ? $q->whereNull('claim_id') : $q->whereRaw('1 = 0'),
             )
             ->latest('id')
-            ->paginate(50);
+            ->paginate(50)
+            ->withQueryString();
         ChatMessage::where('user_id', $user->id)
             ->where('sender_id', $user->id)
             ->whereIn('id', $messages->pluck('id'))
@@ -171,19 +173,9 @@ class ChatController extends Controller
             ],
         ]);
 
-        $path = null;
-
-        if ($request->hasFile('attachment')) {
-            $path = $request->file('attachment')->store('chat-attachments', 'public');
-        }
-
-        ChatMessage::create([
-            'user_id' => $user->id,
-            'claim_id' => $claim->id,
-            'sender_id' => auth()->id(),
-            'message' => $validated['message'] ?? null,
-            'attachment_path' => $path,
-        ]);
+        app(\App\Services\ClaimChatService::class)->send(
+            $claim, $request->user(), $validated, $request->file('attachment'),
+        );
 
         // Tetap di halaman Detail Klaim ketika pesan dikirim dari modal klaim.
         if ($request->boolean('from_inbox')) {

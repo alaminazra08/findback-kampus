@@ -140,7 +140,7 @@
                     </h1>
 
                     {{-- Deskripsi publik mengikuti Admin > Pengaturan Sistem --}}
-                    <p class="hero-description" style="overflow-wrap:anywhere">
+                    <p class="hero-description fb-wrap-anywhere">
                         {{ trim((string) ($fbBrand['site_description'] ?? '')) ?: 'FindBack Kampus membantu civitas akademika melaporkan, mencari, dan menemukan barang yang hilang maupun ditemukan.' }}
                     </p>
 
@@ -635,7 +635,7 @@
                             FindBack Kampus
                         </a>
 
-                        <p class="footer-description" style="overflow-wrap:anywhere">
+                        <p class="footer-description fb-wrap-anywhere">
                             {{ trim((string) ($fbBrand['site_description'] ?? '')) ?: 'Sistem informasi untuk mendukung pelaporan, pencarian, dan pengelolaan barang hilang dan ditemukan di lingkungan kampus.' }}
                         </p>
 

@@ -6,7 +6,7 @@
         <h1>Chat admin</h1>
         <p>Berkomunikasi dengan admin untuk verifikasi dan pengaturan serah terima.</p>
     </div>
-    @if (!$canChat && !$hasHistory)
+    @if ($activeClaims->isEmpty() && !$hasHistory)
         <section class="cu-panel cu-empty"><span class="cu-round">@include('user.components.icon', ['icon' => 'chat'])</span>
             <h2>Chat tersedia setelah klaim disetujui</h2>
             <p>Ajukan klaim barang ditemukan. Setelah Admin menyetujui klaim, kamu dapat menghubungi Admin untuk serah

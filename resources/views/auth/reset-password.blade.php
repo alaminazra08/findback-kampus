@@ -12,7 +12,7 @@
     <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
 </head>
 
-<body class="fb-recovery-page">
+<body class="fb-responsive fb-recovery-page">
     <main class="fb-recovery-card">
         <a class="fb-recovery-brand" href="{{ route('home') }}"><img src="{{ asset('images/logo-findback.png') }}"
                 alt="" width="42" height="42"><span>FindBack <b>Kampus</b></span></a>
@@ -43,6 +43,8 @@
         </form>
         <p class="fb-recovery-footer"><a href="{{ route('login') }}">← Kembali ke halaman Login</a></p>
     </main>
+    <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
+    <script src="{{ asset('js/shared/responsive-viewport.js') }}?v=20261111" defer></script>
 </body>
 
 </html>

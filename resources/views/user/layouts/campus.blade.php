@@ -22,7 +22,7 @@
     <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
 </head>
 
-<body class="cu-body">
+<body class="fb-responsive cu-body">
 
     <a class="cu-skip" href="#main">Langsung ke konten</a>
 
@@ -243,5 +243,7 @@
 
     </footer>
 
+    <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
+    <script src="{{ asset('js/shared/responsive-viewport.js') }}?v=20261111" defer></script>
 </body>
 </html>

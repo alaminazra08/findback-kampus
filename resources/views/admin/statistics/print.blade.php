@@ -10,7 +10,7 @@
     <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
 </head>
 
-<body>
+<body class="fb-responsive fb-responsive-print">
     <div class="toolbar">
         <p>Pilih <strong>Cetak / Simpan PDF</strong>, lalu pilih printer atau <strong>Save as PDF</strong>.<br>Gunakan
             A4 lanskap. Matikan header/footer browser bila tidak diperlukan.</p><button type="button"
@@ -165,6 +165,7 @@
             barang; dokumen cetak berisi rekap klaim/pencocokan dan seluruh laporan barang. Data sesuai keadaan saat
             dokumen dibuka.</footer>
     </main>
+    <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
 </body>
 
 </html>

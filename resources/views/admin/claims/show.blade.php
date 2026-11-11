@@ -359,7 +359,7 @@
     </div>
 
     @if (in_array($claim->status, ['approved', 'returned'], true) && $claim->claimant)
-        <link rel="stylesheet" href="{{ asset('css/chat/findback-claim-premium-v4.css') }}?v=4">
+        <link rel="stylesheet" href="{{ asset('css/chat/findback-claim-premium-v4.css') }}?v=20261111">
         <dialog class="fcp-dialog" id="fcp-dialog" aria-labelledby="fcp-title">
             <div class="fcp-dialog-shell">
                 <button class="fcp-dialog-close" type="button" data-fcp-close aria-label="Tutup percakapan">✕</button>

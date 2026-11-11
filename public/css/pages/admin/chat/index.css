@@ -272,3 +272,17 @@
     .fb-inbox-submit { min-height: 44px; }
     .fb-inbox-main header { padding: 12px; gap: 8px; }
 }
+
+/* FINDBACK_MOBILE_CHAT_20261111 — narrow viewport safeguards */
+@media (max-width: 430px) {
+    .fb-inbox-layout,
+    .fb-inbox-main,
+    .fb-inbox-side { min-width: 0; max-width: 100%; }
+    .fb-inbox-main header { min-width: 0; flex-wrap: wrap; }
+    .fb-inbox-compose { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; }
+    .fb-inbox-compose textarea { flex: 1 1 100%; width: 100%; min-width: 0; }
+    .fb-inbox-compose input[type="file"] { flex: 1 1 100%; width: 100%; max-width: 100%; }
+    .fb-inbox-compose button { min-height: 44px; max-width: 100%; }
+    .fb-inbox-messages { min-width: 0; padding: 12px; }
+    .fb-inbox-bubble { max-width: 96%; min-width: 0; }
+}

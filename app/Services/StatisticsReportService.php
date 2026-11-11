@@ -194,7 +194,7 @@ class StatisticsReportService
         // Sumber nama barang konsisten dengan seluruh modul admin.
 
         $recent = (clone $items)
-            ->select('id', 'title', 'type', 'status', 'location', 'created_at')
+            ->select('id', 'title', 'type', 'status', 'location', 'created_at', 'photo_path')
             ->orderByDesc('created_at')
             ->orderByDesc('id')
             ->limit(8)

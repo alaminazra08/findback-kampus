@@ -5,6 +5,8 @@
 @section('breadcrumb', 'Pengaturan')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
+
 <link rel="stylesheet"
       href="{{ asset('css/admin/admin-settings.css') }}?v=41">
 
@@ -109,7 +111,7 @@
     <div class="fb-settings-hero">
         <div>
             <span class="fb-settings-eyebrow">
-                {{ mb_strtoupper($settings['site_name']) }} · ADMINISTRASI
+                ADMINISTRASI · FINDBACK KAMPUS
             </span>
 
             <h1>Pengaturan <span>Sistem</span></h1>

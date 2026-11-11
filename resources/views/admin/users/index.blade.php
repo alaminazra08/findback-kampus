@@ -4,12 +4,14 @@
 @section('breadcrumb', 'Manajemen Akun')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
+
     <link rel="stylesheet" href="{{ asset('css/admin/admin-users.css') }}?v=36">
     <link rel="stylesheet" href="{{ asset('css/admin/findback-users-v39.css') }}?v=39">
     <div class="fb-users-page">
         <div class="fb-users-heading">
             <div>
-                <p class="fb-users-eyebrow">ADMINISTRASI / AKSES PENGGUNA</p>
+                <p class="fb-users-eyebrow">ADMINISTRASI · FINDBACK KAMPUS</p>
                 <h1>Manajemen <span>Akun</span></h1>
                 <p>Kelola pengguna dan hak akses FindBack Kampus dengan aman.</p>
             </div>

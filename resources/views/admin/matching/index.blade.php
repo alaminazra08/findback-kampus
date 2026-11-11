@@ -4,12 +4,14 @@
 @section('breadcrumb', 'Pencocokan Barang')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
+
     {{-- FINDBACK_ICON_PREMIUM_FIX_V2 --}}
-    <link rel="stylesheet" href="{{ asset('css/admin/admin-matching.css') }}?v=iconfixv2">
+    <link rel="stylesheet" href="{{ asset('css/admin/admin-matching.css') }}?v=match-header-align-1">
     <div class="match-wrap">
         <div class="match-heading match-index-heading">
             <div>
-                <p class="match-kicker">FINDBACK KAMPUS · ADMINISTRATOR</p>
+                <p class="match-kicker">ADMINISTRASI · FINDBACK KAMPUS</p>
                 <h1>Pencocokan <span>Barang</span></h1>
                 <p>Bandingkan laporan barang hilang dan ditemukan untuk menghasilkan kandidat yang ditinjau administrator.
                 </p>

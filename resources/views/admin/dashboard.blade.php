@@ -134,9 +134,11 @@
 
             <main class="fb-main">
                 <link rel="stylesheet" href="{{ asset('css/admin/findback-pm-detail-date.css') }}?v=1">
-                <div class="fb-page-heading">
+                
+<link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
+<div class="fb-page-heading">
                     <div>
-                        <p class="fb-eyebrow">OVERVIEW · FINDBACK KAMPUS</p>
+                        <p class="fb-eyebrow">ADMINISTRASI · FINDBACK KAMPUS</p>
                         <h1>Dashboard <span>Admin</span></h1>
                         {{-- Deskripsi dinamis dari Admin > Pengaturan Sistem --}}
                         <p class="fb-heading-text fb-wrap-anywhere">{{ trim((string) ($adminSettings['site_description'] ?? '')) ?: 'Pusat pengelolaan laporan dan aktivitas barang kampus.' }}</p>
@@ -360,6 +362,38 @@
                     <p>Aktivitas pelaporan barang terkini</p>
                 </div><span class="fb-panel-pill">{{ count($analytics['recent'] ?? []) }} laporan</span>
             </div>
+            {{-- Mobile card layout follows the Statistics page; desktop table stays intact. --}}
+            <div class="fb-dashboard-mobile-reports" aria-label="Daftar laporan terbaru">
+                @forelse(($analytics['recent'] ?? []) as $report)
+                    <article class="fb-dashboard-mobile-card">
+                        <div class="fb-dashboard-mobile-top">
+                            <span class="fb-dashboard-mobile-photo">
+                                @if (!empty($report['photo']))
+                                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($report['photo']) }}"
+                                        alt="Foto barang {{ $report['name'] ?? '' }}" loading="lazy" decoding="async"
+                                        data-image-fallback="hidden">
+                                @endif
+                                <span class="fb-dashboard-mobile-placeholder" @if (!empty($report['photo'])) hidden @endif aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 6-6 4 4 3-3 5 5"/></svg>
+                                </span>
+                            </span>
+                            <div class="fb-dashboard-mobile-title">
+                                <a href="{{ route('admin.items.show', $report['id']) }}"><strong>{{ $report['name'] ?? '—' }}</strong></a>
+                                <span class="fb-report-type {{ ($report['type'] ?? '') === 'found' ? 'is-found' : 'is-lost' }}">{{ ($report['type'] ?? '') === 'found' ? 'Ditemukan' : 'Hilang' }}</span>
+                            </div>
+                        </div>
+                        <div class="fb-dashboard-mobile-details">
+                            <span>Lokasi: <strong>{{ $report['location'] ?? '—' }}</strong></span>
+                            <span>{{ $report['date'] ?? '—' }}</span>
+                        </div>
+                        <div class="fb-dashboard-mobile-footer">
+                            <span class="fb-report-status status-{{ $report['status'] ?? '' }}">{{ \App\Support\WorkflowStatus::reports()[$report['status'] ?? ''] ?? ($report['status'] ?? '—') }}</span>
+                        </div>
+                    </article>
+                @empty
+                    <p class="fb-dashboard-mobile-empty">Belum ada laporan untuk ditampilkan.</p>
+                @endforelse
+            </div>
             <div class="fb-table-scroll">
                 <table class="fb-user-table fb-report-table">
                     <thead>
@@ -415,6 +449,11 @@
                         @endforelse
                     </tbody>
                 </table>
+            </div>
+            <div class="fb-dashboard-more-wrap">
+                <a href="{{ route('admin.statistics.index') }}" class="fb-dashboard-more-link" aria-label="Lihat seluruh laporan di halaman Laporan dan Statistik">
+                    Lihat Statistik Laporan <svg class="fb-dashboard-more-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+                </a>
             </div>
         </section>
 
@@ -491,9 +530,10 @@
     <script src="{{ asset('js/admin/dashboard-date.js') }}"></script>
     {{-- Animasi klik logo saja; menu lain tetap menggunakan navigasi normal. --}}
     <script src="{{ asset('js/admin/sidebar-brand.js') }}"></script>
-    <script src="{{ asset('js/admin/admin-sidebar-v44.js') }}?v=48" defer></script>
+    <script src="{{ asset('js/admin/admin-sidebar-v44.js') }}?v=49" defer></script>
     <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
     <script src="{{ asset('js/shared/responsive-viewport.js') }}?v=20261111" defer></script>
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-report-cards.css') }}?v=20261111">
 </body>
 
 </html>

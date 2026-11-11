@@ -66,6 +66,40 @@
         },
         true,
     );
+    // Avoid needless full-page reloads when repeatedly clicking the currently active
+    // Verification page. Preserve normal navigation for filters/query strings,
+    // modified clicks, and links to a different destination.
+    const verificationLink = [...side.querySelectorAll(".fb-nav-link")].find(
+        (link) => link.querySelector(".fb-nav-text")?.textContent?.trim() === "Verifikasi Laporan",
+    );
+    if (verificationLink) {
+        verificationLink.addEventListener("click", (event) => {
+            if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+            if (verificationLink.getAttribute("aria-current") !== "page") return;
+            const destination = new URL(verificationLink.href, window.location.href);
+            const current = new URL(window.location.href);
+            if (destination.origin === current.origin && destination.pathname === current.pathname && destination.search === current.search) {
+                event.preventDefault();
+            }
+        });
+    }
+    // FindBack: avoid reloading the same active admin sidebar destination.
+    // Match the actual URL, not just the is-active class (detail pages and filters may differ).
+    side.addEventListener("click", (event) => {
+        const link = event.target.closest("a.fb-nav-link[href]");
+        if (!link || !side.contains(link) || event.defaultPrevented) return;
+        if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        if (link.target && link.target !== "_self") return;
+        if (link.hasAttribute("download") || link.getAttribute("aria-current") !== "page") return;
+        const destination = new URL(link.href, window.location.href);
+        const current = new URL(window.location.href);
+        if (destination.href !== current.href) return;
+        event.preventDefault();
+        // In the mobile drawer, a repeat click should close the menu instead.
+        if (window.matchMedia("(max-width: 960px)").matches && side.classList.contains("is-open")) {
+            document.getElementById("fb-menu-toggle")?.click();
+        }
+    });
     window.addEventListener("resize", apply);
     side.querySelectorAll(".fb-nav-link,.fb-sidebar-logout").forEach((el) => {
         const label =

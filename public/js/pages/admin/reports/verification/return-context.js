@@ -1,6 +1,8 @@
 (() => {
+function mount(signal) {
   'use strict';
-  const base = '/admin/reports/verification';
+  const base = document.querySelector('.fb-v-filters') ? new URL(document.querySelector('.fb-v-filters').action).pathname : location.pathname.replace(/\/[^/]+\/?$/, '');
+  if (!base.endsWith('/admin/reports/verification')) return;
   const key = 'fb-verification-return-context-v1';
   const isList = location.pathname.replace(/\/$/, '') === base;
   const isDetail = new RegExp('^' + base + '/[^/]+/?$').test(location.pathname);
@@ -38,14 +40,24 @@
       const same = previous && safeURL(previous.url)?.href === u.href;
       save({url:u.href, x:same ? previous.x : 0, y:same ? previous.y : 0, at:Date.now(), pending:true});
     }
-  }, true);
+  }, { capture: true, signal });
   if (!isList) return;
   const state = read();
   if (!state || !state.pending || safeURL(state.url)?.href !== location.href) return;
   save({...state, pending:false});
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  const restore = () => scrollTo({left:state.x, top:state.y, behavior:'instant'});
+  const restore = () => !signal.aborted && scrollTo({left:state.x, top:state.y, behavior:'instant'});
   requestAnimationFrame(() => requestAnimationFrame(restore));
-  window.addEventListener('load', restore, {once:true});
+  window.addEventListener('load', restore, {once:true,signal});
   setTimeout(restore, 250);
+}
+
+    let controller;
+    function render() {
+        controller?.abort();
+        controller = new AbortController();
+        mount(controller.signal);
+    }
+    document.addEventListener('fb:admin-page', render);
+    render();
 })();

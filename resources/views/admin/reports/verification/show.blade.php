@@ -1,9 +1,17 @@
 @extends('admin.layouts.items')
 @section('title', 'Detail Verifikasi')
-@section('content')
+@section('page-styles')
     <link rel="stylesheet" href="{{ asset('css/report-cycle.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/admin-verification.css') }}?v=18">
     <link rel="stylesheet" href="{{ asset('css/admin/findback-kembali-compact-v2.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/findback-pm-detail-date.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/findback-detail-compact.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/findback-detail-responsive-pm.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/findback-detail-cards-spaced.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/findback-detail-right-cards.css') }}?v=1">
+@endsection
+
+@section('content')
     <div class="fb-page-heading">
         <div>
             <p class="fb-eyebrow">ADMINISTRASI · VERIFIKASI LAPORAN</p>
@@ -30,11 +38,6 @@
             </ul>
         </div>
     @endif
-    <link rel="stylesheet" href="{{ asset('css/admin/findback-pm-detail-date.css') }}?v=1">
-    <link rel="stylesheet" href="{{ asset('css/admin/findback-detail-compact.css') }}?v=1">
-    <link rel="stylesheet" href="{{ asset('css/admin/findback-detail-responsive-pm.css') }}?v=1">
-    <link rel="stylesheet" href="{{ asset('css/admin/findback-detail-cards-spaced.css') }}?v=1">
-    <link rel="stylesheet" href="{{ asset('css/admin/findback-detail-right-cards.css') }}?v=1">
     <div class="fb-v-detail-grid">
         <div class="fb-v-left-column">
             <section class="fb-panel fb-v-detail-panel">
@@ -272,6 +275,5 @@
         </div>
     </div>
 
-<script src="{{ asset('js/pages/admin/reports/verification/detail-prefetch.js') }}?v=1" defer></script>
-<script src="{{ asset('js/pages/admin/reports/verification/return-context.js') }}?v=1" defer></script>
+<script src="{{ asset('js/pages/admin/reports/verification/return-context.js') }}?v=2" defer></script>
 @endsection

@@ -2,9 +2,16 @@
 
 @section('title', 'Laporan Barang')
 
+@section('item-upload-style')
+    <link rel="stylesheet" href="{{ asset('css/admin/admin-items-upload.css') }}?v=20261111-2">
+@endsection
+
+@section('page-styles')
+    <link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/admin/items-table-consistency.css') }}?v=2">
+@endsection
+
 @section('content')
-<link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
-<link rel="stylesheet" href="{{ asset('css/admin/items-table-consistency.css') }}?v=2">
 
 
     {{-- FINDBACK_ADMIN_ITEMS_V16 --}}
@@ -523,5 +530,4 @@
 
     {{-- FINDBACK_ADMIN_AKSI_V17_END --}}
 
-<script src="{{ asset('js/admin/items-filter-ajax-scroll.js') }}?v=1" defer></script>
 @endsection

@@ -60,11 +60,20 @@ class UserManagementController extends Controller
             ->paginate(12)
             ->withQueryString();
 
+        $counts = User::query()
+            ->selectRaw(
+                "COUNT(*) AS total, "
+                . "COUNT(CASE WHEN role = 'admin' THEN 1 END) AS admins, "
+                . "COUNT(CASE WHEN role = 'user' THEN 1 END) AS regular_users, "
+                . "COUNT(google_id) AS google"
+            )
+            ->first();
+
         $stats = [
-            'total' => User::query()->count(),
-            'admin' => User::query()->where('role', 'admin')->count(),
-            'user' => User::query()->where('role', 'user')->count(),
-            'google' => User::query()->whereNotNull('google_id')->count(),
+            'total' => (int) $counts->total,
+            'admin' => (int) $counts->admins,
+            'user' => (int) $counts->regular_users,
+            'google' => (int) $counts->google,
         ];
 
         return view('admin.users.index', compact('users', 'stats', 'q', 'role', 'provider'));
@@ -72,15 +81,16 @@ class UserManagementController extends Controller
 
     public function show(User $user): View
     {
+        $reports = \App\Models\LostFoundItem::query()
+            ->where('user_id', $user->id)
+            ->whereIn('type', ['lost', 'found'])
+            ->selectRaw('type, COUNT(*) AS total')
+            ->groupBy('type')
+            ->pluck('total', 'type');
+
         $activity = [
-            'lost' => \App\Models\LostFoundItem::query()
-                ->where('user_id', $user->id)
-                ->where('type', 'lost')
-                ->count(),
-            'found' => \App\Models\LostFoundItem::query()
-                ->where('user_id', $user->id)
-                ->where('type', 'found')
-                ->count(),
+            'lost' => (int) $reports->get('lost', 0),
+            'found' => (int) $reports->get('found', 0),
             'claims' => \App\Models\ItemClaim::query()->where('user_id', $user->id)->count(),
         ];
 

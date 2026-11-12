@@ -1,15 +1,19 @@
 @extends('admin.layouts.items')
 @section('title', 'Detail Klaim Barang')
 @section('breadcrumb', 'Klaim Barang')
-@section('content')
+@section('page-styles')
     <link rel="stylesheet" href="{{ asset('css/admin/admin-claims.css') }}?v=20261101-final">
     <link rel="stylesheet" href="{{ asset('css/admin/claim-layout-compact-v6.css') }}?v=6">
     <link rel="stylesheet" href="{{ asset('css/admin/claim-layout-premium-v7.css') }}?v=7">
     <link rel="stylesheet" href="{{ asset('css/admin/claim-layout-gap-v9.css') }}?v=9">
     <link rel="stylesheet" href="{{ asset('css/admin/claim-evidence-actions-v11.css') }}?v=11">
     <link rel="stylesheet" href="{{ asset('css/admin/claim-evidence-actions-v12.css') }}?v=12">
-
     <link rel="stylesheet" href="{{ asset('css/admin/claim-detail-responsive-v14.css') }}?v=14">
+    <link rel="stylesheet" href="{{ asset('css/chat/findback-claim-premium-v4.css') }}?v=20261111">
+@endsection
+
+@section('content')
+
     <div class="fb-page-heading fb-claim-heading">
         <div>
             <p class="fb-eyebrow">ADMINISTRASI · FINDBACK KAMPUS</p>
@@ -359,7 +363,6 @@
     </div>
 
     @if (in_array($claim->status, ['approved', 'returned'], true) && $claim->claimant)
-        <link rel="stylesheet" href="{{ asset('css/chat/findback-claim-premium-v4.css') }}?v=20261111">
         <dialog class="fcp-dialog" id="fcp-dialog" aria-labelledby="fcp-title">
             <div class="fcp-dialog-shell">
                 <button class="fcp-dialog-close" type="button" data-fcp-close aria-label="Tutup percakapan">✕</button>

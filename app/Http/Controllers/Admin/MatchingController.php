@@ -48,15 +48,20 @@ class MatchingController extends Controller
             });
         }
 
+        $counts = ItemMatch::query()
+            ->selectRaw('status, COUNT(*) AS total')
+            ->groupBy('status')
+            ->pluck('total', 'status');
+
         return view('admin.matching.index', [
             'matches' => $query->paginate(12)->withQueryString(),
             'status' => $status,
             'search' => $search,
             'stats' => [
-                'all' => ItemMatch::count(),
-                'pending' => ItemMatch::where('status', 'pending')->count(),
-                'confirmed' => ItemMatch::where('status', 'confirmed')->count(),
-                'rejected' => ItemMatch::where('status', 'rejected')->count(),
+                'all' => $counts->sum(),
+                'pending' => (int) $counts->get('pending', 0),
+                'confirmed' => (int) $counts->get('confirmed', 0),
+                'rejected' => (int) $counts->get('rejected', 0),
             ],
         ]);
     }

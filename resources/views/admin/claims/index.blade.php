@@ -1,11 +1,14 @@
 @extends('admin.layouts.items')
 @section('title', 'Klaim Barang')
 @section('breadcrumb', 'Klaim Barang')
-@section('content')
-<link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
-
+@section('page-styles')
+    <link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/admin-claims.css') }}?v=20261101-executive">
     <link rel="stylesheet" href="{{ asset('css/admin/claims-table-consistency.css') }}?v=1">
+@endsection
+
+@section('content')
+
     <section class="fb-claim-executive" aria-label="Ringkasan Klaim Barang">
         <div class="fb-page-heading">
             <div>
@@ -178,6 +181,5 @@
             <div class="fb-claim-pages">{{ $claims->links() }}</div>
         @endif
     </section>
-    <script src="{{ asset('js/admin/claims-filter-ajax-scroll.js') }}?v=1" defer></script>
     <footer class="fb-footer">© {{ date('Y') }} FindBack Kampus · Fakultas Sains dan Teknologi</footer>
 @endsection

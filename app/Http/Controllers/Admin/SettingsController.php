@@ -18,13 +18,8 @@ class SettingsController extends Controller
         // Tabel wajib sudah dibuat sesuai SQL modul Pengaturan.
         abort_unless(Schema::hasTable('app_settings'), 503, 'Tabel app_settings belum tersedia.');
 
-        $settings = array_replace(
-            AdminSettings::DEFAULTS,
-            AppSetting::query()
-                ->whereIn('setting_key', array_keys(AdminSettings::DEFAULTS))
-                ->pluck('setting_value', 'setting_key')
-                ->all(),
-        );
+        $settings = AdminSettings::all(tableExists: true);
+        request()->attributes->set(AdminSettings::class . '.branding', $settings);
 
         $system = [
             'laravel' => app()->version(),

@@ -18,9 +18,9 @@ final class AdminSettings
         'notification_matching' => '1',
     ];
 
-    public static function all(): array
+    public static function all(?bool $tableExists = null): array
     {
-        if (!Schema::hasTable('app_settings')) {
+        if (!($tableExists ?? Schema::hasTable('app_settings'))) {
             return self::DEFAULTS;
         }
         return array_replace(

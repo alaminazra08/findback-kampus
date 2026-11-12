@@ -3,8 +3,11 @@
 @section('title', 'Detail Pencocokan')
 @section('breadcrumb', 'Pencocokan Barang')
 
-@section('content')
+@section('page-styles')
     <link rel="stylesheet" href="{{ asset('css/admin/admin-matching.css') }}?v=36">
+@endsection
+
+@section('content')
     <div class="match-wrap">
         <a class="match-back" href="{{ route('admin.matching.index') }}">← Kembali ke Pencocokan</a>
         {{-- Header detail kandidat: satu panel ringkas, skor tetap bersumber dari sistem --}}

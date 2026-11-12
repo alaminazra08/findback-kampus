@@ -1,0 +1,100 @@
+/* FindBack — visual consistency for Klaim & Pengembalian list only.
+   Same fixed photo grid/centered headers as Verifikasi and Laporan Barang.
+   Does not affect claim detail pages, filters, actions, or database. */
+@media (min-width: 701px) {
+  .fb-claim-panel .fb-claim-table {
+    width: 100%;
+    min-width: 1060px;
+    table-layout: fixed;
+  }
+  .fb-claim-panel .fb-claim-table th,
+  .fb-claim-panel .fb-claim-table td {
+    box-sizing: border-box;
+    text-align: center;
+    vertical-align: middle;
+    overflow-wrap: anywhere;
+  }
+  .fb-claim-panel .fb-claim-table th:nth-child(1),
+  .fb-claim-panel .fb-claim-table td:nth-child(1) { width: 27%; }
+  .fb-claim-panel .fb-claim-table th:nth-child(2),
+  .fb-claim-panel .fb-claim-table td:nth-child(2) { width: 12%; }
+  .fb-claim-panel .fb-claim-table th:nth-child(3),
+  .fb-claim-panel .fb-claim-table td:nth-child(3) { width: 12%; }
+  .fb-claim-panel .fb-claim-table th:nth-child(4),
+  .fb-claim-panel .fb-claim-table td:nth-child(4) { width: 15%; }
+  .fb-claim-panel .fb-claim-table th:nth-child(5),
+  .fb-claim-panel .fb-claim-table td:nth-child(5) { width: 20%; }
+  .fb-claim-panel .fb-claim-table th:nth-child(6),
+  .fb-claim-panel .fb-claim-table td:nth-child(6) { width: 14%; }
+  .fb-claim-panel .fb-claim-table tbody td:first-child { text-align: left; }
+  .fb-claim-panel .fb-claim-table .fb-claim-item-media {
+    display: grid;
+    grid-template-columns: 88px minmax(0, 1fr);
+    column-gap: 16px;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    text-align: left;
+  }
+  .fb-claim-panel .fb-claim-table .fb-claim-item-thumb,
+  .fb-claim-panel .fb-claim-table .fb-claim-item-placeholder {
+    grid-column: 1;
+    width: 88px;
+    height: 88px;
+    min-width: 0;
+    border-radius: 13px;
+    object-fit: cover;
+  }
+  .fb-claim-panel .fb-claim-table .fb-claim-item-copy {
+    grid-column: 2;
+    min-width: 0;
+    text-align: left;
+  }
+  .fb-claim-panel .fb-claim-table td:nth-child(5) .fb-claim-status {
+    margin-inline: auto;
+  }
+  .fb-claim-panel .fb-claim-table td:nth-child(6) .fb-claim-detail-link {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+  }
+}
+/* Existing mobile view remains a two-column card with full-width action.
+   Only harmonize photo size and prevent overflow on narrow phones. */
+@media (max-width: 700px) {
+  .fb-claim-panel .fb-claim-table td:first-child .fb-claim-item-media {
+    display: grid;
+    grid-template-columns: 80px minmax(0, 1fr);
+    column-gap: 12px;
+    align-items: center;
+    min-width: 0;
+    width: 100%;
+  }
+  .fb-claim-panel .fb-claim-table td:first-child .fb-claim-item-thumb,
+  .fb-claim-panel .fb-claim-table td:first-child .fb-claim-item-placeholder {
+    grid-column: 1;
+    width: 80px;
+    height: 80px;
+    min-width: 0;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+  .fb-claim-panel .fb-claim-table td:first-child .fb-claim-item-copy {
+    grid-column: 2;
+    min-width: 0;
+  }
+}
+@media (max-width: 370px) {
+  .fb-claim-panel .fb-claim-table td:first-child .fb-claim-item-media {
+    grid-template-columns: 72px minmax(0, 1fr);
+    column-gap: 10px;
+  }
+  .fb-claim-panel .fb-claim-table td:first-child .fb-claim-item-thumb,
+  .fb-claim-panel .fb-claim-table td:first-child .fb-claim-item-placeholder {
+    width: 72px;
+    height: 72px;
+  }
+}

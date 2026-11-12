@@ -533,7 +533,10 @@
     <script src="{{ asset('js/admin/admin-sidebar-v44.js') }}?v=49" defer></script>
     <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
     <script src="{{ asset('js/shared/responsive-viewport.js') }}?v=20261111" defer></script>
+    {{-- Smart Navigation: sama dengan layout Verifikasi dan Laporan Barang. --}}
+    <script src="{{ asset('js/admin/smart-navigation-session.js') }}?v=1" defer></script>
     <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-report-cards.css') }}?v=20261111">
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-recent-consistency.css') }}?v=1">
 </body>
 
 </html>

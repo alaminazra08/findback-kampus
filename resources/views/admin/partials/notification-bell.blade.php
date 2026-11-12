@@ -1,5 +1,8 @@
 @php
     $adminNotifications = auth()->user()->notifications()->latest()->limit(8)->get();
+    $links = \App\Http\Controllers\Admin\NotificationController::destinations(
+        $adminNotifications->filter(fn ($notification) => $notification->read_at !== null)
+    );
     $unreadCount = auth()->user()->unreadNotifications()->count();
 @endphp
 <div class="fb-notif" id="fb-notif">
@@ -48,7 +51,7 @@
                             </form>
                         @else
                             <a class="fb-notif-action"
-                                href="{{ \App\Http\Controllers\Admin\NotificationController::destination($notification) }}"
+                                href="{{ $links[$notification->id] }}"
                                 aria-label="Buka kembali: {{ $notification->data['title'] ?? 'Notifikasi' }}">Buka
                                 →</a>
                         @endif

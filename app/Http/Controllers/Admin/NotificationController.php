@@ -3,8 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ItemClaim;
+use App\Models\LostFoundItem;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class NotificationController extends Controller
 {
@@ -16,29 +21,63 @@ class NotificationController extends Controller
         return redirect()->to($this->destination($notification));
     }
 
+    private const DESTINATIONS = [
+        'reports' => ['admin.reports.verification.show', 'admin.items.index'],
+        'claims' => ['admin.claims.show', 'admin.claims.index'],
+        'chat' => ['admin.chat.show', 'admin.chat.index'],
+    ];
+
+    private static function destinationRecords(string $category): Builder
+    {
+        return match ($category) {
+            'reports' => LostFoundItem::query(),
+            'claims' => ItemClaim::query(),
+            'chat' => User::query()->where('role', 'user'),
+        };
+    }
+
+    public static function destinations(Collection $notifications): array
+    {
+        $idsByCategory = [];
+        foreach ($notifications as $notification) {
+            $category = $notification->data['category'] ?? null;
+            $id = (int) ($notification->data['record_id'] ?? 0);
+            if (is_string($category) && isset(self::DESTINATIONS[$category]) && $id) {
+                $idsByCategory[$category][] = $id;
+            }
+        }
+
+        $existing = [];
+        foreach ($idsByCategory as $category => $ids) {
+            $existing[$category] = array_fill_keys(
+                self::destinationRecords($category)->whereKey(array_unique($ids))->pluck('id')->all(),
+                true,
+            );
+        }
+
+        $links = [];
+        foreach ($notifications as $notification) {
+            $links[$notification->id] = self::destination($notification, $existing);
+        }
+        return $links;
+    }
+
     // Only routes owned by the admin application are allowed as destinations.
-    public static function destination($notification): string
+    public static function destination($notification, ?array $existing = null): string
     {
         $data = $notification->data ?? [];
         $category = $data['category'] ?? null;
         $id = (int) ($data['record_id'] ?? 0);
-        if ($category === 'reports') {
-            return $id && \App\Models\LostFoundItem::whereKey($id)->exists()
-                ? route('admin.reports.verification.show', $id)
-                : route('admin.items.index');
-        }
-        if ($category === 'claims') {
-            return $id && \App\Models\ItemClaim::whereKey($id)->exists()
-                ? route('admin.claims.show', $id)
-                : route('admin.claims.index');
+        if (is_string($category) && isset(self::DESTINATIONS[$category])) {
+            [$detail, $fallback] = self::DESTINATIONS[$category];
+            $exists = $id && ($existing === null
+                ? self::destinationRecords($category)->whereKey($id)->exists()
+                : isset($existing[$category][$id]));
+
+            return $exists ? route($detail, $id) : route($fallback);
         }
         if ($category === 'matching') {
             return route('admin.matching.index');
-        }
-        if ($category === 'chat') {
-            return $id && \App\Models\User::whereKey($id)->where('role', 'user')->exists()
-                ? route('admin.chat.show', $id)
-                : route('admin.chat.index');
         }
         $title = mb_strtolower((string) ($data['title'] ?? ''));
         $message = mb_strtolower((string) ($data['message'] ?? ''));

@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
         stream.appendChild(article);
     }
     async function refresh() {
-        if (busy || document.hidden) return;
+        if (busy || document.hidden || !dialog.open) return;
         busy = true;
         try {
             const res = await fetch(url + (url.includes("?") ? "&" : "?") + "after=" + after, {
@@ -80,5 +80,23 @@ document.addEventListener("DOMContentLoaded", function () {
             busy = false;
         }
     }
-    window.setInterval(refresh, 5000);
+    let timer;
+    function stopPolling() {
+        window.clearInterval(timer);
+        timer = undefined;
+    }
+    function startPolling() {
+        if (timer !== undefined) return;
+        stream.scrollTop = stream.scrollHeight;
+        refresh();
+        timer = window.setInterval(refresh, 5000);
+    }
+    openers.forEach((button) => button.addEventListener("click", startPolling));
+    dialog.addEventListener("close", () => {
+        if (!dialog.open) stopPolling();
+    });
+    document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) refresh();
+    });
+    if (dialog.open) startPolling();
 });

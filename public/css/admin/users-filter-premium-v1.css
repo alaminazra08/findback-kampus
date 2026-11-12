@@ -1,0 +1,60 @@
+/* FindBack Manajemen Akun - filter premium, isolated; desktop/tablet/mobile */
+.fb-users-page .fb-users-filters {
+  display:grid !important;
+  grid-template-columns:minmax(220px,1fr) minmax(150px,180px) minmax(155px,185px) minmax(125px,145px) minmax(145px,165px) !important;
+  align-items:end !important;
+  gap:12px !important;
+  padding:0 30px 24px !important;
+}
+.fb-users-page .fb-users-filters > label { min-width:0 !important; margin:0 !important; }
+.fb-users-page .fb-users-filters input,
+.fb-users-page .fb-users-filters select,
+.fb-users-page .fb-users-filters .fb-users-button,
+.fb-users-page .fb-users-filters .fb-users-reset {
+  box-sizing:border-box !important; width:100% !important; min-width:0 !important;
+  height:56px !important; min-height:56px !important;
+  border-radius:14px !important; font-size:14px !important;
+}
+.fb-users-page .fb-users-filters input,
+.fb-users-page .fb-users-filters select { padding:0 16px !important; }
+.fb-users-page .fb-users-filters .fb-users-button,
+.fb-users-page .fb-users-filters .fb-users-reset {
+  display:inline-flex !important; align-items:center !important; justify-content:center !important;
+  gap:10px !important; padding:0 14px !important; white-space:nowrap !important;
+  grid-column:auto !important; justify-self:stretch !important;
+  font-weight:750 !important; line-height:1.2 !important;
+}
+.fb-users-page .fb-users-filters .fb-users-button {
+  border:1px solid #8c0e3c !important; background:#890b39 !important; color:#fff !important;
+  box-shadow:0 7px 14px rgba(111,8,45,.10) !important;
+}
+.fb-users-page .fb-users-filters .fb-users-reset {
+  border:1px solid #ead3dc !important; background:#fff !important; color:#8c0e3c !important;
+  text-decoration:none !important;
+}
+.fb-users-page .fb-users-filters .fb-users-reset svg {
+  width:21px !important; height:21px !important; flex:none !important; display:block !important;
+}
+.fb-users-page .fb-users-filters .fb-users-reset:hover { background:#fff7fa !important; }
+.fb-users-page .fb-users-filters .fb-users-button:focus-visible,
+.fb-users-page .fb-users-filters .fb-users-reset:focus-visible { outline:3px solid #c85880 !important; outline-offset:2px !important; }
+@media(max-width:1200px) {
+  .fb-users-page .fb-users-filters { grid-template-columns:minmax(0,1fr) minmax(135px,175px) minmax(135px,175px) !important; }
+  .fb-users-page .fb-users-filters .fb-users-button,
+  .fb-users-page .fb-users-filters .fb-users-reset { grid-column:auto !important; }
+  .fb-users-page .fb-users-filters .fb-users-search { grid-column:auto !important; }
+}
+@media(max-width:900px) {
+  .fb-users-page .fb-users-filters { grid-template-columns:repeat(2,minmax(0,1fr)) !important; padding:0 20px 20px !important; }
+  .fb-users-page .fb-users-filters .fb-users-search { grid-column:1/-1 !important; }
+  .fb-users-page .fb-users-filters .fb-users-button,
+  .fb-users-page .fb-users-filters .fb-users-reset { grid-column:auto !important; }
+}
+@media(max-width:480px) {
+  .fb-users-page .fb-users-filters { gap:10px !important; padding:0 16px 18px !important; }
+  .fb-users-page .fb-users-filters input,
+  .fb-users-page .fb-users-filters select,
+  .fb-users-page .fb-users-filters .fb-users-button,
+  .fb-users-page .fb-users-filters .fb-users-reset { height:48px !important; min-height:48px !important; font-size:13px !important; border-radius:12px !important; }
+  .fb-users-page .fb-users-filters .fb-users-reset { gap:7px !important; }
+}

@@ -1,0 +1,54 @@
+/* FindBack — photo dimensions, shared by both verification tabs. */
+/* Desktop: centered group stays centered; photo is more legible. */
+@media (min-width: 721px) {
+  .fb-v-panel .fb-v25-table .fb-v25-item {
+    gap: 16px;
+  }
+  .fb-v-panel .fb-v25-table .fb-v25-thumb,
+  .fb-v-panel .fb-v25-table .fb-v25-thumb-empty {
+    width: 88px;
+    height: 88px;
+    flex: 0 0 88px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+  .fb-v-panel .fb-v25-table .fb-v25-thumb-empty svg {
+    width: 32px;
+    height: 32px;
+  }
+}
+/* Mobile cards: a slightly smaller image protects room for the ID/date. */
+@media (max-width: 720px) {
+  .fb-v-panel .fb-v25-table .fb-v25-item {
+    gap: 12px;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .fb-v-panel .fb-v25-table .fb-v25-thumb,
+  .fb-v-panel .fb-v25-table .fb-v25-thumb-empty {
+    width: 80px;
+    height: 80px;
+    flex: 0 0 80px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+  .fb-v-panel .fb-v25-table .fb-v25-thumb-empty svg {
+    width: 29px;
+    height: 29px;
+  }
+  .fb-v-panel .fb-v25-table .fb-v25-item-copy {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+/* Very narrow handsets: prevent image + metadata overflow. */
+@media (max-width: 360px) {
+  .fb-v-panel .fb-v25-table .fb-v25-thumb,
+  .fb-v-panel .fb-v25-table .fb-v25-thumb-empty {
+    width: 72px;
+    height: 72px;
+    flex-basis: 72px;
+  }
+}

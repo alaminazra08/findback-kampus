@@ -1,0 +1,85 @@
+/* FindBack — equal column geometry for both verification tabs.
+   Desktop/tablet only: preserve existing mobile card layout. */
+@media (min-width: 721px) {
+  .fb-v25-table-wrap { overflow-x: auto; }
+  .fb-v25-table {
+    width: 100%;
+    min-width: 1060px;
+    table-layout: fixed;
+  }
+  .fb-v25-table th:nth-child(1), .fb-v25-table td:nth-child(1) { width: 28%; }
+  .fb-v25-table th:nth-child(2), .fb-v25-table td:nth-child(2) { width: 10%; }
+  .fb-v25-table th:nth-child(3), .fb-v25-table td:nth-child(3) { width: 11%; }
+  .fb-v25-table th:nth-child(4), .fb-v25-table td:nth-child(4) { width: 12%; }
+  .fb-v25-table th:nth-child(5), .fb-v25-table td:nth-child(5) { width: 22%; }
+  .fb-v25-table th:nth-child(6), .fb-v25-table td:nth-child(6) { width: 17%; }
+  .fb-v25-table td { overflow-wrap: anywhere; }
+  .fb-v25-table .fb-v25-item { min-width: 0; }
+  .fb-v25-table .fb-v25-item > * { min-width: 0; }
+  .fb-v25-table .fb-v-status { max-width: 100%; white-space: normal; }
+  .fb-v25-table .fb-v25-detail { max-width: 100%; }
+}
+
+/* FindBack verification: same centered geometry in Queue and Rejected tabs.
+   Keep the Barang detail block readable with its own left-aligned text. */
+@media (min-width: 721px) {
+  .fb-v-panel .fb-v25-table thead th {
+    text-align: center;
+    vertical-align: middle;
+  }
+  .fb-v-panel .fb-v25-table tbody tr.fb-v25-row > td {
+    text-align: center;
+    vertical-align: middle;
+  }
+  .fb-v-panel .fb-v25-table tbody tr.fb-v25-row > td:first-child .fb-v25-item {
+    width: fit-content;
+    max-width: 100%;
+    min-width: 0;
+    margin-inline: auto;
+    justify-content: flex-start;
+    text-align: left;
+  }
+  .fb-v-panel .fb-v25-table tbody tr.fb-v25-row > td:first-child .fb-v25-item-copy {
+    text-align: left;
+    align-items: flex-start;
+  }
+  .fb-v-panel .fb-v25-table tbody tr.fb-v25-row > td:nth-child(2) .fb-v25-type,
+  .fb-v-panel .fb-v25-table tbody tr.fb-v25-row > td:nth-child(5) .fb-v-status,
+  .fb-v-panel .fb-v25-table tbody tr.fb-v25-row > td:nth-child(6) .fb-v25-detail {
+    margin-inline: auto;
+  }
+  .fb-v-panel .fb-v25-table tbody tr.fb-v25-row > td:nth-child(3) .fb-v25-detail-text,
+  .fb-v-panel .fb-v25-table tbody tr.fb-v25-row > td:nth-child(4) .fb-v25-detail-text {
+    display: inline-block;
+    max-width: 100%;
+    text-align: center;
+  }
+}
+
+/* Align all Barang photos on one shared vertical axis in both verification
+   tabs. The photo column stays fixed even when item titles have different
+   lengths. Do not affect the mobile card presentation. */
+@media (min-width: 721px) {
+  .fb-v-panel .fb-v25-table tbody tr.fb-v25-row > td:first-child .fb-v25-item {
+    display: grid;
+    grid-template-columns: 88px minmax(0, 1fr);
+    align-items: center;
+    column-gap: 16px;
+    width: 100%;
+    max-width: 100%;
+    margin-inline: 0;
+    min-width: 0;
+    box-sizing: border-box;
+    text-align: left;
+  }
+  .fb-v-panel .fb-v25-table tbody tr.fb-v25-row > td:first-child .fb-v25-item-copy {
+    min-width: 0;
+    text-align: left;
+  }
+  .fb-v-panel .fb-v25-table tbody tr.fb-v25-row > td:first-child .fb-v25-thumb,
+  .fb-v-panel .fb-v25-table tbody tr.fb-v25-row > td:first-child .fb-v25-thumb-empty {
+    grid-column: 1;
+    width: 88px;
+    height: 88px;
+  }
+}

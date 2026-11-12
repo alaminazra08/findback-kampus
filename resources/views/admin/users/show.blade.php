@@ -1,8 +1,11 @@
 @extends('admin.layouts.items')
 @section('title', 'Detail Akun')
 @section('breadcrumb', 'Manajemen Akun')
-@section('content')
+@section('page-styles')
     <link rel="stylesheet" href="{{ asset('css/admin/admin-users-detail-v40.css') }}?v=43">
+@endsection
+
+@section('content')
     <div class="fb-users-page fb-detail40">
         <nav class="fb41-breadcrumb" aria-label="Navigasi kembali">
             <a class="fb40-back fb41-back" href="{{ route('admin.users.index') }}"><svg viewBox="0 0 24 24" fill="none"

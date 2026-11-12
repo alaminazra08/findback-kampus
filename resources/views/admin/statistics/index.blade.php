@@ -3,11 +3,15 @@
 @section('title', 'Laporan & Statistik')
 @section('breadcrumb', 'Laporan & Statistik')
 
-@section('content')
-<link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
-
+@section('page-styles')
+    <link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/admin-statistics.css') }}?v=33">
     <link rel="stylesheet" href="{{ asset('css/admin/findback-statistics-premium.css') }}?v=4">
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/statistics/index.css') }}">
+@endsection
+
+@section('content')
+
     <section class="fs-page">
         <div class="fs-header">
             <div>
@@ -19,7 +23,7 @@
                 <div class="fs-toolbar-label"><span class="fs-toolbar-dot"></span> PUSAT LAPORAN</div>
                 <form method="GET" action="{{ route('admin.statistics.index') }}" class="fs-filter">
                     <label for="period">Periode laporan</label>
-                    <select id="period" name="period" data-submit-on-change>
+                    <select id="period" name="period" data-fb-stat-period>
                         @foreach (['7' => '7 Hari Terakhir', '30' => '30 Hari Terakhir', '90' => '3 Bulan Terakhir', '365' => '1 Tahun Terakhir', 'all' => 'Semua Data'] as $key => $label)
                             <option value="{{ $key }}" @selected($period === (string) $key)>{{ $label }}</option>
                         @endforeach
@@ -291,6 +295,4 @@
             seluruh data.</p>
     </section>
     <script type="application/json" id="fs-trend-data" data-period="{{ $period }}">@json($trend)</script>
-    <script src="{{ asset('js/pages/admin/statistics/index.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('css/pages/admin/statistics/index.css') }}">
 @endsection

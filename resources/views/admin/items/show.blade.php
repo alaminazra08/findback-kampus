@@ -1,5 +1,9 @@
 @extends('admin.layouts.items')
 @section('title', 'Detail Barang')
+@section('page-styles')
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/items/show.css') }}">
+@endsection
+
 @section('content')
     <div class="fb-items-heading">
         <div>
@@ -86,5 +90,4 @@
             </section>
         </div>
     </div>
-    <link rel="stylesheet" href="{{ asset('css/pages/admin/items/show.css') }}">
 @endsection

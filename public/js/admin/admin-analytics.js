@@ -1,4 +1,5 @@
 (() => {
+function mount(signal) {
     const source = document.getElementById("fb-analytics-json");
     if (!source) return;
     let d;
@@ -108,4 +109,14 @@
         ),
     );
     node.replaceChildren(svg);
+}
+
+    let controller;
+    function render() {
+        controller?.abort();
+        controller = new AbortController();
+        mount(controller.signal);
+    }
+    document.addEventListener('fb:admin-page', render);
+    render();
 })();

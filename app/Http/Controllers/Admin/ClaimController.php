@@ -56,6 +56,11 @@ class ClaimController extends Controller
             $query->where('status', $status);
         }
 
+        $counts = ItemClaim::query()
+            ->selectRaw('status, COUNT(*) AS total')
+            ->groupBy('status')
+            ->pluck('total', 'status');
+
         return view('admin.claims.index', [
             'claims' => $query
                 ->orderByRaw(
@@ -64,11 +69,11 @@ class ClaimController extends Controller
                 ->latest()
                 ->paginate(10)
                 ->withQueryString(),
-            'total' => ItemClaim::count(),
-            'pending' => ItemClaim::where('status', 'pending')->count(),
-            'approved' => ItemClaim::where('status', 'approved')->count(),
-            'rejected' => ItemClaim::where('status', 'rejected')->count(),
-            'returned' => ItemClaim::where('status', 'returned')->count(),
+            'total' => $counts->sum(),
+            'pending' => (int) $counts->get('pending', 0),
+            'approved' => (int) $counts->get('approved', 0),
+            'rejected' => (int) $counts->get('rejected', 0),
+            'returned' => (int) $counts->get('returned', 0),
         ]);
     }
 

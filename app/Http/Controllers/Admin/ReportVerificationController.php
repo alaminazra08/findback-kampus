@@ -8,12 +8,13 @@ use App\Notifications\ReportReviewResultNotification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class ReportVerificationController extends Controller
 {
-    public function index(Request $request): View|RedirectResponse
+    public function index(Request $request): View|RedirectResponse|Response
     {
         $filters = $request->validate([
             'search' => ['nullable', 'string', 'max:100'],
@@ -68,10 +69,10 @@ class ReportVerificationController extends Controller
             ->groupBy('status')
             ->pluck('total', 'status');
 
-        $openRevisionCount = LostFoundItem::query()->where('status', 'rejected')->count();
+        $openRevisionCount = (int) $counts->get('rejected', 0);
         $pendingReadyCount = (int) $counts->get('pending', 0);
 
-        return view('admin.reports.verification.index', [
+        $data = [
             'revisionMode' => $revisionMode,
             'openRevisionCount' => $openRevisionCount,
             'pendingReadyCount' => $pendingReadyCount,
@@ -82,7 +83,15 @@ class ReportVerificationController extends Controller
             'pending' => $counts->get('pending', 0),
             'verified' => $counts->get('verified', 0),
             'rejected' => $counts->get('rejected', 0),
-        ]);
+        ];
+
+        if ($request->header('X-FindBack-Verification') === 'results') {
+            return response()
+                ->view('admin.reports.verification.results', $data)
+                ->header('Cache-Control', 'private, no-store');
+        }
+
+        return view('admin.reports.verification.index', $data);
     }
 
     public function show(LostFoundItem $item): View

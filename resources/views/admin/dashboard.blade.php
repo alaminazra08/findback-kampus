@@ -7,6 +7,7 @@
     <meta name="description" content="{{ $adminSettings['site_description'] }}">
     <meta name="theme-color" content="#121114">
     <title>Dashboard Admin | {{ $adminSettings['site_name'] }}</title>
+    <script src="{{ asset('js/admin/sidebar-prepaint.js') }}"></script>
     <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/admin/admin-dashboard.css') }}?v=40">
     <link rel="stylesheet" href="{{ asset('css/admin/aksi-cepat-premium-v17.css') }}?v=17">
@@ -19,12 +20,15 @@
     <link rel="stylesheet" href="{{ asset('css/admin/admin-sidebar-v43.css') }}?v=43">
     {{-- FINDBACK_SIDEBAR_V44 --}}
     <link rel="stylesheet" href="{{ asset('css/admin/admin-sidebar-v44.css') }}?v=44">
-    <!-- FINDBACK_V45_PREPAINT -->
-    <script src="{{ asset('js/admin/sidebar-prepaint.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('css/admin/admin-sidebar-v45.css') }}?v=48">
     <link rel="stylesheet" href="{{ asset('css/report-cycle.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/shared/view-utilities.css') }}">
-    <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
+    <script src="{{ asset('js/shared/view-interactions.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ asset('css/admin/findback-pm-detail-date.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-report-cards.css') }}?v=20261111">
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-recent-consistency.css') }}?v=1">
 </head>
 
 <body class="fb-responsive fb-admin-body">
@@ -132,11 +136,8 @@
                 </div>
             </header>
 
-            <main class="fb-main">
-                <link rel="stylesheet" href="{{ asset('css/admin/findback-pm-detail-date.css') }}?v=1">
-                
-<link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
-<div class="fb-page-heading">
+            <main class="fb-main" data-fb-nav-page="dashboard">
+                <div class="fb-page-heading">
                     <div>
                         <p class="fb-eyebrow">ADMINISTRASI · FINDBACK KAMPUS</p>
                         <h1>Dashboard <span>Admin</span></h1>
@@ -524,19 +525,33 @@
         </main>
     </div>
     </div>
-    <script src="{{ asset('js/admin/admin-notifications.js') }}?v=1" defer></script>
-    <script src="{{ asset('js/admin/admin-analytics.js') }}?v=1" defer></script>
-    <script src="{{ asset('js/admin/sidebar-mobile.js') }}?v=20261111"></script>
-    <script src="{{ asset('js/admin/dashboard-date.js') }}"></script>
+    <script src="{{ asset('js/admin/admin-notifications.js') }}?v=2" defer></script>
+    <script src="{{ asset('js/admin/sidebar-mobile.js') }}?v=20261111" defer></script>
     {{-- Animasi klik logo saja; menu lain tetap menggunakan navigasi normal. --}}
-    <script src="{{ asset('js/admin/sidebar-brand.js') }}"></script>
     <script src="{{ asset('js/admin/admin-sidebar-v44.js') }}?v=49" defer></script>
-    <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
     <script src="{{ asset('js/shared/responsive-viewport.js') }}?v=20261111" defer></script>
     {{-- Smart Navigation: sama dengan layout Verifikasi dan Laporan Barang. --}}
     <script src="{{ asset('js/admin/smart-navigation-session.js') }}?v=1" defer></script>
-    <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-report-cards.css') }}?v=20261111">
-    <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-recent-consistency.css') }}?v=1">
+    <script src="{{ asset('js/admin/admin-analytics.js') }}?v=2" defer></script>
+    <script src="{{ asset('js/admin/dashboard-date.js') }}?v=2" defer></script>
+    <script src="{{ asset('js/pages/admin/reports/verification/fast-tabs.js') }}?v=3" defer></script>
+    <script src="{{ asset('js/pages/admin/reports/verification/return-context.js') }}?v=2" defer></script>
+    <script src="{{ asset('js/admin/admin-items-upload.js') }}?v=2" defer></script>
+    <script src="{{ asset('js/admin/items-filter-ajax-scroll.js') }}?v=2" defer></script>
+    <script src="{{ asset('js/pages/admin/matching/filter-navigation-v2.js') }}?v=3" defer></script>
+    <script src="{{ asset('js/admin/claims-filter-ajax-scroll.js') }}?v=2" defer></script>
+    <script src="{{ asset('js/pages/admin/statistics/index.js') }}?v=2" defer></script>
+    <script src="{{ asset('js/admin/users-filter-navigation-v1.js') }}?v=2" defer></script>
+    <script src="{{ asset('js/admin/settings-score.js') }}?v=2" defer></script>
+    <script src="{{ asset('js/admin/dashboard-verification-navigation.js') }}?v=7" defer
+        data-dashboard="{{ route('admin.dashboard') }}"
+        data-verification="{{ route('admin.reports.verification') }}"
+        data-items="{{ route('admin.items.index') }}"
+        data-matching="{{ route('admin.matching.index') }}"
+        data-claims="{{ route('admin.claims.index') }}"
+        data-statistics="{{ route('admin.statistics.index') }}"
+        data-users="{{ route('admin.users.index') }}"
+        data-settings="{{ route('admin.settings.index') }}"></script>
 </body>
 
 </html>

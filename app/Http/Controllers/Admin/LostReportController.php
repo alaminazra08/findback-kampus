@@ -33,16 +33,18 @@ class LostReportController extends Controller
             $query->where('status', $status);
         }
 
+        $counts = LostFoundItem::query()
+            ->where('type', 'lost')
+            ->selectRaw('status, COUNT(*) AS total')
+            ->groupBy('status')
+            ->pluck('total', 'status');
+
         return view('admin.reports.lost.index', [
             'items' => $query->latest()->paginate(10)->withQueryString(),
-            'total' => LostFoundItem::where('type', 'lost')->count(),
-            'pending' => LostFoundItem::where('type', 'lost')->where('status', 'pending')->count(),
-            'verified' => LostFoundItem::where('type', 'lost')
-                ->where('status', 'verified')
-                ->count(),
-            'returned' => LostFoundItem::where('type', 'lost')
-                ->where('status', 'returned')
-                ->count(),
+            'total' => $counts->sum(),
+            'pending' => (int) $counts->get('pending', 0),
+            'verified' => (int) $counts->get('verified', 0),
+            'returned' => (int) $counts->get('returned', 0),
         ]);
     }
 }

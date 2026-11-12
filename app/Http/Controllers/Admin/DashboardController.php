@@ -91,52 +91,35 @@ class DashboardController extends Controller
             // 06. GRAFIK TREN LAPORAN 7 HARI
             // =================================================
 
-            $startDate = Carbon::now('Asia/Jakarta')->startOfDay()->subDays(6);
-
-            $trendRows = DB::table('lost_found_items')
+            $today = Carbon::now('Asia/Jakarta')->startOfDay();
+            $startDate = $today->copy()->subDays(6);
+            $databaseTimezone = config('app.timezone');
+            $trendQuery = DB::table('lost_found_items')
                 ->whereIn('status', ['verified', 'claimed', 'returned'])
-                ->select('type', 'created_at')
-                ->where('created_at', '>=', $startDate->copy()->timezone(config('app.timezone')))
                 ->whereIn('type', ['lost', 'found'])
-                ->get();
+                ->where('created_at', '>=', $startDate->copy()->timezone($databaseTimezone))
+                ->where('created_at', '<', $today->copy()->addDay()->timezone($databaseTimezone))
+                ->select('type')
+                ->groupBy('type');
 
-            $trendBucket = [];
-
-            foreach ($trendRows as $row) {
-                if ($row->created_at === null) {
-                    continue;
-                }
-
-                $dateKey = Carbon::parse($row->created_at)
-                    ->timezone('Asia/Jakarta')
-                    ->format('Y-m-d');
-
-                if (!isset($trendBucket[$dateKey])) {
-                    $trendBucket[$dateKey] = [
-                        'lost' => 0,
-                        'found' => 0,
-                    ];
-                }
-
-                if ($row->type === 'lost') {
-                    $trendBucket[$dateKey]['lost']++;
-                }
-
-                if ($row->type === 'found') {
-                    $trendBucket[$dateKey]['found']++;
-                }
+            for ($day = 0; $day < 7; $day++) {
+                $date = $startDate->copy()->addDays($day);
+                $trendQuery->selectRaw(
+                    "COUNT(CASE WHEN created_at >= ? AND created_at < ? THEN 1 END) AS day_{$day}",
+                    [
+                        $date->copy()->timezone($databaseTimezone),
+                        $date->copy()->addDay()->timezone($databaseTimezone),
+                    ],
+                );
+                $reportAnalytics['labels'][] = $date->locale('id')->translatedFormat('d M');
             }
 
-            for ($i = 6; $i >= 0; $i--) {
-                $date = Carbon::now('Asia/Jakarta')->startOfDay()->subDays($i);
+            $trend = $trendQuery->get()->keyBy('type');
 
-                $key = $date->format('Y-m-d');
-
-                $reportAnalytics['labels'][] = $date->locale('id')->translatedFormat('d M');
-
-                $reportAnalytics['lostTrend'][] = $trendBucket[$key]['lost'] ?? 0;
-
-                $reportAnalytics['foundTrend'][] = $trendBucket[$key]['found'] ?? 0;
+            for ($day = 0; $day < 7; $day++) {
+                $column = "day_{$day}";
+                $reportAnalytics['lostTrend'][] = (int) ($trend->get('lost')->{$column} ?? 0);
+                $reportAnalytics['foundTrend'][] = (int) ($trend->get('found')->{$column} ?? 0);
             }
 
             // =================================================

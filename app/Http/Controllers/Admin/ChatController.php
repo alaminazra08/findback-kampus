@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ChatMessage;
+use App\Models\ItemClaim;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class ChatController extends Controller
 {
@@ -49,10 +51,11 @@ class ChatController extends Controller
             $selectedUser = User::where('role', 'user')->findOrFail($request->integer('user'));
             // Only users with conversation history are selectable from this inbox.
             abort_unless($selectedUser->chatMessages()->exists(), 404);
-            $selectedClaim = \App\Models\ItemClaim::with('item')
+            $claimOptions = ItemClaim::with('item')
                 ->where('user_id', $selectedUser->id)
-                ->whereKey($request->integer('claim_id'))
-                ->first();
+                ->latest('id')
+                ->get();
+            $selectedClaim = $claimOptions->firstWhere('id', $request->integer('claim_id'));
             $selectedMessages = $selectedClaim
                 ? ChatMessage::where('user_id', $selectedUser->id)
                     ->where('claim_id', $selectedClaim->id)
@@ -62,10 +65,6 @@ class ChatController extends Controller
                     ->get()
                     ->reverse()
                 : collect();
-            $claimOptions = \App\Models\ItemClaim::with('item')
-                ->where('user_id', $selectedUser->id)
-                ->latest('id')
-                ->get();
             if (!$selectedClaim && $request->boolean('legacy')) {
                 $selectedMessages = ChatMessage::where('user_id', $selectedUser->id)
                     ->whereNull('claim_id')
@@ -76,11 +75,7 @@ class ChatController extends Controller
                     ->reverse();
             }
             $canChat = $selectedClaim && $selectedClaim->status === 'approved';
-            ChatMessage::where('user_id', $selectedUser->id)
-                ->where('sender_id', $selectedUser->id)
-                ->whereIn('id', $selectedMessages->pluck('id'))
-                ->whereNull('read_at')
-                ->update(['read_at' => now()]);
+            $this->markMessagesRead($selectedUser, $selectedMessages->pluck('id'));
         }
         return view(
             'admin.chat.index',
@@ -103,7 +98,7 @@ class ChatController extends Controller
     {
         abort_unless($user->role === 'user', 404);
 
-        $claimOptions = \App\Models\ItemClaim::with('item')
+        $claimOptions = ItemClaim::with('item')
             ->where('user_id', $user->id)
             ->latest('id')
             ->get();
@@ -120,11 +115,7 @@ class ChatController extends Controller
             ->latest('id')
             ->paginate(50)
             ->withQueryString();
-        ChatMessage::where('user_id', $user->id)
-            ->where('sender_id', $user->id)
-            ->whereIn('id', $messages->pluck('id'))
-            ->whereNull('read_at')
-            ->update(['read_at' => now()]);
+        $this->markMessagesRead($user, $messages->pluck('id'));
 
         return view(
             'admin.chat.show',
@@ -139,7 +130,7 @@ class ChatController extends Controller
     {
         abort_unless($user->role === 'user', 404);
         abort_unless(
-            \App\Models\ItemClaim::where('user_id', $user->id)
+            ItemClaim::where('user_id', $user->id)
                 ->where('status', 'approved')
                 ->exists(),
             403,
@@ -150,7 +141,7 @@ class ChatController extends Controller
         $request->validate(['from_claim' => ['required', 'integer', 'min:1']]);
         $claim = null;
         if ($request->exists('from_claim')) {
-            $claim = \App\Models\ItemClaim::query()
+            $claim = ItemClaim::query()
                 ->whereKey($request->integer('from_claim'))
                 ->where('user_id', $user->id)
                 ->where('status', 'approved')
@@ -201,7 +192,7 @@ class ChatController extends Controller
     {
         abort_unless($user->role === 'user', 404);
 
-        $claim = \App\Models\ItemClaim::whereKey($request->integer('claim_id'))
+        $claim = ItemClaim::whereKey($request->integer('claim_id'))
             ->where('user_id', $user->id)
             ->first();
         abort_unless($claim, 403, 'Pilih klaim yang sesuai.');
@@ -232,13 +223,20 @@ class ChatController extends Controller
                 ];
             });
 
-        ChatMessage::where('user_id', $user->id)
-            ->where('sender_id', $user->id)
-            ->whereIn('id', $messages->pluck('id'))
-            ->whereNull('read_at')
-            ->update(['read_at' => now()]);
+        $this->markMessagesRead($user, $messages->pluck('id'));
         return response()->json([
             'messages' => $messages,
         ]);
+    }
+
+    private function markMessagesRead(User $user, Collection $ids): void
+    {
+        if ($ids->isNotEmpty()) {
+            ChatMessage::where('user_id', $user->id)
+                ->where('sender_id', $user->id)
+                ->whereIn('id', $ids)
+                ->whereNull('read_at')
+                ->update(['read_at' => now()]);
+        }
     }
 }

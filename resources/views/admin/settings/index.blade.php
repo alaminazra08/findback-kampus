@@ -4,11 +4,14 @@
 @section('title', 'Pengaturan Sistem')
 @section('breadcrumb', 'Pengaturan')
 
-@section('content')
-<link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
-
-<link rel="stylesheet"
+@section('page-styles')
+    <link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
+    <link rel="stylesheet"
       href="{{ asset('css/admin/admin-settings.css') }}?v=41">
+@endsection
+
+@section('content')
+
 
 <div class="fb-settings">
 
@@ -464,5 +467,4 @@
 
 </div>
 
-<script src="{{ asset('js/admin/settings-score.js') }}" defer></script>
 @endsection

@@ -29,16 +29,16 @@ class StatisticsReportService
         $since = $this->since($period);
         $items = $this->itemsForPeriod($period);
 
-        $total = (clone $items)->count();
+        $itemCounts = (clone $items)
+            ->selectRaw('status, type, COUNT(*) AS total')
+            ->groupBy('status', 'type')
+            ->get();
 
-        $lost = (clone $items)->where('type', 'lost')->count();
-
-        $found = (clone $items)->where('type', 'found')->count();
-
-        $statuses = (clone $items)
-            ->select('status', DB::raw('COUNT(*) as total'))
-            ->groupBy('status')
-            ->pluck('total', 'status')
+        $total = $itemCounts->sum('total');
+        $lost = $itemCounts->where('type', 'lost')->sum('total');
+        $found = $itemCounts->where('type', 'found')->sum('total');
+        $statuses = $itemCounts->groupBy('status')
+            ->map(fn ($rows) => $rows->sum('total'))
             ->all();
 
         // ====================================================
@@ -55,13 +55,12 @@ class StatisticsReportService
                 $claims->where('created_at', '>=', $since);
             }
 
-            $claimTotal = (clone $claims)->count();
-
-            $claimStatuses = (clone $claims)
+            $claimStatuses = $claims
                 ->select('status', DB::raw('COUNT(*) as total'))
                 ->groupBy('status')
                 ->pluck('total', 'status')
                 ->all();
+            $claimTotal = array_sum($claimStatuses);
         }
 
         // ====================================================
@@ -78,13 +77,12 @@ class StatisticsReportService
                 $matches->where('created_at', '>=', $since);
             }
 
-            $matchTotal = (clone $matches)->count();
-
-            $matchStatuses = (clone $matches)
+            $matchStatuses = $matches
                 ->select('status', DB::raw('COUNT(*) as total'))
                 ->groupBy('status')
                 ->pluck('total', 'status')
                 ->all();
+            $matchTotal = array_sum($matchStatuses);
         }
 
         // ====================================================
@@ -116,29 +114,16 @@ class StatisticsReportService
         $trendRows = DB::table('lost_found_items')
             ->whereIn('status', ['verified', 'claimed', 'returned'])
             ->where('created_at', '>=', $trendStart)
-            ->select('type', 'created_at')
+            ->whereIn('type', ['lost', 'found'])
+            ->selectRaw('type, DATE(created_at) AS report_day, COUNT(*) AS total')
+            ->groupBy('type', DB::raw('DATE(created_at)'))
             ->get();
 
         $bucket = [];
 
         foreach ($trendRows as $row) {
-            if ($row->created_at === null) {
-                continue;
-            }
-
-            $date = Carbon::parse($row->created_at);
-
-            $key = $monthly ? $date->format('Y-m') : $date->format('Y-m-d');
-
-            $kind = match ($row->type) {
-                'lost' => 'lost',
-                'found' => 'found',
-                default => null,
-            };
-
-            if ($kind !== null) {
-                $bucket[$key][$kind] = ($bucket[$key][$kind] ?? 0) + 1;
-            }
+            $key = $monthly ? substr($row->report_day, 0, 7) : $row->report_day;
+            $bucket[$key][$row->type] = ($bucket[$key][$row->type] ?? 0) + (int) $row->total;
         }
 
         $trend = [];

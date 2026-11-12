@@ -1,9 +1,12 @@
 @extends('admin.layouts.items')
 @section('title', 'Pesan Pengguna')
 @section('breadcrumb', 'Pesan Pengguna')
-@section('content')
+@section('page-styles')
     <link rel="stylesheet" href="{{ asset('css/chat/chat.css') }}?v=3">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/chat/index.css') }}">
+@endsection
+
+@section('content')
     <div class="fb-inbox">
         <h1>Pesan Pengguna</h1>
         <p>Pilih pengguna dan nomor klaim untuk melihat percakapan yang sesuai.</p>

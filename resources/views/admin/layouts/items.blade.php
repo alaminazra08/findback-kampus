@@ -13,6 +13,7 @@
     <title>
         @yield('title', 'Data Barang') | {{ $adminSettings['site_name'] }}
     </title>
+    <script src="{{ asset('js/admin/sidebar-prepaint.js') }}"></script>
 
     <link rel="icon"
         href="{{ asset('favicon.png') }}"
@@ -20,13 +21,12 @@
 
     {{-- CSS UTAMA --}}
     <link rel="stylesheet"
-        href="{{ asset('css/admin/admin-dashboard.css') }}?v=24">
+        href="{{ asset('css/admin/admin-dashboard.css') }}?v=40">
 
     <link rel="stylesheet"
         href="{{ asset('css/admin/admin-items.css') }}?v=34">
 
-    {{-- CSS khusus popup Tambah Barang, dibatasi pada komponen dialog --}}
-    <link rel="stylesheet" href="{{ asset('css/admin/admin-items-upload.css') }}?v=20261111-2">
+    @yield('item-upload-style')
 
     <link rel="stylesheet"
         href="{{ asset('css/pages/admin/layouts/items.css') }}">
@@ -41,7 +41,6 @@
     <link rel="stylesheet"
         href="{{ asset('css/admin/admin-sidebar-v44.css') }}?v=44">
 
-    <script src="{{ asset('js/admin/sidebar-prepaint.js') }}"></script>
 
     <link rel="stylesheet"
         href="{{ asset('css/admin/admin-sidebar-v45.css') }}?v=48">
@@ -53,7 +52,9 @@
     <link rel="stylesheet"
         href="{{ asset('css/shared/view-utilities.css') }}">
 
-    <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
+    <script src="{{ asset('js/shared/view-interactions.js') }}" defer></script>
+    @yield('page-styles')
+    <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
 </head>
 
 <body class="fb-responsive fb-admin-body">
@@ -330,7 +331,7 @@
             </header>
 
             {{-- KONTEN UTAMA --}}
-            <main class="fb-main fb-items-main">
+            <main class="fb-main fb-items-main" @if (request()->routeIs('admin.reports.verification')) data-fb-nav-page="verification" @elseif (request()->routeIs('admin.items.index')) data-fb-nav-page="items" @elseif (request()->routeIs('admin.matching.index')) data-fb-nav-page="matching" @elseif (request()->routeIs('admin.claims.index')) data-fb-nav-page="claims" @elseif (request()->routeIs('admin.statistics.index')) data-fb-nav-page="statistics" @elseif (request()->routeIs('admin.users.index')) data-fb-nav-page="users" @elseif (request()->routeIs('admin.settings.index')) data-fb-nav-page="settings" @endif>
 
                 @yield('content')
 
@@ -342,15 +343,12 @@
 
     {{-- NOTIFIKASI --}}
     <script
-        src="{{ asset('js/admin/admin-notifications.js') }}?v=1"
+        src="{{ asset('js/admin/admin-notifications.js') }}?v=2"
         defer>
     </script>
 
     {{-- SIDEBAR MOBILE --}}
-    <script src="{{ asset('js/admin/sidebar-mobile.js') }}?v=20261111"></script>
-
-    {{-- ANIMASI LOGO --}}
-    <script src="{{ asset('js/admin/sidebar-brand.js') }}"></script>
+    <script src="{{ asset('js/admin/sidebar-mobile.js') }}?v=20261111" defer></script>
 
     {{-- SIDEBAR --}}
     <script
@@ -358,11 +356,30 @@
         defer>
     </script>
 
-    {{-- JavaScript popup unggah laporan barang --}}
-    <script src="{{ asset('js/admin/admin-items-upload.js') }}?v=1" defer></script>
-    <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
     <script src="{{ asset('js/shared/responsive-viewport.js') }}?v=20261111" defer></script>
     <script src="{{ asset('js/admin/smart-navigation-session.js') }}?v=1" defer></script>
+    @if (request()->routeIs('admin.reports.verification', 'admin.items.index', 'admin.matching.index', 'admin.claims.index', 'admin.statistics.index', 'admin.users.index', 'admin.settings.index'))
+        <script src="{{ asset('js/admin/admin-analytics.js') }}?v=2" defer></script>
+        <script src="{{ asset('js/admin/dashboard-date.js') }}?v=2" defer></script>
+        <script src="{{ asset('js/pages/admin/reports/verification/fast-tabs.js') }}?v=3" defer></script>
+        <script src="{{ asset('js/pages/admin/reports/verification/return-context.js') }}?v=2" defer></script>
+        <script src="{{ asset('js/admin/admin-items-upload.js') }}?v=2" defer></script>
+        <script src="{{ asset('js/admin/items-filter-ajax-scroll.js') }}?v=2" defer></script>
+        <script src="{{ asset('js/pages/admin/matching/filter-navigation-v2.js') }}?v=3" defer></script>
+        <script src="{{ asset('js/admin/claims-filter-ajax-scroll.js') }}?v=2" defer></script>
+        <script src="{{ asset('js/pages/admin/statistics/index.js') }}?v=2" defer></script>
+        <script src="{{ asset('js/admin/users-filter-navigation-v1.js') }}?v=2" defer></script>
+        <script src="{{ asset('js/admin/settings-score.js') }}?v=2" defer></script>
+        <script src="{{ asset('js/admin/dashboard-verification-navigation.js') }}?v=7" defer
+            data-dashboard="{{ route('admin.dashboard') }}"
+            data-verification="{{ route('admin.reports.verification') }}"
+            data-items="{{ route('admin.items.index') }}"
+            data-matching="{{ route('admin.matching.index') }}"
+            data-claims="{{ route('admin.claims.index') }}"
+            data-statistics="{{ route('admin.statistics.index') }}"
+            data-users="{{ route('admin.users.index') }}"
+            data-settings="{{ route('admin.settings.index') }}"></script>
+    @endif
 </body>
 
 </html>

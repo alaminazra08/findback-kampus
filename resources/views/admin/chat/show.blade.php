@@ -4,14 +4,17 @@
 
 @section('breadcrumb', 'Pesan Pengguna')
 
-@section('content')
+@section('page-styles')
     <link rel="stylesheet" href="{{ asset('css/chat/findback-chat-ui-v2.css') }}?v=2">
-
     <link rel="stylesheet" href="{{ asset('css/chat/chat.css') }}?v=3">
     <link rel="stylesheet" href="{{ asset('css/chat/findback-claim-chat.css') }}?v=20261111">
     <link rel="stylesheet" href="{{ asset('css/chat/findback-claim-premium-v4.css') }}?v=20261111">
-
     <link rel="stylesheet" href="{{ asset('css/pages/admin/chat/show.css') }}">
+@endsection
+
+@section('content')
+
+
 
     <div class="fb-chat-page">
 

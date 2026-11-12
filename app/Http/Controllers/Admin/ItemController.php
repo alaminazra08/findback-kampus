@@ -87,33 +87,24 @@ class ItemController extends Controller
         /*
         | Statistik dan daftar barang
         */
+        $counts = LostFoundItem::query()
+            ->whereIn('status', [...$activeStatuses, 'pending'])
+            ->selectRaw('status, type, COUNT(*) AS total')
+            ->groupBy('status', 'type')
+            ->get();
+        $published = $counts->whereIn('status', $activeStatuses);
+
         return view('admin.items.index', [
             'items' => $query
                 ->latest()
                 ->paginate(10)
                 ->withQueryString(),
 
-            'total' => LostFoundItem::query()
-                ->whereIn('status', $activeStatuses)
-                ->count(),
-
-            'lost' => LostFoundItem::query()
-                ->where('type', 'lost')
-                ->whereIn('status', $activeStatuses)
-                ->count(),
-
-            'found' => LostFoundItem::query()
-                ->where('type', 'found')
-                ->whereIn('status', $activeStatuses)
-                ->count(),
-
-            'pending' => LostFoundItem::query()
-                ->where('status', 'pending')
-                ->count(),
-
-            'returned' => LostFoundItem::query()
-                ->where('status', 'returned')
-                ->count(),
+            'total' => $published->sum('total'),
+            'lost' => $published->where('type', 'lost')->sum('total'),
+            'found' => $published->where('type', 'found')->sum('total'),
+            'pending' => $counts->where('status', 'pending')->sum('total'),
+            'returned' => $counts->where('status', 'returned')->sum('total'),
 
             'group' => $group,
         ]);

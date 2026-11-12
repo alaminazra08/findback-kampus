@@ -3,15 +3,18 @@
 @section('title', 'Manajemen Akun')
 @section('breadcrumb', 'Manajemen Akun')
 
-@section('content')
-<link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
-
+@section('page-styles')
+    <link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/admin-users.css') }}?v=36">
     <link rel="stylesheet" href="{{ asset('css/admin/findback-users-v39.css') }}?v=39">
     <link rel="stylesheet" href="{{ asset('css/admin/users-filter-premium-v1.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/users-filter-claims-consistent-v2.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/users-filter-claims-compact-v3.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/users-filter-claim-final-v4.css') }}?v=4">
+@endsection
+
+@section('content')
+
     <div class="fb-users-page">
         <div class="fb-users-heading">
             <div>
@@ -151,5 +154,4 @@
         <p class="fb-users-footnote">Untuk keamanan, password, token sesi, dan identitas Google internal tidak ditampilkan.
         </p>
     </div>
-    <script defer src="{{ asset('js/admin/users-filter-navigation-v1.js') }}?v=1"></script>
 @endsection

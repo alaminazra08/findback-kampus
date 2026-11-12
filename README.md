@@ -54,3 +54,6 @@ Jalankan pengujian pada salinan terisolasi. Pemasang menyediakan verify.php dan 
 ## Status hasil audit
 
 Refactoring tidak menyatakan seluruh aplikasi sudah siap produksi. Baseline memiliki 17 tes gagal/error sebelum perubahan; hasil akhir tetap mencatat 17 masalah yang sama, tanpa skip. Rincian dan batas pengujian terdapat di docs/refactoring. Perubahan alur bisnis, privasi lampiran lama, dan perbaikan desain responsif lanjutan harus dikerjakan sebagai pekerjaan tersendiri.
+
+
+Nazwa ikut berkontribusi di project ini.

@@ -17,11 +17,17 @@ class DashboardController extends Controller
         // 01. STATISTIK PENGGUNA
         // ====================================================
 
-        $totalUsers = User::count();
+        $userCounts = User::query()
+            ->selectRaw(
+                "COUNT(*) AS total"
+                . ", COUNT(CASE WHEN role = 'admin' THEN 1 END) AS admins"
+                . ", COUNT(CASE WHEN role = 'user' THEN 1 END) AS regular_users"
+            )
+            ->first();
 
-        $totalAdmins = User::query()->where('role', 'admin')->count();
-
-        $totalRegularUsers = User::query()->where('role', 'user')->count();
+        $totalUsers = (int) $userCounts->total;
+        $totalAdmins = (int) $userCounts->admins;
+        $totalRegularUsers = (int) $userCounts->regular_users;
 
         $recentUsers = User::query()
             ->select(['id', 'name', 'email', 'role', 'created_at'])
@@ -40,6 +46,8 @@ class DashboardController extends Controller
             'found' => 0,
             'claim' => 0,
             'returned' => 0,
+            'pending' => 0,
+            'rejected' => 0,
             'labels' => [],
             'lostTrend' => [],
             'foundTrend' => [],
@@ -58,44 +66,24 @@ class DashboardController extends Controller
             // 04. TOTAL LAPORAN BARANG
             // =================================================
 
-            $reportAnalytics['total'] = DB::table('lost_found_items')
-                ->whereIn('status', ['verified', 'claimed', 'returned'])
-                ->count();
+            $reportCounts = DB::table('lost_found_items')
+                ->selectRaw(
+                    "COUNT(CASE WHEN status IN ('verified', 'claimed', 'returned') THEN 1 END) AS total"
+                    . ", COUNT(CASE WHEN status IN ('verified', 'claimed', 'returned') AND type = 'lost' THEN 1 END) AS lost"
+                    . ", COUNT(CASE WHEN status IN ('verified', 'claimed', 'returned') AND type = 'found' THEN 1 END) AS found"
+                    . ", COUNT(CASE WHEN status = 'returned' AND type = 'found' THEN 1 END) AS returned"
+                    . ", COUNT(CASE WHEN status = 'pending' THEN 1 END) AS pending"
+                    . ", COUNT(CASE WHEN status = 'rejected' THEN 1 END) AS rejected"
+                )
+                ->first();
 
-            $reportAnalytics['lost'] = DB::table('lost_found_items')
-                ->where('type', 'lost')
-                ->whereIn('status', ['verified', 'claimed', 'returned'])
-                ->count();
-
-            $reportAnalytics['found'] = DB::table('lost_found_items')
-                ->where('type', 'found')
-                ->whereIn('status', ['verified', 'claimed', 'returned'])
-                ->count();
-
-            // =================================================
-            // 05. STATISTIK KLAIM BARANG
-            // =================================================
+            foreach (['total', 'lost', 'found', 'returned', 'pending', 'rejected'] as $metric) {
+                $reportAnalytics[$metric] = (int) $reportCounts->{$metric};
+            }
 
             if (Schema::hasTable('item_claims')) {
-                // Klaim yang masih dalam proses:
-                // pending  = menunggu pemeriksaan
-                // approved = disetujui, belum diserahkan
-
                 $reportAnalytics['claim'] = DB::table('item_claims')
                     ->whereIn('status', ['pending', 'approved'])
-                    ->count();
-
-                // Klaim yang telah selesai dikembalikan
-                $reportAnalytics['returned'] = DB::table('item_claims')
-                    ->where('status', 'returned')
-                    ->count();
-            } else {
-                // Jika modul klaim belum tersedia,
-                // gunakan status pengembalian pada laporan.
-
-                $reportAnalytics['returned'] = DB::table('lost_found_items')
-                    ->where('type', 'found')
-                    ->where('status', 'returned')
                     ->count();
             }
 
@@ -197,23 +185,6 @@ class DashboardController extends Controller
             $reportAnalytics['updatedAt'] = Carbon::now('Asia/Jakarta')->toDateTimeString();
         }
 
-        // Dashboard and statistics count returned goods, not approved claims.
-        // A returned found item represents one completed handover, regardless
-        // of how many claim records reference it.
-        $reportAnalytics['returned'] = Schema::hasTable('lost_found_items')
-            ? DB::table('lost_found_items')
-                ->where('type', 'found')
-                ->where('status', 'returned')
-                ->count()
-            : 0;
-        $reportAnalytics['pending'] = Schema::hasTable('lost_found_items')
-            ? DB::table('lost_found_items')->where('status', 'pending')->count()
-            : 0;
-        // Selaraskan kartu Dashboard dengan tab Verifikasi Laporan.
-        // Antrean Verifikasi = pending; Laporan Ditolak = rejected.
-        $reportAnalytics['rejected'] = Schema::hasTable('lost_found_items')
-            ? DB::table('lost_found_items')->where('status', 'rejected')->count()
-            : 0;
         // ====================================================
         // 09. KIRIM DATA KE DASHBOARD ADMIN
         // ====================================================

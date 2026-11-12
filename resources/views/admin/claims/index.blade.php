@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
 
     <link rel="stylesheet" href="{{ asset('css/admin/admin-claims.css') }}?v=20261101-executive">
+    <link rel="stylesheet" href="{{ asset('css/admin/claims-table-consistency.css') }}?v=1">
     <section class="fb-claim-executive" aria-label="Ringkasan Klaim Barang">
         <div class="fb-page-heading">
             <div>
@@ -74,7 +75,13 @@
                 @endforeach
             </select>
             <button type="submit">Terapkan</button>
-            <a class="fb-claim-reset" href="{{ route('admin.claims.index') }}">Reset</a>
+            <a class="fb-claim-reset" href="{{ route('admin.claims.index') }}"><svg
+                    viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"
+                    style="flex:none">
+                    <path d="M4 8.5H13.5C17.5 8.5 20 11 20 14.5C20 18 17.5 20 14 20H10"
+                        stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M4.2 8.5L10 3.5V13.5L4.2 8.5Z" fill="currentColor" />
+                </svg><span>Atur Ulang</span></a>
         </form>
 
         <div class="fb-claim-table-scroll">
@@ -171,5 +178,6 @@
             <div class="fb-claim-pages">{{ $claims->links() }}</div>
         @endif
     </section>
+    <script src="{{ asset('js/admin/claims-filter-ajax-scroll.js') }}?v=1" defer></script>
     <footer class="fb-footer">© {{ date('Y') }} FindBack Kampus · Fakultas Sains dan Teknologi</footer>
 @endsection

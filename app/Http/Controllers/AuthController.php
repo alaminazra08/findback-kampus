@@ -121,13 +121,19 @@ class AuthController extends Controller
 
         $reports = DB::table('lost_found_items')->where('user_id', $userId);
 
-        $totalReports = (clone $reports)->count();
+        $reportCounts = (clone $reports)
+            ->selectRaw(
+                "COUNT(*) AS total"
+                . ", COUNT(CASE WHEN type = 'lost' THEN 1 END) AS lost"
+                . ", COUNT(CASE WHEN type = 'found' THEN 1 END) AS found"
+                . ", COUNT(CASE WHEN status = 'pending' THEN 1 END) AS pending"
+            )
+            ->first();
 
-        $lostReports = (clone $reports)->where('type', 'lost')->count();
-
-        $foundReports = (clone $reports)->where('type', 'found')->count();
-
-        $pendingReports = (clone $reports)->where('status', 'pending')->count();
+        $totalReports = (int) $reportCounts->total;
+        $lostReports = (int) $reportCounts->lost;
+        $foundReports = (int) $reportCounts->found;
+        $pendingReports = (int) $reportCounts->pending;
 
         /*
         |--------------------------------------------------------------------------
@@ -159,15 +165,21 @@ class AuthController extends Controller
 
         $claims = DB::table('item_claims')->where('user_id', $userId);
 
-        $totalClaims = (clone $claims)->count();
+        $claimCounts = $claims
+            ->selectRaw(
+                "COUNT(*) AS total"
+                . ", COUNT(CASE WHEN status = 'pending' THEN 1 END) AS pending"
+                . ", COUNT(CASE WHEN status = 'approved' THEN 1 END) AS approved"
+                . ", COUNT(CASE WHEN status = 'rejected' THEN 1 END) AS rejected"
+                . ", COUNT(CASE WHEN status = 'returned' THEN 1 END) AS returned"
+            )
+            ->first();
 
-        $pendingClaims = (clone $claims)->where('status', 'pending')->count();
-
-        $approvedClaims = (clone $claims)->where('status', 'approved')->count();
-
-        $rejectedClaims = (clone $claims)->where('status', 'rejected')->count();
-
-        $returnedClaims = (clone $claims)->where('status', 'returned')->count();
+        $totalClaims = (int) $claimCounts->total;
+        $pendingClaims = (int) $claimCounts->pending;
+        $approvedClaims = (int) $claimCounts->approved;
+        $rejectedClaims = (int) $claimCounts->rejected;
+        $returnedClaims = (int) $claimCounts->returned;
 
         /*
         |--------------------------------------------------------------------------

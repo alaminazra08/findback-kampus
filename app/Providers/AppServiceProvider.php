@@ -21,13 +21,30 @@ class AppServiceProvider extends ServiceProvider
     {
         \App\Models\LostFoundItem::observe(\App\Observers\LostFoundItemObserver::class);
         \App\Models\ItemClaim::observe(\App\Observers\ItemClaimObserver::class);
-        // Share current database-backed branding with public, user and admin views.
-        \Illuminate\Support\Facades\View::composer('*', function ($view): void {
-            $view->with('fbBrand', \App\Support\AdminSettings::all());
+        $views = [
+            'welcome',
+            'auth.login',
+            'auth.register',
+            'auth.forgot-password',
+            'auth.reset-password',
+            'user.dashboard',
+            'user.layouts.campus',
+            'user.partials.premium-shell',
+            'admin.dashboard',
+            'admin.layouts.items',
+            'admin.partials.brand',
+        ];
+
+        \Illuminate\Support\Facades\View::composer($views, function ($view): void {
+            $attributes = request()->attributes;
+            $key = \App\Support\AdminSettings::class . '.branding';
+            if (!$attributes->has($key)) {
+                $attributes->set($key, \App\Support\AdminSettings::all());
+            }
+            $settings = $attributes->get($key);
+
+            $view->with('fbBrand', $settings);
+            $view->with('adminSettings', $settings);
         });
-        \Illuminate\Support\Facades\View::composer(
-            ['admin.dashboard', 'admin.layouts.items'],
-            fn ($view) => $view->with('adminSettings', \App\Support\AdminSettings::all()),
-        );
     }
 }

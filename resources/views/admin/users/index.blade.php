@@ -8,6 +8,10 @@
 
     <link rel="stylesheet" href="{{ asset('css/admin/admin-users.css') }}?v=36">
     <link rel="stylesheet" href="{{ asset('css/admin/findback-users-v39.css') }}?v=39">
+    <link rel="stylesheet" href="{{ asset('css/admin/users-filter-premium-v1.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/users-filter-claims-consistent-v2.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/admin/users-filter-claims-compact-v3.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/users-filter-claim-final-v4.css') }}?v=4">
     <div class="fb-users-page">
         <div class="fb-users-heading">
             <div>
@@ -73,15 +77,8 @@
                         <option value="email" @selected($provider === 'email')>Email / biasa</option>
                     </select>
                 </label>
-                <button type="submit" class="fb-users-button">Terapkan</button>
-                <a class="fb-users-reset" href="{{ route('admin.users.index') }}" aria-label="Reset filter pencarian"><svg
-                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M3 12a9 9 0 0 1 15.4-6.4L21 8" />
-                        <path d="M21 3v5h-5" />
-                        <path d="M21 12a9 9 0 0 1-15.4 6.4L3 16" />
-                        <path d="M3 21v-5h5" />
-                    </svg><span>Reset</span></a>
+                <button type="submit" class="fb-users-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16l-6.5 7.5V19l-3 1v-7.5L4 5z"/></svg><span>Terapkan</span></button>
+                <a class="fb-users-reset" href="{{ route('admin.users.index') }}" aria-label="Atur ulang filter pencarian"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true" style="flex:none"><path d="M4 8.5H13.5C17.5 8.5 20 11 20 14.5C20 18 17.5 20 14 20H10" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.2 8.5L10 3.5V13.5L4.2 8.5Z" fill="currentColor"/></svg><span>Atur Ulang</span></a>
             </form>
 
             <div class="fb-users-table-scroll">
@@ -154,4 +151,5 @@
         <p class="fb-users-footnote">Untuk keamanan, password, token sesi, dan identitas Google internal tidak ditampilkan.
         </p>
     </div>
+    <script defer src="{{ asset('js/admin/users-filter-navigation-v1.js') }}?v=1"></script>
 @endsection

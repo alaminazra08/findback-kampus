@@ -428,7 +428,7 @@
                 </section>
             </div>
         </dialog>
-        <script src="{{ asset('js/admin/claim-chat-modal.js') }}"></script>
+        <script src="{{ asset('js/admin/claim-chat-modal.js') }}?v=20261112"></script>
     @endif
 
     @if ($claim->proof_photo_path)

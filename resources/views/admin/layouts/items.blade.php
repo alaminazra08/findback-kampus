@@ -362,6 +362,7 @@
     <script src="{{ asset('js/admin/admin-items-upload.js') }}?v=1" defer></script>
     <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
     <script src="{{ asset('js/shared/responsive-viewport.js') }}?v=20261111" defer></script>
+    <script src="{{ asset('js/admin/smart-navigation-session.js') }}?v=1" defer></script>
 </body>
 
 </html>

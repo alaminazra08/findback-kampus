@@ -9,7 +9,7 @@
             <p class="fb-eyebrow">ADMINISTRASI · VERIFIKASI LAPORAN</p>
             <h1>Detail <span>Verifikasi</span></h1>
             <p class="fb-heading-text">Periksa identitas pelapor dan detail barang sebelum mengambil keputusan.</p>
-        </div><a class="fb-v-back fb-v-back-compact" href="{{ route('admin.reports.verification') }}"
+        </div><a class="fb-v-back fb-v-back-compact" href="{{ route('admin.reports.verification', array_merge(request()->only(['search', 'type', 'page']), request('from') === 'history' ? ['revision' => 'history'] : [])) }}"
             aria-label="Kembali ke Verifikasi Laporan"><span aria-hidden="true">←</span> Verifikasi Laporan</a>
     </div>
     @if (session('success'))
@@ -272,4 +272,6 @@
         </div>
     </div>
 
+<script src="{{ asset('js/pages/admin/reports/verification/detail-prefetch.js') }}?v=1" defer></script>
+<script src="{{ asset('js/pages/admin/reports/verification/return-context.js') }}?v=1" defer></script>
 @endsection

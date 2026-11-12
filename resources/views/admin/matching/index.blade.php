@@ -8,6 +8,128 @@
 
     {{-- FINDBACK_ICON_PREMIUM_FIX_V2 --}}
     <link rel="stylesheet" href="{{ asset('css/admin/admin-matching.css') }}?v=match-header-align-1">
+    
+    <style>
+        .match-wrap .match-filters .match-reset-curved {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            min-height: 46px; padding: 0 18px; border: 1px solid #ead4de;
+            border-radius: 11px; background: #fff; color: #850c2d;
+            font-size: 12px; font-weight: 700; line-height: 1.25;
+            text-decoration: none; white-space: nowrap; box-shadow: none;
+            transition: border-color .18s, background .18s;
+        }
+        .match-wrap .match-filters .match-reset-curved svg { display: block; flex: 0 0 20px; }
+        .match-wrap .match-filters .match-reset-curved:hover { background: #fff7fa; border-color: #cb9caf; }
+        .match-wrap .match-filters .match-reset-curved:focus-visible { outline: 3px solid #dca5ba; outline-offset: 3px; }
+        @media (max-width: 700px) {
+            .match-wrap .match-filters .match-reset-curved { width: 100%; min-height: 48px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .match-wrap .match-filters .match-reset-curved { transition: none; }
+        }
+    
+        /* FINDBACK_MATCHING_FILTER_RESPONSIVE_V1 */
+        .match-wrap .match-panel-top {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            align-items: stretch;
+            gap: 18px;
+        }
+        .match-wrap .match-list-title { min-width: 0; }
+        .match-wrap .match-filters {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(170px, 0.48fr) auto auto;
+            align-items: stretch;
+            gap: 12px;
+            width: 100%;
+            min-width: 0;
+            margin: 0;
+        }
+        .match-wrap .match-filters > input,
+        .match-wrap .match-filters > select,
+        .match-wrap .match-filters > button,
+        .match-wrap .match-filters > .match-reset-curved {
+            box-sizing: border-box;
+            width: 100%;
+            min-width: 0;
+            min-height: 50px;
+            margin: 0;
+            border-radius: 11px;
+        }
+        .match-wrap .match-filters > input { padding-inline: 17px; }
+        .match-wrap .match-filters > select { padding-inline: 14px; }
+        .match-wrap .match-filters > button,
+        .match-wrap .match-filters > .match-reset-curved {
+            min-width: 140px;
+            padding-inline: 17px;
+            white-space: nowrap;
+        }
+        @media (max-width: 1100px) {
+            .match-wrap .match-filters {
+                grid-template-columns: minmax(0, 1fr) minmax(160px, 0.6fr);
+            }
+            .match-wrap .match-filters > button,
+            .match-wrap .match-filters > .match-reset-curved { min-width: 0; }
+        }
+        @media (max-width: 700px) {
+            .match-wrap .match-panel-top { padding: 20px 17px; gap: 16px; }
+            .match-wrap .match-filters {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+            }
+            .match-wrap .match-filters > input {
+                grid-column: 1 / -1;
+                flex: none;
+            }
+            .match-wrap .match-filters > select {
+                grid-column: 1 / -1;
+                flex: none;
+            }
+            .match-wrap .match-filters > button,
+            .match-wrap .match-filters > .match-reset-curved {
+                width: 100%;
+                min-height: 48px;
+                padding-inline: 8px;
+            }
+        }
+        @media (max-width: 360px) {
+            .match-wrap .match-filters { grid-template-columns: minmax(0, 1fr); }
+        }
+
+    
+        /* FINDBACK_MATCHING_TABLE_CENTER_V2 */
+        @media (min-width: 701px) {
+            .match-wrap .match-table { table-layout: fixed; width: 100%; }
+            .match-wrap .match-table th,
+            .match-wrap .match-table td { text-align: center; vertical-align: middle; }
+            .match-wrap .match-table th:nth-child(1) { width: 9%; }
+            .match-wrap .match-table th:nth-child(2),
+            .match-wrap .match-table th:nth-child(3) { width: 20%; }
+            .match-wrap .match-table th:nth-child(4) { width: 13%; }
+            .match-wrap .match-table th:nth-child(5) { width: 21%; }
+            .match-wrap .match-table th:nth-child(6) { width: 17%; }
+            .match-wrap .match-table .match-item-cell,
+            .match-wrap .match-table .match-item-cell > div {
+                display: flex; flex-direction: column; align-items: center;
+                justify-content: center; min-width: 0; text-align: center;
+            }
+            .match-wrap .match-table .match-item-cell strong,
+            .match-wrap .match-table .match-item-cell small { max-width: 100%; overflow-wrap: anywhere; text-align: center; }
+            .match-wrap .match-table .match-pill,
+            .match-wrap .match-table .match-detail-link { margin-inline: auto; }
+            .match-wrap .match-table .match-detail-link { justify-content: center; }
+        }
+        @media (max-width: 700px) {
+            .match-wrap .match-table-scroll { overflow: visible; }
+            .match-wrap .match-table td { min-width: 0; }
+            .match-wrap .match-table .match-item-cell,
+            .match-wrap .match-table .match-item-cell > div { text-align: right; align-items: flex-end; }
+            .match-wrap .match-table .match-item-cell { display: flex; flex-direction: column; }
+            .match-wrap .match-table .match-item-cell strong,
+            .match-wrap .match-table .match-item-cell small { text-align: right; overflow-wrap: anywhere; }
+        }
+
+    </style>
     <div class="match-wrap">
         <div class="match-heading match-index-heading">
             <div>
@@ -81,6 +203,13 @@
                             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M4 5h16l-6.5 7.5V19l-3 1.5v-8L4 5Z" />
                         </svg><span>Terapkan</span></button>
+                    <a class="match-reset-curved" href="{{ route('admin.matching.index') }}" aria-label="Atur ulang filter pencocokan">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true" focusable="false">
+                            <path d="M4 8.5H13.5C17.5 8.5 20 11 20 14.5C20 18 17.5 20 14 20H10" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M4.2 8.5L10 3.5V13.5L4.2 8.5Z" fill="currentColor" />
+                        </svg>
+                        <span>Atur Ulang</span>
+                    </a>
                 </form>
             </div>
             <p class="match-guidance"> Persentase kemiripan merupakan skor sistem untuk membantu peninjauan, bukan keputusan
@@ -146,4 +275,5 @@
             @endif
         </section>
     </div>
+<script src="{{ asset('js/pages/admin/matching/filter-navigation-v2.js') }}?v=2" defer></script>
 @endsection

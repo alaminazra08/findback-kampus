@@ -1,0 +1,76 @@
+/* FindBack: harmonize Dashboard Laporan Terbaru with Laporan Barang /
+   Verifikasi Laporan. Scoped to this panel; no data or action changes. */
+@media (min-width: 769px) {
+  .fb-recent-reports .fb-table-scroll {
+    overflow-x: auto;
+  }
+  .fb-recent-reports .fb-report-table {
+    width: 100% !important;
+    min-width: 970px;
+    table-layout: fixed !important;
+  }
+  .fb-recent-reports .fb-report-table th,
+  .fb-recent-reports .fb-report-table td {
+    box-sizing: border-box;
+    text-align: center !important;
+    vertical-align: middle !important;
+  }
+  .fb-recent-reports .fb-report-table th:nth-child(1),
+  .fb-recent-reports .fb-report-table td:nth-child(1) { width: 30% !important; }
+  .fb-recent-reports .fb-report-table th:nth-child(2),
+  .fb-recent-reports .fb-report-table td:nth-child(2) { width: 16% !important; }
+  .fb-recent-reports .fb-report-table th:nth-child(3),
+  .fb-recent-reports .fb-report-table td:nth-child(3) { width: 16% !important; }
+  .fb-recent-reports .fb-report-table th:nth-child(4),
+  .fb-recent-reports .fb-report-table td:nth-child(4) { width: 17% !important; }
+  .fb-recent-reports .fb-report-table th:nth-child(5),
+  .fb-recent-reports .fb-report-table td:nth-child(5) { width: 21% !important; }
+  .fb-recent-reports .fb-report-table td:first-child .fb-v37-item {
+    display: grid !important;
+    grid-template-columns: 88px minmax(0, 1fr) !important;
+    align-items: center !important;
+    justify-content: start !important;
+    column-gap: 16px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin-inline: 0 !important;
+    text-align: left !important;
+  }
+  .fb-recent-reports .fb-report-table td:first-child .fb-v37-photo {
+    grid-column: 1;
+    width: 88px !important;
+    height: 88px !important;
+    min-width: 88px !important;
+    flex: 0 0 88px !important;
+    border-radius: 13px;
+  }
+  .fb-recent-reports .fb-report-table td:first-child .fb-v37-item a {
+    min-width: 0;
+    text-align: left !important;
+    overflow-wrap: anywhere;
+  }
+  .fb-recent-reports .fb-report-table td:nth-child(2) .fb-report-type,
+  .fb-recent-reports .fb-report-table td:nth-child(5) .fb-report-status {
+    margin-inline: auto !important;
+    max-width: 100%;
+  }
+  .fb-recent-reports .fb-report-table tbody tr.fb-v35-report-row > td {
+    overflow-wrap: anywhere;
+  }
+}
+/* Match photo sizing in mobile report cards; preserve existing card order. */
+@media (min-width: 371px) and (max-width: 768px) {
+  .fb-recent-reports .fb-dashboard-mobile-photo {
+    width: 80px;
+    height: 80px;
+    flex: 0 0 80px;
+  }
+}
+@media (max-width: 370px) {
+  .fb-recent-reports .fb-dashboard-mobile-photo {
+    width: 72px;
+    height: 72px;
+    flex: 0 0 72px;
+  }
+}

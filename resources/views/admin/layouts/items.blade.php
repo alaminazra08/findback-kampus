@@ -34,18 +34,18 @@
 
     {{-- SIDEBAR --}}
     <link rel="stylesheet"
-        href="{{ asset('css/admin/admin-sidebar-v43.css') }}?v=43">
+        href="{{ asset('css/admin/sidebar-theme.css') }}?v=43">
 
     <link rel="stylesheet"
-        href="{{ asset('css/admin/admin-sidebar-v44.css') }}?v=44">
+        href="{{ asset('css/admin/sidebar-layout.css') }}?v=44">
 
 
     <link rel="stylesheet"
-        href="{{ asset('css/admin/admin-sidebar-v45.css') }}?v=48">
+        href="{{ asset('css/admin/sidebar-prepaint.css') }}?v=48">
 
     {{-- RESPONSIVE --}}
     <link rel="stylesheet"
-        href="{{ asset('css/admin/admin-responsive-v2d.css') }}?v=1">
+        href="{{ asset('css/admin/admin-shell-responsive.css') }}?v=1">
 
     <link rel="stylesheet"
         href="{{ asset('css/shared/view-utilities.css') }}">
@@ -54,10 +54,10 @@
     @yield('page-styles')
     <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
     <!-- FINDBACK_UI_TEXT_KONSISTEN_V1 -->
-    <link rel="stylesheet" href="{{ asset('css/shared/findback-ui-text-consistency-v1.css') }}?v=1">
-    <link rel="stylesheet" href="{{ asset('css/admin/findback-brand-premium-v1.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/shared/ui-text-consistency.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/brand-polish.css') }}?v=1">
 <!-- FINDBACK_TYPOGRAPHY_V1 -->
-<link rel="stylesheet" href="{{ asset('css/shared/findback-typography-v1.css') }}">
+<link rel="stylesheet" href="{{ asset('css/shared/typography.css') }}">
 </head>
 
 <body class="fb-responsive fb-admin-body">
@@ -327,7 +327,7 @@
 
     {{-- SIDEBAR --}}
     <script
-        src="{{ asset('js/admin/admin-sidebar-v44.js') }}?v=49"
+        src="{{ asset('js/admin/sidebar-branding.js') }}?v=49"
         defer>
     </script>
 
@@ -340,10 +340,10 @@
         <script src="{{ asset('js/pages/admin/reports/verification/return-context.js') }}?v=2" defer></script>
         <script src="{{ asset('js/admin/admin-items-upload.js') }}?v=2" defer></script>
         <script src="{{ asset('js/admin/items-filter-ajax-scroll.js') }}?v=2" defer></script>
-        <script src="{{ asset('js/pages/admin/matching/filter-navigation-v2.js') }}?v=3" defer></script>
+        <script src="{{ asset('js/pages/admin/matching/filter-navigation.js') }}?v=3" defer></script>
         <script src="{{ asset('js/admin/claims-filter-ajax-scroll.js') }}?v=2" defer></script>
         <script src="{{ asset('js/pages/admin/statistics/index.js') }}?v=2" defer></script>
-        <script src="{{ asset('js/admin/users-filter-navigation-v1.js') }}?v=2" defer></script>
+        <script src="{{ asset('js/admin/users-filter-navigation.js') }}?v=2" defer></script>
         <script src="{{ asset('js/admin/settings-score.js') }}?v=2" defer></script>
         <script src="{{ asset('js/admin/dashboard-verification-navigation.js') }}?v=8" defer
             data-dashboard="{{ route('admin.dashboard') }}"
@@ -356,7 +356,7 @@
             data-settings="{{ route('admin.settings.index') }}"></script>
     @endif
     {{-- Smart Save harus sudah siap sebelum navigasi AJAX menuju Pengaturan. --}}
-    <script src="{{ asset('js/admin/settings-smart-save-v5.js') }}?v=10" defer></script>
+    <script src="{{ asset('js/admin/settings-smart-save.js') }}?v=10" defer></script>
 </body>
 
 </html>

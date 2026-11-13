@@ -4,7 +4,7 @@
 @section('breadcrumb', 'Pencocokan Barang')
 
 @section('page-styles')
-    <link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/admin/header-consistency.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/admin-matching.css') }}?v=match-header-align-1">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/matching/index.css') }}?v=1">
 @endsection

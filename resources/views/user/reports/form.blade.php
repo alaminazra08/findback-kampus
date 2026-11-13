@@ -10,6 +10,16 @@
     </header>
     <form class="cu-panel cu-report-form" data-wizard method="POST" enctype="multipart/form-data"
         action="{{ route('user.reports.' . $kind . '.store') }}">@csrf
+        @if ($errors->any())
+            <div class="cu-note" role="alert">
+                <strong>Periksa kembali isian laporanmu</strong>
+                <ul>
+                    @foreach ($errors->all() as $message)
+                        <li>{{ $message }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <ol class="cu-steps" aria-label="Tahap pelaporan">
             <li class="active"><span>1</span>Isi informasi</li>
             <li><span>2</span>Upload foto</li>
@@ -19,19 +29,19 @@
             <h2>Informasi barang</h2>
             <p class="cu-muted">Kolom bertanda * wajib diisi.</p>
             <div class="cu-fields"><label>Nama barang *<input name="title" required maxlength="255"
-                        value="{{ old('title') }}" placeholder="Contoh: Dompet kulit cokelat"></label><label
+                        value="{{ old('title') }}" placeholder="Contoh: Dompet kulit cokelat merek Eiger"></label><label
                     class="full">Deskripsi barang *
                     <textarea name="description" required maxlength="3000" rows="4"
-                        placeholder="Warna, merek, kondisi, dan ciri khas barang...">{{ old('description') }}</textarea>
+                        placeholder="Tulis warna, merek, ukuran, dan ciri khas (stiker, goresan, isi barang)...">{{ old('description') }}</textarea>
                 </label><label>Lokasi {{ $kind === 'found' ? 'ditemukan' : 'terakhir' }} *<input name="location"
                         required maxlength="255" value="{{ old('location') }}"
-                        placeholder="Contoh: Lab Komputer, lantai 2"></label><label>Tanggal
+                        placeholder="Contoh: Lab Komputer lantai 2, dekat tangga"></label><label>Tanggal
                     {{ $kind === 'found' ? 'ditemukan' : 'hilang' }} *<input type="date" name="event_date"
                         max="{{ now()->format('Y-m-d') }}" required value="{{ old('event_date') }}"></label></div>
         </section>
         <section data-step="1">
             <h2>Foto barang</h2>
-            <p class="cu-muted">Gunakan foto yang jelas. JPG, PNG, atau WEBP, maksimal 5 MB.</p><label
+            <p class="cu-muted">Gunakan foto yang jelas dan tidak buram. JPG, PNG, atau WEBP, maksimal 5 MB.</p><label
                 class="cu-upload">@include('user.components.icon', ['icon' => 'upload'])<strong>Pilih foto barang *</strong><span>Foto membantu
                     admin memeriksa laporanmu.</span><input type="file" name="photo"
                     accept="image/jpeg,image/png,image/webp" required data-preview data-max="5242880"></label><img

@@ -1,59 +1,159 @@
+<div align="center">
+
+<img src="public/images/logo-findback.png" alt="Logo FindBack Kampus" width="125" />
+
 # FindBack Kampus
 
-Aplikasi Laravel 12 untuk pelaporan barang hilang/ditemukan Fakultas Sains dan Teknologi UIN Imam Bonjol Padang. Panel Admin mengelola verifikasi, pencocokan, klaim, serah terima, statistik, akun, dan pengaturan. Panel User digunakan untuk laporan, pencarian, klaim, notifikasi, profil, dan komunikasi sesuai izin klaim.
+**Sistem Informasi Barang Hilang dan Ditemukan Berbasis Web**
 
-## Lingkungan
+Fakultas Sains dan Teknologi · UIN Imam Bonjol Padang
 
-- PHP 8.2 atau lebih baru; dependensi dikunci melalui composer.lock.
-- MySQL/MariaDB untuk aplikasi XAMPP.
-- SQLite in-memory untuk tes terisolasi.
-- Blade, CSS dan JavaScript statis; stylesheet yang aktif masih mempertahankan urutan cascade desain sebelumnya.
-- Pengujian refactoring ini dijalankan pada PHP 8.3.6, bukan pada Windows/XAMPP langsung.
+[![Laravel](https://img.shields.io/badge/Laravel-12-FF2D20?logo=laravel&logoColor=white)](https://laravel.com/)
+[![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php&logoColor=white)](https://www.php.net/)
+[![Database](https://img.shields.io/badge/Database-MySQL%20%2F%20MariaDB-4479A1?logo=mysql&logoColor=white)](https://mariadb.org/)
+[![Status](https://img.shields.io/badge/Status-Pengembangan-informational)](#status-dan-batasan-pengujian)
 
-## Pemasangan refactoring pada proyek yang sudah ada
+**[Fitur](#fitur-utama) · [Teknologi](#teknologi) · [Instalasi](#menjalankan-proyek-secara-lokal) · [Tim](#tim-dan-kontribusi)**
 
-Gunakan PASANG_CLEAN_CODE.cmd dari paket pemasang pada direktori proyek. Pemasang memeriksa hash source, menguji salinan terisolasi, membuat backup file, memasang perubahan, dan mengkompilasi Blade. Tidak ada migration atau perubahan database untuk paket ini. .env, vendor, unggahan pengguna, dan backup asli tidak ditimpa.
+</div>
 
-Salinan source-bersih dalam paket disediakan untuk inspeksi/pengembangan; tidak memuat .env, vendor, database pengguna atau unggahan. Jangan menyalin seluruh salinan tersebut ke proyek produksi.
+---
 
-## Struktur utama
+## Tentang proyek
 
-- app/Http/Controllers: koordinasi HTTP dan otorisasi route/record yang sudah ada.
-- app/Http/Requests: validasi laporan baru dan penyelesaian serah terima.
-- app/Services: penyimpanan laporan, serah terima, skor pencocokan dan query statistik.
-- app/Models, app/Observers, app/Notifications, app/Support: kontrak data dan pendukung aplikasi yang dipertahankan.
-- resources/views: markup Blade, include dan data server.
-- resources/views/admin/partials: bagian shell yang digunakan bersama.
-- public/css/pages, public/js/pages: aset halaman yang diekstrak dari Blade.
-- public/css/shared, public/js/shared: presentasi/interaksi yang memang berulang.
-- archive: berkas historis yang dipindahkan, bukan bagian runtime. Backup asli dalam backup tetap dipertahankan.
-- docs/refactoring: audit, peta dependensi, perubahan tiap tahap, pengujian dan pekerjaan tersisa.
+**FindBack Kampus** adalah aplikasi *lost and found* berbasis Laravel 12 untuk membantu sivitas akademika Fakultas Sains dan Teknologi UIN Imam Bonjol Padang melaporkan barang hilang, menelusuri barang yang ditemukan, serta mengelola proses klaim secara terpusat.
 
-JSON di script[type="application/json"] hanya memuat data dari server. Script eksekusi membaca JSON/data attribute; jangan memasukkan ekspresi Blade ke berkas JS statis.
+Aplikasi menyediakan dua ruang kerja: **Pengguna** untuk pelaporan dan pencarian barang, serta **Administrator** untuk verifikasi, pencocokan, pengelolaan klaim, dan pemantauan layanan.
 
-Stylesheet PDF dibaca melalui file URI lokal dengan chroot hanya ke public; pemuatan remote tetap dimatikan. Jangan mengganti URL tersebut ke URL HTTP yang bergantung pada server aktif.
+## Tampilan aplikasi
 
-## Menjalankan aplikasi lokal
+<div align="center">
+  <img src="public/images/login-fst-premium.jpg" alt="Tampilan halaman login FindBack Kampus" width="760" />
+  <br />
+  <sub>Pratinjau halaman login. Screenshot dashboard dan fitur lainnya akan ditambahkan setelah diverifikasi.</sub>
+</div>
 
-Dari direktori proyek yang telah dikonfigurasi:
+## Fitur utama
 
-    php artisan serve
+| Pengguna | Administrator |
+| --- | --- |
+| Melaporkan barang hilang atau ditemukan | Memverifikasi laporan barang |
+| Mencari dan menelusuri laporan barang | Mengelola pencocokan barang |
+| Mengajukan dan memantau klaim | Memproses klaim dan serah terima |
+| Melihat aktivitas dan notifikasi | Memantau laporan dan statistik |
+| Mengelola profil | Mengelola akun dan pengaturan |
+| Berkomunikasi sesuai izin klaim | Mengelola komunikasi terkait klaim |
 
-Buka http://127.0.0.1:8000. MySQL harus aktif untuk penggunaan aplikasi.
+> Ketersediaan dan perilaku setiap fitur perlu divalidasi kembali pada lingkungan instalasi yang digunakan. Daftar ini merangkum cakupan aplikasi, bukan pernyataan bahwa semua alur telah lulus uji produksi.
 
-## Kualitas kode
+## Teknologi
 
-Konfigurasi PSR-12 tersedia di pint.json; Blade di .bladeformatterrc.json dan aset di .prettierrc.json.
+| Komponen | Teknologi |
+| --- | --- |
+| Framework backend | Laravel 12 |
+| Bahasa pemrograman | PHP 8.2 atau lebih baru |
+| Tampilan | Laravel Blade, CSS, JavaScript |
+| Database aplikasi | MySQL / MariaDB |
+| Database pengujian terisolasi | SQLite *in-memory* |
+| PDF | `barryvdh/laravel-dompdf` |
+| Autentikasi sosial (dependensi) | `laravel/socialite` |
+| Manajemen dependensi | Composer (`composer.lock`) |
 
-    php vendor/bin/pint --config=pint.json app routes config bootstrap/app.php bootstrap/providers.php tests
+## Menjalankan proyek secara lokal
 
-Formatter yang digunakan: Laravel Pint bawaan composer.lock, blade-formatter 1.44.6, serta Prettier dan plugin PHP dengan target sintaks 8.2. Laporan memuat versi lengkap. Jangan memformat vendor, archive, backup, unggahan atau compiled views sebagai source aplikasi.
+**Prasyarat:** PHP 8.2+, Composer, MySQL/MariaDB, serta lingkungan pengembangan seperti XAMPP. Node.js/npm diperlukan bila aset frontend perlu dibangun menggunakan Vite.
 
-Jalankan pengujian pada salinan terisolasi. Pemasang menyediakan verify.php dan data baseline; skrip tersebut menolak salinan yang masih mempunyai .env asli. Tidak ada migrate:fresh pada database aplikasi.
+```bash
+git clone https://github.com/alaminazra08/findback-kampus.git
+cd findback-kampus
+composer install
+```
 
-## Status hasil audit
+Untuk instalasi baru, buat konfigurasi lokal dari contoh yang tersedia, kemudian sesuaikan pengaturan koneksi database di `.env`:
 
-Refactoring tidak menyatakan seluruh aplikasi sudah siap produksi. Baseline memiliki 17 tes gagal/error sebelum perubahan; hasil akhir tetap mencatat 17 masalah yang sama, tanpa skip. Rincian dan batas pengujian terdapat di docs/refactoring. Perubahan alur bisnis, privasi lampiran lama, dan perbaikan desain responsif lanjutan harus dikerjakan sebagai pekerjaan tersendiri.
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
+> Di Windows CMD, gunakan `copy .env.example .env` sebagai pengganti `cp`. Jangan menimpa `.env` pada instalasi yang sudah berjalan. Siapkan database sesuai konfigurasi lokal sebelum menjalankan aplikasi.
 
-Nazwa ikut berkontribusi di project ini.
+Jika skema database memang perlu dibuat pada **database baru yang telah diverifikasi**, jalankan:
+
+```bash
+php artisan migrate
+```
+
+Jangan menjalankan migrasi, `migrate:fresh`, atau perintah penghapusan data pada database proyek tim tanpa pemeriksaan dan backup terlebih dahulu.
+
+Jalankan aplikasi:
+
+```bash
+php artisan serve
+```
+
+Buka `http://127.0.0.1:8000`. Jika proyek menggunakan aset Vite yang belum dibangun, jalankan `npm install` dan `npm run dev` di terminal lain sesuai kebutuhan konfigurasi frontend.
+
+## Struktur proyek
+
+```text
+app/
+  Http/Controllers/       # Controller dan otorisasi HTTP
+  Http/Requests/          # Validasi request
+  Services/               # Logika layanan dan statistik
+  Models/                 # Model data
+resources/views/          # Template Blade
+public/css/               # Stylesheet aplikasi
+public/js/                # JavaScript aplikasi
+public/images/            # Aset gambar
+routes/                   # Definisi route
+config/                   # Konfigurasi Laravel
+database/                 # Migrasi dan komponen database
+tests/                    # Pengujian aplikasi
+docs/refactoring/         # Dokumentasi audit/refactoring
+archive/                  # Aset historis, bukan runtime
+```
+
+## Kualitas kode dan pengujian
+
+Proyek menyediakan konfigurasi Laravel Pint (`pint.json`), Blade Formatter (`.bladeformatterrc.json`), dan Prettier (`.prettierrc.json`). Contoh pemeriksaan sintaks dan tes:
+
+```bash
+php artisan test
+php vendor/bin/pint --test --config=pint.json app routes config bootstrap/app.php bootstrap/providers.php tests
+```
+
+Jalankan pengujian pada **lingkungan atau database terisolasi**, bukan pada database produksi. Perintah dan dependensi yang tersedia dapat berbeda antar lingkungan.
+
+## Status dan batasan pengujian
+
+Proyek masih dalam pengembangan dan validasi. Dokumentasi refactoring mencatat adanya masalah pada baseline pengujian serta pekerjaan lanjutan yang belum diselesaikan. **README ini tidak menyatakan aplikasi sudah siap produksi** atau bahwa seluruh alur admin–pengguna telah lulus pengujian end-to-end.
+
+Rincian audit dan batas pengujian tersedia di [`docs/refactoring/09-finalisasi.md`](docs/refactoring/09-finalisasi.md).
+
+## Tim dan kontribusi
+
+FindBack Kampus merupakan proyek kolaborasi tim. Kontribusi pengembangan dapat ditelusuri melalui [riwayat commit](https://github.com/alaminazra08/findback-kampus/commits/main/) dan [halaman contributors](https://github.com/alaminazra08/findback-kampus/graphs/contributors).
+
+| Kontributor | Akun GitHub |
+| --- | --- |
+| Al Amin Azra | [@alaminazra08](https://github.com/alaminazra08) |
+| Pisa Kesuma Dewi | [@pisadewi](https://github.com/pisadewi) |
+| Nazwa | [@nazwa8067-rgb](https://github.com/nazwa8067-rgb) |
+| Anggota kolaborator lainnya | Lihat halaman contributors |
+
+> Identitas kontributor mengikuti riwayat Git yang telah diperbaiki. Peran dan rincian pembagian tugas dapat dilengkapi setelah disetujui seluruh tim.
+
+## Keamanan dan penggunaan data
+
+Jangan mengunggah `.env`, kredensial, database pribadi, unggahan pengguna, atau backup ke repository publik. Gunakan data pengujian yang aman dan verifikasi hak akses sebelum penerapan nyata.
+
+---
+
+<div align="center">
+
+**FindBack Kampus** · Fakultas Sains dan Teknologi · UIN Imam Bonjol Padang
+
+*Helping lost items find their way back.*
+
+</div>

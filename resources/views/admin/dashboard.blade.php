@@ -516,8 +516,18 @@
             ];
         @endphp
         <script type="application/json" id="fb-analytics-json">@json($analyticsPayload)</script>
-        <footer class="fb-footer">© {{ date('Y') }} {{ $adminSettings['site_name'] }} <span>·</span>
-            {{ $adminSettings['institution_name'] }}</footer>
+        <footer class="fb-footer">
+            © {{ date('Y') }} {{ $adminSettings['site_name'] }}
+            <span>·</span>
+            {{ $adminSettings['institution_name'] }}
+
+            @if (!empty($adminSettings['contact_email']))
+                <span>·</span>
+                <a href="mailto:{{ $adminSettings['contact_email'] }}">
+                    {{ $adminSettings['contact_email'] }}
+                </a>
+            @endif
+        </footer>
         </main>
     </div>
     </div>

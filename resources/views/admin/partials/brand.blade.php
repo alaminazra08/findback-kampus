@@ -5,6 +5,9 @@
     </span>
     <span class="fb-brand-copy">
         <strong>FindBack</strong>
-        <small>Kampus <span>· Admin</span></small>
+        <small>
+            {{ $adminSettings['institution_name'] }}
+            <span>· Admin</span>
+        </small>
     </span>
 </a>

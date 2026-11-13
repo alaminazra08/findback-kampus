@@ -4027,3 +4027,78 @@ form.cu-filter + .cu-result + .cu-cards .cu-empty {
 }
 
 /* FINDBACK NOTIFICATION PREMIUM V13 END */
+
+/* ===== Rapikan form laporan & riwayat laporan (Nazwa) ===== */
+
+/* Form: kolom isian */
+.cu-report-form .cu-fields label {
+    color: #3a3d36;
+}
+.cu-report-form input:not([type="checkbox"]):not([type="file"]),
+.cu-report-form textarea {
+    border-color: #d5d9cc;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.cu-report-form input:not([type="checkbox"]):not([type="file"]):focus,
+.cu-report-form textarea:focus {
+    border-color: var(--wine);
+    box-shadow: 0 0 0 3px rgba(131, 13, 44, 0.12);
+}
+.found .cu-report-form input:not([type="checkbox"]):not([type="file"]):focus,
+.found .cu-report-form textarea:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(19, 90, 61, 0.14);
+}
+
+/* Form: kotak upload foto */
+.cu-upload {
+    transition: background 0.2s, border-color 0.2s;
+}
+.cu-upload:hover {
+    background: #f3f5ee;
+    border-color: var(--wine);
+}
+.found .cu-upload:hover {
+    border-color: var(--green);
+}
+
+/* Form: catatan, daftar error, dan tombol */
+.cu-report-form .cu-note ul {
+    margin: 8px 0 0;
+    padding-left: 20px;
+}
+.cu-report-form .cu-note[role="alert"] {
+    background: #fff0ec;
+    border-color: #efcec5;
+    color: #8e3428;
+    margin: 0 0 22px;
+}
+.cu-report-form .cu-actions {
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+}
+
+/* Riwayat laporan: tabel dan filter */
+.fb-cycle-report-list .cu-inline-filter {
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+}
+.fb-cycle-report-list table {
+    font-size: 14px;
+}
+.fb-cycle-report-list th {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.fb-cycle-report-list td strong {
+    display: block;
+    color: var(--ink);
+    font-size: 14px;
+}
+.fb-cycle-report-list td small {
+    font-size: 12px;
+}
+.fb-cycle-report-list tbody tr:hover {
+    background: #fafbf7;
+}

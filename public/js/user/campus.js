@@ -84,16 +84,27 @@
                 box.replaceChildren();
                 for (const [name, label] of [
                     ["title", "Nama barang"],
-                    ["category", "Kategori"],
                     ["description", "Deskripsi"],
                     ["location", "Lokasi"],
                     ["event_date", "Tanggal"],
                 ]) {
+                    const field = form.elements[name];
+                    if (!field) continue;
                     const row = document.createElement("div"),
                         key = document.createElement("strong"),
                         value = document.createElement("span");
                     key.textContent = label;
-                    value.textContent = form.elements[name].value;
+                    value.textContent = field.value;
+                    row.append(key, value);
+                    box.append(row);
+                }
+                const photo = form.elements["photo"];
+                if (photo && photo.files[0]) {
+                    const row = document.createElement("div"),
+                        key = document.createElement("strong"),
+                        value = document.createElement("span");
+                    key.textContent = "Foto";
+                    value.textContent = photo.files[0].name;
                     row.append(key, value);
                     box.append(row);
                 }

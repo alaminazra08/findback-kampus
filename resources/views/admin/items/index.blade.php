@@ -7,7 +7,7 @@
 @endsection
 
 @section('page-styles')
-    <link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/admin/header-consistency.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/items-table-consistency.css') }}?v=2">
 @endsection
 

@@ -1,7 +1,7 @@
 @extends('user.layouts.campus')
 @section('title', 'Chat Admin')
 @section('content')
-    <link rel="stylesheet" href="{{ asset('css/chat/findback-chat-ui-v2.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/chat/chat-ui.css') }}?v=2">
     <div class="cu-title">
         <h1>Chat admin</h1>
         <p>Berkomunikasi dengan admin untuk verifikasi dan pengaturan serah terima.</p>

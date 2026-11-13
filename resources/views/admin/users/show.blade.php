@@ -2,7 +2,7 @@
 @section('title', 'Detail Akun')
 @section('breadcrumb', 'Manajemen Akun')
 @section('page-styles')
-    <link rel="stylesheet" href="{{ asset('css/admin/admin-users-detail-v40.css') }}?v=43">
+    <link rel="stylesheet" href="{{ asset('css/admin/users-detail.css') }}?v=43">
 @endsection
 
 @section('content')

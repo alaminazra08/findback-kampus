@@ -14,16 +14,16 @@
 
     {{-- CSS USER --}}
     <link rel="stylesheet" href="{{ asset('css/user/campus.css') }}?v=2">
-    <link rel="stylesheet" href="{{ asset('css/user/navbar-premium-v3.css') }}?v=3">
+    <link rel="stylesheet" href="{{ asset('css/user/navbar-premium.css') }}?v=3">
     <link rel="stylesheet" href="{{ asset('css/shared/view-utilities.css') }}">
 
     {{-- JAVASCRIPT --}}
     <script src="{{ asset('js/user/campus.js') }}?v=1" defer></script>
     <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
     <!-- FINDBACK_UI_TEXT_KONSISTEN_V1 -->
-    <link rel="stylesheet" href="{{ asset('css/shared/findback-ui-text-consistency-v1.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/shared/ui-text-consistency.css') }}?v=1">
 <!-- FINDBACK_TYPOGRAPHY_V1 -->
-<link rel="stylesheet" href="{{ asset('css/shared/findback-typography-v1.css') }}">
+<link rel="stylesheet" href="{{ asset('css/shared/typography.css') }}">
 </head>
 
 <body class="fb-responsive cu-body">

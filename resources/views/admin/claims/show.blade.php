@@ -3,13 +3,13 @@
 @section('breadcrumb', 'Klaim Barang')
 @section('page-styles')
     <link rel="stylesheet" href="{{ asset('css/admin/admin-claims.css') }}?v=20261101-final">
-    <link rel="stylesheet" href="{{ asset('css/admin/claim-layout-compact-v6.css') }}?v=6">
-    <link rel="stylesheet" href="{{ asset('css/admin/claim-layout-premium-v7.css') }}?v=7">
-    <link rel="stylesheet" href="{{ asset('css/admin/claim-layout-gap-v9.css') }}?v=9">
-    <link rel="stylesheet" href="{{ asset('css/admin/claim-evidence-actions-v11.css') }}?v=11">
-    <link rel="stylesheet" href="{{ asset('css/admin/claim-evidence-actions-v12.css') }}?v=12">
-    <link rel="stylesheet" href="{{ asset('css/admin/claim-detail-responsive-v14.css') }}?v=14">
-    <link rel="stylesheet" href="{{ asset('css/chat/findback-claim-premium-v4.css') }}?v=20261111">
+    <link rel="stylesheet" href="{{ asset('css/admin/claim-detail-compact.css') }}?v=6">
+    <link rel="stylesheet" href="{{ asset('css/admin/claim-detail-premium.css') }}?v=7">
+    <link rel="stylesheet" href="{{ asset('css/admin/claim-detail-spacing.css') }}?v=9">
+    <link rel="stylesheet" href="{{ asset('css/admin/claim-evidence-actions.css') }}?v=11">
+    <link rel="stylesheet" href="{{ asset('css/admin/claim-evidence-icons.css') }}?v=12">
+    <link rel="stylesheet" href="{{ asset('css/admin/claim-detail-responsive.css') }}?v=14">
+    <link rel="stylesheet" href="{{ asset('css/chat/claim-chat-premium.css') }}?v=20261111">
 @endsection
 
 @section('content')
@@ -435,7 +435,7 @@
     @endif
 
     @if ($claim->proof_photo_path)
-        <link rel="stylesheet" href="{{ asset('css/admin/claim-proof-modal-v13.css') }}?v=13">
+        <link rel="stylesheet" href="{{ asset('css/admin/claim-proof-modal.css') }}?v=13">
         <dialog id="fb-proof-dialog" class="fb-proof-dialog" aria-labelledby="fb-proof-title"
             aria-describedby="fb-proof-description">
             <div class="fb-proof-shell">

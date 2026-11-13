@@ -7,7 +7,7 @@
 @endsection
 
 @section('page-styles')
-    <link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/admin/header-consistency.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/items-table-consistency.css') }}?v=2">
 @endsection
 
@@ -315,8 +315,7 @@
                 </svg><span>Terapkan</span></button>
 
             <a href="{{ route('admin.items.index', ['group' => 'semua']) }}" class="fb-items-reset fb-v20-action"><svg
-                    viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"
-                    style="flex:none">
+                    viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
                     <path d="M4 8.5H13.5C17.5 8.5 20 11 20 14.5C20 18 17.5 20 14 20H10"
                         stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
                     <path d="M4.2 8.5L10 3.5V13.5L4.2 8.5Z" fill="currentColor" />

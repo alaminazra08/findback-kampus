@@ -4,7 +4,7 @@
 @section('breadcrumb', 'Laporan & Statistik')
 
 @section('page-styles')
-    <link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/admin/header-consistency.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/admin-statistics.css') }}?v=33">
     <link rel="stylesheet" href="{{ asset('css/admin/findback-statistics-premium.css') }}?v=4">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/statistics/index.css') }}">

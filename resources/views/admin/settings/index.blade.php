@@ -5,10 +5,10 @@
 @section('breadcrumb', 'Pengaturan')
 
 @section('page-styles')
-    <link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/admin/header-consistency.css') }}?v=2">
     <link rel="stylesheet"
       href="{{ asset('css/admin/admin-settings.css') }}?v=41">
-    <link rel="stylesheet" href="{{ asset('css/admin/settings-clean-save-v9.css') }}?v=9">
+    <link rel="stylesheet" href="{{ asset('css/admin/settings-clean-save.css') }}?v=9">
 @endsection
 
 @section('content')
@@ -404,10 +404,10 @@
 
     </form>
 
-    <link rel="stylesheet" href="{{ asset('css/admin/settings-notifications-v6.css') }}?v=6">
-    <link rel="stylesheet" href="{{ asset('css/admin/settings-matching-v7.css') }}?v=7">
-    <link rel="stylesheet" href="{{ asset('css/admin/settings-smart-save-v5.css') }}?v=5">
-    <script src="{{ asset('js/admin/settings-smart-save-v5.js') }}?v=5" defer></script>
+    <link rel="stylesheet" href="{{ asset('css/admin/settings-notifications.css') }}?v=6">
+    <link rel="stylesheet" href="{{ asset('css/admin/settings-matching.css') }}?v=7">
+    <link rel="stylesheet" href="{{ asset('css/admin/settings-smart-save.css') }}?v=5">
+    <script src="{{ asset('js/admin/settings-smart-save.js') }}?v=5" defer></script>
 
     {{-- INFORMASI SISTEM --}}
     <section class="fb-settings-card fb-settings-system"

@@ -51,8 +51,7 @@
                 </svg><span>Terapkan</span></button>
             <a class="fb-v-reset fb-v30-reset"
                 href="{{ route('admin.reports.verification', $revisionMode === 'history' ? ['revision' => 'history'] : []) }}"><svg
-                    viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"
-                    style="flex:none">
+                    viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
                     <path d="M4 8.5H13.5C17.5 8.5 20 11 20 14.5C20 18 17.5 20 14 20H10"
                         stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
                     <path d="M4.2 8.5L10 3.5V13.5L4.2 8.5Z" fill="currentColor" />

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
     <link rel="stylesheet"
       href="{{ asset('css/admin/admin-settings.css') }}?v=41">
+    <link rel="stylesheet" href="{{ asset('css/admin/settings-clean-save-v9.css') }}?v=9">
 @endsection
 
 @section('content')
@@ -132,15 +133,11 @@
         </span>
     </div>
 
-    {{-- PESAN BERHASIL --}}
-    @if (session('success'))
-        <div class="fb-settings-alert success" role="status">
-            <svg class="fb-settings-inline-icon" aria-hidden="true">
-                <use href="#fb-i-check"/>
-            </svg>
-            <span>{{ session('success') }}</span>
-        </div>
-    @endif
+    <div id="fb-settings-toast" class="fb-settings-toast" data-flash-success="{{ session('success') ? '1' : '0' }}" role="status" aria-live="polite" aria-atomic="true" hidden>
+        <span class="fb-settings-toast-icon" aria-hidden="true">✓</span>
+        <span class="fb-settings-toast-copy"><strong id="fb-settings-toast-title"></strong><small id="fb-settings-toast-message"></small></span>
+        <button type="button" id="fb-settings-toast-close" aria-label="Tutup notifikasi">×</button>
+    </div>
 
     {{-- PESAN ERROR --}}
     @if ($errors->any())
@@ -191,7 +188,7 @@
             <div class="fb-settings-fields">
 
                 <label class="fb-settings-field">
-                    <span>Nama aplikasi <b>*</b></span>
+                    <span>Nama aplikasi <b></b></span>
                     <input type="text"
                            name="site_name"
                            maxlength="100"
@@ -200,7 +197,7 @@
                 </label>
 
                 <label class="fb-settings-field">
-                    <span>Nama institusi <b>*</b></span>
+                    <span>Nama institusi <b></b></span>
                     <input type="text"
                            name="institution_name"
                            maxlength="150"
@@ -258,7 +255,7 @@
                 <label class="fb-settings-field compact">
                     <span>
                         Skor minimum kandidat (0–100%)
-                        <b>*</b>
+                        <b></b>
                     </span>
 
                     <div class="fb-settings-score">
@@ -297,11 +294,13 @@
 
             </div>
 
-            <p class="fb-settings-note">
-                Nilai ini digunakan oleh modul pencocokan
-                pada proses berikutnya. Hasil pencocokan lama
-                tidak dihitung ulang otomatis.
-            </p>
+            <div class="fb-settings-note fb-settings-matching-note" role="note" aria-label="Informasi Pencocokan">
+                <strong class="fb-settings-matching-note-title">
+                    <svg class="fb-settings-svg" aria-hidden="true"><use href="#fb-i-info"/></svg>
+                    Informasi Pencocokan
+                </strong>
+                <p>Nilai ini digunakan oleh modul pencocokan pada proses berikutnya. Hasil pencocokan lama tidak dihitung ulang otomatis.</p>
+            </div>
 
         </section>
 
@@ -381,22 +380,18 @@
 
             @endforeach
 
-            <p class="fb-settings-note">
-                Pemberitahuan admin untuk laporan dan klaim
-                mengikuti preferensi ini. Pemberitahuan
-                pencocokan berlaku untuk pengiriman yang
-                menggunakan layanan AdminAlerts.
-                Pesan keputusan kepada pengguna tetap dikirim.
-            </p>
+            <div class="fb-settings-note fb-settings-notification-note" role="note" aria-label="Informasi Notifikasi">
+                <strong class="fb-settings-notification-note-title">
+                    <svg class="fb-settings-svg" aria-hidden="true"><use href="#fb-i-info"/></svg>
+                    Informasi Notifikasi
+                </strong>
+                <p>Pengaturan ini mengatur pemberitahuan yang diterima administrator terkait laporan, klaim, dan pencocokan barang. Menonaktifkan pemberitahuan tidak menghentikan proses layanan maupun pengiriman pesan keputusan kepada pengguna.</p>
+            </div>
 
         </section>
 
         {{-- TOMBOL SIMPAN --}}
         <div class="fb-settings-footer-actions">
-
-            <span>
-                Perubahan hanya berlaku setelah menekan Simpan.
-            </span>
 
             <button type="submit" class="fb-settings-button">
                 <svg class="fb-settings-inline-icon" aria-hidden="true">
@@ -408,6 +403,11 @@
         </div>
 
     </form>
+
+    <link rel="stylesheet" href="{{ asset('css/admin/settings-notifications-v6.css') }}?v=6">
+    <link rel="stylesheet" href="{{ asset('css/admin/settings-matching-v7.css') }}?v=7">
+    <link rel="stylesheet" href="{{ asset('css/admin/settings-smart-save-v5.css') }}?v=5">
+    <script src="{{ asset('js/admin/settings-smart-save-v5.js') }}?v=5" defer></script>
 
     {{-- INFORMASI SISTEM --}}
     <section class="fb-settings-card fb-settings-system"

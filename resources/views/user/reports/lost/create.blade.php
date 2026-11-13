@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#750d34">
 
-    <title>Laporkan Barang Hilang | FindBack Kampus</title>
+    <title>FindBack Kampus</title>
 
     <link rel="icon" href="{{ asset('favicon.png') }}">
 
@@ -17,6 +17,8 @@
     <script src="{{ asset('js/user/premium.js') }}?v=1" defer></script>
     <link rel="stylesheet" href="{{ asset('css/shared/view-utilities.css') }}">
     <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
+<!-- FINDBACK_TYPOGRAPHY_V1 -->
+<link rel="stylesheet" href="{{ asset('css/shared/findback-typography-v1.css') }}">
 </head>
 
 <body class="fb-user-body fp-body fp-existing">

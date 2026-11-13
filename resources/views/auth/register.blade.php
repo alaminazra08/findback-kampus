@@ -10,7 +10,7 @@
 
     <meta name="theme-color" content="#850c2d">
 
-    <title>Daftar Akun | {{ $fbBrand['site_name'] }}</title>
+    <title>FindBack Kampus</title>
 
     <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
 
@@ -20,6 +20,8 @@
 
     <link rel="stylesheet" href="{{ asset('css/shared/view-utilities.css') }}">
     <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
+<!-- FINDBACK_TYPOGRAPHY_V1 -->
+<link rel="stylesheet" href="{{ asset('css/shared/findback-typography-v1.css') }}">
 </head>
 
 <body class="fb-responsive fb-auth-page fb-register-page">

@@ -1,0 +1,42 @@
+/* FindBack Manajemen Akun — compact mobile V1. Scoped to this page only. */
+@media (max-width: 640px) {
+ .fb-users-page { min-width:0; max-width:100%; }
+ .fb-users-page .fb-users-stats {
+   display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+   gap:10px !important; align-items:stretch;
+ }
+ .fb-users-page .fb-users-stats article {
+   min-width:0 !important; min-height:118px !important;
+   padding:14px 13px !important; margin:0 !important;
+   display:flex !important; flex-direction:column !important;
+   justify-content:space-between !important; gap:7px !important;
+   border-radius:16px !important; box-sizing:border-box;
+ }
+ .fb-users-page .fb-users-stats article span {
+   font-size:13px !important; font-weight:600 !important;
+   line-height:1.3 !important; overflow-wrap:break-word;
+ }
+ .fb-users-page .fb-users-stats article strong {
+   font-size:26px !important; line-height:1.15 !important; font-weight:700 !important;
+ }
+ .fb-users-page .fb-users-stats article small {
+   font-size:11.5px !important; line-height:1.35 !important;
+   overflow-wrap:break-word;
+ }
+ .fb-users-page .fb-users-filters input,
+ .fb-users-page .fb-users-filters select {
+   min-width:0; max-width:100%; box-sizing:border-box;
+   font-family:Calibri,Inter,"Segoe UI",Arial,sans-serif !important;
+   font-size:16px !important;
+ }
+ .fb-users-page .fb-users-panel, .fb-users-page .fb-users-panel-head { min-width:0; }
+}
+@media (max-width: 340px) {
+ .fb-users-page .fb-users-stats {gap:8px !important;}
+ .fb-users-page .fb-users-stats article { padding:11px 10px !important; min-height:116px !important; }
+ .fb-users-page .fb-users-stats article span {font-size:12px !important;}
+ .fb-users-page .fb-users-stats article small {font-size:11px !important;}
+}
+@media (prefers-reduced-motion:reduce) {
+ .fb-users-page .fb-users-stats article {transition:none !important;}
+}

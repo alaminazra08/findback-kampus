@@ -8,7 +8,7 @@
     <meta name="theme-color" content="#800d2b">
     <meta name="description" content="{{ $fbBrand['site_description'] }}">
 
-    <title>@yield('title') | {{ $fbBrand['site_name'] }}</title>
+    <title>FindBack Kampus</title>
 
     <link rel="icon" href="{{ asset('images/logo-findback.png') }}">
 
@@ -20,6 +20,10 @@
     {{-- JAVASCRIPT --}}
     <script src="{{ asset('js/user/campus.js') }}?v=1" defer></script>
     <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
+    <!-- FINDBACK_UI_TEXT_KONSISTEN_V1 -->
+    <link rel="stylesheet" href="{{ asset('css/shared/findback-ui-text-consistency-v1.css') }}?v=1">
+<!-- FINDBACK_TYPOGRAPHY_V1 -->
+<link rel="stylesheet" href="{{ asset('css/shared/findback-typography-v1.css') }}">
 </head>
 
 <body class="fb-responsive cu-body">

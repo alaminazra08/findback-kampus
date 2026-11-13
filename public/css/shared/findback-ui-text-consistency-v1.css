@@ -1,0 +1,32 @@
+/* FindBack — UI labels are non-selectable, content remains selectable. */
+/* Scoped to app navigation and decorative page headings only. */
+.fb-admin-body .fb-sidebar .fb-nav-link,
+.fb-admin-body .fb-sidebar .fb-nav-label,
+.fb-admin-body .fb-sidebar .fb-nav-text,
+.fb-admin-body .fb-sidebar .fb-sidebar-logout,
+.fb-admin-body .fb-sidebar .fb-mobile-brand,
+.fb-admin-body .fb-sidebar .fb-sidebar-brand,
+.fb-admin-body .fb-topbar .fb-breadcrumb,
+.fb-admin-body .fb-page-heading h1,
+.fb-admin-body .fb-page-heading .fb-eyebrow,
+.fb-admin-body .fb-settings-hero h1,
+.fb-admin-body .fb-main > h1,
+.cu-body .cu-header a,
+.cu-body .cu-header button,
+.cu-body .cu-sidebar a,
+.cu-body .cu-sidebar button,
+.cu-body .cu-page-title,
+.cu-body .cu-page-heading h1 {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+/* Explicitly preserve text selection in editable fields and user content. */
+.fb-admin-body input, .fb-admin-body textarea, .fb-admin-body select,
+.fb-admin-body [contenteditable="true"],
+.cu-body input, .cu-body textarea, .cu-body select,
+.cu-body [contenteditable="true"] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+/* Avoid layout/spacing changes across breakpoints. */

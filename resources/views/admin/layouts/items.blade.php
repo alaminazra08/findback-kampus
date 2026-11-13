@@ -10,9 +10,7 @@
 
     <meta name="theme-color" content="#121114">
 
-    <title>
-        @yield('title', 'Data Barang') | {{ $adminSettings['site_name'] }}
-    </title>
+    <title>FindBack Kampus</title>
     <script src="{{ asset('js/admin/sidebar-prepaint.js') }}"></script>
 
     <link rel="icon"
@@ -55,6 +53,11 @@
     <script src="{{ asset('js/shared/view-interactions.js') }}" defer></script>
     @yield('page-styles')
     <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
+    <!-- FINDBACK_UI_TEXT_KONSISTEN_V1 -->
+    <link rel="stylesheet" href="{{ asset('css/shared/findback-ui-text-consistency-v1.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/findback-brand-premium-v1.css') }}?v=1">
+<!-- FINDBACK_TYPOGRAPHY_V1 -->
+<link rel="stylesheet" href="{{ asset('css/shared/findback-typography-v1.css') }}">
 </head>
 
 <body class="fb-responsive fb-admin-body">
@@ -173,30 +176,6 @@
             {{-- BAGIAN BAWAH SIDEBAR --}}
             <div class="fb-sidebar-bottom">
 
-                <div class="fb-sidebar-help">
-
-                    <span class="fb-help-dot"
-                        aria-hidden="true"></span>
-
-                    <div>
-
-                        <strong>Panel Administrator</strong>
-
-                        @if ($adminSettings['contact_email'])
-
-                            <a href="mailto:{{ $adminSettings['contact_email'] }}">
-                                Hubungi admin
-                            </a>
-
-                        @endif
-
-                        <small>
-                            {{ $adminSettings['institution_name'] }}
-                        </small>
-
-                    </div>
-
-                </div>
 
                 {{-- LOGOUT --}}
                 <form action="{{ route('logout') }}"
@@ -250,11 +229,7 @@
                         aria-label="Buka menu"
                         aria-controls="fb-sidebar"
                         aria-expanded="false"
-                        id="fb-menu-toggle">
-
-                        ☰
-
-                    </button>
+                        id="fb-menu-toggle"><svg class="fb-hamburger-svg" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
 
                     {{-- BRAND MOBILE DINAMIS --}}
                     <div class="fb-mobile-brand"
@@ -331,7 +306,7 @@
             </header>
 
             {{-- KONTEN UTAMA --}}
-            <main class="fb-main fb-items-main" @if (request()->routeIs('admin.reports.verification')) data-fb-nav-page="verification" @elseif (request()->routeIs('admin.items.index')) data-fb-nav-page="items" @elseif (request()->routeIs('admin.matching.index')) data-fb-nav-page="matching" @elseif (request()->routeIs('admin.claims.index')) data-fb-nav-page="claims" @elseif (request()->routeIs('admin.statistics.index')) data-fb-nav-page="statistics" @elseif (request()->routeIs('admin.users.index')) data-fb-nav-page="users" @elseif (request()->routeIs('admin.settings.index')) data-fb-nav-page="settings" @endif>
+            <main class="fb-main fb-items-main" @if (request()->routeIs('admin.reports.verification')) data-fb-nav-page="verification" @elseif (request()->routeIs('admin.items.index')) data-fb-nav-page="items" @elseif (request()->routeIs('admin.matching.index')) data-fb-nav-page="matching" @elseif (request()->routeIs('admin.claims.index')) data-fb-nav-page="claims" @elseif (request()->routeIs('admin.statistics.index')) data-fb-nav-page="statistics" @elseif (request()->routeIs('admin.users.index')) data-fb-nav-page="users" @elseif (request()->routeIs('admin.users.show')) data-fb-nav-page="user-detail" @elseif (request()->routeIs('admin.settings.index')) data-fb-nav-page="settings" @endif>
 
                 @yield('content')
 
@@ -358,7 +333,7 @@
 
     <script src="{{ asset('js/shared/responsive-viewport.js') }}?v=20261111" defer></script>
     <script src="{{ asset('js/admin/smart-navigation-session.js') }}?v=1" defer></script>
-    @if (request()->routeIs('admin.reports.verification', 'admin.items.index', 'admin.matching.index', 'admin.claims.index', 'admin.statistics.index', 'admin.users.index', 'admin.settings.index'))
+    @if (request()->routeIs('admin.reports.verification', 'admin.items.index', 'admin.matching.index', 'admin.claims.index', 'admin.statistics.index', 'admin.users.index', 'admin.users.show', 'admin.settings.index'))
         <script src="{{ asset('js/admin/admin-analytics.js') }}?v=2" defer></script>
         <script src="{{ asset('js/admin/dashboard-date.js') }}?v=2" defer></script>
         <script src="{{ asset('js/pages/admin/reports/verification/fast-tabs.js') }}?v=3" defer></script>
@@ -370,7 +345,7 @@
         <script src="{{ asset('js/pages/admin/statistics/index.js') }}?v=2" defer></script>
         <script src="{{ asset('js/admin/users-filter-navigation-v1.js') }}?v=2" defer></script>
         <script src="{{ asset('js/admin/settings-score.js') }}?v=2" defer></script>
-        <script src="{{ asset('js/admin/dashboard-verification-navigation.js') }}?v=7" defer
+        <script src="{{ asset('js/admin/dashboard-verification-navigation.js') }}?v=8" defer
             data-dashboard="{{ route('admin.dashboard') }}"
             data-verification="{{ route('admin.reports.verification') }}"
             data-items="{{ route('admin.items.index') }}"
@@ -380,6 +355,8 @@
             data-users="{{ route('admin.users.index') }}"
             data-settings="{{ route('admin.settings.index') }}"></script>
     @endif
+    {{-- Smart Save harus sudah siap sebelum navigasi AJAX menuju Pengaturan. --}}
+    <script src="{{ asset('js/admin/settings-smart-save-v5.js') }}?v=10" defer></script>
 </body>
 
 </html>

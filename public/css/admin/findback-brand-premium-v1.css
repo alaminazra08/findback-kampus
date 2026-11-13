@@ -1,0 +1,12 @@
+/* FindBack Brand Premium V1 — restrained, responsive, accessible */
+.fb-sidebar .fb-brand { text-decoration:none; -webkit-tap-highlight-color:transparent; }
+.fb-sidebar .fb-brand .fb-brand-mark { overflow:hidden; border-radius:16px; transition:transform .22s ease, box-shadow .22s ease, filter .22s ease; }
+.fb-sidebar .fb-brand .fb-brand-mark img { display:block; max-width:100%; max-height:100%; object-fit:contain; }
+@media (hover:hover) and (pointer:fine) {
+ .fb-sidebar .fb-brand:hover .fb-brand-mark { transform:translateY(-2px) scale(1.035); box-shadow:0 6px 18px rgba(0,0,0,.16); }
+ .fb-sidebar .fb-brand:hover .fb-brand-copy strong { color:#fff; }
+}
+.fb-sidebar .fb-brand:focus-visible { outline:2px solid #f8c8da !important; outline-offset:3px; border-radius:16px; }
+.fb-sidebar .fb-brand:active .fb-brand-mark { transform:scale(.98); }
+@media (max-width:767px) { .fb-sidebar .fb-brand .fb-brand-mark { border-radius:14px; } }
+@media (prefers-reduced-motion:reduce) { .fb-sidebar .fb-brand .fb-brand-mark { transition:none !important; transform:none !important; } }

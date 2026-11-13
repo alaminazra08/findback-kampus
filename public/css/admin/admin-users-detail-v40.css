@@ -557,3 +557,45 @@
         grid-column: 1/-1;
     }
 }
+
+
+/* FindBack Detail Akun V44 — responsive refinement; CSS only */
+.fb-detail40 {font-family:Calibri,Inter,"Segoe UI",Arial,sans-serif;}
+.fb-detail40 .fb40-layout,.fb-detail40 .fb40-main,.fb-detail40 .fb40-side,.fb-detail40 .fb40-card{min-width:0;}
+.fb-detail40 .fb40-section-heading>div:last-child{min-width:0;}
+.fb-detail40 .fb40-profile-text p{overflow-wrap:anywhere;}
+.fb-detail40 .fb40-facts dd{overflow-wrap:anywhere;}
+.fb-detail40 .fb40-role-form select{font-family:inherit;font-size:14px;min-height:50px;}
+.fb-detail40 .fb40-save{font-family:inherit;font-size:14px;min-height:50px;}
+@media(min-width:1051px){
+ .fb-detail40 .fb40-layout{grid-template-columns:minmax(0,1.2fr) minmax(320px,.8fr);gap:20px;}
+ .fb-detail40 .fb42-stats{grid-template-columns:repeat(3,minmax(0,1fr));}
+}
+@media(max-width:1050px){.fb-detail40 .fb40-layout{grid-template-columns:minmax(0,1fr);}}
+@media(max-width:640px){
+ .fb-detail40 .fb41-breadcrumb{margin-bottom:12px;}
+ .fb-detail40 .fb40-top{padding:19px 18px;margin-bottom:16px;border-radius:18px;}
+ .fb-detail40 .fb40-title-row h1{font-size:clamp(25px,7.5vw,29px);line-height:1.18;letter-spacing:-.025em;}
+ .fb-detail40 .fb40-subtitle{font-size:13px;line-height:1.55;}
+ .fb-detail40 .fb40-card{padding:16px;border-radius:18px;}
+ .fb-detail40 .fb40-main,.fb-detail40 .fb40-side{gap:14px;}
+ .fb-detail40 .fb40-profile{padding:14px;gap:12px;align-items:flex-start;}
+ .fb-detail40 .fb40-name-row{display:flex;align-items:center;flex-wrap:wrap;gap:5px 9px;}
+ .fb-detail40 .fb40-name-row h2{font-size:17px;}
+ .fb-detail40 .fb40-profile-text p{font-size:12.5px;line-height:1.55;margin:5px 0 7px;}
+ .fb-detail40 .fb40-section-heading{gap:11px;margin-bottom:14px;align-items:flex-start;}
+ .fb-detail40 .fb40-section-heading h2{font-size:16px;line-height:1.35;}
+ .fb-detail40 .fb40-section-heading p{font-size:12.5px;line-height:1.55;}
+ .fb-detail40 .fb40-facts>div,.fb-detail40 .fb43-history-side .fb40-facts>div{padding:11px 0;gap:5px;}
+ .fb-detail40 .fb40-facts dt{font-size:12px;}
+ .fb-detail40 .fb40-facts dd{font-size:13px;}
+ .fb-detail40 .fb42-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+ .fb-detail40 .fb42-stat{padding:13px 12px;gap:7px;border-radius:13px;}
+ .fb-detail40 .fb42-stat strong{font-size:25px;}
+ .fb-detail40 .fb42-stat>span:last-child{font-size:12px;}
+ .fb-detail40 .fb42-stat:last-child{grid-column:1/-1;}
+ .fb-detail40 .fb40-role-form label{font-size:13px;}
+ .fb-detail40 .fb40-helper,.fb-detail40 .fb40-security p,.fb-detail40 .fb40-note p{font-size:12.5px;line-height:1.65;}
+ .fb-detail40 .fb40-security{padding:13px;}
+}
+@media(max-width:350px){.fb-detail40 .fb40-top{padding:16px 14px;}.fb-detail40 .fb40-card{padding:13px;}.fb-detail40 .fb40-profile{padding:11px;}}

@@ -83,7 +83,7 @@
                     </select>
                 </label>
                 <button type="submit" class="fb-users-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16l-6.5 7.5V19l-3 1v-7.5L4 5z"/></svg><span>Terapkan</span></button>
-                <a class="fb-users-reset" href="{{ route('admin.users.index') }}" aria-label="Atur ulang filter pencarian"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true" style="flex:none"><path d="M4 8.5H13.5C17.5 8.5 20 11 20 14.5C20 18 17.5 20 14 20H10" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.2 8.5L10 3.5V13.5L4.2 8.5Z" fill="currentColor"/></svg><span>Atur Ulang</span></a>
+                <a class="fb-users-reset" href="{{ route('admin.users.index') }}" aria-label="Atur ulang filter pencarian"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="M4 8.5H13.5C17.5 8.5 20 11 20 14.5C20 18 17.5 20 14 20H10" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.2 8.5L10 3.5V13.5L4.2 8.5Z" fill="currentColor"/></svg><span>Atur Ulang</span></a>
             </form>
 
             <div class="fb-users-table-scroll">

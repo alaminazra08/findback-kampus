@@ -1,0 +1,43 @@
+/* FindBack V7 — Preferensi Pencocokan: informasi dan tipografi konsisten */
+.fb-settings .fb-settings-matching-note {
+    margin-top: 18px;
+    padding: 15px 16px;
+    border-radius: 14px;
+    text-align: left;
+    overflow-wrap: break-word;
+}
+.fb-settings .fb-settings-matching-note-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 8px;
+    font-family: Calibri, "Inter", "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+    font-weight: 600;
+    color: #6e2749;
+    text-align: left;
+}
+.fb-settings .fb-settings-matching-note-title .fb-settings-svg {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+}
+.fb-settings .fb-settings-matching-note p {
+    margin: 0;
+    font-family: Calibri, "Inter", "Segoe UI", Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.7;
+    text-align: justify;
+    text-align-last: left;
+    word-spacing: normal;
+    letter-spacing: normal;
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+@media(max-width:640px) {
+    .fb-settings .fb-settings-matching-note { padding: 13px 14px; }
+    .fb-settings .fb-settings-matching-note-title { font-size: 14px; }
+    .fb-settings .fb-settings-matching-note p { font-size: 13px; }
+}

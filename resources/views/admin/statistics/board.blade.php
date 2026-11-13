@@ -8,6 +8,8 @@
         href="{{ 'file:///' . ltrim(str_replace('\\', '/', public_path('css/pages/admin/statistics/board.css')), '/') }}">
     <link rel="stylesheet"
         href="{{ 'file:///' . ltrim(str_replace('\\', '/', public_path('css/shared/view-utilities.css')), '/') }}">
+<!-- FINDBACK_TYPOGRAPHY_V1 -->
+<link rel="stylesheet" href="{{ asset('css/shared/findback-typography-v1.css') }}">
 </head>
 
 <body>

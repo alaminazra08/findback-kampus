@@ -81,6 +81,12 @@ class SettingsController extends Controller
             ]);
         }
 
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'Pengaturan berhasil disimpan.',
+            ]);
+        }
+
         return redirect()
             ->route('admin.settings.index')
             ->with('success', 'Pengaturan berhasil disimpan.');

@@ -1,0 +1,68 @@
+
+/* FindBack V6 — Preferensi Notifikasi Premium */
+
+/* Dropdown Aktif / Nonaktif */
+.fb-settings .fb-settings-toggle-row select {
+    font-family: Calibri, "Inter", "Segoe UI", Arial, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+    min-height: 50px;
+    letter-spacing: normal !important;
+}
+
+/* Kotak Informasi Notifikasi */
+.fb-settings .fb-settings-notification-note {
+    margin-top: 18px;
+    padding: 15px 16px;
+    border-radius: 14px;
+    text-align: left;
+    overflow-wrap: break-word;
+}
+
+/* Judul Informasi Notifikasi */
+.fb-settings .fb-settings-notification-note-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #6e2749;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+/* Ikon informasi */
+.fb-settings .fb-settings-notification-note-title .fb-settings-svg {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+}
+
+/* Isi paragraf — rata kanan-kiri */
+.fb-settings .fb-settings-notification-note p {
+    margin: 0;
+    font-family: Calibri, "Inter", "Segoe UI", Arial, sans-serif;
+    font-size: 13px !important;
+    font-weight: 400;
+    line-height: 1.7 !important;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-align: justify !important;
+    text-align-last: left !important;
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+
+/* Responsif mobile */
+@media (max-width: 640px) {
+    .fb-settings .fb-settings-toggle-row select {
+        font-size: 15px !important;
+        min-height: 50px;
+    }
+
+    .fb-settings .fb-settings-notification-note {
+        padding: 13px 14px;
+    }
+}

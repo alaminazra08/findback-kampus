@@ -11,8 +11,11 @@
         [new URL(config.users).pathname, 'users'],
         [new URL(config.settings).pathname, 'settings']
     ]);
+    const usersPath = new URL(config.users).pathname;
+    const detailPattern = new RegExp('^' + usersPath + '/[0-9]+/?$');
+    const pageOf = path => pages.get(path) || (detailPattern.test(path) ? 'user-detail' : undefined);
     function rememberedListURL(url) {
-        const page = pages.get(url.pathname);
+        const page = pageOf(url.pathname);
         if ((page !== 'matching' && page !== 'users') || url.search) return url;
         try {
             if (page === 'users' && sessionStorage.getItem('findback:admin:users:filters:v1:skip')) return url;
@@ -63,7 +66,7 @@
             const crumb = doc.querySelector('.fb-breadcrumb');
             const topbar = doc.querySelector('.fb-topbar-right');
             const active = doc.querySelector('.fb-sidebar .fb-nav-link[aria-current="page"]');
-            if (next?.dataset.fbNavPage !== pages.get(url.pathname) || !crumb || !topbar || !active) {
+            if (next?.dataset.fbNavPage !== pageOf(url.pathname) || !crumb || !topbar || !active) {
                 throw Error('Incomplete admin page');
             }
             // DOMParser resolves relative references against the current document.
@@ -77,12 +80,12 @@
             for (const link of old) link.remove();
             if (historyMode === 'push') history.pushState(null, '', url);
             displayedURL = url.href;
-            document.title = doc.title;
+            document.title = 'FindBack Kampus';
             main().replaceWith(document.importNode(next, true));
             document.querySelector('.fb-breadcrumb').replaceWith(document.importNode(crumb, true));
             document.querySelector('.fb-topbar-right').replaceWith(document.importNode(topbar, true));
             for (const link of document.querySelectorAll('.fb-sidebar a.fb-nav-link')) {
-                const selected = new URL(link.href).pathname === url.pathname;
+                const selected = new URL(link.href).pathname === (pageOf(url.pathname) === 'user-detail' ? usersPath : url.pathname);
                 link.classList.toggle('is-active', selected);
                 if (selected) link.setAttribute('aria-current', 'page');
                 else link.removeAttribute('aria-current');
@@ -108,8 +111,8 @@
         const link = event.target.closest?.('.fb-sidebar a.fb-nav-link[href], main[data-fb-nav-page] a[href]');
         if (!link || link.target || link.hasAttribute('download') || !main()) return;
         const url = new URL(link.href);
-        if (url.origin !== location.origin || !pages.has(url.pathname)) return;
-        if (main().dataset.fbNavPage === pages.get(url.pathname)) {
+        if (url.origin !== location.origin || !Boolean(pageOf(url.pathname))) return;
+        if (main().dataset.fbNavPage === pageOf(url.pathname) && (pageOf(url.pathname) !== 'user-detail' || location.pathname === url.pathname)) {
             pending?.abort();
             return;
         }
@@ -119,7 +122,7 @@
 
     function changeStatisticsPeriod(form) {
         const url = new URL(form.action);
-        if (url.origin !== location.origin || pages.get(url.pathname) !== 'statistics') return;
+        if (url.origin !== location.origin || pageOf(url.pathname) !== 'statistics') return;
         url.search = new URLSearchParams(new FormData(form)).toString();
         if (url.href === displayedURL) {
             pending?.abort();
@@ -147,9 +150,9 @@
         pending?.abort();
         const url = new URL(location.href);
         const current = main()?.dataset.fbNavPage;
-        const target = pages.get(url.pathname);
+        const target = pageOf(url.pathname);
         if (!current || !target) return;
-        if (current === target && (target !== 'statistics' || url.href === displayedURL)) return;
+        if (current === target && (target !== 'statistics' && target !== 'user-detail' || url.href === displayedURL)) return;
         event.stopImmediatePropagation();
         navigate(url, 'pop');
     }, true);

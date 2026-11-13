@@ -9,13 +9,15 @@
     <meta name="description"
         content="{{ trim((string) ($fbBrand['site_description'] ?? '')) ?: 'Sistem informasi barang hilang dan ditemukan di kampus' }}">
 
-    <title>FindBack Kampus | UIN Imam Bonjol Padang</title>
+    <title>FindBack Kampus</title>
 
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 
     <link rel="stylesheet" href="{{ asset('css/public/landing.css') }}">
     <link rel="stylesheet" href="{{ asset('css/shared/view-utilities.css') }}">
     <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
+<!-- FINDBACK_TYPOGRAPHY_V1 -->
+<link rel="stylesheet" href="{{ asset('css/shared/findback-typography-v1.css') }}">
 </head>
 
 <body class="fb-responsive loading">

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{{ $adminSettings['site_description'] }}">
     <meta name="theme-color" content="#121114">
-    <title>Dashboard Admin | {{ $adminSettings['site_name'] }}</title>
+    <title>FindBack Kampus</title>
     <script src="{{ asset('js/admin/sidebar-prepaint.js') }}"></script>
     <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/admin/admin-dashboard.css') }}?v=40">
@@ -29,6 +29,11 @@
     <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-report-cards.css') }}?v=20261111">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-recent-consistency.css') }}?v=1">
+    <!-- FINDBACK_UI_TEXT_KONSISTEN_V1 -->
+    <link rel="stylesheet" href="{{ asset('css/shared/findback-ui-text-consistency-v1.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/findback-brand-premium-v1.css') }}?v=1">
+<!-- FINDBACK_TYPOGRAPHY_V1 -->
+<link rel="stylesheet" href="{{ asset('css/shared/findback-typography-v1.css') }}">
 </head>
 
 <body class="fb-responsive fb-admin-body">
@@ -95,16 +100,7 @@
             </div> {{-- Akhir area scroll menu --}}
 
             <div class="fb-sidebar-bottom">
-                <div class="fb-sidebar-help">
-                    <span class="fb-help-dot" aria-hidden="true"></span>
-                    <div><strong>Panel Administrator</strong>
-                        @if ($adminSettings['contact_email'])
-                            <a href="mailto:{{ $adminSettings['contact_email'] }}">Hubungi admin</a>
-                        @endif
-                        <small>
-                            {{ $adminSettings['institution_name'] }}</small>
-                    </div>
-                </div>
+
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button class="fb-sidebar-logout" type="submit"><svg viewBox="0 0 24 24" fill="none"
@@ -123,7 +119,7 @@
             <header class="fb-topbar">
                 <div class="fb-topbar-left">
                     <button class="fb-menu-toggle" type="button" aria-label="Buka menu" aria-controls="fb-sidebar"
-                        aria-expanded="false" id="fb-menu-toggle">☰</button>
+                        aria-expanded="false" id="fb-menu-toggle"><svg class="fb-hamburger-svg" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
                     <div class="fb-mobile-brand" aria-label="{{ $adminSettings['site_name'] }}, panel admin">
                         <strong>FindBack</strong>
                         <small>ADMIN PANEL</small>
@@ -552,6 +548,8 @@
         data-statistics="{{ route('admin.statistics.index') }}"
         data-users="{{ route('admin.users.index') }}"
         data-settings="{{ route('admin.settings.index') }}"></script>
+    {{-- Smart Save harus sudah siap sebelum navigasi AJAX menuju Pengaturan. --}}
+    <script src="{{ asset('js/admin/settings-smart-save-v5.js') }}?v=10" defer></script>
 </body>
 
 </html>

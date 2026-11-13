@@ -1,0 +1,32 @@
+/* FINDBACK SETTINGS V9 — single success toast and white application fields */
+/* Only the two general-information fields are affected. */
+.fb-settings .fb-settings-field input[name="site_name"],
+.fb-settings .fb-settings-field input[name="institution_name"] {
+    background: #fff !important;
+    background-color: #fff !important;
+    color: #34222d !important;
+    -webkit-text-fill-color: #34222d !important;
+    color-scheme: light !important;
+    caret-color: #842344;
+    opacity: 1 !important;
+}
+.fb-settings .fb-settings-field input[name="site_name"]:focus,
+.fb-settings .fb-settings-field input[name="institution_name"]:focus,
+.fb-settings .fb-settings-field input[name="site_name"]:hover,
+.fb-settings .fb-settings-field input[name="institution_name"]:hover {
+    background: #fff !important;
+    background-color: #fff !important;
+}
+.fb-settings .fb-settings-field input[name="site_name"]:-webkit-autofill,
+.fb-settings .fb-settings-field input[name="institution_name"]:-webkit-autofill,
+.fb-settings .fb-settings-field input[name="site_name"]:-webkit-autofill:hover,
+.fb-settings .fb-settings-field input[name="institution_name"]:-webkit-autofill:hover,
+.fb-settings .fb-settings-field input[name="site_name"]:-webkit-autofill:focus,
+.fb-settings .fb-settings-field input[name="institution_name"]:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+    box-shadow: 0 0 0 1000px #fff inset !important;
+    -webkit-text-fill-color: #34222d !important;
+    caret-color: #842344;
+    transition: background-color 9999s ease-in-out 0s;
+}
+/* Keep inputs keyboard-accessible, retaining a visible focus ring. */

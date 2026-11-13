@@ -3,7 +3,7 @@
 @section('page-styles')
     <link rel="stylesheet" href="{{ asset('css/report-cycle.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/admin-verification.css') }}?v=18">
-    <link rel="stylesheet" href="{{ asset('css/admin/findback-kembali-compact-v2.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/verification-back-button.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/findback-pm-detail-date.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/findback-detail-compact.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/findback-detail-responsive-pm.css') }}?v=1">

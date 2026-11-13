@@ -4,15 +4,15 @@
 @section('breadcrumb', 'Manajemen Akun')
 
 @section('page-styles')
-    <link rel="stylesheet" href="{{ asset('css/admin/findback-header-consistency-v2.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/admin/header-consistency.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/admin-users.css') }}?v=36">
-    <link rel="stylesheet" href="{{ asset('css/admin/findback-users-v39.css') }}?v=39">
-    <link rel="stylesheet" href="{{ asset('css/admin/users-filter-premium-v1.css') }}?v=1">
-    <link rel="stylesheet" href="{{ asset('css/admin/users-filter-claims-consistent-v2.css') }}?v=2">
-    <link rel="stylesheet" href="{{ asset('css/admin/users-filter-claims-compact-v3.css') }}?v=1">
-    <link rel="stylesheet" href="{{ asset('css/admin/users-filter-claim-final-v4.css') }}?v=4">
+    <link rel="stylesheet" href="{{ asset('css/admin/users-list.css') }}?v=39">
+    <link rel="stylesheet" href="{{ asset('css/admin/users-filter-base.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/users-filter-claims-alignment.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/admin/users-filter-compact.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/users-filter-final.css') }}?v=4">
     {{-- FINDBACK_USERS_MOBILE_COMPACT_V1 --}}
-    <link rel="stylesheet" href="{{ asset('css/admin/users-mobile-compact-v1.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/users-mobile-compact.css') }}?v=1">
 @endsection
 
 @section('content')

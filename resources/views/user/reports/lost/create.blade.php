@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{{ asset('css/shared/view-utilities.css') }}">
     <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
 <!-- FINDBACK_TYPOGRAPHY_V1 -->
-<link rel="stylesheet" href="{{ asset('css/shared/findback-typography-v1.css') }}">
+<link rel="stylesheet" href="{{ asset('css/shared/typography.css') }}">
 </head>
 
 <body class="fb-user-body fp-body fp-existing">

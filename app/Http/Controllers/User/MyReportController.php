@@ -45,7 +45,6 @@ class MyReportController extends Controller
 
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
-                    ->orWhere('category', 'like', "%{$search}%")
                     ->orWhere('location', 'like', "%{$search}%");
 
                 if (ctype_digit($search)) {

@@ -3,6 +3,9 @@
     if (!side) return;
     const brand = side.querySelector(".fb-brand");
     if (!brand) return;
+    // Guard against duplicate initialization when scripts are evaluated again.
+    if (side.dataset.fbSidebarBrandingInitialized === "1") return;
+    side.dataset.fbSidebarBrandingInitialized = "1";
     const key = "findback-sidebar-compact-v44";
     const desktop = () => window.matchMedia("(min-width:961px)").matches;
     let compact = false;

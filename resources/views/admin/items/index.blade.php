@@ -18,7 +18,7 @@
 
     {{-- FINDBACK_ADMIN_ITEMS_V15_FIX --}}
 
-    <div class="fb-items-heading">
+    <div class="fb-items-heading fb-work-heading">
 
         <div>
 

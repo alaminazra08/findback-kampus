@@ -15,7 +15,7 @@
     {{-- FINDBACK_ICON_PREMIUM_FIX_V2 --}}
     
     <div class="match-wrap">
-        <div class="match-heading match-index-heading">
+        <div class="match-heading match-index-heading fb-work-heading">
             <div>
                 <p class="match-kicker">ADMINISTRASI · FINDBACK KAMPUS</p>
                 <h1>Pencocokan <span>Barang</span></h1>

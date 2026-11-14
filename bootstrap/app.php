@@ -66,6 +66,16 @@ return Application::configure(basePath: dirname(__DIR__))
     */
 
     ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->render(function (\Symfony\Component\HttpKernel\Exception\HttpExceptionInterface $exception, \Illuminate\Http\Request $request) {
+            if ($exception->getStatusCode() !== 419 || !$request->isMethod('POST') || !$request->routeIs('login.store') || $request->expectsJson()) {
+                return null;
+            }
+
+            return redirect()->route('login', [], 303)
+                ->with('login_expired', 'Sesi formulir login berakhir. Silakan masukkan kembali email dan kata sandi.')
+                ->header('Cache-Control', 'no-store');
+        });
+
         // FindBack: admin matching throttle feedback
         $exceptions->render(function (\Symfony\Component\HttpKernel\Exception\HttpExceptionInterface $exception, \Illuminate\Http\Request $request) {
             if ($exception->getStatusCode() !== 429 || !$request->isMethod('POST') || !$request->routeIs('admin.matching.generate') || $request->expectsJson()) {

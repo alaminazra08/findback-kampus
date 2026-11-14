@@ -9,8 +9,8 @@
 
 @section('content')
 
-    <section class="fb-claim-executive" aria-label="Ringkasan Klaim Barang">
-        <div class="fb-page-heading">
+    <section class="fb-claim-executive fb-work-claims" aria-label="Ringkasan Klaim Barang">
+        <div class="fb-page-heading fb-work-heading">
             <div>
                 <p class="fb-eyebrow">ADMINISTRASI · FINDBACK KAMPUS</p>
                 <h1>Klaim <span>Barang</span></h1>

@@ -18,7 +18,7 @@
 @section('content')
 
     <div class="fb-users-page">
-        <div class="fb-users-heading">
+        <div class="fb-users-heading fb-work-heading">
             <div>
                 <p class="fb-users-eyebrow">ADMINISTRASI · FINDBACK KAMPUS</p>
                 <h1>Manajemen <span>Akun</span></h1>

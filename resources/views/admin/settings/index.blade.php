@@ -112,7 +112,7 @@
     </svg>
 
     {{-- HERO --}}
-    <div class="fb-settings-hero">
+    <div class="fb-settings-hero fb-work-settings-hero">
         <div>
             <span class="fb-settings-eyebrow">
                 ADMINISTRASI · FINDBACK KAMPUS

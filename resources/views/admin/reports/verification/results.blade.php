@@ -1,5 +1,5 @@
     <div class="fb-v-stats fb-v-stats-v18">
-        @foreach ([['label' => 'Antrean Verifikasi', 'value' => $pendingReadyCount, 'class' => 'pending', 'description' => 'Perlu diperiksa admin'], ['label' => 'Laporan Ditolak', 'value' => $openRevisionCount, 'class' => 'revision', 'description' => 'Ditolak dan menunggu perbaikan'], ['label' => 'Laporan Terverifikasi', 'value' => $verified, 'class' => 'approved', 'description' => 'Berstatus disetujui'], ['label' => 'Laporan Ditolak', 'value' => $rejected, 'class' => 'rejected', 'description' => 'Tidak memenuhi ketentuan']] as $stat)
+        @foreach ([['label' => 'Antrean Verifikasi', 'value' => $pendingReadyCount, 'class' => 'pending', 'description' => 'Perlu diperiksa admin'], ['label' => 'Menunggu Perbaikan', 'value' => $openRevisionCount, 'class' => 'revision', 'description' => 'Ditolak dan menunggu perbaikan'], ['label' => 'Laporan Terverifikasi', 'value' => $verified, 'class' => 'approved', 'description' => 'Berstatus disetujui'], ['label' => 'Laporan Ditolak', 'value' => $rejected, 'class' => 'rejected', 'description' => 'Tidak memenuhi ketentuan']] as $stat)
             <div class="fb-v-stat {{ $stat['class'] }}">
                 <span>{{ $stat['label'] }}</span><strong>{{ number_format($stat['value'], 0, ',', '.') }}</strong><small>{{ $stat['description'] }}</small>
             </div>

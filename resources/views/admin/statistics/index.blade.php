@@ -13,7 +13,7 @@
 @section('content')
 
     <section class="fs-page">
-        <div class="fs-header">
+        <div class="fs-header fb-work-heading fb-work-heading--statistics">
             <div>
                 <p class="fs-eyebrow">ADMINISTRASI · FINDBACK KAMPUS</p>
                 <h1>Laporan <span>& Statistik</span></h1>

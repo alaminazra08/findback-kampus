@@ -66,6 +66,9 @@
                     <h1 id="login-title">Masuk ke Akun Anda</h1>
                     <p>Masuk untuk melanjutkan pencarian dan pelaporan barang di {{ $fbBrand['site_name'] }}.</p>
                 </header>
+                @if (session('login_expired'))
+                    <div class="fb-auth-alert" role="alert">{{ session('login_expired') }}</div>
+                @endif
                 @if (session('success'))
                     <div class="fb-login-success" role="status">{{ session('success') }}</div>
                 @endif

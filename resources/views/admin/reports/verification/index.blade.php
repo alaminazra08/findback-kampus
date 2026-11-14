@@ -10,7 +10,7 @@
 
 @section('content')
 
-    <div class="fb-page-heading">
+    <div class="fb-page-heading fb-work-heading">
         <div>
             <p class="fb-eyebrow">ADMINISTRASI · FINDBACK KAMPUS</p>
             <h1>Verifikasi <span>Laporan</span></h1>

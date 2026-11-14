@@ -59,6 +59,7 @@
 <!-- FINDBACK_TYPOGRAPHY_V1 -->
 <link rel="stylesheet" href="{{ asset('css/shared/typography.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/notification-toast.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/admin/work-page-heading.css') }}?v=1">
 </head>
 
 <body class="fb-responsive fb-admin-body">

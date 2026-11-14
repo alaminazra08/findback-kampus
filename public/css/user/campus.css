@@ -4102,3 +4102,30 @@ form.cu-filter + .cu-result + .cu-cards .cu-empty {
 .fb-cycle-report-list tbody tr:hover {
     background: #fafbf7;
 }
+
+
+/* ==========================================
+   HILANGKAN LABEL PUSAT AKTIVITAS
+   KHUSUS HALAMAN NOTIFIKASI
+========================================== */
+
+.fb-notif-v12 .cu-section-title::before,
+.fb-notif-v12 .cu-section-title::after,
+.fb-notif-v12 .cu-section-title .cu-title::before,
+.fb-notif-v12 .cu-section-title .cu-title::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* Pastikan judul halaman tetap tampil normal */
+
+.fb-notif-v12 .cu-section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.fb-notif-v12 .cu-section-title .cu-title h1 {
+    display: block;
+    margin-top: 0;
+}

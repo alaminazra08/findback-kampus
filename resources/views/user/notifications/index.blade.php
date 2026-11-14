@@ -18,7 +18,6 @@
         {{-- HEADER HALAMAN --}}
         <div class="cu-section-title">
             <div class="cu-title">
-                <span class="fb-notif-eyebrow">PUSAT AKTIVITAS</span>
                 <h1>Notifikasi</h1>
                 <p>Informasi terbaru tentang laporan, klaim, dan aktivitas akunmu.</p>
             </div>

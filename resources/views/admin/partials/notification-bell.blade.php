@@ -1,11 +1,11 @@
 @php
-    $adminNotifications = auth()->user()->notifications()->latest()->limit(8)->get();
+    $adminNotifications = auth()->user()->notifications()->latest()->orderByDesc('id')->limit(8)->get();
     $links = \App\Http\Controllers\Admin\NotificationController::destinations(
         $adminNotifications->filter(fn ($notification) => $notification->read_at !== null)
     );
     $unreadCount = auth()->user()->unreadNotifications()->count();
 @endphp
-<div class="fb-notif" id="fb-notif">
+<div class="fb-notif" id="fb-notif" data-feed="{{ route('admin.notifications.feed') }}">
     <button class="fb-notif-trigger" type="button" id="fb-notif-trigger"
         aria-label="Notifikasi{{ $unreadCount ? ', ' . $unreadCount . ' belum dibaca' : '' }}" aria-expanded="false"
         aria-controls="fb-notif-panel" aria-haspopup="true">
@@ -34,7 +34,8 @@
         @else
             <ul class="fb-notif-list">
                 @foreach ($adminNotifications as $notification)
-                    <li class="fb-notif-item {{ $notification->read_at ? '' : 'is-unread' }}">
+                    <li data-notification-id="{{ $notification->id }}" data-category="{{ $notification->data['category'] ?? '' }}"
+                        class="fb-notif-item {{ $notification->read_at ? '' : 'is-unread' }}">
                         <span class="fb-notif-dot" aria-hidden="true"></span>
                         <div class="fb-notif-content">
                             <strong>{{ $notification->data['title'] ?? 'Pemberitahuan FindBack' }}</strong>

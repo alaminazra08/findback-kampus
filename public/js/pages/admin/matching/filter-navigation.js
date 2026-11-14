@@ -112,11 +112,68 @@
     } catch (_) {}
   }
 
+  function mountFeedback(signal) {
+    const toast = document.querySelector('[data-fb-matching-toast]');
+    if (toast) {
+      const dismiss = () => toast.remove();
+      const timer = toast.classList.contains('is-error') ? null : setTimeout(dismiss, 5000);
+      signal.addEventListener('abort', () => clearTimeout(timer), { once: true });
+      toast.querySelector('[data-fb-matching-toast-close]').addEventListener('click', () => {
+        clearTimeout(timer);
+        dismiss();
+      }, { signal });
+    }
+
+    const form = document.querySelector('form[data-fb-match-generate]');
+    const dialog = document.getElementById('fb-match-confirm');
+    if (!form || !dialog?.showModal || !form.requestSubmit) return;
+    let approved = false;
+    let sent = false;
+    let submitter;
+    const button = form.querySelector('button[type="submit"]');
+    const label = button.querySelector('span');
+    const originalLabel = label.textContent;
+    form.addEventListener('submit', event => {
+      if (event.defaultPrevented) return;
+      if (sent) {
+        event.preventDefault();
+        return;
+      }
+      if (approved) {
+        queueMicrotask(() => {
+          if (event.defaultPrevented || signal.aborted) return;
+          sent = true;
+          button.disabled = true;
+          label.textContent = 'Memproses…';
+        });
+        return;
+      }
+      event.preventDefault();
+      if (dialog.open) return;
+      submitter = event.submitter;
+      dialog.showModal();
+    }, { signal });
+    dialog.querySelector('[data-fb-match-accept]').addEventListener('click', () => {
+      if (!dialog.open || sent) return;
+      dialog.close();
+      approved = true;
+      try { form.requestSubmit(submitter || undefined); }
+      finally { approved = false; }
+    }, { signal });
+    window.addEventListener('pageshow', event => {
+      if (!event.persisted) return;
+      sent = false;
+      button.disabled = false;
+      label.textContent = originalLabel;
+    }, { signal });
+  }
+
   let scope;
   function render(initialLoad = false) {
     scope?.abort();
     scope = new AbortController();
     mount(scope.signal, initialLoad);
+    mountFeedback(scope.signal);
   }
 
   document.addEventListener('fb:admin-page', () => render());

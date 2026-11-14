@@ -69,23 +69,6 @@
         },
         true,
     );
-    // Avoid needless full-page reloads when repeatedly clicking the currently active
-    // Verification page. Preserve normal navigation for filters/query strings,
-    // modified clicks, and links to a different destination.
-    const verificationLink = [...side.querySelectorAll(".fb-nav-link")].find(
-        (link) => link.querySelector(".fb-nav-text")?.textContent?.trim() === "Verifikasi Laporan",
-    );
-    if (verificationLink) {
-        verificationLink.addEventListener("click", (event) => {
-            if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
-            if (verificationLink.getAttribute("aria-current") !== "page") return;
-            const destination = new URL(verificationLink.href, window.location.href);
-            const current = new URL(window.location.href);
-            if (destination.origin === current.origin && destination.pathname === current.pathname && destination.search === current.search) {
-                event.preventDefault();
-            }
-        });
-    }
     // FindBack: avoid reloading the same active admin sidebar destination.
     // Match the actual URL, not just the is-active class (detail pages and filters may differ).
     side.addEventListener("click", (event) => {

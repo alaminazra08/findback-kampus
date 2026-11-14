@@ -4,9 +4,10 @@
 @section('breadcrumb', 'Pencocokan Barang')
 
 @section('page-styles')
+    <link rel="stylesheet" href="{{ asset('css/admin/settings-smart-save.css') }}?v=5">
     <link rel="stylesheet" href="{{ asset('css/admin/header-consistency.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/admin-matching.css') }}?v=match-header-align-1">
-    <link rel="stylesheet" href="{{ asset('css/pages/admin/matching/index.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/matching/index.css') }}?v=1-dialog1">
 @endsection
 
 @section('content')
@@ -23,7 +24,7 @@
             </div>
             <form method="POST" action="{{ route('admin.matching.generate') }}"
                 data-confirm="Jalankan pencocokan laporan terverifikasi? Kandidat yang sudah diperiksa tidak akan diubah."
-                data-confirm-event="submit">
+                data-fb-match-generate>
                 @csrf
                 <button class="match-button" type="submit"><svg class="match-action-svg" viewBox="0 0 24 24"
                         aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9"
@@ -39,16 +40,27 @@
             </form>
         </div>
 
-        @if (session('success'))
-            <div class="match-flash success" role="status">{{ session('success') }}</div>
-        @endif
-        @if (session('error'))
-            <div class="match-flash error" role="alert">{{ session('error') }}</div>
+        @php
+            $matchingError = session('error');
+            $matchingMessage = $matchingError ?? session('success');
+        @endphp
+        @if ($matchingMessage)
+            <div data-fb-matching-toast class="fb-settings-toast is-visible{{ $matchingError ? ' is-error' : '' }}"
+                role="{{ $matchingError ? 'alert' : 'status' }}" aria-atomic="true">
+                <span class="fb-settings-toast-icon" aria-hidden="true">{{ $matchingError ? '!' : '✓' }}</span>
+                <span class="fb-settings-toast-copy" style="overflow-wrap:anywhere">
+                    <strong>{{ $matchingError ? 'Pencocokan gagal' : 'Pencocokan selesai' }}</strong>
+                    <small>{{ $matchingError ? $matchingMessage : (preg_replace('/^Pencocokan selesai\.?\s*/i', '', $matchingMessage) ?: $matchingMessage) }}</small>
+                </span>
+                <button type="button" data-fb-matching-toast-close aria-label="Tutup notifikasi"
+                    style="flex:0 0 44px;min-height:44px;border:0;background:transparent;color:inherit;cursor:pointer;font-size:22px">×</button>
+            </div>
         @endif
         @if ($errors->any())
             <div class="match-flash error" role="alert">{{ $errors->first() }}</div>
         @endif
 
+        <dialog id="fb-match-confirm" aria-labelledby="fb-match-title" aria-describedby="fb-match-description"><h2 id="fb-match-title">Jalankan pencocokan?</h2><p id="fb-match-description">Sistem akan mencocokkan laporan terverifikasi. Kandidat yang sudah diperiksa tetap dipertahankan.</p><form method="dialog"><button type="submit" autofocus>Batal</button><button type="button" data-fb-match-accept>Jalankan Pencocokan</button></form></dialog>
         <section class="match-stats" aria-label="Statistik pencocokan">
             <div class="match-stat match-stat-all"><small>Total
                     Kandidat</small><strong>{{ number_format($stats['all'], 0, ',', '.') }}</strong><span>Semua pasangan

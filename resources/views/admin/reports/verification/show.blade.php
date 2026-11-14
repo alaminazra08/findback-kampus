@@ -3,22 +3,22 @@
 @section('page-styles')
     <link rel="stylesheet" href="{{ asset('css/report-cycle.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/admin-verification.css') }}?v=18">
-    <link rel="stylesheet" href="{{ asset('css/admin/verification-back-button.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/findback-pm-detail-date.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/findback-detail-compact.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/findback-detail-responsive-pm.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/findback-detail-cards-spaced.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/findback-detail-right-cards.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/detail-back.css') }}?v=1">
 @endsection
 
 @section('content')
-    <div class="fb-page-heading">
+    <div class="fb-page-heading fb-detail-return-heading">
+        <a class="fb-detail-return" data-fb-detail-back href="{{ route('admin.reports.verification', array_merge(request()->only(['search', 'type', 'page']), request('from') === 'history' ? ['revision' => 'history'] : [])) }}"><span aria-hidden="true">←</span> Kembali ke daftar</a>
         <div>
             <p class="fb-eyebrow">ADMINISTRASI · VERIFIKASI LAPORAN</p>
             <h1>Detail <span>Verifikasi</span></h1>
             <p class="fb-heading-text">Periksa identitas pelapor dan detail barang sebelum mengambil keputusan.</p>
-        </div><a class="fb-v-back fb-v-back-compact" href="{{ route('admin.reports.verification', array_merge(request()->only(['search', 'type', 'page']), request('from') === 'history' ? ['revision' => 'history'] : [])) }}"
-            aria-label="Kembali ke Verifikasi Laporan"><span aria-hidden="true">←</span> Verifikasi Laporan</a>
+        </div>
     </div>
     @if (session('success'))
         <div class="fb-v-alert is-success" role="status">{{ session('success') }}</div>
@@ -225,7 +225,7 @@
                             <p class="fb-v27-caution">Aktifkan JavaScript untuk memilih tindakan verifikasi.</p>
                         </noscript>
                     </div>
-                    <script src="{{ asset('js/pages/admin/reports/verification/show.js') }}"></script>
+
                 @elseif($openRevision)
                     <div class="fb-v-alert"><strong>Menunggu Perbaikan</strong>
                         <p>Keputusan diblokir selama permintaan perbaikan terbuka.</p>
@@ -275,5 +275,4 @@
         </div>
     </div>
 
-<script src="{{ asset('js/pages/admin/reports/verification/return-context.js') }}?v=2" defer></script>
 @endsection

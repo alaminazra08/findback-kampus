@@ -17,7 +17,6 @@
                 <p class="fb-heading-text">Tinjau bukti kepemilikan, proses keputusan klaim, dan pantau pengembalian barang.
                 </p>
             </div>
-            <span class="fb-date-label">{{ now()->timezone('Asia/Jakarta')->locale('id')->translatedFormat('d F Y') }}</span>
         </div>
 
         <div class="fb-claim-stats">

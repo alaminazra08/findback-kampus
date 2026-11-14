@@ -2,14 +2,19 @@
 function mount(signal) {
     const dateLabel = document.getElementById("fb-live-date");
     if (!dateLabel) return;
-    const formatter = new Intl.DateTimeFormat("id-ID", {
+    const options = {
         timeZone: "Asia/Jakarta",
         day: "numeric",
-        month: "long",
         year: "numeric",
-    });
+    };
+    const fullDate = dateLabel.querySelector(".fb-date-text");
+    const shortDate = dateLabel.querySelector(".fb-date-text-short");
+    const fullFormat = new Intl.DateTimeFormat("id-ID", { ...options, month: "long" });
+    const shortFormat = new Intl.DateTimeFormat("id-ID", { ...options, month: "short" });
     const update = () => {
-        dateLabel.querySelector(".fb-date-text").textContent = formatter.format(new Date());
+        const now = new Date();
+        fullDate.textContent = fullFormat.format(now);
+        if (shortDate) shortDate.textContent = shortFormat.format(now);
     };
     update();
     const timer = setInterval(update, 30000);

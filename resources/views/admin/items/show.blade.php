@@ -2,16 +2,17 @@
 @section('title', 'Detail Barang')
 @section('page-styles')
     <link rel="stylesheet" href="{{ asset('css/pages/admin/items/show.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/detail-back.css') }}?v=1">
 @endsection
 
 @section('content')
-    <div class="fb-items-heading">
+    <div class="fb-items-heading fb-detail-return-heading">
+        <a class="fb-detail-return" data-fb-detail-back href="{{ route('admin.items.index') }}"><span aria-hidden="true">←</span> Kembali ke daftar</a>
         <div>
             <p class="fb-eyebrow">ADMINISTRASI · DETAIL BARANG</p>
             <h1>Detail <span>Barang</span></h1>
             <p>Informasi lengkap laporan barang yang tersimpan dalam sistem.</p>
         </div>
-        <a href="{{ route('admin.items.index') }}" class="fb-items-back">← Kembali ke Laporan Barang</a>
     </div>
     <div class="fb-items-detail-layout">
         <section class="fb-items-panel fb-items-detail" aria-labelledby="fb-detail-title">

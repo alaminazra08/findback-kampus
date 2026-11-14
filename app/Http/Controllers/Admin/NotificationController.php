@@ -13,12 +13,24 @@ use Illuminate\Support\Collection;
 
 class NotificationController extends Controller
 {
-    public function markAsRead(Request $request, string $id): RedirectResponse
+    public function feed(): \Illuminate\Http\Response
+    {
+        return response()->view('admin.partials.notification-bell')
+            ->header('Cache-Control', 'private, no-store');
+    }
+
+    public function markAsRead(Request $request, string $id): RedirectResponse|\Illuminate\Http\JsonResponse
     {
         $notification = $request->user()->notifications()->whereKey($id)->firstOrFail();
         $notification->markAsRead();
 
-        return redirect()->to($this->destination($notification));
+        $destination = $this->destination($notification);
+
+        if ($request->expectsJson()) {
+            return response()->json(['destination' => $destination]);
+        }
+
+        return redirect()->to($destination);
     }
 
     private const DESTINATIONS = [

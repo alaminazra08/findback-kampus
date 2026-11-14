@@ -10,21 +10,18 @@
     <link rel="stylesheet" href="{{ asset('css/admin/claim-evidence-icons.css') }}?v=12">
     <link rel="stylesheet" href="{{ asset('css/admin/claim-detail-responsive.css') }}?v=14">
     <link rel="stylesheet" href="{{ asset('css/chat/claim-chat-premium.css') }}?v=20261111">
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/detail-back.css') }}?v=1">
 @endsection
 
 @section('content')
 
-    <div class="fb-page-heading fb-claim-heading">
+    <div class="fb-page-heading fb-claim-heading fb-detail-return-heading">
+        <a class="fb-detail-return" data-fb-detail-back href="{{ route('admin.claims.index') }}"><span aria-hidden="true">←</span> Kembali ke daftar</a>
         <div>
             <p class="fb-eyebrow">ADMINISTRASI · FINDBACK KAMPUS</p>
             <h1>Detail <span>Klaim K{{ $claim->id }}</span></h1>
             <p class="fb-heading-text">Pemeriksaan bukti kepemilikan dan keputusan pengembalian barang.</p>
         </div>
-        <a class="fb-claim-back fb-claim-back-v14" href="{{ route('admin.claims.index') }}"><svg viewBox="0 0 24 24"
-                width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"
-                stroke-linejoin="round" aria-hidden="true">
-                <path d="M19 12H5m7 7-7-7 7-7" />
-            </svg><span>Kembali ke Daftar</span></a>
     </div>
 
     @if (session('success'))
@@ -431,7 +428,7 @@
                 </section>
             </div>
         </dialog>
-        <script src="{{ asset('js/admin/claim-chat-modal.js') }}?v=20261112"></script>
+
     @endif
 
     @if ($claim->proof_photo_path)
@@ -487,7 +484,7 @@
                 </footer>
             </div>
         </dialog>
-        <script src="{{ asset('js/admin/claim-proof-modal.js') }}"></script>
+
     @endif
 
     <footer class="fb-footer">© {{ date('Y') }} FindBack Kampus · Fakultas Sains dan Teknologi</footer>

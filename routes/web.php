@@ -175,6 +175,9 @@ Route::middleware(['auth', 'role:admin'])
         // 01. NOTIFIKASI
         // ----------------------------------------------------
 
+        Route::get('/notifications/feed', [AdminNotificationController::class, 'feed'])
+            ->name('notifications.feed');
+
         Route::post('/notifications/read-all', [
             AdminNotificationController::class,
             'markAllAsRead',

@@ -5,11 +5,14 @@
 
 @section('page-styles')
     <link rel="stylesheet" href="{{ asset('css/admin/admin-matching.css') }}?v=36">
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/detail-back.css') }}?v=2">
 @endsection
 
 @section('content')
     <div class="match-wrap">
-        <a class="match-back" href="{{ route('admin.matching.index') }}">← Kembali ke Pencocokan</a>
+        <div class="fb-match-return-bar">
+            <a class="fb-detail-return" data-fb-detail-back href="{{ route('admin.matching.index') }}"><span aria-hidden="true">←</span> Kembali ke daftar</a>
+        </div>
         {{-- Header detail kandidat: satu panel ringkas, skor tetap bersumber dari sistem --}}
         <header class="match-detail-hero" aria-labelledby="match-detail-title">
             <div class="match-detail-hero-main">

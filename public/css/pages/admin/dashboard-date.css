@@ -1,0 +1,27 @@
+#fb-live-date .fb-date-text-short {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .fb-page-heading #fb-live-date {
+        align-self: flex-start;
+        width: fit-content;
+        min-height: 0 !important;
+        padding: 4px 0 !important;
+        margin: 0;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        gap: 7px !important;
+    }
+
+    .fb-page-heading #fb-live-date svg {
+        width: 15px;
+        height: 15px;
+        flex-basis: 15px;
+    }
+
+    #fb-live-date .fb-date-text { display: none; }
+    #fb-live-date .fb-date-text-short { display: inline; }
+}

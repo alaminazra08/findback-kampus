@@ -66,7 +66,14 @@ return Application::configure(basePath: dirname(__DIR__))
     */
 
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        // FindBack: admin matching throttle feedback
+        $exceptions->render(function (\Symfony\Component\HttpKernel\Exception\HttpExceptionInterface $exception, \Illuminate\Http\Request $request) {
+            if ($exception->getStatusCode() !== 429 || !$request->isMethod('POST') || !$request->routeIs('admin.matching.generate') || $request->expectsJson()) {
+                return null;
+            }
+            $seconds = max(1, (int) ($exception->getHeaders()['Retry-After'] ?? 60));
+            return redirect()->route('admin.matching.index', [], 303)->with('error', 'Batas pencocokan tercapai. Coba lagi dalam ' . $seconds . ' detik.');
+        });
     })
 
     ->create();

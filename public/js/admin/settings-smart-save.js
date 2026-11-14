@@ -34,8 +34,9 @@
       toast.dataset.flashSuccess = '0';
     }
     form.addEventListener('submit', async (event) => {
-      if (event.defaultPrevented || button.disabled) return;
+      if (event.defaultPrevented) return;
       event.preventDefault();
+      if (button.disabled) return;
       if (!form.reportValidity()) return;
       button.disabled = true;
       button.setAttribute('aria-busy', 'true');
@@ -63,10 +64,7 @@
       }
     });
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
-  document.addEventListener('DOMContentLoaded', init);
-  document.addEventListener('pageshow', init);
+  init();
   // Inisialisasi ulang form yang dimuat melalui navigasi AJAX Admin.
   document.addEventListener('fb:admin-page', init);
 })();

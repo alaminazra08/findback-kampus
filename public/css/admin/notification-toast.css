@@ -1,0 +1,56 @@
+.fb-notif-toast {
+    position: fixed;
+    z-index: 1000;
+    top: var(--fb-notif-top, 90px);
+    right: 24px;
+    display: flex;
+    max-width: calc(100vw - 24px);
+    box-sizing: border-box;
+    background: #fff;
+    color: #780e36;
+    border: 1px solid #eed5df;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px #3509181f;
+}
+.fb-notif-toast button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.fb-notif-toast button:first-child { flex: 1; }
+.fb-notif-toast button:last-child { justify-content: center; min-width: 44px; font-size: 20px; }
+.fb-notif-toast button:focus-visible { outline: 2px solid currentColor; outline-offset: -3px; }
+.fb-notif-toast svg { width: 16px; height: 16px; flex: none; }
+@media (max-width: 767px) {
+    .fb-notif-toast { right: 12px; left: 12px; }
+}
+
+#fb-notif-panel .fb-notif-action {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 8px;
+}
+#fb-notif-panel .fb-notif-content { overflow-wrap: anywhere; }
+#fb-notif-panel .fb-notif-item > :last-child { flex-shrink: 0; }
+#fb-notif-panel .fb-notif-open-error { padding: 8px 16px; color: #8c1943; }
+@media (max-width: 767px) {
+    #fb-notif-panel {
+        position: fixed;
+        inset: var(--fb-notif-panel-top, 80px) 12px auto;
+        width: auto;
+        max-height: min(500px, calc(100dvh - var(--fb-notif-panel-top, 80px) - 12px));
+        overscroll-behavior: contain;
+    }
+    #fb-notif-panel .fb-notif-item { gap: 8px; padding-inline: 12px; }
+}

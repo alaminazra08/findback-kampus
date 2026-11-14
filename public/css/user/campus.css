@@ -284,10 +284,11 @@
     z-index: 1;
 }
 .cu-kicker {
-    font-size: 10px;
-    letter-spacing: 1.8px;
-    font-weight: 750;
-    color: #898879;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 .cu-hero .cu-kicker {
     color: #d1dfc1;

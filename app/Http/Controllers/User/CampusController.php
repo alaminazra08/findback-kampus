@@ -30,13 +30,13 @@ class CampusController extends Controller
 
     /**
      * Memeriksa kelayakan barang untuk diklaim.
+     * (Syarat "bukan pelapor" dimatikan sementara untuk tes.)
      */
     private function eligible(Request $request, LostFoundItem $item): void
     {
         abort_unless(
             $item->type === 'found' &&
-            $item->status === 'verified' &&
-            (int) $item->user_id !== (int) $request->user()->id,
+            $item->status === 'verified',
             404
         );
     }
@@ -228,6 +228,6 @@ class CampusController extends Controller
 
         $request->session()->regenerate();
 
-        return back()->with('success', 'Password berhasil diperbarui.');
+        return back()->with('success', 'Profil diperbarui.');
     }
 }

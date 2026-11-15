@@ -322,11 +322,11 @@ $photoUrl = $photoPath && \Illuminate\Support\Facades\Storage::disk('public')->e
 @keyframes fp-toast-in {
     from {
         opacity: 0;
-        transform: translateY(-10px);
+        transform: translate(-50%, -10px);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate(-50%, 0);
     }
 }
 

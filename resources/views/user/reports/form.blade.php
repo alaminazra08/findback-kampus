@@ -56,7 +56,8 @@
             </div><label class="cu-check"><input type="checkbox" name="confirmation" value="1" required> Saya
                 memastikan informasi laporan ini benar.</label>
         </section>
-        <div class="cu-actions"><a class="cu-btn light" href="{{ route('dashboard') }}">Batal</a><button type="button"
+        <div class="cu-actions"><a class="cu-btn light"
+                href="{{ route('user.reports.' . $kind . '.create') }}">Batal</a><button type="button"
                 class="cu-btn light" data-prev hidden>Kembali</button><button type="button"
                 class="cu-btn {{ $kind === 'found' ? 'green' : '' }}" data-next hidden>Lanjutkan →</button><button
                 type="submit" class="cu-btn {{ $kind === 'found' ? 'green' : '' }}" data-submit>Kirim laporan

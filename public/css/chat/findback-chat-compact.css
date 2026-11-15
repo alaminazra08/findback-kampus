@@ -1,0 +1,482 @@
+
+/* ==========================================
+   FINDBACK KAMPUS - COMPACT CHAT UI
+   Tampilan chat yang modern dan rapi
+   ========================================== */
+
+/* Ukuran jendela chat */
+.fb-chat-modal {
+    width: min(960px, calc(100vw - 36px));
+    height: min(720px, calc(100dvh - 36px));
+    border-radius: 22px;
+}
+
+/* Header chat */
+.fb-chat-modal-head {
+    padding: 16px 22px 14px;
+    gap: 12px;
+    align-items: center;
+}
+
+.fb-chat-modal-head .fb-chat-eyebrow {
+    font-size: 10px;
+    letter-spacing: .12em;
+    margin-bottom: 5px;
+}
+
+.fb-chat-modal-head h2 {
+    font-size: 19px;
+    margin: 0 0 5px;
+    line-height: 1.25;
+}
+
+.fb-chat-modal-head p {
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.fb-chat-head-actions {
+    gap: 8px;
+}
+
+.fb-chat-status {
+    min-height: 30px;
+    padding: 0 11px;
+    font-size: 11px;
+}
+
+.fb-chat-close {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    font-size: 26px;
+}
+
+/* Informasi Admin */
+.fb-chat-person {
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    gap: 11px;
+    padding: 11px 22px;
+}
+
+.fb-chat-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 13px;
+    font-size: 16px;
+}
+
+.fb-chat-person strong {
+    font-size: 13px;
+}
+
+.fb-chat-person small {
+    font-size: 11px;
+}
+
+.fb-chat-claim {
+    min-height: 30px;
+    padding: 0 11px;
+    font-size: 11px;
+}
+
+/* Area percakapan */
+.fb-chat-messages {
+    padding: 18px 22px;
+    background: #fcfafb;
+}
+
+/* Bubble pesan */
+.fb-chat-bubble-row {
+    margin: 8px 0;
+}
+
+.fb-chat-bubble {
+    min-width: 0;
+    max-width: min(70%, 440px);
+    padding: 10px 13px 9px;
+    border-radius: 16px;
+    box-shadow: 0 3px 12px rgba(54, 24, 39, .045);
+}
+
+/* Pesan pengguna */
+.fb-chat-bubble-row.mine .fb-chat-bubble {
+    background: #911a4c;
+    border-color: #911a4c;
+    box-shadow: 0 5px 15px rgba(107, 23, 62, .12);
+}
+
+/* Nama pengirim */
+.fb-chat-bubble strong {
+    font-size: 11px;
+    margin-bottom: 3px;
+    font-weight: 700;
+}
+
+/* Isi pesan */
+.fb-chat-text,
+.fb-chat-recalled {
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+/* Tanggal dan waktu */
+.fb-chat-bubble footer {
+    margin-top: 5px;
+    font-size: 10px;
+    line-height: 1.3;
+    opacity: .75;
+}
+
+/* Pesan yang telah ditarik */
+.fb-chat-bubble-row.is-recalled .fb-chat-bubble,
+.fb-chat-bubble-row.mine.is-recalled .fb-chat-bubble {
+    min-width: 0;
+    background: #f5f1f4;
+    color: #786773;
+    border: 1px dashed #d9c8d0;
+    box-shadow: none;
+}
+
+.fb-chat-bubble-row.is-recalled .fb-chat-bubble strong,
+.fb-chat-bubble-row.mine.is-recalled .fb-chat-bubble footer {
+    color: #786773;
+}
+
+/* Menu klik kanan */
+.fb-chat-menu-content {
+    width: 190px;
+    border-radius: 12px;
+    padding: 5px;
+}
+
+.fb-chat-menu-content button {
+    min-height: 38px;
+    padding: 8px 10px;
+    font-size: 12px;
+    border-radius: 8px;
+}
+
+/* Bagian bawah chat */
+.fb-chat-bottom {
+    padding: 10px 16px 11px;
+}
+
+/* Tata letak input */
+.fb-chat-composer {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr) 92px;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Tombol lampiran gambar */
+.fb-chat-attach {
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+    background: #f8eaf0;
+    border: 1px solid #efd9e3;
+    box-shadow: none;
+    color: #901e4c;
+}
+
+.fb-chat-attach svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Kolom pesan */
+#fb-chat-textarea {
+    min-height: 42px;
+    max-height: 120px;
+    height: 42px;
+    padding: 10px 13px;
+    border-radius: 13px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* Tombol kirim */
+.fb-chat-composer .fb-chat-primary {
+    width: 92px;
+    min-width: 0;
+    height: 42px;
+    min-height: 42px;
+    padding: 0 10px;
+    border-radius: 13px;
+    font-size: 12px;
+    gap: 7px;
+    box-shadow: none;
+    background: #911a4c;
+}
+
+.fb-chat-composer .fb-chat-primary:hover {
+    background: #7b153e;
+    box-shadow: 0 4px 12px rgba(107, 23, 62, .14);
+}
+
+.fb-chat-composer .fb-chat-primary svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Keterangan lampiran */
+.fb-chat-file-label {
+    margin-top: 6px;
+    font-size: 10px;
+    line-height: 1.35;
+}
+
+/* Notifikasi */
+.fb-chat-flash {
+    margin: 8px 16px 0;
+    padding: 9px 12px;
+    font-size: 12px;
+}
+
+/* ==========================================
+   RESPONSIVE - SMARTPHONE
+   ========================================== */
+
+@media (max-width: 680px) {
+    .fb-chat-modal {
+        width: 100%;
+        height: 100dvh;
+        border-radius: 0;
+    }
+
+    .fb-chat-modal-head {
+        padding: 13px 14px;
+    }
+
+    .fb-chat-modal-head h2 {
+        font-size: 17px;
+    }
+
+    .fb-chat-modal-head p {
+        font-size: 11px;
+    }
+
+    .fb-chat-person {
+        grid-template-columns: 36px minmax(0, 1fr);
+        padding: 10px 14px;
+    }
+
+    .fb-chat-avatar {
+        width: 36px;
+        height: 36px;
+    }
+
+    .fb-chat-claim {
+        grid-column: 1 / -1;
+        justify-self: start;
+    }
+
+    .fb-chat-messages {
+        padding: 12px;
+    }
+
+    .fb-chat-bubble {
+        max-width: 83%;
+        padding: 9px 11px;
+    }
+
+    .fb-chat-bottom {
+        padding: 9px 10px 11px;
+    }
+
+    .fb-chat-composer {
+        grid-template-columns: 40px minmax(0, 1fr) 42px;
+        gap: 7px;
+    }
+
+    .fb-chat-attach {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+    }
+
+    #fb-chat-textarea {
+        height: 40px;
+        min-height: 40px;
+        padding: 9px 11px;
+    }
+
+    .fb-chat-composer .fb-chat-primary {
+        grid-column: auto;
+        width: 42px;
+        min-width: 0;
+        height: 40px;
+        min-height: 40px;
+        border-radius: 12px;
+        padding: 0;
+    }
+
+    .fb-chat-composer .fb-chat-primary span {
+        display: none;
+    }
+
+    .fb-chat-composer .fb-chat-primary svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .fb-chat-file-label {
+        font-size: 9px;
+    }
+}
+
+/* Menghormati preferensi pengurangan animasi */
+@media (prefers-reduced-motion: reduce) {
+    .fb-chat-messages {
+        scroll-behavior: auto;
+    }
+}
+
+/* ==========================================
+   TOMBOL LAMPIRAN GAMBAR - GAYA ADMIN
+   ========================================== */
+
+.fb-chat-composer .fb-chat-attach-plus {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    padding: 0;
+    box-sizing: border-box;
+
+    background: #f9e8ef;
+    border: 1px solid #efd6e0;
+    border-radius: 13px;
+
+    color: #95143e;
+    cursor: pointer;
+
+    box-shadow: none;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.15s ease;
+}
+
+/* Simbol tambah */
+.fb-chat-composer .fb-chat-attach-symbol {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: Arial, sans-serif;
+    font-size: 27px;
+    font-weight: 400;
+    line-height: 1;
+
+    color: inherit;
+    transform: translateY(-1px);
+}
+
+/* Efek saat diarahkan mouse */
+.fb-chat-composer .fb-chat-attach-plus:hover {
+    background: #f3dce6;
+    border-color: #e6bfce;
+    color: #800f36;
+}
+
+/* Efek saat ditekan */
+.fb-chat-composer .fb-chat-attach-plus:active {
+    transform: scale(0.96);
+}
+
+/* Fokus saat navigasi keyboard */
+.fb-chat-composer .fb-chat-attach-plus:focus-within {
+    outline: 3px solid rgba(149, 20, 62, 0.15);
+    outline-offset: 2px;
+}
+
+/* Tampilan pada layar kecil */
+@media (max-width: 680px) {
+    .fb-chat-composer .fb-chat-attach-plus {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
+        border-radius: 12px;
+    }
+
+    .fb-chat-composer .fb-chat-attach-symbol {
+        font-size: 25px;
+    }
+}
+
+
+/* ==========================================
+   FINDBACK - STABILITAS MODAL CHAT
+   ========================================== */
+
+.fb-chat-overlay .fb-chat-modal {
+    display: flex;
+    flex-direction: column;
+    width: min(960px, calc(100vw - 36px));
+    height: min(720px, calc(100dvh - 36px));
+    max-height: calc(100dvh - 36px);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.fb-chat-modal .fb-chat-modal-head,
+.fb-chat-modal .fb-chat-person,
+.fb-chat-modal .fb-chat-bottom {
+    flex: 0 0 auto;
+}
+
+.fb-chat-modal .fb-chat-messages {
+    flex: 1 1 0;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-behavior: auto !important;
+    overflow-anchor: none;
+    overscroll-behavior: contain;
+    transition: none !important;
+}
+
+.fb-chat-composer #fb-chat-textarea {
+    display: block;
+    height: 42px;
+    min-height: 42px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+@media (max-width: 680px) {
+    .fb-chat-overlay .fb-chat-modal {
+        width: 100%;
+        height: 100dvh;
+        max-height: 100dvh;
+        border-radius: 0;
+    }
+
+    .fb-chat-composer #fb-chat-textarea {
+        height: 40px;
+        min-height: 40px;
+    }
+}
+
+
+/* Menjaga ukuran lampiran gambar tetap stabil */
+
+.fb-chat-messages img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.fb-chat-messages .fb-chat-bubble {
+    box-sizing: border-box;
+    overflow-wrap: anywhere;
+}

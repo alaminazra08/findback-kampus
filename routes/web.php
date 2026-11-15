@@ -391,16 +391,54 @@ Route::middleware(['auth', 'role:admin'])
 |--------------------------------------------------------------------------
 */
 
+
 Route::middleware(['auth', 'role:user'])
     ->prefix('chat')
     ->name('user.chat.')
     ->group(function () {
-        Route::get('/', [\App\Http\Controllers\User\ChatController::class, 'index'])->name('index');
 
-        Route::post('/send', [\App\Http\Controllers\User\ChatController::class, 'store'])
+        // Halaman utama percakapan
+        Route::get(
+            '/',
+            [\App\Http\Controllers\User\ChatController::class, 'index']
+        )->name('index');
+
+        // Mengirim pesan
+        Route::post(
+            '/send',
+            [\App\Http\Controllers\User\ChatController::class, 'store']
+        )
             ->middleware('throttle:30,1')
             ->name('store');
+
+        // Mengedit pesan
+        Route::patch(
+            '/messages/{message}',
+            [\App\Http\Controllers\User\ChatController::class, 'update']
+        )
+            ->whereNumber('message')
+            ->middleware('throttle:30,1')
+            ->name('messages.update');
+
+        // Menarik pesan untuk semua
+        Route::patch(
+            '/messages/{message}/recall',
+            [\App\Http\Controllers\User\ChatController::class, 'recall']
+        )
+            ->whereNumber('message')
+            ->middleware('throttle:30,1')
+            ->name('messages.recall');
+
+        // Menyembunyikan pesan dari pengguna
+        Route::patch(
+            '/messages/{message}/hide',
+            [\App\Http\Controllers\User\ChatController::class, 'hide']
+        )
+            ->whereNumber('message')
+            ->middleware('throttle:30,1')
+            ->name('messages.hide');
     });
+
 
 /*
 |--------------------------------------------------------------------------

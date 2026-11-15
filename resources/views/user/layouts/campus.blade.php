@@ -41,6 +41,19 @@
         }
     </script>
 @endif
+
+{{-- Gaya Chat User dimuat sebelum halaman ditampilkan --}}
+@if (request()->routeIs('user.chat.index'))
+    <link rel="stylesheet"
+          href="{{ asset('css/chat/chat-ui.css') }}?v=2">
+
+    <link rel="stylesheet"
+          href="{{ asset('css/chat/user-chat-modal.css') }}?v=14">
+
+    <link rel="stylesheet"
+          href="{{ asset('css/chat/findback-chat-compact.css') }}?v=7">
+@endif
+
 </head>
 
 <body class="fb-responsive cu-body">

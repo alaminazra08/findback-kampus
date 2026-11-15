@@ -217,36 +217,70 @@
         </div>
     </header>
 
+    
     {{-- KONTEN UTAMA --}}
     <main class="cu-main" id="main">
 
-        @if (session('success'))
-            <div class="cu-alert success" role="status">
-                {{ session('success') }}
-            </div>
-        @endif
+        {{-- FLOATING NOTIFICATION USER --}}
+        <div class="cu-toast-stack" aria-live="polite">
 
-        @if (session('error'))
-            <div class="cu-alert" role="alert">
-                {{ session('error') }}
-            </div>
-        @endif
+            @if (session('success'))
+                <div class="cu-alert success" role="status" data-auto-dismiss>
+                    <span class="cu-toast-icon">✓</span>
+                    <div class="cu-toast-message">
+                        {{ session('success') }}
+                    </div>
+                </div>
+            @endif
 
-        @if ($errors->any())
-            <div class="cu-alert" role="alert">
-                <strong>Periksa kembali isian berikut:</strong>
+            @if (session('error'))
+                <div class="cu-alert error" role="alert" data-auto-dismiss>
+                    <span class="cu-toast-icon">!</span>
+                    <div class="cu-toast-message">
+                        {{ session('error') }}
+                    </div>
+                </div>
+            @endif
 
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+            @if (session('warning'))
+                <div class="cu-alert warning" role="alert" data-auto-dismiss>
+                    <span class="cu-toast-icon">!</span>
+                    <div class="cu-toast-message">
+                        {{ session('warning') }}
+                    </div>
+                </div>
+            @endif
+
+            @if (session('info'))
+                <div class="cu-alert info" role="status" data-auto-dismiss>
+                    <span class="cu-toast-icon">i</span>
+                    <div class="cu-toast-message">
+                        {{ session('info') }}
+                    </div>
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="cu-alert error" role="alert" data-auto-dismiss>
+                    <span class="cu-toast-icon">!</span>
+                    <div class="cu-toast-message">
+                        <strong>Periksa kembali isian berikut:</strong>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            @endif
+
+        </div>
 
         @yield('content')
 
     </main>
+
+
 
     {{-- FOOTER DINAMIS --}}
     <footer class="cu-footer">

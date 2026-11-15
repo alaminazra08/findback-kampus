@@ -133,20 +133,6 @@
                     <span>Aktivitas Saya</span>
                 </a>
 
-                {{-- CHAT ADMIN --}}
-                <a
-                    class="{{ request()->routeIs('user.chat.*') ? 'active' : '' }}"
-                    href="{{ route('user.chat.index') }}"
-                >
-                    <svg class="fb-nav-icon" viewBox="0 0 24 24"
-                         fill="none" stroke="currentColor"
-                         stroke-width="1.8" stroke-linecap="round"
-                         stroke-linejoin="round" aria-hidden="true">
-                        <path d="M20 11a8 8 0 0 1-8 8H7l-4 2 1.5-4A8 8 0 1 1 20 11z" />
-                    </svg>
-                    <span>Chat Admin</span>
-                </a>
-
             </nav>
 
             {{-- AKUN DAN NOTIFIKASI --}}

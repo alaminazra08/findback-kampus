@@ -1,11 +1,10 @@
-
 <!doctype html>
 <html lang="id">
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#800d2b">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#7d0d2b">
     <meta name="description" content="{{ $fbBrand['site_description'] }}">
 
     <title>FindBack Kampus</title>
@@ -14,7 +13,7 @@
 
     {{-- CSS USER --}}
     <link rel="stylesheet" href="{{ asset('css/user/campus.css') }}?v=2">
-    <link rel="stylesheet" href="{{ asset('css/user/navbar-premium.css') }}?v=3">
+    <link rel="stylesheet" href="{{ asset('css/user/navbar-premium.css') }}?v=5">
     <link rel="stylesheet" href="{{ asset('css/shared/view-utilities.css') }}">
 
     {{-- JAVASCRIPT --}}
@@ -22,25 +21,26 @@
     <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
     <!-- FINDBACK_UI_TEXT_KONSISTEN_V1 -->
     <link rel="stylesheet" href="{{ asset('css/shared/ui-text-consistency.css') }}?v=1">
-<!-- FINDBACK_TYPOGRAPHY_V1 -->
-<link rel="stylesheet" href="{{ asset('css/shared/typography.css') }}">
-@if (request()->routeIs('user.profile.index'))
-    <script>
-        // Ẩn trang trong lúc khôi phục vị trí sau khi lưu.
-        try {
-            if (sessionStorage.getItem('findback:profil:scroll') !== null) {
-                document.documentElement.style.visibility = 'hidden';
+    <!-- FINDBACK_TYPOGRAPHY_V1 -->
+    <link rel="stylesheet" href="{{ asset('css/shared/typography.css') }}">
 
-                // Hiện lại trang kể cả khi script bên dưới gặp lỗi.
-                window.addEventListener('load', () => {
-                    document.documentElement.style.removeProperty('visibility');
-                }, { once: true });
+    @if (request()->routeIs('user.profile.index'))
+        <script>
+            // Sembunyikan halaman saat posisi scroll dipulihkan setelah menyimpan.
+            try {
+                if (sessionStorage.getItem('findback:profil:scroll') !== null) {
+                    document.documentElement.style.visibility = 'hidden';
+
+                    // Tampilkan lagi halaman walaupun script di bawah mengalami error.
+                    window.addEventListener('load', () => {
+                        document.documentElement.style.removeProperty('visibility');
+                    }, { once: true });
+                }
+            } catch {
+                // Browser tetap menampilkan halaman jika penyimpanan diblokir.
             }
-        } catch {
-            // Trình duyệt vẫn hiển thị trang nếu bộ nhớ bị chặn.
-        }
-    </script>
-@endif
+        </script>
+    @endif
 </head>
 
 <body class="fb-responsive cu-body">
@@ -51,6 +51,9 @@
         $noticeCount = auth()->user()->unreadNotifications()->count();
         $siteName = $fbBrand['site_name'];
         $institutionName = $fbBrand['institution_name'];
+
+        $navUser = auth()->user();
+        $navPhoto = $navUser->profile_photo_path;
     @endphp
 
     {{-- HEADER / NAVBAR --}}
@@ -101,7 +104,6 @@
                     </svg>
                     <span>Beranda</span>
                 </a>
-
 
                 {{-- LAPOR BARANG --}}
                 <details class="cu-dropdown">
@@ -171,25 +173,20 @@
                 {{-- PROFIL USER --}}
                 <details class="cu-dropdown cu-profile">
                     <summary>
-                       @php
-    $navUser = auth()->user();
-    $navPhoto = $navUser->profile_photo_path;
-@endphp
-
-<span class="cu-avatar" aria-hidden="true">
-    @if ($navPhoto && \Illuminate\Support\Facades\Storage::disk('public')->exists($navPhoto))
-        <img
-            src="{{ route('user.profile.photo', ['v' => basename($navPhoto)]) }}"
-            alt=""
-            style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
-        >
-    @else
-        {{ mb_strtoupper(mb_substr(trim($navUser->name), 0, 1)) }}
-    @endif
-</span>
+                        <span class="cu-avatar" aria-hidden="true">
+                            @if ($navPhoto && \Illuminate\Support\Facades\Storage::disk('public')->exists($navPhoto))
+                                <img
+                                    src="{{ route('user.profile.photo', ['v' => basename($navPhoto)]) }}"
+                                    alt=""
+                                    style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
+                                >
+                            @else
+                                {{ mb_strtoupper(mb_substr(trim($navUser->name), 0, 1)) }}
+                            @endif
+                        </span>
 
                         <span class="cu-name">
-                            {{ auth()->user()->name }}
+                            {{ $navUser->name }}
                             <small>Civitas Akademika</small>
                         </span>
 
@@ -200,8 +197,6 @@
                         <a href="{{ route('user.profile.index') }}">
                             Profil saya
                         </a>
-
-                        
 
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

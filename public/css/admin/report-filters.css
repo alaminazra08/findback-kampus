@@ -1,0 +1,62 @@
+/* Report filters on the inventory and verification lists. */
+.fb-main :is(.fb-items-panel, .fb-v-panel) form.fb-report-filter {
+    display: grid !important;
+    grid-template-columns: minmax(160px, 2fr) repeat(var(--report-selects), minmax(112px, 1fr)) auto auto !important;
+    gap: 12px !important;
+    align-items: end !important;
+}
+.fb-report-filter.fb-v-filters { --report-selects: 1; }
+.fb-report-filter.fb-items-filter { --report-selects: 3; }
+.fb-main form.fb-report-filter > :is(label, button, a) {
+    grid-column: auto !important;
+    min-width: 0 !important;
+    width: 100% !important;
+}
+.fb-main form.fb-report-filter > :is(button, a) {
+    min-height: 44px !important;
+    justify-content: center;
+    white-space: normal;
+}
+.fb-main .fb-report-empty {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    padding: 22px 12px;
+    text-align: center;
+}
+.fb-main .fb-report-empty p { margin: 0; }
+.fb-main .fb-report-empty a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 12px;
+    border: 1px solid #ead3df;
+    border-radius: 10px;
+    color: #850c2d;
+}
+@media (max-width: 1440px) {
+    .fb-main .fb-items-panel form.fb-report-filter {
+        grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    }
+    .fb-main .fb-items-panel form.fb-report-filter > :is(button, a) { grid-column: span 3 !important; }
+    .fb-main .fb-items-panel form.fb-report-filter > :is(.fb-v20-search, .fb-v20-field) {
+        grid-column: span 3 !important;
+    }
+}
+@media (max-width: 900px) {
+    .fb-main .fb-v-panel form.fb-report-filter {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+@media (max-width: 600px) {
+    .fb-main :is(.fb-items-panel, .fb-v-panel) form.fb-report-filter {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+    }
+    .fb-main :is(.fb-items-panel, .fb-v-panel) form.fb-report-filter > label { grid-column: 1 / -1 !important; }
+    .fb-main :is(.fb-items-panel, .fb-v-panel) form.fb-report-filter > :is(button, a) {
+        grid-column: auto !important;
+        padding-inline: 6px !important;
+    }
+}

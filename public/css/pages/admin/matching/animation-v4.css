@@ -1,0 +1,64 @@
+/* FindBack Matching V4 — additive motion layer, desktop + mobile.
+   Does not modify V1/V2/V3 or any underlying workflow. */
+@keyframes fbMatchV4Enter {
+  from {opacity:0; transform:translate3d(0,12px,0)}
+  to {opacity:1; transform:translate3d(0,0,0)}
+}
+@keyframes fbMatchV4CardEnter {
+  from {opacity:0; transform:translate3d(0,10px,0) scale(.985)}
+  to {opacity:1; transform:translate3d(0,0,0) scale(1)}
+}
+/* Only the index view, not matching detail or other admin screens. */
+.match-wrap:has(> .match-index-heading) > .match-index-heading {
+  animation:fbMatchV4Enter .34s cubic-bezier(.2,.75,.3,1) both;
+}
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat {
+  animation:fbMatchV4CardEnter .38s cubic-bezier(.2,.75,.3,1) both;
+  transition:box-shadow .2s ease, border-color .2s ease, filter .2s ease !important;
+}
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat:nth-child(1) {animation-delay:.07s}
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat:nth-child(2) {animation-delay:.11s}
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat:nth-child(3) {animation-delay:.15s}
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat:nth-child(4) {animation-delay:.19s}
+.match-wrap:has(> .match-index-heading) > .match-panel {
+  animation:fbMatchV4Enter .42s .21s cubic-bezier(.2,.75,.3,1) both;
+}
+@media(hover:hover) and (pointer:fine) {
+  .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat:hover {
+    box-shadow:0 14px 30px rgba(67,20,41,.10) !important;
+    border-color:#e6c4d3 !important;
+    filter:brightness(1.006);
+  }
+  .match-wrap:has(> .match-index-heading) .match-button,
+  .match-wrap:has(> .match-index-heading) .match-reset-curved,
+  .match-wrap:has(> .match-index-heading) .match-detail-link {
+    transition:background-color .2s ease, border-color .2s ease, box-shadow .2s ease, filter .2s ease !important;
+  }
+  .match-wrap:has(> .match-index-heading) .match-button:hover,
+  .match-wrap:has(> .match-index-heading) .match-detail-link:hover {filter:brightness(1.055)}
+}
+.match-wrap:has(> .match-index-heading) .match-button:active {filter:brightness(.94)}
+.match-wrap:has(> .match-index-heading) :is(button,a,input,select):focus-visible {
+  outline:3px solid #dca5ba;
+  outline-offset:3px;
+}
+/* Smaller movement and less delay for touch/mobile. Keep 2-column cards from V3. */
+@media(max-width:700px) {
+  .match-wrap:has(> .match-index-heading) > .match-index-heading {animation-duration:.26s}
+  .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat {animation-duration:.29s}
+  .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat:nth-child(1) {animation-delay:.04s}
+  .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat:nth-child(2) {animation-delay:.07s}
+  .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat:nth-child(3) {animation-delay:.10s}
+  .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat:nth-child(4) {animation-delay:.13s}
+  .match-wrap:has(> .match-index-heading) > .match-panel {animation-duration:.32s;animation-delay:.15s}
+}
+/* Respect OS/browser reduce-motion preference (also affects mobile). */
+@media(prefers-reduced-motion:reduce) {
+  .match-wrap:has(> .match-index-heading) > .match-index-heading,
+  .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat,
+  .match-wrap:has(> .match-index-heading) > .match-panel {animation:none !important}
+  .match-wrap:has(> .match-index-heading) .match-button,
+  .match-wrap:has(> .match-index-heading) .match-reset-curved,
+  .match-wrap:has(> .match-index-heading) .match-detail-link,
+  .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat {transition:none !important}
+}

@@ -1,0 +1,15 @@
+/* V5: one clean responsive zoom toolbar and scrollable image viewport. */
+#fb-match-photo-dialog .fb-match-photo-stage{display:block!important;overflow:auto!important;min-height:120px;overscroll-behavior:contain;touch-action:pan-x pan-y;background:#faf7f9}
+#fb-match-photo-dialog .fb-match-photo-canvas{display:flex;justify-content:center;align-items:center;min-width:100%;min-height:100%;margin:0 auto}
+#fb-match-photo-dialog .fb-match-photo-canvas img{display:block;max-width:none!important;max-height:none!important;flex-shrink:0;object-fit:contain;border-radius:10px}
+#fb-match-photo-dialog .fb-photo-zoom-controls{display:none!important}
+#fb-match-photo-dialog .fb-match-photo-controls{display:flex!important;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin-right:auto}
+#fb-match-photo-dialog .fb-match-photo-controls button{width:42px;min-height:42px;border:1px solid #e6c8d3;border-radius:11px;color:#850d3b;background:#fff;cursor:pointer;font-size:19px;font-weight:700;display:grid;place-items:center;padding:4px 8px}
+#fb-match-photo-dialog .fb-match-photo-controls button[data-fb-photo-reset]{width:auto;padding:0 13px;font-size:13px}
+#fb-match-photo-dialog .fb-match-photo-controls button:disabled{opacity:.42;cursor:not-allowed}
+#fb-match-photo-dialog .fb-match-photo-zoom-value{min-width:54px;text-align:center;font-weight:750;color:#5d2340;font-variant-numeric:tabular-nums}
+#fb-match-photo-dialog .fb-match-photo-footer{display:flex;justify-content:space-between;align-items:center;gap:12px}
+#fb-match-photo-dialog .fb-match-photo-box{display:flex;flex-direction:column;max-height:calc(100dvh - 32px)}
+#fb-match-photo-dialog .fb-match-photo-head,#fb-match-photo-dialog .fb-match-photo-footer{flex-shrink:0}
+#fb-match-photo-dialog [hidden]{display:none!important}
+@media(max-width:600px){#fb-match-photo-dialog .fb-match-photo-box{max-height:calc(100dvh - 24px)}#fb-match-photo-dialog .fb-match-photo-footer{flex-wrap:wrap;padding:12px 16px}#fb-match-photo-dialog .fb-match-photo-controls{width:100%;margin:0}#fb-match-photo-dialog .fb-match-photo-footer>[data-fb-photo-close]{width:100%}}

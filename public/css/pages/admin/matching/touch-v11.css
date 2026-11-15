@@ -1,0 +1,14 @@
+/* FindBack V11: mobile touch feedback, matching statistics only. */
+.match-wrap:has(> .match-index-heading) .match-stat { -webkit-tap-highlight-color:transparent; }
+@media (hover:none), (pointer:coarse) {
+.match-wrap:has(> .match-index-heading) .match-stat {transition:transform .19s ease,box-shadow .19s ease,border-color .19s ease!important;}
+.match-wrap:has(> .match-index-heading) .match-stat::before {transition:width .22s ease!important;}
+.match-wrap:has(> .match-index-heading) .match-stat.fb-match-touch-v11 {
+ transform:translateY(-3px)!important;box-shadow:0 14px 28px rgba(81,15,43,.15)!important;border-color:#e7a0bd!important;
+}
+.match-wrap:has(> .match-index-heading) .match-stat.fb-match-touch-v11::before {width:65px!important;}
+}
+@media (prefers-reduced-motion:reduce) {
+.match-wrap:has(> .match-index-heading) .match-stat,.match-wrap:has(> .match-index-heading) .match-stat::before {transition:none!important;}
+.match-wrap:has(> .match-index-heading) .match-stat.fb-match-touch-v11 {transform:none!important;}
+}

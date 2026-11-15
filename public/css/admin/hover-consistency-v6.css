@@ -1,0 +1,13 @@
+/* FindBack V6: hover-only, additive, matching V5 visual language */
+@media (hover:hover) and (pointer:fine) {
+.fb-items-summary > article, .fb-v-stats > .fb-v-stat {animation-fill-mode:backwards!important;transition:transform 210ms cubic-bezier(.2,.75,.25,1),box-shadow 210ms ease,border-color 210ms ease,filter 210ms ease!important;transform-origin:center center}
+.fb-items-summary > article:hover, .fb-v-stats > .fb-v-stat:hover {transform:translateY(-4px)!important;box-shadow:0 17px 35px rgba(81,15,43,.13)!important;border-color:#d9a1b7!important;filter:brightness(1.008)}
+.fb-items-summary > article::before,.fb-v-stats > .fb-v-stat::before {transition:width 210ms ease!important}
+.fb-items-summary > article:hover::before,.fb-v-stats > .fb-v-stat:hover::before {width:61px!important}
+.fb-items-panel button,.fb-items-heading button,.fb-v-panel button,.fb-v-tabs a {transition:transform 180ms ease,box-shadow 180ms ease,background-color 180ms ease,border-color 180ms ease!important}
+.fb-items-panel button:hover,.fb-items-heading button:hover,.fb-v-panel button:hover,.fb-v-tabs a:hover {transform:translateY(-2px);box-shadow:0 9px 20px rgba(81,15,43,.12)}
+.fb-items-panel tbody tr,.fb-v-panel tbody tr {transition:background-color 180ms ease}
+.fb-items-panel tbody tr:hover,.fb-v-panel tbody tr:hover {background-color:#fff7fa}
+}
+.fb-items-panel button:active,.fb-items-heading button:active,.fb-v-panel button:active,.fb-v-tabs a:active {transform:scale(.985)}
+@media (prefers-reduced-motion:reduce) {.fb-items-summary > article,.fb-v-stats > .fb-v-stat,.fb-items-summary > article::before,.fb-v-stats > .fb-v-stat::before,.fb-items-panel button,.fb-items-heading button,.fb-v-panel button,.fb-v-tabs a,.fb-items-panel tbody tr,.fb-v-panel tbody tr {animation:none!important;transition:none!important}}

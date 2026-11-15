@@ -1,0 +1,67 @@
+/* Shared typography and spacing for the two report lists. */
+.fb-main :is(.fb-v-stats-v18, .fb-items-summary) {
+    gap: clamp(0.625rem, 1.2vw, 1.125rem) !important;
+}
+
+.fb-main :is(.fb-v-stats-v18 .fb-v-stat, .fb-items-summary article) {
+    min-width: 0;
+    min-height: clamp(8.75rem, 12vw, 11rem) !important;
+    padding: clamp(0.75rem, 1.6vw, 1.5rem) !important;
+    overflow-wrap: anywhere;
+}
+
+.fb-main :is(.fb-v-stats-v18 .fb-v-stat, .fb-items-summary article) > span {
+    font-size: 0.875rem !important;
+    line-height: 1.3;
+}
+
+.fb-main :is(.fb-v-stats-v18 .fb-v-stat, .fb-items-summary article) > strong {
+    font-size: clamp(1.75rem, 2.7vw, 2.375rem) !important;
+    line-height: 1.15;
+    font-variant-numeric: tabular-nums;
+}
+
+.fb-main :is(.fb-v-stats-v18 .fb-v-stat, .fb-items-summary article) > small,
+.fb-main :is(.fb-v-panel .fb-panel-head, .fb-items-panel-head) p,
+.fb-main .fb-v-panel .fb-v26-flow-copy p,
+.fb-main .fb-items-panel .fb-v24-filter-help {
+    color: #6c4f60;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+.fb-main :is(.fb-v-panel .fb-panel-head, .fb-items-panel-head) h2 {
+    font-size: clamp(1.25rem, 1.7vw, 1.5rem);
+    line-height: 1.25;
+}
+
+.fb-main :is(.fb-v-panel .fb-v25-table, .fb-items-panel .fb-items-table) tbody td {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.fb-main :is(.fb-v25-detail, .fb-items-panel .fb-v16-detail, .fb-v26-flow-link) {
+    min-height: 44px;
+}
+
+.fb-main :is(.fb-items-panel, .fb-v-panel) :is(a, button, input, select):focus-visible {
+    outline: 2px solid #8c1945;
+    outline-offset: 2px;
+}
+
+@media (max-width: 767px) {
+    .fb-main :is(.fb-v-stats-v18, .fb-items-summary) {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .fb-main .fb-report-filter :is(input, select) {
+        font-size: 1rem !important;
+    }
+
+    .fb-main .fb-v-panel .fb-v-tabs a {
+        min-width: 0;
+        min-height: 44px;
+        white-space: normal;
+    }
+}

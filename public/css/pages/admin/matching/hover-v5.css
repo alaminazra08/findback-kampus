@@ -1,0 +1,85 @@
+/* FindBack Matching — V5 Additive Hover Polish
+ * Desktop pointer interactions; keeps V1-V4 files and page dimensions unchanged.
+ * Fix: V4 animation-fill-mode:both retains transform and masks transform:hover.
+ */
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat {
+  animation-fill-mode: backwards !important;
+  transform: translateY(0);
+  transform-origin: center center;
+  transition: transform 210ms cubic-bezier(.2,.75,.25,1),
+              box-shadow 210ms ease, border-color 210ms ease,
+              background-color 210ms ease, filter 210ms ease !important;
+}
+@media (hover:hover) and (pointer:fine) {
+  .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 17px 35px rgba(81,15,43,.13) !important;
+    border-color: #d9a1b7 !important;
+    filter: brightness(1.008);
+  }
+  .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat:hover::before {
+    width: 61px !important;
+  }
+  .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat::before {
+    transition: width 210ms ease !important;
+  }
+  .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat::after {
+    transition: transform 210ms ease, box-shadow 210ms ease !important;
+  }
+  .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat:hover::after {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(81,15,43,.08);
+  }
+  .match-wrap:has(> .match-index-heading) .match-button,
+  .match-wrap:has(> .match-index-heading) .match-reset-curved,
+  .match-wrap:has(> .match-index-heading) .match-detail-link {
+    transition: transform 180ms ease, box-shadow 180ms ease,
+                background-color 180ms ease, border-color 180ms ease,
+                filter 180ms ease !important;
+  }
+  .match-wrap:has(> .match-index-heading) .match-button:hover,
+  .match-wrap:has(> .match-index-heading) .match-detail-link:hover,
+  .match-wrap:has(> .match-index-heading) .match-reset-curved:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 9px 20px rgba(81,15,43,.12);
+  }
+  .match-wrap:has(> .match-index-heading) .match-table tbody tr:not(:has(.match-empty)) {
+    transition: background-color 180ms ease !important;
+  }
+  .match-wrap:has(> .match-index-heading) .match-table tbody tr:not(:has(.match-empty)):hover {
+    background-color: #fff7fa !important;
+  }
+}
+.match-wrap:has(> .match-index-heading) .match-button:active,
+.match-wrap:has(> .match-index-heading) .match-detail-link:active,
+.match-wrap:has(> .match-index-heading) .match-reset-curved:active {
+  transform: scale(.985);
+}
+@media (hover:none), (pointer:coarse) {
+  .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat {
+    transform: none !important;
+  }
+  .match-wrap:has(> .match-index-heading) .match-button:active,
+  .match-wrap:has(> .match-index-heading) .match-reset-curved:active,
+  .match-wrap:has(> .match-index-heading) .match-detail-link:active {
+    transform: scale(.985);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat,
+  .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat::before,
+  .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat::after,
+  .match-wrap:has(> .match-index-heading) .match-button,
+  .match-wrap:has(> .match-index-heading) .match-reset-curved,
+  .match-wrap:has(> .match-index-heading) .match-detail-link,
+  .match-wrap:has(> .match-index-heading) .match-table tbody tr {
+    animation: none !important;
+    transition: none !important;
+  }
+  .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat:hover,
+  .match-wrap:has(> .match-index-heading) .match-button:hover,
+  .match-wrap:has(> .match-index-heading) .match-reset-curved:hover,
+  .match-wrap:has(> .match-index-heading) .match-detail-link:hover {
+    transform: none !important;
+  }
+}

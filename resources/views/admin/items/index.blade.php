@@ -9,9 +9,16 @@
 @section('page-styles')
     <link rel="stylesheet" href="{{ asset('css/admin/header-consistency.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/items-table-consistency.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/admin/report-filters.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/report-list-polish.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/admin/hover-consistency-v6.css') }}?v=20261115-6">
+    <link rel="stylesheet" href="{{ asset('css/admin/hover-line-v7.css') }}?v=20261115-7">
+    <link rel="stylesheet" href="{{ asset('css/admin/hover-responsive-v8.css') }}?v=20261115-8">
+    <link rel="stylesheet" href="{{ asset('css/admin/statistics-motion-v12.css') }}?v=12">
 @endsection
 
 @section('content')
+    <script defer src="{{ asset('js/admin/statistics-motion-v12.js') }}?v=12"></script>
 
 
     {{-- FINDBACK_ADMIN_ITEMS_V16 --}}
@@ -248,13 +255,7 @@
 
         </div>
 
-        {{-- FINDBACK_FILTER_POLOS_V23 --}}
-
-        <p class="fb-cycle-notice">Filter jenis, tahap, dan status diterapkan bersama. Kombinasi yang bertentangan
-
-            menghasilkan daftar kosong; gunakan Atur Ulang untuk melihat semua laporan.</p>
-
-        <form method="GET" action="{{ route('admin.items.index') }}" class="fb-items-filter fb-v20-filter" role="search">
+        <form method="GET" action="{{ route('admin.items.index') }}" class="fb-items-filter fb-v20-filter fb-report-filter" role="search">
 
             <label class="fb-items-search fb-v20-search">
 
@@ -323,10 +324,8 @@
 
         </form>
 
-        <p class="fb-v24-filter-help">Status Laporan yang dipilih secara khusus akan menjadi acuan utama pencarian. Halaman
-
-            ini hanya menampilkan laporan yang telah diterima. Laporan menunggu verifikasi dan ditolak dikelola di
-
+        <p class="fb-v24-filter-help">Gunakan <strong>Atur Ulang</strong> jika kombinasi filter tidak menghasilkan data.
+            Laporan yang masih diperiksa atau ditolak ada di
             Verifikasi Laporan.</p>
 
         <div class="fb-items-table-wrap">
@@ -471,12 +470,19 @@
 
                             <td colspan="6">
 
-                                <div class="fb-items-empty"><span aria-hidden="true">⌕</span><strong>Belum ada barang yang
-
-                                        sesuai</strong>
-
-                                    <p>Belum terdapat laporan pada database atau tidak ada hasil untuk filter ini.</p>
-
+                                <div class="fb-items-empty fb-report-empty">
+                                    @if ($total <= 0)
+                                        <strong>Belum ada laporan barang</strong>
+                                        <p>Laporan yang tersedia akan muncul di sini.</p>
+                                    @elseif ($items->total() > 0)
+                                        <strong>Halaman ini tidak berisi laporan</strong>
+                                        <p>Kembali ke halaman pertama untuk melihat hasil.</p>
+                                        <a class="fb-items-reset" href="{{ $items->url(1) }}">Halaman Pertama</a>
+                                    @else
+                                        <strong>Tidak ada barang yang cocok dengan filter ini</strong>
+                                        <p>Ubah filter atau tampilkan semua laporan.</p>
+                                        <a class="fb-items-reset" href="{{ route('admin.items.index', ['group' => 'semua']) }}">Atur Ulang Filter</a>
+                                    @endif
                                 </div>
 
                             </td>

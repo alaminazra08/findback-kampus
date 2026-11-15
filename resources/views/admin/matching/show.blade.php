@@ -6,10 +6,14 @@
 @section('page-styles')
     <link rel="stylesheet" href="{{ asset('css/admin/admin-matching.css') }}?v=36">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/detail-back.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/matching/photo-preview-v1.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/matching/photo-zoom-v3.css') }}?v=3fixed2">
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/matching/photo-viewer-v6.css') }}?v=6-20261115">
 @endsection
 
 @section('content')
-    <div class="match-wrap">
+    <script defer src="{{ asset('js/pages/admin/matching/photo-viewer-v6.js') }}?v=6-20261115"></script>
+<div class="match-wrap">
         <div class="fb-match-return-bar">
             <a class="fb-detail-return" data-fb-detail-back href="{{ route('admin.matching.index') }}"><span aria-hidden="true">←</span> Kembali ke daftar</a>
         </div>
@@ -94,8 +98,8 @@
                         </div>
                     </dl>
                     @if ($item && $item->photo_path)
-                        <a class="match-image-link" href="{{ asset('storage/' . $item->photo_path) }}" target="_blank"
-                            rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none"
+                        <a class="match-image-link" href="#fb-match-photo-dialog" data-fb-photo-src="{{ asset('storage/' . $item->photo_path) }}"
+                            data-fb-match-photo data-photo-label="{{ $data['label'] }}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none"
                                 stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="3" y="3" width="18" height="18" rx="3" />
                                 <circle cx="8.5" cy="8.5" r="1.5" />
@@ -182,4 +186,17 @@
             @endif
         </section>
     </div>
+    <dialog data-fb-photo-user="{{ auth()->id() }}" id="fb-match-photo-dialog" class="fb-match-photo-dialog" aria-labelledby="fb-match-photo-title">
+        <div class="fb-match-photo-box">
+            <header class="fb-match-photo-head">
+                <div><p class="fb-match-photo-kicker">FINDBACK KAMPUS</p><h2 id="fb-match-photo-title">Foto Laporan</h2></div>
+                <button type="button" class="fb-match-photo-close" data-fb-photo-close aria-label="Tutup foto">×</button>
+            </header>
+            <div class="fb-match-photo-stage">
+                <div class="fb-match-photo-canvas"><img data-fb-photo-image alt="Foto barang yang dilaporkan" /></div>
+                <p data-fb-photo-error hidden>Foto tidak dapat ditampilkan. Silakan coba kembali.</p>
+            </div>
+            <footer class="fb-match-photo-footer"><div class="fb-match-photo-controls" data-fb-photo-zoom aria-label="Kontrol zoom foto"><button type="button" data-fb-photo-zoom-out aria-label="Zoom out">-</button><span class="fb-match-photo-zoom-value" data-fb-photo-zoom-value>100%</span><button type="button" data-fb-photo-zoom-in aria-label="Zoom in">+</button><button type="button" data-fb-photo-reset>Reset</button></div><button type="button" data-fb-photo-close>Tutup</button></footer>
+        </div>
+    </dialog>
 @endsection

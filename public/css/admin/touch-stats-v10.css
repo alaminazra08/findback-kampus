@@ -1,0 +1,29 @@
+/* FindBack V10: immediate touch feedback for report statistic cards. */
+.fb-items-summary > article, .fb-v-stats-v18 > .fb-v-stat {
+  -webkit-tap-highlight-color: transparent;
+}
+@media (hover: none), (pointer: coarse) {
+  .fb-items-summary > article, .fb-v-stats-v18 > .fb-v-stat {
+    transition: transform 190ms ease, box-shadow 190ms ease, border-color 190ms ease !important;
+  }
+  .fb-items-summary > article::before, .fb-v-stats-v18 > .fb-v-stat::before {
+    transition: width 200ms ease !important;
+  }
+  .fb-items-summary > article.fb-touch-v10, .fb-v-stats-v18 > .fb-v-stat.fb-touch-v10 {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 14px 28px rgba(81,15,43,.15) !important;
+    border-color: #e7a0bd !important;
+  }
+  .fb-items-summary > article.fb-touch-v10::before, .fb-v-stats-v18 > .fb-v-stat.fb-touch-v10::before {
+    width: 78px !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fb-items-summary > article, .fb-v-stats-v18 > .fb-v-stat,
+  .fb-items-summary > article::before, .fb-v-stats-v18 > .fb-v-stat::before {
+    transition: none !important;
+  }
+  .fb-items-summary > article.fb-touch-v10, .fb-v-stats-v18 > .fb-v-stat.fb-touch-v10 {
+    transform: none !important;
+  }
+}

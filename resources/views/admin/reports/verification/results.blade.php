@@ -8,7 +8,7 @@
     <section class="fb-panel fb-v-panel">
         <div class="fb-panel-head">
             <div>
-                <h2>{{ $revisionMode === 'history' ? 'Laporan Ditolak' : 'Antrean Verifikasi' }}</h2>
+                <h2>{{ $revisionMode === 'history' ? 'Menunggu Perbaikan' : 'Antrean Verifikasi' }}</h2>
                 <p>{{ $revisionMode === 'history' ? 'Laporan ditolak yang menunggu perbaikan dari User.' : 'Laporan yang perlu diperiksa, diurutkan dari yang paling lama.' }}
                 </p>
             </div><span class="fb-panel-pill">{{ $items->total() }} hasil</span>
@@ -20,10 +20,10 @@
                 <span>{{ $pendingReadyCount }}</span></a>
             <a class="{{ $revisionMode === 'history' ? 'active' : '' }}"
                 href="{{ route('admin.reports.verification', array_merge(array_filter(['search' => request('search'), 'type' => request('type')]), ['revision' => 'history'])) }}"
-                @if ($revisionMode === 'history') aria-current="page" @endif>Laporan Ditolak
+                @if ($revisionMode === 'history') aria-current="page" @endif>Menunggu Perbaikan
                 <span>{{ $openRevisionCount }}</span></a>
         </nav>
-        <form class="fb-v-filters fb-v25-filters fb-v30-filters" method="GET"
+        <form class="fb-v-filters fb-v25-filters fb-v30-filters fb-report-filter" method="GET"
             action="{{ route('admin.reports.verification') }}" role="search">
             <label class="fb-v30-search">
                 <span class="sr-only">Cari barang, pelapor, lokasi, atau ID laporan</span>
@@ -64,9 +64,7 @@
                     <path d="M12 10.5v5M12 7.4h.01" />
                 </svg></span>
             <div class="fb-v26-flow-copy"><strong>Alur pemeriksaan laporan</strong>
-                <p>Gunakan halaman ini untuk memeriksa dan memutuskan verifikasi. Hanya laporan yang telah diterima tampil
-                    di <em>Laporan Barang</em>. Laporan ditolak tersimpan pada tab Laporan Ditolak dan menunggu perbaikan
-                    User.</p>
+                <p>Laporan yang disetujui masuk ke Laporan Barang. Laporan yang dikembalikan untuk revisi ada di tab Menunggu Perbaikan.</p>
             </div>
             <a class="fb-v26-flow-link" href="{{ route('admin.items.index', ['group' => 'semua']) }}"
                 aria-label="Buka pusat Laporan Barang">Buka Laporan Barang <span aria-hidden="true">→</span></a>
@@ -137,10 +135,18 @@
                         </tr>
                     @empty<tr>
                             <td colspan="6" class="fb-empty">
-                                <div class="fb-empty-state">
-                                    <span>✓</span><strong>{{ request('search') || request('type') ? 'Tidak ditemukan laporan yang sesuai dengan filter.' : ($revisionMode === 'history' ? 'Tidak ada laporan yang menunggu perbaikan.' : 'Tidak ada laporan yang menunggu verifikasi.') }}</strong>
-                                    <p>{{ request('search') || request('type') ? 'Ubah kata kunci atau reset filter.' : 'Laporan yang diterima tersedia di menu Laporan Barang.' }}
-                                    </p>
+                                <div class="fb-empty-state fb-report-empty">
+                                    @if ($items->total() > 0)
+                                        <strong>Halaman ini tidak berisi laporan</strong>
+                                        <p>Kembali ke halaman pertama untuk melihat hasil.</p>
+                                        <a class="fb-v-reset" href="{{ $items->url(1) }}">Halaman Pertama</a>
+                                    @elseif (request()->filled('search') || request()->filled('type'))
+                                        <strong>Tidak ada laporan yang cocok dengan filter ini</strong>
+                                        <p>Ubah kata kunci atau jenis barang.</p>
+                                        <a class="fb-v-reset" href="{{ route('admin.reports.verification', $revisionMode === 'history' ? ['revision' => 'history'] : []) }}">Atur Ulang Filter</a>
+                                    @else
+                                        <strong>{{ $revisionMode === 'history' ? 'Tidak ada laporan yang menunggu perbaikan' : 'Tidak ada laporan yang menunggu verifikasi' }}</strong>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

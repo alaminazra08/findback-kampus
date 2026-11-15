@@ -1,0 +1,15 @@
+/* FindBack unified statistics animation V12 */
+.fb-items-summary > article, .fb-v-stats > .fb-v-stat, .match-stats > .match-stat { -webkit-tap-highlight-color: transparent; transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease !important; }
+.fb-items-summary > article::before, .fb-v-stats > .fb-v-stat::before, .match-stats > .match-stat::before {transition: width .22s ease, box-shadow .22s ease !important;}
+@media (hover:hover) and (pointer:fine) {
+.fb-items-summary > article:hover, .fb-v-stats > .fb-v-stat:hover, .match-stats > .match-stat:hover {transform:translateY(-4px)!important;box-shadow:0 17px 34px rgba(81,15,43,.14)!important;border-color:#e7a0bd!important;}
+.fb-items-summary > article:hover::before, .fb-v-stats > .fb-v-stat:hover::before, .match-stats > .match-stat:hover::before {width:78px!important;}
+}
+@media (hover:none), (pointer:coarse) {
+.fb-items-summary > article.fb-stat-active-v12, .fb-v-stats > .fb-v-stat.fb-stat-active-v12, .match-stats > .match-stat.fb-stat-active-v12 {transform:translateY(-3px)!important;box-shadow:0 14px 28px rgba(81,15,43,.15)!important;border-color:#e7a0bd!important;}
+.fb-items-summary > article.fb-stat-active-v12::before, .fb-v-stats > .fb-v-stat.fb-stat-active-v12::before, .match-stats > .match-stat.fb-stat-active-v12::before {width:78px!important;}
+}
+@media (prefers-reduced-motion:reduce) {
+.fb-items-summary > article,.fb-v-stats > .fb-v-stat,.match-stats > .match-stat,.fb-items-summary > article::before,.fb-v-stats > .fb-v-stat::before,.match-stats > .match-stat::before {transition:none!important;animation:none!important;}
+.fb-items-summary > article.fb-stat-active-v12,.fb-v-stats > .fb-v-stat.fb-stat-active-v12,.match-stats > .match-stat.fb-stat-active-v12 {transform:none!important;}
+}

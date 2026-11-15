@@ -1,0 +1,14 @@
+/* FindBack matching photo zoom V3 — additive, scoped. */
+#fb-match-photo-dialog .fb-match-photo-stage{display:block;overflow:auto;min-height:120px;overscroll-behavior:contain;touch-action:pan-x pan-y;background:#faf7f9;position:relative}
+#fb-match-photo-dialog .fb-match-photo-canvas{display:flex;align-items:center;justify-content:center;min-width:100%;min-height:100%;width:max-content;height:max-content;margin:auto}
+#fb-match-photo-dialog .fb-match-photo-canvas img{display:block;max-width:none!important;max-height:none!important;width:auto;height:auto;flex-shrink:0;object-fit:contain;transition:none;border-radius:10px}
+#fb-match-photo-dialog .fb-match-photo-controls{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin-right:auto}
+#fb-match-photo-dialog .fb-match-photo-controls button{width:42px;min-height:42px;border:1px solid #e6c8d3;border-radius:11px;color:#850d3b;background:#fff;cursor:pointer;font-size:19px;font-weight:700;line-height:1;display:grid;place-items:center}
+#fb-match-photo-dialog .fb-match-photo-controls button:disabled{opacity:.4;cursor:not-allowed}
+#fb-match-photo-dialog .fb-match-photo-controls button[data-fb-photo-reset]{font-size:13px;width:auto;padding:0 12px}
+#fb-match-photo-dialog .fb-match-photo-zoom-value{min-width:57px;text-align:center;font-size:13px;font-weight:800;color:#5d2340;font-variant-numeric:tabular-nums}
+#fb-match-photo-dialog .fb-match-photo-footer{align-items:center;gap:14px;justify-content:space-between}
+#fb-match-photo-dialog .fb-match-photo-zoom-hint{font-size:11px;color:#947585;margin:0;flex-basis:100%;text-align:center}
+#fb-match-photo-dialog .fb-match-photo-canvas [hidden]{display:none!important}
+@media(max-width:600px){#fb-match-photo-dialog .fb-match-photo-footer{flex-wrap:wrap;gap:12px}#fb-match-photo-dialog .fb-match-photo-controls{width:100%;margin-right:0}#fb-match-photo-dialog .fb-match-photo-footer>[data-fb-photo-close]{width:100%}#fb-match-photo-dialog .fb-match-photo-zoom-hint{display:none}}
+@media(prefers-reduced-motion:reduce){#fb-match-photo-dialog .fb-match-photo-controls button{transition:none!important}}

@@ -50,6 +50,8 @@
     <link rel="stylesheet"
         href="{{ asset('css/shared/view-utilities.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('css/shared/confirmation-modal-v14.css') }}?v=14">
+    <script src="{{ asset('js/shared/confirmation-modal-v14.js') }}?v=14" defer></script>
     <script src="{{ asset('js/shared/view-interactions.js') }}" defer></script>
     @yield('page-styles')
     <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">

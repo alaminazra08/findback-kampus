@@ -1,0 +1,24 @@
+/* FindBack V8: additive responsive stats and hover; no existing stylesheet overwritten. */
+.fb-items-summary > article, .fb-v-stats-v18 > .fb-v-stat {min-width:0; box-sizing:border-box;}
+@media (min-width: 961px) {
+ .fb-items-summary, .fb-v-stats-v18 {grid-template-columns:repeat(4,minmax(0,1fr)) !important;}
+}
+@media (min-width: 341px) and (max-width: 960px) {
+ .fb-items-summary, .fb-v-stats-v18 {grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+}
+@media (max-width: 580px) {
+ .fb-items-summary, .fb-v-stats-v18 {gap:11px !important;}
+ .fb-items-summary > article, .fb-v-stats-v18 > .fb-v-stat {min-height:146px !important;padding:17px 13px 15px !important; border-radius:18px !important;}
+ .fb-items-summary > article > span, .fb-v-stats-v18 > .fb-v-stat > span {font-size:11px !important;line-height:1.4 !important;overflow-wrap:anywhere;}
+ .fb-items-summary > article > strong, .fb-v-stats-v18 > .fb-v-stat > strong {font-size:31px !important;line-height:1.1 !important;}
+ .fb-items-summary > article > small, .fb-v-stats-v18 > .fb-v-stat > small {font-size:10.5px !important;line-height:1.5 !important;overflow-wrap:anywhere;}
+}
+@media (max-width:340px) {.fb-items-summary,.fb-v-stats-v18 {grid-template-columns:1fr !important;}}
+@media (hover:hover) and (pointer:fine) {
+ .fb-items-summary > article, .fb-v-stats-v18 > .fb-v-stat {transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease !important;}
+ .fb-items-summary > article:hover, .fb-v-stats-v18 > .fb-v-stat:hover {transform:translateY(-4px) !important;box-shadow:0 17px 34px rgba(81,15,43,.12) !important;border-color:#e8a4c0 !important;}
+ .fb-items-summary > article::before, .fb-v-stats-v18 > .fb-v-stat::before {transition:width .23s ease !important;}
+ .fb-items-summary > article:hover::before, .fb-v-stats-v18 > .fb-v-stat:hover::before {width:76px !important;}
+}
+@media (hover:none) {.fb-items-summary > article, .fb-v-stats-v18 > .fb-v-stat {transform:none !important;}}
+@media (prefers-reduced-motion:reduce) {.fb-items-summary > article,.fb-v-stats-v18 > .fb-v-stat,.fb-items-summary > article::before,.fb-v-stats-v18 > .fb-v-stat::before {transition:none !important;animation:none !important;}}

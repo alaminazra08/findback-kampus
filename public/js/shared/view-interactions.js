@@ -15,13 +15,8 @@
         if (target.hasAttribute("data-close-admin-nav"))
             document.getElementById("fb-menu-toggle")?.click();
         if (target.hasAttribute("data-print-page")) window.print();
-        if (target.dataset.confirmEvent === "click" && !window.confirm(target.dataset.confirm))
-            event.preventDefault();
-    });
-    document.addEventListener("submit", (event) => {
-        const form = event.target;
-        if (form.dataset.confirmEvent === "submit" && !window.confirm(form.dataset.confirm))
-            event.preventDefault();
+
+
     });
     document.addEventListener("change", (event) => {
         if (event.target.hasAttribute("data-submit-on-change")) event.target.form?.submit();

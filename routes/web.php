@@ -117,7 +117,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
         ->whereNumber('item')
         ->name('user.items.show');
 
-    // --------------------------------------------------------
+   // --------------------------------------------------------
     // 04. LAPORKAN BARANG HILANG
     // --------------------------------------------------------
 
@@ -127,6 +127,10 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 
     Route::post('/laporkan-barang-hilang', [LostReportController::class, 'store'])->name(
         'user.reports.lost.store',
+    );
+
+    Route::get('/laporkan-barang-hilang/tambah', [LostReportController::class, 'form'])->name(
+        'user.reports.lost.form',
     );
 
     // --------------------------------------------------------
@@ -141,6 +145,10 @@ Route::middleware(['auth', 'role:user'])->group(function () {
         'user.reports.found.store',
     );
 
+    Route::get('/laporkan-barang-ditemukan/tambah', [UserFoundReportController::class, 'form'])->name(
+        'user.reports.found.form',
+    );
+    
     // --------------------------------------------------------
     // 06. LAPORAN SAYA
     // --------------------------------------------------------

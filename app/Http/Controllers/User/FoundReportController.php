@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreReportRequest;
+use App\Models\LostFoundItem;
 use App\Services\ReportSubmissionService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -11,6 +12,15 @@ use Illuminate\View\View;
 class FoundReportController extends Controller
 {
     public function create(): View
+    {
+        $items = LostFoundItem::where('status', 'verified')
+            ->where('type', 'found')
+            ->latest()
+            ->paginate(12);
+
+        return view('user.reports.gallery', ['items' => $items, 'kind' => 'found']);
+    }
+    public function form(): View
     {
         return view('user.reports.found-create');
     }

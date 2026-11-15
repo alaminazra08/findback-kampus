@@ -26,7 +26,7 @@
       title.textContent = heading;
       message.textContent = detail;
       requestAnimationFrame(() => toast.classList.add('is-visible'));
-      timeout = setTimeout(dismiss, 4200);
+      if (kind === 'error') { timeout = null; } else { timeout = setTimeout(dismiss, 5000); }
     }
     close.addEventListener('click', dismiss);
     if (toast.dataset.flashSuccess === '1') {

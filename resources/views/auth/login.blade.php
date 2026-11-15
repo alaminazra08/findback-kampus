@@ -16,6 +16,19 @@
     <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
 <!-- FINDBACK_TYPOGRAPHY_V1 -->
 <link rel="stylesheet" href="{{ asset('css/shared/typography.css') }}">
+<script data-findback-tab-login-marker>
+(function () {
+    function authorize() {
+        try { sessionStorage.setItem('findback.admin.tab.authorized.v1', '1'); } catch (e) {}
+    }
+    document.addEventListener('submit', function (event) {
+        if (event.target && event.target.matches('form.fb-auth-form')) authorize();
+    }, true);
+    document.addEventListener('click', function (event) {
+        if (event.target && event.target.closest('a.fb-login-google')) authorize();
+    }, true);
+})();
+</script>
 </head>
 
 <body class="fb-responsive fb-auth-page fb-login-page">

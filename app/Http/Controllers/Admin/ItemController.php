@@ -21,7 +21,7 @@ class ItemController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function index(Request $request): View
+    public function index(Request $request): View|RedirectResponse
     {
         $filters = $request->validate([
             'search' => ['nullable', 'string', 'max:100'],
@@ -29,6 +29,20 @@ class ItemController extends Controller
             'status' => ['nullable', 'in:verified,claimed,returned'],
             'group' => ['nullable', 'in:aktif,selesai,semua'],
         ]);
+
+        // FindBack: canonical URL filter default (tanpa mengubah hasil query).
+        // Nilai `semua` sudah menjadi default; parameter kosong juga tidak dibutuhkan.
+        $queryParams = $request->query();
+        $normalized = $queryParams;
+        foreach (['search', 'type', 'status', 'group'] as $key) {
+            if (array_key_exists($key, $normalized)
+                && ($normalized[$key] === '' || ($key === 'group' && $normalized[$key] === 'semua'))) {
+                unset($normalized[$key]);
+            }
+        }
+        if ($queryParams !== $normalized) {
+            return redirect()->route('admin.items.index', $normalized, 302);
+        }
 
         $activeStatuses = [
             'verified',

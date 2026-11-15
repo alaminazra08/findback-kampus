@@ -1,0 +1,14 @@
+/* FindBack Claims Toast V1: isolated to claims pages. */
+.fb-claim-toast{position:fixed;top:164px;right:24px;z-index:1090;box-sizing:border-box;width:min(440px,calc(100vw - 32px));display:flex;align-items:flex-start;gap:13px;padding:16px;background:#fff;border:1px solid #c6e4d2;border-radius:17px;box-shadow:0 16px 42px rgba(42,15,28,.16);color:#244c37;overflow-wrap:anywhere;animation:fb-claim-toast-in .24s ease-out both}
+.fb-claim-toast.is-error{color:#92243c;border-color:#f0bdca}
+.fb-claim-toast-icon{display:grid;place-items:center;flex:0 0 40px;width:40px;height:40px;border-radius:13px;background:#e9f8ee;font-size:23px;font-weight:800}
+.fb-claim-toast.is-error .fb-claim-toast-icon{background:#fff0f3}
+.fb-claim-toast-copy{display:flex;flex:1;min-width:0;flex-direction:column;gap:5px;padding-top:2px}
+.fb-claim-toast-copy strong{font-size:14px;line-height:1.35;font-weight:750}
+.fb-claim-toast-copy small,.fb-claim-toast-copy li{font-size:12px;line-height:1.55;font-weight:400}
+.fb-claim-toast-copy ul{margin:3px 0 0;padding-left:18px;max-height:36vh;overflow:auto}
+.fb-claim-toast-close{display:grid;place-items:center;flex:0 0 32px;width:32px;height:32px;border:0;background:transparent;border-radius:9px;color:inherit;font-size:23px;cursor:pointer}
+.fb-claim-toast-close:hover,.fb-claim-toast-close:focus-visible{background:rgba(90,40,60,.07);outline-offset:2px}
+@keyframes fb-claim-toast-in{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:767px){.fb-claim-toast{top:calc(env(safe-area-inset-top,0px) + 88px);left:12px;right:12px;width:auto;padding:13px;gap:10px;max-height:calc(100dvh - 110px);overflow:auto}}
+@media(prefers-reduced-motion:reduce){.fb-claim-toast{animation:none}}

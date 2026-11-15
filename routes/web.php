@@ -175,7 +175,7 @@ Route::post('/klaim-saya/{claim}/bukti-tambahan', [
 // 05. ADMIN ROUTES
 // ============================================================
 
-Route::middleware(['auth', 'role:admin'])
+Route::middleware(['auth', 'role:admin', 'admin-tab'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
@@ -205,7 +205,11 @@ Route::middleware(['auth', 'role:admin'])
         // 03. DATA BARANG
         // ----------------------------------------------------
 
-        Route::get('/items', [AdminItemController::class, 'index'])->name('items.index');
+        Route::get('/reports/items', [AdminItemController::class, 'index'])->name('items.index');
+        // Kompatibilitas tautan lama, pertahankan seluruh query filter.
+        Route::get('/items', function (\Illuminate\Http\Request $request) {
+            return redirect()->route('admin.items.index', $request->query(), 302);
+        });
 
         // Admin menambah barang hilang/ditemukan dan langsung mempublikasikannya.
         Route::post('/items', [AdminItemController::class, 'store'])
@@ -408,7 +412,7 @@ Route::middleware(['auth', 'role:user'])
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth', 'role:admin'])
+Route::middleware(['auth', 'role:admin', 'admin-tab'])
     ->prefix('admin/chat')
     ->name('admin.chat.')
     ->group(function () {
@@ -433,7 +437,7 @@ Route::middleware(['auth', 'role:user'])
     ->get('/chat/messages', [\App\Http\Controllers\User\ChatController::class, 'messages'])
     ->name('user.chat.messages');
 
-Route::middleware(['auth', 'role:admin'])
+Route::middleware(['auth', 'role:admin', 'admin-tab'])
     ->get('/admin/chat/{user}/messages', [
         \App\Http\Controllers\Admin\ChatController::class,
         'messages',

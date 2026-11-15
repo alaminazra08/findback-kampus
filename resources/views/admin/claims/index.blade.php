@@ -2,12 +2,15 @@
 @section('title', 'Klaim Barang')
 @section('breadcrumb', 'Klaim Barang')
 @section('page-styles')
+    <link rel="stylesheet" href="{{ asset('css/admin/claims-toast-v1.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/header-consistency.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/admin-claims.css') }}?v=20261101-executive">
     <link rel="stylesheet" href="{{ asset('css/admin/claims-table-consistency.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/claims-toast-alignment-v2.css') }}?v=2">
 @endsection
 
 @section('content')
+    <script defer src="{{ asset('js/admin/claims-toast-v1.js') }}?v=1"></script>
 
     <section class="fb-claim-executive fb-work-claims" aria-label="Ringkasan Klaim Barang">
         <div class="fb-page-heading fb-work-heading">
@@ -33,7 +36,11 @@
     </section>
 
     @if (session('success'))
-        <div class="fb-claim-alert" role="status">{{ session('success') }}</div>
+        <div class="fb-claim-toast" data-fb-claim-toast data-duration="5000" role="status" aria-live="polite" aria-atomic="true">
+            <span class="fb-claim-toast-icon" aria-hidden="true">✓</span>
+            <span class="fb-claim-toast-copy"><strong>Proses berhasil</strong><small>{{ session('success') }}</small></span>
+            <button type="button" class="fb-claim-toast-close" aria-label="Tutup notifikasi" data-fb-claim-toast-close>&times;</button>
+        </div>
     @endif
 
     <section class="fb-claim-panel">

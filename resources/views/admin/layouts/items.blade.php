@@ -384,6 +384,8 @@
     @endif
     {{-- Smart Save harus sudah siap sebelum navigasi AJAX menuju Pengaturan. --}}
     <script src="{{ asset('js/admin/settings-smart-save.js') }}?v=11" defer></script>
+    <script src="{{ asset('js/admin/admin-toast-standard-v1.js') }}?v=1" defer></script>
+    <script src="{{ asset('js/admin/admin-scroll-continuity-v1.js') }}?v=1" defer></script>
 </body>
 
 </html>

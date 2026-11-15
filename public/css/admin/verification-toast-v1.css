@@ -1,0 +1,20 @@
+/* FindBack Verification Toast V1: isolated to verification index only. */
+.fb-verification-toast {
+ position:fixed; z-index:1050; top:90px; right:24px;
+ box-sizing:border-box; width:min(390px,calc(100vw - 32px));
+ display:flex; align-items:center; gap:12px; padding:14px 15px;
+ background:#fff; color:#244c37; border:1px solid #c6e4d2;
+ border-radius:16px; box-shadow:0 12px 36px rgba(45,12,29,.16);
+ overflow-wrap:anywhere; animation:fb-verification-toast-enter .24s ease-out both;
+}
+.fb-verification-toast.is-warning {color:#80521b; border-color:#efd6b0;}
+.fb-verification-toast-icon {display:grid;place-items:center;flex:0 0 36px;width:36px;height:36px;border-radius:12px;background:#e9f8ee;font-size:19px;font-weight:800;}
+.fb-verification-toast.is-warning .fb-verification-toast-icon {background:#fff4e4;}
+.fb-verification-toast-copy {display:flex;flex:1;min-width:0;flex-direction:column;gap:4px;}
+.fb-verification-toast-copy strong {font-size:14px;font-weight:750;line-height:1.3;}
+.fb-verification-toast-copy small {font-size:12px;font-weight:400;line-height:1.5;}
+.fb-verification-toast-close {flex:0 0 36px;width:36px;height:36px;display:grid;place-items:center;background:transparent;border:0;border-radius:9px;color:inherit;font-size:23px;cursor:pointer;}
+.fb-verification-toast-close:hover,.fb-verification-toast-close:focus-visible {background:rgba(90,40,60,.07);outline-offset:2px;}
+@keyframes fb-verification-toast-enter {from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:767px){.fb-verification-toast{top:calc(env(safe-area-inset-top,0px) + 88px);left:12px;right:12px;width:auto;padding:13px;gap:10px;}.fb-verification-toast-copy small{font-size:12px;}}
+@media(prefers-reduced-motion:reduce){.fb-verification-toast{animation:none;}}

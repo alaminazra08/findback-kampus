@@ -6,9 +6,11 @@
     @php
         $user = auth()->user();
         
-        $photoUrl = $user->profile_photo_path
-            ? asset('storage/' . $user->profile_photo_path)
-            : null;
+        $photoPath = $user->profile_photo_path;
+
+$photoUrl = $photoPath && \Illuminate\Support\Facades\Storage::disk('public')->exists($photoPath)
+    ? route('user.profile.photo', ['v' => basename($photoPath)])
+    : null;
 
         $initial = mb_strtoupper(mb_substr(trim($user->name), 0, 1));
         $profileError = $errors->has('name') || $errors->has('photo')
@@ -386,6 +388,274 @@ body:has(#fp-edit-dialog[open], #fp-password-dialog[open]) {
     font-size: 24px;
     cursor: pointer;
 }
+    #fp-edit,
+#fp-password-open,
+#fp-remove-button,
+#fp-save,
+label[for="fp-photo"].fp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+}
+
+.fbp .fp-btn .cu-icon {
+    display: block;
+    width: 17px;
+    height: 17px;
+    flex: 0 0 17px;
+}
+
+#fp-remove-button[hidden] {
+    display: none;
+}
+    /* Judul dan tombol tutup di kedua dialog profil */
+.fbp .fp-dialog-header {
+    align-items: center;
+    gap: 16px;
+}
+
+.fbp .fp-dialog-header h2 {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.25;
+}
+
+.fbp .fp-dialog-header .fp-dialog-close {
+    display: grid;
+    place-items: center;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #f7f1f3;
+    color: var(--wine);
+    font-family: Arial, sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+/* Foto dan aksi tetap berdekatan saat ukuran layar berubah */
+#fp-edit-dialog .fp-photo-editor {
+    padding: 16px;
+    gap: 10px 14px;
+    border: 1px solid #e9dfe2;
+    border-radius: 14px;
+    background: #fbf8f9;
+}
+
+#fp-edit-dialog .fp-photo-controls {
+    column-gap: 8px;
+    row-gap: 6px;
+}
+
+#fp-edit-dialog #fp-photo-hint {
+    color: #645d60;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+/* Tombol mudah dikenali saat memakai keyboard */
+.fbp dialog :is(button, input):focus-visible,
+#fp-edit-dialog .fp-picker:focus-visible + label {
+    outline: 3px solid #ad5570;
+    outline-offset: 3px;
+}
+
+/* Umpan balik saat kursor berada di atas tombol */
+@media (hover: hover) {
+    .fbp .fp-dialog-close:hover {
+        background: #eedfe4;
+    }
+
+    #fp-edit-dialog label[for="fp-photo"]:hover,
+    #fp-edit-dialog #fp-remove-button:hover {
+        border-color: #cda9b4;
+        background: #fff;
+    }
+}
+
+/* Ruang lebih lega untuk nama dan tombol pada layar HP */
+@media (max-width: 480px) {
+    #fp-edit-dialog,
+    #fp-password-dialog {
+        width: calc(100% - 24px);
+        padding: 18px;
+    }
+
+    #fp-edit-dialog .fp-photo-editor {
+        padding: 12px;
+        column-gap: 10px;
+    }
+
+    #fp-edit-dialog .fp-photo-controls .fp-btn {
+        gap: 5px;
+        padding-inline: 8px;
+    }
+}
+    #fp-edit-dialog .fp-photo-editor {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    grid-template-areas:
+        "title title"
+        "avatar actions"
+        "hint hint";
+    align-items: center;
+    gap: 10px 14px;
+    padding: 16px;
+    border: 1px solid #e8dfe2;
+    border-radius: 14px;
+    background: #fbf8f9;
+}
+
+#fp-edit-dialog .fp-photo-title {
+    grid-area: title;
+    font-size: 14px;
+}
+
+#fp-edit-dialog .fp-thumb {
+    grid-area: avatar;
+    width: 56px;
+    height: 56px;
+}
+
+#fp-edit-dialog .fp-photo-controls {
+    grid-area: actions;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    margin: 0;
+}
+
+#fp-edit-dialog #fp-photo-hint {
+    grid-area: hint;
+    margin: 0;
+    color: #665e61;
+    line-height: 1.45;
+}
+
+#fp-edit-dialog label[for="fp-photo"] {
+    border-color: #d8b3bf;
+    background: #fff;
+    color: var(--wine);
+}
+
+#fp-edit-dialog #fp-save:enabled {
+    background: var(--wine);
+    border-color: var(--wine);
+    color: white;
+}
+
+.fbp .fp-dialog-header .fp-dialog-close {
+    font-size: 28px;
+    line-height: 1;
+}
+
+@media (max-width: 480px) {
+    #fp-edit-dialog .fp-photo-editor {
+        grid-template-columns: 44px minmax(0, 1fr);
+        gap: 8px 10px;
+        padding: 12px;
+    }
+
+    #fp-edit-dialog .fp-thumb {
+        width: 44px;
+        height: 44px;
+    }
+
+    #fp-edit-dialog .fp-photo-controls .fp-btn {
+        min-height: 44px;
+        padding: 6px 8px;
+        gap: 5px;
+    }
+}
+   
+/* Tombol dan dialog profil responsif */
+@media (max-width: 600px) {
+    .fbp dialog {
+        box-sizing: border-box;
+        width: calc(100% - 24px);
+        max-width: 100%;
+        max-height: calc(100dvh - 32px);
+        overflow-y: auto;
+    }
+
+    .fbp dialog .fp-actions {
+        display: grid;
+        grid-template-columns:
+            minmax(0, 1fr)
+            minmax(0, 1.5fr);
+        gap: 10px;
+    }
+
+    .fbp dialog .fp-actions .fp-btn {
+        width: 100%;
+        min-width: 0;
+        min-height: 44px;
+        padding: 10px 8px;
+        white-space: normal;
+        text-align: center;
+        justify-content: center;
+        line-height: 1.3;
+    }
+}
+
+@media (max-width: 360px) {
+    .fbp dialog .fp-actions {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+#fp-confirm-note:empty {
+    display: none;
+}
+
+/* Pesan validasi profil */
+.fbp .fp-error {
+    margin: 6px 0 0;
+    color: #b42318;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.fbp input[aria-invalid="true"] {
+    border-color: #b42318;
+    background-color: #fff8f7;
+}
+
+.fbp input:focus-visible,
+.fbp button:focus-visible {
+    outline: 3px solid rgba(137, 36, 66, 0.25);
+    outline-offset: 2px;
+}
+
+    
+/* Interaksi tombol yang lebih halus */
+.fbp .fp-btn {
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.fbp .fp-btn:enabled:active {
+    transform: translateY(1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fbp .fp-btn {
+        transition: none;
+    }
+}
+
     </style>
 
     <div class="fbp" id="fb-profile">
@@ -421,7 +691,8 @@ body:has(#fp-edit-dialog[open], #fp-password-dialog[open]) {
         class="fp-btn"
         aria-haspopup="dialog"
         aria-controls="fp-edit-dialog">
-    Edit profil
+    @include('user.components.icon', ['icon' => 'edit'])
+<span>Edit profil</span>
 </button>
             </div>
 
@@ -454,70 +725,99 @@ body:has(#fp-edit-dialog[open], #fp-password-dialog[open]) {
           enctype="multipart/form-data">
                 @csrf
 
-                <div class="fp-field">
-                    <label for="fp-name">Nama lengkap</label>
-                    <input id="fp-name"
-                           name="name"
-                           type="text"
-                           value="{{ old('name', $user->name) }}"
-                           autocomplete="name"
-                           maxlength="255"
-                           required>
-                </div>
+                
+<div class="fp-field">
+    <label for="fp-name">Nama lengkap</label>
+
+    <input
+        id="fp-name"
+        name="name"
+        type="text"
+        value="{{ old('name', $user->name) }}"
+        autocomplete="name"
+        maxlength="255"
+        required
+        @error('name')
+            aria-invalid="true"
+            aria-describedby="fp-name-error"
+        @enderror
+    >
+
+    @error('name')
+        <p id="fp-name-error"
+           class="fp-error"
+           role="alert">
+            {{ $message }}
+        </p>
+    @enderror
+</div>
+
 
                 <div class="fp-field">
                    <div class="fp-photo-editor">
+    <strong class="fp-photo-title">Foto profil</strong>
+
     <div class="fp-avatar fp-thumb" aria-hidden="true">
-        <img id="fp-thumb-image" alt="" hidden>
-        <span id="fp-thumb-initial">{{ $initial }}</span>
+        <img id="fp-thumb-image"
+             @if ($photoUrl) src="{{ $photoUrl }}" @else hidden @endif
+             alt="">
+        <span id="fp-thumb-initial" @if ($photoUrl) hidden @endif>
+            {{ $initial }}
+        </span>
     </div>
 
-    <div>
-        <strong>Foto profil</strong>
+    <div class="fp-photo-controls">
+        
+<input id="fp-photo"
+       class="fp-picker"
+       name="photo"
+       type="file"
+       accept="image/jpeg,image/png,image/webp"
+       aria-describedby="fp-photo-hint @error('photo') fp-photo-error @enderror"
+       @error('photo') aria-invalid="true" @enderror>
 
-        <div class="fp-photo-controls">
-            <input
-                id="fp-photo"
-                class="fp-picker"
-                name="photo"
-                type="file"
-                accept="image/jpeg,image/png,image/webp"
-                aria-describedby="fp-photo-hint"
-            >
 
-            <label for="fp-photo" class="fp-btn">Pilih foto</label>
+        <label for="fp-photo" class="fp-btn">
+            @include('user.components.icon', ['icon' => 'upload'])
+            <span>Pilih foto</span>
+        </label>
 
-            <button
-                type="button"
-                class="fp-btn"
+        <button type="button"
                 id="fp-remove-button"
-                @unless ($photoUrl) hidden @endunless
-            >
-                Hapus foto
-            </button>
-        </div>
-
-        <small id="fp-photo-hint" class="fp-hint">
-            JPG, PNG, atau WebP. Maksimal 2 MB.
-        </small>
+                class="fp-btn"
+                @unless ($photoUrl) hidden @endunless>
+            @include('user.components.icon', ['icon' => 'trash'])
+            <span>Hapus foto</span>
+        </button>
     </div>
+
+    <small id="fp-photo-hint" class="fp-hint">
+        JPG, PNG, atau WebP · Maksimal 2 MB
+    </small>
+
+@error('photo')
+    <p id="fp-photo-error"
+       class="fp-error"
+       role="alert">
+        {{ $message }}
+    </p>
+@enderror
+
 </div>
 
-<input type="hidden" id="fp-remove" name="remove_photo" value="0">
-                    </button>
-                </div>
+            <input type="hidden" id="fp-remove" name="remove_photo" value="0">
+        </div>
 
-                <p id="fp-status" class="fp-status" role="status"></p>
+        <p id="fp-status" class="fp-status" role="status"></p>
 
-                <div class="fp-actions">
-                    <button type="button" id="fp-cancel" class="fp-btn">Batal</button>
-                    <button type="submit" class="fp-btn fp-primary" id="fp-save">
-                        Simpan perubahan
-                    </button>
-                </div>
-            </form>
-                        <button type="submit" class="fp-btn fp-primary" id="fp-save">
-                Simpan perubahan
+        <div class="fp-actions">
+            <button type="button" id="fp-cancel" class="fp-btn">
+                Batal
+            </button>
+
+            <button type="submit" id="fp-save" class="fp-btn fp-primary">
+                @include('user.components.icon', ['icon' => 'check'])
+                <span>Simpan perubahan</span>
             </button>
         </div>
     </form>
@@ -525,9 +825,7 @@ body:has(#fp-edit-dialog[open], #fp-password-dialog[open]) {
         </section>
 
         <section class="fp-card" aria-labelledby="fp-security-heading">
-            <div class="fbp">
-    <div class="fp-card">
-        <div class="fp-row">
+    <div class="fp-row">
     <h2 id="fp-security-heading">Keamanan akun</h2>
 
     <button type="button"
@@ -535,7 +833,8 @@ body:has(#fp-edit-dialog[open], #fp-password-dialog[open]) {
             class="fp-btn"
             aria-haspopup="dialog"
             aria-controls="fp-password-dialog">
-        Ubah kata sandi
+        @include('user.components.icon', ['icon' => 'lock'])
+<span>Ubah kata sandi</span>
     </button>
 </div>
 
@@ -567,9 +866,15 @@ body:has(#fp-edit-dialog[open], #fp-password-dialog[open]) {
                        aria-invalid="true" aria-describedby="fp-current-error"
                    @enderror>
 
-            @error('current_password')
-                <p id="fp-current-error" class="fp-status">{{ $message }}</p>
-            @enderror
+           
+@error('current_password')
+    <p id="fp-current-error"
+       class="fp-error"
+       role="alert">
+        {{ $message }}
+    </p>
+@enderror
+
         </div>
 
         <div class="fp-field">
@@ -585,19 +890,33 @@ body:has(#fp-edit-dialog[open], #fp-password-dialog[open]) {
 
             <small id="fp-password-hint" class="fp-hint">Minimal 8 karakter.</small>
 
-            @error('password')
-                <p id="fp-new-error" class="fp-status">{{ $message }}</p>
-            @enderror
+            
+@error('password')
+    <p id="fp-new-error"
+       class="fp-error"
+       role="alert">
+        {{ $message }}
+    </p>
+@enderror
+
         </div>
 
         <div class="fp-field">
             <label for="fp-confirm">Konfirmasi kata sandi baru</label>
             <input id="fp-confirm"
-                   name="password_confirmation"
-                   type="password"
-                   autocomplete="new-password"
-                   minlength="8"
-                   required>
+       name="password_confirmation"
+       type="password"
+       autocomplete="new-password"
+       minlength="8"
+       aria-describedby="fp-confirm-note"
+       required>
+
+
+<p id="fp-confirm-note"
+   class="fp-error"
+   role="status"
+   aria-live="polite"></p>
+
         </div>
 
         <div class="fp-actions">
@@ -609,12 +928,10 @@ body:has(#fp-edit-dialog[open], #fp-password-dialog[open]) {
                 Perbarui kata sandi
             </button>
         </div>
-    </form>
+        </form>
 </dialog>
-    </div>
+</section>
 </div>
-        </section>
-    </div>
 
     <script>
         (() => {
@@ -769,34 +1086,70 @@ dialog.addEventListener('cancel', (event) => {
 @endif
 })();
 
+
+/* Pertahankan posisi scroll setelah profil disimpan */
 (() => {
     const profile = document.getElementById('fb-profile');
     if (!profile) return;
 
-    
     const scrollKey = 'findback:profil:scroll';
 
-    // Ghi lại vị trí ngay trước khi gửi form hồ sơ hoặc mật khẩu.
-    profile.addEventListener('submit', () => {
-        sessionStorage.setItem(scrollKey, String(window.scrollY));
+    // Mengingat posisi saat formulir dikirim.
+    profile.addEventListener('submit', (event) => {
+        if (
+            event.target.id === 'fp-form' ||
+            event.target.id === 'fp-password-form'
+        ) {
+            sessionStorage.setItem(
+                scrollKey,
+                String(window.scrollY)
+            );
+        }
     });
 
     const savedPosition = sessionStorage.getItem(scrollKey);
+
     if (savedPosition === null) return;
 
-    // Chỉ khôi phục một lần sau khi gửi form.
-    sessionStorage.removeItem(scrollKey);
+    const targetY = Number(savedPosition);
 
-    try {
-    const top = Number(savedPosition);
-
-    if (Number.isFinite(top)) {
-        window.scrollTo({ top, behavior: 'instant' });
+    if (!Number.isFinite(targetY)) {
+        sessionStorage.removeItem(scrollKey);
+        return;
     }
-} finally {
-    document.documentElement.style.removeProperty('visibility');
-}
+
+    // Mencegah browser menimpa posisi scroll.
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+
+    const restoreScroll = () => {
+        const maxScroll = Math.max(
+            0,
+            document.documentElement.scrollHeight -
+            window.innerHeight
+        );
+
+        window.scrollTo({
+            top: Math.min(
+                Math.max(0, targetY),
+                maxScroll
+            ),
+            behavior: 'instant'
+        });
+    };
+
+    // Pulihkan posisi setelah halaman selesai dimuat.
+    window.addEventListener('load', () => {
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                restoreScroll();
+                sessionStorage.removeItem(scrollKey);
+            });
+        });
+    }, { once: true });
 })();
+
     const profileToast = document.getElementById('fp-toast');
 
 if (profileToast) {
@@ -840,13 +1193,19 @@ if (profileToast) {
     }
 
     function checkConfirmation() {
-        const mismatch = confirmation.value !== ''
-            && confirmation.value !== newPassword.value;
+    const note = document.getElementById('fp-confirm-note');
+    const mismatch = confirmation.value !== ''
+        && confirmation.value !== newPassword.value;
 
-        confirmation.setCustomValidity(
-            mismatch ? 'Konfirmasi kata sandi belum cocok.' : ''
-        );
+    const message = mismatch ? 'Konfirmasi kata sandi belum cocok.' : '';
+
+    confirmation.setCustomValidity(message);
+    confirmation.setAttribute('aria-invalid', String(mismatch));
+
+    if (note.textContent !== message) {
+        note.textContent = message;
     }
+}
 
     openButton.addEventListener('click', openPasswordDialog);
 
@@ -862,7 +1221,7 @@ if (profileToast) {
     // Chạy khi đóng bằng nút Batal, dấu × hoặc phím Esc.
     dialog.addEventListener('close', () => {
         form.reset();
-        confirmation.setCustomValidity('');
+        checkConfirmation();
         openButton.focus({ preventScroll: true });
     });
 

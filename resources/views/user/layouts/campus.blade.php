@@ -185,15 +185,20 @@
                 {{-- PROFIL USER --}}
                 <details class="cu-dropdown cu-profile">
                     <summary>
-                        <span class="cu-avatar" aria-hidden="true">
-    @if (auth()->user()->profile_photo_path)
+                       @php
+    $navUser = auth()->user();
+    $navPhoto = $navUser->profile_photo_path;
+@endphp
+
+<span class="cu-avatar" aria-hidden="true">
+    @if ($navPhoto && \Illuminate\Support\Facades\Storage::disk('public')->exists($navPhoto))
         <img
-            src="{{ asset('storage/' . auth()->user()->profile_photo_path) }}"
+            src="{{ route('user.profile.photo', ['v' => basename($navPhoto)]) }}"
             alt=""
-            style="display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
+            style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
         >
     @else
-        {{ mb_strtoupper(mb_substr(trim(auth()->user()->name), 0, 1)) }}
+        {{ mb_strtoupper(mb_substr(trim($navUser->name), 0, 1)) }}
     @endif
 </span>
 

@@ -197,6 +197,18 @@ class CampusController extends Controller
     {
         return view('user.profile.index');
     }
+    public function profilePhoto(Request $request)
+{
+    $path = $request->user()->profile_photo_path;
+    $disk = Storage::disk('public');
+
+    abort_unless($path && $disk->exists($path), 404);
+
+    return $disk->response($path, null, [
+        'Cache-Control' => 'private, no-store',
+        'X-Content-Type-Options' => 'nosniff',
+    ], 'inline');
+}
 
     /**
      * Memperbarui nama pengguna.
@@ -285,19 +297,48 @@ return redirect()
     /**
      * Memperbarui password pengguna.
      */
-    public function password(Request $request)
-    {
-        $data = $request->validate([
-            'current_password' => 'required|current_password',
-            'password' => ['required', 'confirmed', Password::min(8)],
-        ]);
+    
+/**
+ * Memperbarui kata sandi pengguna.
+ */
+public function password(Request $request)
+{
+    $data = $request->validate([
+        'current_password' => [
+            'required',
+            'current_password',
+        ],
+        'password' => [
+            'required',
+            'confirmed',
+            Password::min(8),
+        ],
+    ], [
+        'current_password.required' =>
+            'Kata sandi saat ini wajib diisi.',
 
-        $request->user()->update([
-            'password' => $data['password'],
-        ]);
+        'current_password.current_password' =>
+            'Kata sandi saat ini tidak sesuai.',
 
-        $request->session()->regenerate();
-return back()->with('profile_toast', $message);
-       return back()->with('profile_toast', 'Kata sandi berhasil diperbarui.');
-    }
+        'password.required' =>
+            'Kata sandi baru wajib diisi.',
+
+        'password.confirmed' =>
+            'Konfirmasi kata sandi tidak cocok.',
+    ]);
+
+    $request->user()->update([
+        'password' => $data['password'],
+    ]);
+
+    $request->session()->regenerate();
+
+    return redirect()
+        ->route('user.profile.index')
+        ->with(
+            'profile_toast',
+            'Kata sandi berhasil diperbarui.'
+        );
+}
+
 }

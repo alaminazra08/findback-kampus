@@ -474,6 +474,10 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     ])
         ->whereUuid('id')
         ->name('user.notifications.read');
+    Route::get('/profil/foto', [
+    \App\Http\Controllers\User\CampusController::class,
+    'profilePhoto',
+])->name('user.profile.photo');
     Route::get('/profil', [\App\Http\Controllers\User\CampusController::class, 'profile'])->name(
         'user.profile.index',
     );

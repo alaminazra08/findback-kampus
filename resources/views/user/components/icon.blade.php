@@ -33,6 +33,18 @@
             <path d="M7 18H5a4 4 0 0 1 0-8 7 7 0 0 1 14-1 5 5 0 0 1 0 10h-2M12 21V10m-4 4 4-4 4 4" />
         @break
 
+                @case('edit')
+            <path d="m15 5 4 4M4 20l4-1 12-12a2.8 2.8 0 0 0-4-4L4 15z" />
+        @break
+
+        @case('trash')
+            <path d="M3 6h18M9 6V4h6v2M6 6l1 14h10l1-14M10 10v6M14 10v6" />
+        @break
+
+        @case('lock')
+            <rect x="5" y="10" width="14" height="11" rx="2" />
+            <path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3" />
+        @break
         @default
             <path d="M4 4h16v13H9l-5 4V4Z" />
     @endswitch

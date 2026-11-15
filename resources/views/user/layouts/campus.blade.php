@@ -24,6 +24,23 @@
     <link rel="stylesheet" href="{{ asset('css/shared/ui-text-consistency.css') }}?v=1">
 <!-- FINDBACK_TYPOGRAPHY_V1 -->
 <link rel="stylesheet" href="{{ asset('css/shared/typography.css') }}">
+@if (request()->routeIs('user.profile.index'))
+    <script>
+        // Ẩn trang trong lúc khôi phục vị trí sau khi lưu.
+        try {
+            if (sessionStorage.getItem('findback:profil:scroll') !== null) {
+                document.documentElement.style.visibility = 'hidden';
+
+                // Hiện lại trang kể cả khi script bên dưới gặp lỗi.
+                window.addEventListener('load', () => {
+                    document.documentElement.style.removeProperty('visibility');
+                }, { once: true });
+            }
+        } catch {
+            // Trình duyệt vẫn hiển thị trang nếu bộ nhớ bị chặn.
+        }
+    </script>
+@endif
 </head>
 
 <body class="fb-responsive cu-body">
@@ -168,9 +185,17 @@
                 {{-- PROFIL USER --}}
                 <details class="cu-dropdown cu-profile">
                     <summary>
-                        <span class="cu-avatar">
-                            {{ mb_strtoupper(mb_substr(auth()->user()->name, 0, 1)) }}
-                        </span>
+                        <span class="cu-avatar" aria-hidden="true">
+    @if (auth()->user()->profile_photo_path)
+        <img
+            src="{{ asset('storage/' . auth()->user()->profile_photo_path) }}"
+            alt=""
+            style="display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
+        >
+    @else
+        {{ mb_strtoupper(mb_substr(trim(auth()->user()->name), 0, 1)) }}
+    @endif
+</span>
 
                         <span class="cu-name">
                             {{ auth()->user()->name }}
@@ -185,9 +210,7 @@
                             Profil saya
                         </a>
 
-                        <a href="{{ route('user.profile.index') }}#password">
-                            Ubah password
-                        </a>
+                        
 
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

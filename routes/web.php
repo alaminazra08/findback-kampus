@@ -477,6 +477,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/profil', [\App\Http\Controllers\User\CampusController::class, 'profile'])->name(
         'user.profile.index',
     );
+   Route::redirect('/profil/edit', '/profil')->name('user.profile.edit');
     Route::post('/profil', [\App\Http\Controllers\User\CampusController::class, 'updateProfile'])
         ->middleware('throttle:10,1')
         ->name('user.profile.update');

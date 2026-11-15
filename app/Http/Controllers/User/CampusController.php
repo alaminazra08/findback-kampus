@@ -199,27 +199,132 @@ class CampusController extends Controller
     }
 
     /**
-     * Memperbarui nama pengguna.
+     * Menampilkan foto profil pengguna.
+     */
+    public function profilePhoto(Request $request)
+    {
+        $path = $request->user()->profile_photo_path;
+        $disk = Storage::disk('public');
+
+        abort_unless($path && $disk->exists($path), 404);
+
+        return $disk->response($path, null, [
+            'Cache-Control' => 'private, no-store',
+            'X-Content-Type-Options' => 'nosniff',
+        ], 'inline');
+    }
+
+    /**
+     * Memperbarui nama dan foto pengguna.
      */
     public function updateProfile(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => ['required', 'string', 'max:255'],
+            'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'remove_photo' => ['nullable', 'boolean'],
+        ], [
+            'name.required' => 'Nama lengkap wajib diisi.',
+            'photo.image' => 'File harus berupa gambar.',
+            'photo.mimes' => 'Gunakan foto JPG, PNG, atau WebP.',
+            'photo.max' => 'Ukuran foto maksimal 2 MB.',
         ]);
 
-        $request->user()->update($data);
+        $userId = $request->user()->getKey();
+        $disk = Storage::disk('public');
+        $newPath = null;
 
-        return back()->with('success', 'Profil diperbarui.');
+        // Simpan foto baru jika pengguna memilih file.
+        if ($request->hasFile('photo')) {
+            $newPath = $disk->putFile(
+                "profile-photos/{$userId}",
+                $request->file('photo')
+            );
+
+            if (!$newPath) {
+                return back()
+                    ->withInput($request->only('name'))
+                    ->withErrors([
+                        'photo' => 'Foto gagal disimpan. Silakan pilih ulang foto.',
+                    ]);
+            }
+        }
+
+        try {
+            $oldPath = DB::transaction(function () use ($request, $userId, $data, $newPath) {
+                $user = $request->user()
+                    ->newQuery()
+                    ->lockForUpdate()
+                    ->findOrFail($userId);
+
+                $previousPath = $user->profile_photo_path;
+                $user->name = $data['name'];
+
+                if ($newPath !== null) {
+                    $user->profile_photo_path = $newPath;
+                } elseif ($request->boolean('remove_photo')) {
+                    $user->profile_photo_path = null;
+                }
+
+                $user->save();
+
+                return $previousPath !== $user->profile_photo_path
+                    ? $previousPath
+                    : null;
+            });
+        } catch (\Throwable $exception) {
+            if ($newPath !== null) {
+                $disk->delete($newPath);
+            }
+
+            throw $exception;
+        }
+
+        // Hapus foto lama setelah perubahan berhasil disimpan.
+        if ($oldPath) {
+            $disk->delete($oldPath);
+        }
+
+        $message = 'Profil berhasil diperbarui.';
+
+        if ($request->hasFile('photo')) {
+            $message = 'Foto profil berhasil diperbarui.';
+        } elseif ($request->boolean('remove_photo')) {
+            $message = 'Foto profil berhasil dihapus.';
+        }
+
+        return redirect()
+            ->route('user.profile.index')
+            ->with('profile_toast', $message);
     }
 
     /**
-     * Memperbarui password pengguna.
+     * Memperbarui kata sandi pengguna.
      */
     public function password(Request $request)
     {
         $data = $request->validate([
-            'current_password' => 'required|current_password',
-            'password' => ['required', 'confirmed', Password::min(8)],
+            'current_password' => [
+                'required',
+                'current_password',
+            ],
+            'password' => [
+                'required',
+                'confirmed',
+                Password::min(8),
+            ],
+        ], [
+            'current_password.required' =>
+                'Kata sandi saat ini wajib diisi.',
+
+            'current_password.current_password' =>
+                'Kata sandi saat ini tidak sesuai.',
+
+            'password.required' =>
+                'Kata sandi baru wajib diisi.',
+
+            'password.confirmed' =>
+                'Konfirmasi kata sandi tidak cocok.',
         ]);
 
         $request->user()->update([
@@ -228,6 +333,11 @@ class CampusController extends Controller
 
         $request->session()->regenerate();
 
-        return back()->with('success', 'Profil diperbarui.');
+        return redirect()
+            ->route('user.profile.index')
+            ->with(
+                'profile_toast',
+                'Kata sandi berhasil diperbarui.'
+            );
     }
 }

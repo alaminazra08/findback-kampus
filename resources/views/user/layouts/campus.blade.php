@@ -24,6 +24,23 @@
     <link rel="stylesheet" href="{{ asset('css/shared/ui-text-consistency.css') }}?v=1">
 <!-- FINDBACK_TYPOGRAPHY_V1 -->
 <link rel="stylesheet" href="{{ asset('css/shared/typography.css') }}">
+@if (request()->routeIs('user.profile.index'))
+    <script>
+        // Ẩn trang trong lúc khôi phục vị trí sau khi lưu.
+        try {
+            if (sessionStorage.getItem('findback:profil:scroll') !== null) {
+                document.documentElement.style.visibility = 'hidden';
+
+                // Hiện lại trang kể cả khi script bên dưới gặp lỗi.
+                window.addEventListener('load', () => {
+                    document.documentElement.style.removeProperty('visibility');
+                }, { once: true });
+            }
+        } catch {
+            // Trình duyệt vẫn hiển thị trang nếu bộ nhớ bị chặn.
+        }
+    </script>
+@endif
 </head>
 
 <body class="fb-responsive cu-body">
@@ -133,20 +150,6 @@
                     <span>Aktivitas Saya</span>
                 </a>
 
-                {{-- CHAT ADMIN --}}
-                <a
-                    class="{{ request()->routeIs('user.chat.*') ? 'active' : '' }}"
-                    href="{{ route('user.chat.index') }}"
-                >
-                    <svg class="fb-nav-icon" viewBox="0 0 24 24"
-                         fill="none" stroke="currentColor"
-                         stroke-width="1.8" stroke-linecap="round"
-                         stroke-linejoin="round" aria-hidden="true">
-                        <path d="M20 11a8 8 0 0 1-8 8H7l-4 2 1.5-4A8 8 0 1 1 20 11z" />
-                    </svg>
-                    <span>Chat Admin</span>
-                </a>
-
             </nav>
 
             {{-- AKUN DAN NOTIFIKASI --}}
@@ -168,9 +171,22 @@
                 {{-- PROFIL USER --}}
                 <details class="cu-dropdown cu-profile">
                     <summary>
-                        <span class="cu-avatar">
-                            {{ mb_strtoupper(mb_substr(auth()->user()->name, 0, 1)) }}
-                        </span>
+                       @php
+    $navUser = auth()->user();
+    $navPhoto = $navUser->profile_photo_path;
+@endphp
+
+<span class="cu-avatar" aria-hidden="true">
+    @if ($navPhoto && \Illuminate\Support\Facades\Storage::disk('public')->exists($navPhoto))
+        <img
+            src="{{ route('user.profile.photo', ['v' => basename($navPhoto)]) }}"
+            alt=""
+            style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
+        >
+    @else
+        {{ mb_strtoupper(mb_substr(trim($navUser->name), 0, 1)) }}
+    @endif
+</span>
 
                         <span class="cu-name">
                             {{ auth()->user()->name }}
@@ -185,9 +201,7 @@
                             Profil saya
                         </a>
 
-                        <a href="{{ route('user.profile.index') }}#password">
-                            Ubah password
-                        </a>
+                        
 
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

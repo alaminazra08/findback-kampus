@@ -14,6 +14,7 @@ class MyClaimController extends Controller
         $filters = $request->validate([
             'search' => ['nullable', 'string', 'max:100'],
             'status' => ['nullable', 'in:pending,approved,rejected,returned'],
+            'type' => ['nullable', 'in:lost,found'],
         ]);
 
         $userId = $request->user()->id;
@@ -63,8 +64,11 @@ class MyClaimController extends Controller
         if (!empty($filters['status'])) {
             $query->where('claims.status', $filters['status']);
         }
+        if (!empty($filters['type'])) {
+            $query->where('items.type', $filters['type']);
+        }
 
-        $claims = $query->orderByDesc('claims.created_at')->paginate(10)->withQueryString();
+        $claims = $query->orderByDesc('claims.created_at')->paginate(5)->withQueryString();
 
         $openEvidenceRequests = \App\Models\ClaimEvidenceRequest::query()
             ->whereIn('item_claim_id', $claims->pluck('id')->all())

@@ -43,7 +43,7 @@
 @endif
 </head>
 
-<body class="fb-responsive cu-body">
+<body class="fb-responsive cu-body {{ request()->routeIs('user.reports.index') ? 'fb-activity-page' : '' }}">
 
     <a class="cu-skip" href="#main">Langsung ke konten</a>
 

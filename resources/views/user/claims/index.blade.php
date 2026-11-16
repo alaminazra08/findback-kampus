@@ -7,15 +7,45 @@
     </div>
     <nav class="cu-tabs"><a href="{{ route('user.reports.index') }}">Riwayat laporan</a><a class="active"
             href="{{ route('user.claims.index') }}">Pengajuan klaim</a></nav>
-    <form class="cu-panel cu-inline-filter"><input name="search" value="{{ request('search') }}"
-            placeholder="Cari barang yang diklaim" aria-label="Cari klaim"><select name="status" aria-label="Status klaim">
-            <option value="">Semua status</option>
-            @foreach (['pending' => 'Menunggu', 'approved' => 'Disetujui', 'rejected' => 'Ditolak', 'returned' => 'Dikembalikan'] as $key => $label)
-                <option value="{{ $key }}" @selected(request('status') === $key)>{{ $label }}</option>
-            @endforeach
-        </select>
-        <button class="cu-btn">Terapkan</button><a href="{{ route('user.claims.index') }}">Reset</a>
-    </form>
+    <form method="GET" action="{{ route('user.claims.index') }}"
+    class="cu-panel cu-inline-filter">
+
+    <input
+        type="text"
+        name="search"
+        value="{{ request('search') }}"
+        placeholder="Cari barang yang diklaim"
+        aria-label="Cari klaim"
+    >
+
+    <select name="type" aria-label="Jenis barang">
+        <option value="">Semua jenis barang</option>
+        <option value="lost" @selected(request('type') === 'lost')>
+            Barang Hilang
+        </option>
+        <option value="found" @selected(request('type') === 'found')>
+            Barang Ditemukan
+        </option>
+    </select>
+
+    <select name="status" aria-label="Status klaim">
+        <option value="">Semua status</option>
+        @foreach ([
+            'pending' => 'Menunggu',
+            'approved' => 'Disetujui',
+            'rejected' => 'Ditolak',
+            'returned' => 'Dikembalikan'
+        ] as $key => $label)
+            <option value="{{ $key }}" @selected(request('status') === $key)>
+                {{ $label }}
+            </option>
+        @endforeach
+    </select>
+
+    <button type="submit" class="cu-btn">Terapkan</button>
+
+    <a href="{{ route('user.claims.index') }}">Reset</a>
+</form>
     @if (session('success'))
         <div class="cu-alert success" role="status">{{ session('success') }}</div>
     @endif

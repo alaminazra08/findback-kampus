@@ -62,7 +62,7 @@ class MyReportController extends Controller
             $query->where('status', $filters['status']);
         }
 
-        $reports = $query->latest()->paginate(10)->withQueryString();
+        $reports = $query->latest()->paginate(5)->withQueryString();
 
         return view(
             'user.reports.index',

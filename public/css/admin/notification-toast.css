@@ -54,3 +54,12 @@
     }
     #fb-notif-panel .fb-notif-item { gap: 8px; padding-inline: 12px; }
 }
+
+
+/* FindBack Admin Toast Standard V1: consistent placement and responsive bounds. */
+.fb-notif-toast { z-index: 99998; width: min(390px, calc(100vw - 32px)); box-sizing: border-box; }
+@media (max-width: 767px) {
+  .fb-notif-toast { top: calc(env(safe-area-inset-top, 0px) + 88px) !important; right: 12px !important; left: 12px !important; width: auto; max-width: none; }
+  .fb-settings-toast { top: calc(env(safe-area-inset-top, 0px) + 88px) !important; right: 12px !important; left: 12px !important; width: auto !important; max-width: none !important; }
+  .fb-verification-toast { top: calc(env(safe-area-inset-top, 0px) + 88px) !important; right: 12px !important; left: 12px !important; width: auto !important; max-width: none !important; }
+}

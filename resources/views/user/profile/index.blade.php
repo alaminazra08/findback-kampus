@@ -277,16 +277,19 @@ $photoUrl = $photoPath && \Illuminate\Support\Facades\Storage::disk('public')->e
 .fbp details[open] .fp-when-open {
     display: inline;
 }
-    .fbp .fp-toast {
+
+.fbp .fp-toast {
     position: fixed;
     top: max(16px, env(safe-area-inset-top));
-    right: 16px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
     z-index: 9999;
     display: flex;
     align-items: center;
     gap: 12px;
     width: max-content;
-    max-width: min(380px, calc(100% - 32px));
+    max-width: min(380px, calc(100vw - 32px));
     padding: 14px 18px;
     border: 1px solid #d6e5da;
     border-radius: 16px;
@@ -300,6 +303,7 @@ $photoUrl = $photoPath && \Illuminate\Support\Facades\Storage::disk('public')->e
     transition: opacity 220ms ease, transform 220ms ease;
 }
 
+
 .fbp .fp-toast-check {
     display: grid;
     place-items: center;
@@ -312,26 +316,27 @@ $photoUrl = $photoPath && \Illuminate\Support\Facades\Storage::disk('public')->e
 
 .fbp .fp-toast.is-leaving {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translate(-50%, -8px);
 }
 
 @keyframes fp-toast-in {
     from {
         opacity: 0;
-        transform: translateY(-10px);
+        transform: translate(-50%, -10px);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate(-50%, 0);
     }
 }
 
 @media (max-width: 600px) {
     .fbp .fp-toast {
-        left: 12px;
-        right: 12px;
-        width: auto;
-        max-width: none;
+        left: 50%;
+        right: auto;
+        width: max-content;
+        max-width: calc(100vw - 32px);
+        transform: translateX(-50%);
     }
 }
 

@@ -206,4 +206,20 @@
             if (!document.hidden) poll();
         });
     }
+
+
+
+    // AUTO-DISMISS NOTIFIKASI USER
+    document.querySelectorAll("[data-auto-dismiss]").forEach((notice) => {
+        window.setTimeout(() => {
+            notice.style.transition = "opacity 300ms ease, transform 300ms ease";
+            notice.style.opacity = "0";
+            notice.style.transform = "translateY(-6px)";
+
+            window.setTimeout(() => {
+                notice.remove();
+            }, 300);
+        }, 5000);
+    });
+
 })();

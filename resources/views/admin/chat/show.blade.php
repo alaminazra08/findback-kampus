@@ -73,18 +73,46 @@
                                     {{ (int) $msg->sender_id === (int) auth()->id() ? 'Admin' : $user->name }}
                                 </span>
 
-                                @if ($msg->attachment_path)
-                                    <a href="{{ \Illuminate\Support\Facades\Storage::url($msg->attachment_path) }}"
-                                        target="_blank" rel="noopener noreferrer">
-                                        <img class="chat-attachment"
-                                            src="{{ \Illuminate\Support\Facades\Storage::url($msg->attachment_path) }}"
-                                            alt="Lampiran pesan" loading="lazy">
-                                    </a>
-                                @endif
+                               
+{{-- Pesan yang sudah ditarik --}}
+@if ($msg->recalled_at)
 
-                                @if ($msg->message)
-                                    <p>{{ $msg->message }}</p>
-                                @endif
+    <p class="chat-recalled">
+        Pesan telah ditarik
+    </p>
+
+@else
+
+    {{-- Lampiran gambar --}}
+    @if ($msg->attachment_path)
+        <a
+            href="{{ \Illuminate\Support\Facades\Storage::url($msg->attachment_path) }}"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            <img
+                class="chat-attachment"
+                src="{{ \Illuminate\Support\Facades\Storage::url($msg->attachment_path) }}"
+                alt="Lampiran pesan"
+                loading="lazy"
+            >
+        </a>
+    @endif
+
+    {{-- Isi pesan --}}
+    @if ($msg->message)
+        <p>{{ $msg->message }}</p>
+    @endif
+
+    {{-- Penanda pesan diedit --}}
+    @if ($msg->edited_at)
+        <small class="chat-edited">
+            Diedit
+        </small>
+    @endif
+
+@endif
+
 
                                 <small>
                                     {{ $msg->created_at->timezone('Asia/Jakarta')->format('d/m/Y H:i') }}
@@ -154,4 +182,15 @@
 
     <script src="{{ asset('js/pages/admin/chat/show.js') }}"></script>
 
+<style>
+.chat-recalled {
+    font-style: italic;
+    opacity: 0.75;
+}
+
+.chat-edited {
+    font-size: 11px;
+    opacity: 0.7;
+}
+</style>    
 @endsection

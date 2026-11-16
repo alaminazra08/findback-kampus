@@ -278,3 +278,2655 @@
         padding: 13px 15px;
     }
 }
+
+
+
+/* Pagination angka - Aktivitas Saya */
+.fb-cycle-report-list .fb-number-pages {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 22px;
+    padding: 18px 4px 2px;
+    border-top: 1px solid #e9e5dc;
+}
+
+.fb-number-pages .fb-pages-info {
+    color: #686b63;
+    font-size: 13px;
+}
+
+.fb-number-pages .fb-pages-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.fb-number-pages .fb-page-number,
+.fb-number-pages .fb-page-arrow {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    min-height: 40px;
+    padding: 0 11px;
+    border: 1px solid #deded5;
+    border-radius: 9px;
+    background: #fff;
+    color: #514b46;
+    font-size: 13px;
+    font-weight: 650;
+    text-decoration: none;
+    transition: .2s ease;
+}
+
+.fb-number-pages .fb-page-number:hover,
+.fb-number-pages .fb-page-arrow:not(.disabled):hover {
+    border-color: #850c2d;
+    color: #850c2d;
+    background: #fff8fa;
+}
+
+.fb-number-pages .fb-page-number.active {
+    border-color: #850c2d;
+    background: #850c2d;
+    color: #fff;
+    cursor: default;
+}
+
+.fb-number-pages .fb-page-arrow {
+    padding: 0 14px;
+}
+
+.fb-number-pages .fb-page-arrow.disabled {
+    background: #f7f7f3;
+    color: #aaa99f;
+    cursor: not-allowed;
+}
+
+.fb-number-pages .fb-page-dots {
+    padding: 0 3px;
+    color: #777;
+}
+
+@media (max-width: 640px) {
+    .fb-cycle-report-list .fb-number-pages {
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .fb-number-pages .fb-pages-navigation {
+        width: 100%;
+        gap: 5px;
+    }
+
+    .fb-number-pages .fb-page-number,
+    .fb-number-pages .fb-page-arrow {
+        min-width: 36px;
+        min-height: 40px;
+        padding: 0 8px;
+        font-size: 12px;
+    }
+}
+
+/* Tabel modern - Riwayat Laporan */
+.fb-cycle-report-list .fb-report-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 760px;
+}
+.fb-cycle-report-list .fb-report-table thead th:nth-child(2) {
+    text-align: center !important;
+    padding-right: 200px !important;
+}
+.fb-cycle-report-list .fb-report-table thead th {
+    padding: 16px 14px;
+    background: #f8f5f5;
+    color: #66545b;
+    font-size: 12px;
+    font-weight: 750;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    border-bottom: 1px solid #eadde2;
+}
+
+.fb-cycle-report-list .fb-report-table tbody td {
+    padding: 18px 14px;
+    border-bottom: 1px solid #f0e9e9;
+    color: #51464a;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+.fb-cycle-report-list .fb-report-table tbody tr:hover {
+    background: #fffafb;
+}
+
+.fb-report-item {
+    display: grid;
+    gap: 6px;
+    min-width: 150px;
+}
+
+.fb-report-item strong {
+    color: #4b1830;
+    font-size: 14px;
+    font-weight: 750;
+}
+
+.fb-report-item small {
+    color: #82727a;
+    font-size: 12px;
+}
+
+.fb-report-type {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.fb-report-type.lost {
+    background: #f9e9ee;
+    color: #850c2d;
+}
+
+.fb-report-type.found {
+    background: #eaf3e8;
+    color: #426b3d;
+}
+
+.fb-cycle-report-list .fb-report-view {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 36px;
+    padding: 0 13px;
+    border: 1px solid #850c2d;
+    border-radius: 8px;
+    color: #850c2d;
+    background: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.fb-cycle-report-list .fb-report-view:hover {
+    color: white;
+    background: #850c2d;
+}
+
+@media (max-width: 760px) {
+    .fb-cycle-report-list .fb-report-table {
+        min-width: 0;
+    }
+}
+
+/* Membatasi teks barang dan lokasi */
+.fb-cycle-report-list .fb-report-item {
+    max-width: 280px;
+    min-width: 0;
+}
+
+.fb-cycle-report-list .fb-report-item strong,
+.fb-cycle-report-list .fb-report-item small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+    .fb-cycle-report-list .fb-report-item {
+        max-width: 100%;
+    }
+}
+
+
+/* ========================================
+   HEADER AKTIVITAS SAYA
+======================================== */
+
+.fb-activity-heading {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 0 0 22px;
+}
+
+.fb-activity-heading-icon {
+    width: 66px;
+    height: 66px;
+    flex: 0 0 66px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 19px;
+    background: #f7e2e9;
+    color: #850c2d;
+}
+
+.fb-activity-heading-icon svg {
+    width: 34px;
+    height: 34px;
+}
+
+.fb-activity-heading-text h1 {
+    margin: 0 0 5px;
+    color: #850c2d;
+    font-size: 29px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+/* Ukuran deskripsi Aktivitas Saya */
+.fb-activity-heading-text p {
+    font-size: 15px !important;
+    color: #777477;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* ========================================
+   TAB AKTIVITAS
+======================================== */
+
+.fb-activity-tabs {
+    display: flex;
+    align-items: stretch;
+    gap: 20px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid #e8e2e1;
+}
+
+.fb-activity-tabs a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0 18px;
+    border-bottom: 3px solid transparent;
+    color: #575252;
+    font-size: 15px;
+    font-weight: 650;
+    text-decoration: none;
+    transition: .2s ease;
+}
+
+.fb-activity-tabs a svg {
+    width: 21px;
+    height: 21px;
+}
+
+.fb-activity-tabs a:hover,
+.fb-activity-tabs a.active {
+    color: #850c2d;
+}
+
+.fb-activity-tabs a.active {
+    border-bottom-color: #850c2d;
+}
+
+@media (max-width: 600px) {
+    .fb-activity-heading {
+        gap: 13px;
+    }
+
+    .fb-activity-heading-icon {
+        width: 54px;
+        height: 54px;
+        flex-basis: 54px;
+        border-radius: 15px;
+    }
+
+    .fb-activity-heading-icon svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    .fb-activity-heading-text h1 {
+        font-size: 23px;
+    }
+
+    .fb-activity-heading-text p {
+        font-size: 12px;
+    }
+
+    .fb-activity-tabs {
+        gap: 4px;
+    }
+
+    .fb-activity-tabs a {
+        gap: 7px;
+        padding: 0 10px;
+        font-size: 12px;
+    }
+}
+
+
+/* ========================================
+   FILTER AKTIVITAS SAYA
+======================================== */
+
+.fb-activity-filter {
+    display: grid;
+    grid-template-columns: minmax(220px, 1.8fr) minmax(150px, 1fr) minmax(150px, 1fr) auto auto;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 0 0 18px;
+    border-bottom: 1px solid #eee8e8;
+}
+
+.fb-filter-search,
+.fb-filter-select {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    height: 44px;
+    border: 1px solid #dedbd8;
+    border-radius: 10px;
+    background: #fff;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.fb-filter-search:focus-within,
+.fb-filter-select:focus-within {
+    border-color: #a12a4b;
+    box-shadow: 0 0 0 3px rgba(133, 12, 45, .08);
+}
+
+.fb-filter-search svg,
+.fb-filter-select svg {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+    margin-left: 13px;
+    color: #850c2d;
+    pointer-events: none;
+}
+
+.fb-filter-search input,
+.fb-filter-select select {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #393536;
+    font: inherit;
+    font-size: 13px;
+}
+
+.fb-filter-search input {
+    padding: 0 13px;
+}
+
+.fb-filter-select select {
+    padding: 0 12px;
+    cursor: pointer;
+}
+
+.fb-filter-search input::placeholder {
+    color: #99918f;
+}
+
+.fb-filter-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 21px;
+    border: 1px solid #850c2d;
+    border-radius: 9px;
+    background: #850c2d;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.fb-filter-submit:hover {
+    background: #6e0925;
+}
+
+.fb-filter-reset {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 8px;
+    color: #850c2d;
+    font-size: 12px;
+    font-weight: 650;
+    text-decoration: none;
+}
+
+.fb-filter-reset:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 850px) {
+    .fb-activity-filter {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .fb-filter-search {
+        grid-column: 1 / -1;
+    }
+
+    .fb-filter-submit,
+    .fb-filter-reset {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .fb-activity-filter {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .fb-filter-search {
+        grid-column: auto;
+    }
+}
+
+
+/* Nomor urut laporan */
+.fb-report-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #f7e8ed;
+    color: #850c2d;
+    font-size: 12px;
+    font-weight: 750;
+}
+
+/* Perataan isi tabel */
+.fb-cycle-report-list .fb-report-table th,
+.fb-cycle-report-list .fb-report-table td {
+    vertical-align: middle;
+}
+
+.fb-cycle-report-list .fb-report-table tbody tr:nth-child(even) {
+    background: #fdfafb;
+}
+
+.fb-cycle-report-list .fb-report-table tbody tr:hover {
+    background: #fff4f7;
+}
+
+/* Nomor urut laporan */
+.fb-report-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #f7e8ed;
+    color: #850c2d;
+    font-size: 12px;
+    font-weight: 750;
+}
+
+
+/* ========================================
+   PAGINATION AKTIVITAS SAYA
+======================================== */
+
+.fb-cycle-report-list .fb-number-pages {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 22px;
+    padding: 19px 5px 3px;
+    border-top: 1px solid #eee7e7;
+}
+
+.fb-number-pages .fb-pages-info {
+    color: #777071;
+    font-size: 13px;
+}
+
+.fb-number-pages .fb-pages-info strong {
+    color: #49383e;
+    font-weight: 750;
+}
+
+.fb-number-pages .fb-pages-navigation {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.fb-number-pages .fb-page-number,
+.fb-number-pages .fb-page-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 38px;
+    min-height: 38px;
+    padding: 0 11px;
+    border: 1px solid #e3dddd;
+    border-radius: 8px;
+    background: #fff;
+    color: #55474b;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: .2s ease;
+}
+
+.fb-number-pages .fb-page-number:hover,
+.fb-number-pages .fb-page-arrow:not(.disabled):hover {
+    border-color: #850c2d;
+    color: #850c2d;
+    background: #fff6f8;
+}
+
+.fb-number-pages .fb-page-number.active {
+    border-color: #850c2d;
+    background: #850c2d;
+    color: #fff;
+}
+
+.fb-number-pages .fb-page-arrow {
+    padding: 0 13px;
+}
+
+.fb-number-pages .fb-page-arrow.disabled {
+    background: #f8f7f6;
+    color: #aaa3a3;
+    cursor: not-allowed;
+}
+
+.fb-number-pages .fb-page-dots {
+    color: #888;
+    padding: 0 3px;
+}
+
+@media (max-width: 640px) {
+    .fb-cycle-report-list .fb-number-pages {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .fb-number-pages .fb-pages-navigation {
+        justify-content: center;
+        width: 100%;
+        gap: 5px;
+    }
+}
+
+
+/* ========================================
+   PANEL UTAMA AKTIVITAS SAYA
+======================================== */
+
+.fb-cycle-report-list {
+    padding: 24px;
+    border: 1px solid #eee7e7;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 5px 20px rgba(62, 25, 38, .045);
+}
+
+/* Header tabel */
+.fb-cycle-report-list .fb-report-table thead th {
+    padding: 16px 14px;
+    background: #f8edf0;
+    color: #6f1935;
+    font-size: 12px;
+    font-weight: 750;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: .035em;
+    border-bottom: 1px solid #ead9df;
+}
+
+/* Isi tabel */
+.fb-cycle-report-list .fb-report-table tbody td {
+    padding: 17px 14px;
+    border-bottom: 1px solid #f0e9eb;
+    color: #51474a;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+/* Baris tabel */
+.fb-cycle-report-list .fb-report-table tbody tr:nth-child(even) {
+    background: #fdfafb;
+}
+
+.fb-cycle-report-list .fb-report-table tbody tr:hover {
+    background: #fff4f7;
+}
+
+/* Informasi barang */
+.fb-cycle-report-list .fb-report-item {
+    max-width: 260px;
+    min-width: 0;
+    display: grid;
+    gap: 5px;
+}
+
+.fb-cycle-report-list .fb-report-item strong {
+    color: #48182d;
+    font-size: 13px;
+    font-weight: 750;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.fb-cycle-report-list .fb-report-item small {
+    color: #898083;
+    font-size: 11px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Tombol aksi */
+.fb-cycle-report-list .fb-report-view {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+}
+
+.fb-cycle-report-list .fb-report-view svg {
+    width: 17px;
+    height: 17px;
+    flex: 0 0 17px;
+}
+
+/* Responsif */
+@media (max-width: 760px) {
+    .fb-cycle-report-list {
+        padding: 15px;
+    }
+
+    .fb-cycle-report-list .fb-report-item {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .fb-cycle-report-list {
+        padding: 12px;
+        border-radius: 12px;
+    }
+}
+
+
+/* ========================================
+   PERBAIKAN FILTER PENCARIAN
+======================================== */
+
+.fb-activity-filter .fb-filter-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 44px;
+    padding: 0 13px;
+    border: 1px solid #dedbd8;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: none;
+}
+
+.fb-activity-filter .fb-filter-search svg {
+    position: static;
+    display: block;
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
+    margin: 0 11px 0 0;
+    color: #850c2d;
+}
+
+.fb-activity-filter .fb-filter-search input {
+    display: block;
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0 !important;
+    border-radius: 0;
+    outline: none !important;
+    background: transparent;
+    box-shadow: none !important;
+    color: #393536;
+    font-size: 13px;
+}
+
+.fb-activity-filter .fb-filter-search input:focus {
+    border: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.fb-activity-filter .fb-filter-search:focus-within {
+    border-color: #a12a4b;
+    box-shadow: 0 0 0 3px rgba(133, 12, 45, .08);
+}
+
+
+/* ========================================
+   PERATAAN KOLOM TABEL
+======================================== */
+
+/* Kolom Jenis, Tanggal, Status, dan Aksi */
+.fb-cycle-report-list .fb-report-table th:nth-child(3),
+.fb-cycle-report-list .fb-report-table th:nth-child(4),
+.fb-cycle-report-list .fb-report-table th:nth-child(5),
+.fb-cycle-report-list .fb-report-table th:nth-child(6) {
+    text-align: center;
+}
+
+.fb-cycle-report-list .fb-report-table td:nth-child(3),
+.fb-cycle-report-list .fb-report-table td:nth-child(4),
+.fb-cycle-report-list .fb-report-table td:nth-child(5),
+.fb-cycle-report-list .fb-report-table td:nth-child(6) {
+    text-align: center;
+}
+
+/* Posisi elemen di dalam kolom */
+.fb-cycle-report-list .fb-report-type,
+.fb-cycle-report-list .fb-report-view {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Nomor juga rata tengah */
+.fb-cycle-report-list .fb-report-table th:first-child,
+.fb-cycle-report-list .fb-report-table td:first-child {
+    text-align: center;
+}
+
+
+/* FIX FINAL INPUT PENCARIAN AKTIVITAS */
+.fb-activity-filter .fb-filter-search {
+    display: flex !important;
+    align-items: center !important;
+    position: relative !important;
+    height: 44px !important;
+    padding: 0 13px !important;
+    border: 1px solid #dedbd8 !important;
+    border-radius: 10px !important;
+    background: #fff !important;
+    box-shadow: none;
+    overflow: hidden;
+}
+
+.fb-activity-filter .fb-filter-search svg {
+    position: static !important;
+    display: block !important;
+    width: 19px !important;
+    height: 19px !important;
+    flex: 0 0 19px !important;
+    margin: 0 11px 0 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    color: #850c2d !important;
+}
+
+.fb-activity-filter .fb-filter-search input,
+.fb-activity-filter .fb-filter-search input[type="search"] {
+    display: block !important;
+    position: static !important;
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    outline: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    color: #393536 !important;
+    font-size: 13px !important;
+}
+
+.fb-activity-filter .fb-filter-search input:focus {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.fb-activity-filter .fb-filter-search:focus-within {
+    border-color: #a12a4b !important;
+    box-shadow: 0 0 0 3px rgba(133, 12, 45, .08) !important;
+}
+
+
+
+/* ========================================
+   RESPONSIVE AKTIVITAS SAYA
+======================================== */
+
+/* Tablet */
+@media (max-width: 900px) {
+    body.fb-activity-page .fb-activity-filter {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    body.fb-activity-page .fb-filter-search {
+        grid-column: 1 / -1;
+    }
+
+    body.fb-activity-page .fb-cycle-report-list {
+        padding: 18px;
+    }
+
+    body.fb-activity-page .cu-table-wrap {
+        overflow-x: auto;
+    }
+}
+
+/* Smartphone */
+@media (max-width: 760px) {
+    body.fb-activity-page .fb-activity-heading {
+        gap: 12px;
+        margin-bottom: 17px;
+    }
+
+    body.fb-activity-page .fb-activity-heading-icon {
+        width: 52px;
+        height: 52px;
+        flex-basis: 52px;
+        border-radius: 14px;
+    }
+
+    body.fb-activity-page .fb-activity-heading-text h1 {
+        font-size: 22px;
+    }
+
+    body.fb-activity-page .fb-activity-heading-text p {
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    body.fb-activity-page .fb-activity-tabs {
+        gap: 3px;
+        overflow-x: auto;
+    }
+
+    body.fb-activity-page .fb-activity-tabs a {
+        flex: 0 0 auto;
+        padding: 0 11px;
+        font-size: 12px;
+    }
+
+    body.fb-activity-page .fb-cycle-report-list {
+        padding: 13px;
+        border-radius: 14px;
+    }
+
+    body.fb-activity-page .fb-activity-filter {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    body.fb-activity-page .fb-filter-search {
+        grid-column: auto;
+        width: 100%;
+    }
+
+    body.fb-activity-page .fb-filter-select,
+    body.fb-activity-page .fb-filter-submit,
+    body.fb-activity-page .fb-filter-reset {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Tabel menjadi kartu pada layar HP */
+    body.fb-activity-page .fb-cycle-report-list .fb-table-wrap,
+    body.fb-activity-page .fb-cycle-report-list .cu-table-wrap {
+        overflow: visible;
+    }
+
+    body.fb-activity-page .fb-cycle-report-list .fb-report-table {
+        display: block;
+        width: 100%;
+        min-width: 0;
+        border: 0;
+    }
+
+    body.fb-activity-page .fb-cycle-report-list .fb-report-table thead {
+        display: none;
+    }
+
+    body.fb-activity-page .fb-cycle-report-list .fb-report-table tbody {
+        display: block;
+        width: 100%;
+    }
+
+    body.fb-activity-page .fb-cycle-report-list .fb-report-table tbody tr {
+        display: block;
+        margin-bottom: 12px;
+        padding: 10px;
+        border: 1px solid #eee5e8;
+        border-radius: 10px;
+        background: #fff;
+    }
+
+    body.fb-activity-page .fb-cycle-report-list .fb-report-table tbody td {
+        display: grid;
+        grid-template-columns: 95px minmax(0, 1fr);
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 9px 5px;
+        border-bottom: 1px solid #f2edef;
+        text-align: left;
+    }
+
+    body.fb-activity-page .fb-cycle-report-list .fb-report-table tbody td:last-child {
+        border-bottom: 0;
+    }
+
+    body.fb-activity-page .fb-cycle-report-list .fb-report-table tbody td::before {
+        content: attr(data-label);
+        color: #850c2d;
+        font-size: 11px;
+        font-weight: 750;
+    }
+
+    body.fb-activity-page .fb-cycle-report-list .fb-report-number {
+        width: 27px;
+        height: 27px;
+    }
+
+    body.fb-activity-page .fb-cycle-report-list .fb-report-item {
+        max-width: 100%;
+    }
+
+    body.fb-activity-page .fb-cycle-report-list .fb-report-type,
+    body.fb-activity-page .fb-cycle-report-list .fb-report-view {
+        margin-left: 0;
+        margin-right: auto;
+    }
+
+    body.fb-activity-page .fb-number-pages {
+        align-items: center;
+        flex-direction: column;
+    }
+
+    body.fb-activity-page .fb-number-pages .fb-pages-navigation {
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+/* Smartphone kecil */
+@media (max-width: 380px) {
+    body.fb-activity-page .fb-cycle-report-list .fb-report-table tbody td {
+        grid-template-columns: 78px minmax(0, 1fr);
+        gap: 5px;
+        font-size: 11px;
+    }
+
+    body.fb-activity-page .fb-number-pages .fb-page-arrow {
+        padding: 0 8px;
+        font-size: 11px;
+    }
+}
+
+
+/* ========================================
+   CUSTOM DROPDOWN - FIX FINAL
+======================================== */
+
+.fb-activity-filter .fb-custom-select {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 44px !important;
+}
+
+.fb-activity-filter .fb-custom-trigger {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+    width: 100% !important;
+    height: 44px !important;
+    margin: 0 !important;
+    padding: 0 14px !important;
+    border: 1px solid #dedbd8 !important;
+    border-radius: 11px !important;
+    background: #fff !important;
+    color: #393536 !important;
+    box-shadow: none !important;
+    font-family: inherit !important;
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    text-align: left !important;
+    cursor: pointer !important;
+}
+
+.fb-activity-filter .fb-custom-trigger:hover {
+    border-color: #850c2d !important;
+    background: #fff !important;
+}
+
+.fb-activity-filter .fb-custom-trigger:focus,
+.fb-activity-filter .fb-custom-trigger:focus-visible {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(133, 12, 45, .10) !important;
+}
+
+.fb-activity-filter .fb-custom-trigger svg {
+    display: block !important;
+    position: static !important;
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    max-width: 20px !important;
+    flex: 0 0 20px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #850c2d !important;
+}
+
+.fb-activity-filter .fb-custom-label {
+    display: block !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    color: #393536 !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+}
+
+.fb-activity-filter .fb-custom-chevron {
+    display: block !important;
+    flex: 0 0 auto !important;
+    color: #850c2d !important;
+    font-size: 19px !important;
+    line-height: 1 !important;
+    transition: transform .2s ease;
+}
+
+.fb-activity-filter .fb-custom-select.open .fb-custom-chevron {
+    transform: rotate(180deg);
+}
+
+/* Panel pilihan */
+.fb-activity-filter .fb-custom-options {
+    display: none !important;
+    position: absolute !important;
+    top: calc(100% + 7px) !important;
+    left: 0 !important;
+    z-index: 9999 !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 10px !important;
+    border: 1px solid #f0dce3 !important;
+    border-radius: 16px !important;
+    background: #fff !important;
+    box-shadow: 0 10px 28px rgba(70, 25, 40, .12) !important;
+}
+
+.fb-activity-filter .fb-custom-select.open .fb-custom-options {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 5px !important;
+}
+
+/* Tombol pilihan */
+.fb-activity-filter .fb-custom-options button {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    min-height: 48px !important;
+    margin: 0 !important;
+    padding: 0 16px !important;
+    border: 0 !important;
+    border-radius: 9px !important;
+    background: transparent !important;
+    color: #393536 !important;
+    box-shadow: none !important;
+    font-family: inherit !important;
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    text-align: left !important;
+    cursor: pointer !important;
+}
+
+.fb-activity-filter .fb-custom-options button:hover,
+.fb-activity-filter .fb-custom-options button.selected {
+    background: #f7e9ee !important;
+    color: #850c2d !important;
+}
+
+.fb-activity-filter .fb-custom-options button:focus {
+    outline: none !important;
+    background: #f7e9ee !important;
+    color: #850c2d !important;
+}
+
+@media (max-width: 760px) {
+    .fb-activity-filter .fb-custom-select {
+        width: 100% !important;
+    }
+}
+
+/* Panah dropdown tetap di kanan dan mengarah ke bawah */
+.fb-activity-filter .fb-custom-chevron {
+    position: absolute !important;
+    right: 15px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 16px !important;
+    height: 16px !important;
+    margin: 0 !important;
+    color: #850c2d !important;
+    font-size: 0 !important;
+    line-height: 1 !important;
+}
+
+/* Bentuk panah bawah */
+.fb-activity-filter .fb-custom-chevron::after {
+    content: "";
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid #850c2d;
+    border-bottom: 2px solid #850c2d;
+    transform: rotate(45deg) translateY(-2px);
+}
+
+/* Tidak ada animasi atau rotasi saat dropdown dibuka */
+.fb-activity-filter .fb-custom-select.open .fb-custom-chevron {
+    transform: translateY(-50%) !important;
+}
+
+
+/* Hanya pilihan aktif yang berwarna marun soft */
+.fb-activity-filter .fb-custom-options button {
+    background: #fff !important;
+    color: #393536 !important;
+    transition: background .15s ease, color .15s ease;
+}
+
+/* Hilangkan warna marun soft saat hover */
+.fb-activity-filter .fb-custom-options button:hover,
+.fb-activity-filter .fb-custom-options button:focus {
+    background: #fff !important;
+    color: #393536 !important;
+    outline: none !important;
+}
+
+/* Pilihan yang benar-benar aktif */
+.fb-activity-filter .fb-custom-options button.selected {
+    background: #f7e9ee !important;
+    color: #850c2d !important;
+}
+
+/* Hover pada pilihan aktif tetap satu warna */
+.fb-activity-filter .fb-custom-options button.selected:hover {
+    background: #f7e9ee !important;
+    color: #850c2d !important;
+}
+
+
+/* ========================================
+   DROPDOWN AKTIVITAS - STYLE NAVBAR
+======================================== */
+
+.fb-activity-filter .fb-custom-select {
+    position: relative;
+    width: 100%;
+}
+
+.fb-activity-filter .fb-custom-trigger {
+    height: 48px !important;
+    padding: 0 16px !important;
+    border: 1px solid #e8dce0 !important;
+    border-radius: 15px !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    gap: 13px !important;
+}
+
+.fb-activity-filter .fb-custom-trigger:hover {
+    border-color: #ead2da !important;
+}
+
+.fb-activity-filter .fb-custom-trigger svg {
+    width: 21px !important;
+    height: 21px !important;
+    color: #850c2d !important;
+}
+
+.fb-activity-filter .fb-custom-options {
+    top: calc(100% + 8px) !important;
+    padding: 10px !important;
+    border: 1px solid #f0dce3 !important;
+    border-radius: 20px !important;
+    background: #fff !important;
+    box-shadow: 0 12px 30px rgba(80, 25, 43, .12) !important;
+}
+
+.fb-activity-filter .fb-custom-options button {
+    min-height: 55px !important;
+    padding: 0 17px !important;
+    border: 0 !important;
+    border-radius: 11px !important;
+    background: #fff !important;
+    color: #393536 !important;
+    font-size: 14px !important;
+    text-align: left !important;
+    transition: background .18s ease, color .18s ease;
+}
+
+/* Efek saat diarahkan kursor */
+.fb-activity-filter .fb-custom-options button:hover {
+    background: #f7e9ee !important;
+    color: #850c2d !important;
+}
+
+/* Pilihan aktif berpindah mengikuti klik */
+.fb-activity-filter .fb-custom-options button.selected {
+    background: #f7e9ee !important;
+    color: #850c2d !important;
+}
+
+.fb-activity-filter .fb-custom-options button.selected:hover {
+    background: #f7e9ee !important;
+    color: #850c2d !important;
+}
+
+/* Hilangkan warna permanen pada pilihan default */
+.fb-activity-filter .fb-custom-options button.selected {
+    background: #fff !important;
+    color: #393536 !important;
+}
+
+/* Warna marun soft hanya saat diarahkan kursor */
+.fb-activity-filter .fb-custom-options button:hover {
+    background: #f7e9ee !important;
+    color: #850c2d !important;
+}
+
+/* Fokus keyboard tetap netral */
+.fb-activity-filter .fb-custom-options button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+
+
+
+
+
+
+/* ========================================
+   FINAL HEADER AKTIVITAS SAYA
+======================================== */
+/* HEADER AKTIVITAS SAYA */
+.fb-activity-heading {
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+    margin: 0 0 28px !important;
+}
+
+.fb-activity-heading-icon {
+    width: 64px !important;
+    height: 64px !important;
+    flex: 0 0 64px !important;
+    border-radius: 18px !important;
+}
+
+.fb-activity-heading-icon svg {
+    width: 32px !important;
+    height: 32px !important;
+}
+
+.fb-activity-heading-text h1 {
+    margin: 0 0 7px !important;
+    color: #850c2d !important;
+    font-size: 27px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+}
+
+.fb-activity-heading-text p {
+    margin: 0 !important;
+    color: #777477 !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+}
+
+/* TAB RIWAYAT DAN KLAIM */
+.fb-activity-tabs a {
+    min-height: 50px !important;
+    padding: 8px 18px !important;
+    gap: 9px !important;
+    font-size: 14px !important;
+}
+
+.fb-activity-tabs a svg {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+@media (max-width: 760px) {
+    .fb-activity-heading {
+        gap: 10px !important;
+        margin-bottom: 17px !important;
+    }
+
+    .fb-activity-heading-icon {
+        width: 44px !important;
+        height: 44px !important;
+        flex-basis: 44px !important;
+    }
+
+    .fb-activity-heading-icon svg {
+        width: 22px !important;
+        height: 22px !important;
+    }
+
+    .fb-activity-heading-text h1 {
+        font-size: 19px !important;
+    }
+
+    .fb-activity-heading-text p {
+        font-size: 11px !important;
+    }
+
+    .fb-activity-tabs a {
+        min-width: 0 !important;
+        min-height: 42px !important;
+        padding: 5px 9px !important;
+        font-size: 11px !important;
+    }
+
+    .fb-activity-tabs a svg {
+        width: 16px !important;
+        height: 16px !important;
+        flex-basis: 16px !important;
+    }
+}
+
+
+
+/* Foto barang pada tabel Aktivitas Saya */
+.fb-cycle-report-list .fb-report-item {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-width: 220px;
+}
+
+.fb-report-photo {
+    width: 52px;
+    height: 52px;
+    flex: 0 0 52px;
+    overflow: hidden;
+    border: 1px solid #eee5e8;
+    border-radius: 9px;
+    background: #f9f3f5;
+}
+
+.fb-report-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.fb-report-photo-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #850c2d;
+    font-size: 25px;
+}
+
+.fb-report-item-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+.fb-report-item-info strong {
+    color: #4b1830;
+    font-size: 13px;
+    font-weight: 750;
+    overflow-wrap: anywhere;
+}
+
+.fb-report-item-info small {
+    color: #82727a;
+    font-size: 11px;
+}
+
+
+
+/* =====================================================
+   FIX TAMPILAN DETAIL LAPORAN SAYA
+===================================================== */
+
+/* Layout detail */
+.fb-detail-page {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+.fb-detail-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.9fr);
+    align-items: start;
+    gap: 20px;
+}
+
+/* Pastikan ukuran kartu tidak melebar */
+.fb-detail-card,
+.fb-detail-history,
+.fb-detail-history .fb-cycle-history {
+    min-width: 0;
+    max-width: 100%;
+}
+
+/* Ukuran foto laporan */
+.fb-detail-photo {
+    width: 100%;
+    height: 210px;
+    min-height: 0;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.fb-detail-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    object-fit: contain;
+    object-position: center;
+}
+
+/* Perbaiki ikon judul riwayat */
+.fb-history-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.fb-history-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px;
+    flex: 0 0 38px;
+    border-radius: 10px;
+    background: #f8e9ee;
+    color: #850c2d;
+}
+
+.fb-history-icon svg {
+    display: block;
+    width: 21px !important;
+    height: 21px !important;
+    max-width: 21px;
+    max-height: 21px;
+}
+
+/* Perbaiki ikon setiap aktivitas riwayat */
+.fb-history-event {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.fb-history-event-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px;
+    flex: 0 0 34px;
+    border-radius: 50%;
+    background: #f8e9ee;
+    color: #850c2d;
+}
+
+.fb-history-event-icon svg {
+    display: block;
+    width: 18px !important;
+    height: 18px !important;
+    max-width: 18px;
+    max-height: 18px;
+}
+
+/* Pastikan SVG riwayat tidak mengikuti ukuran gambar */
+.fb-detail-history svg {
+    max-width: 100%;
+}
+
+/* Perbaiki isi riwayat */
+.fb-history-event-content {
+    min-width: 0;
+    flex: 1;
+}
+
+.fb-history-event-content p {
+    overflow-wrap: anywhere;
+}
+
+/* Responsif tablet */
+@media (max-width: 900px) {
+    .fb-detail-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .fb-detail-history {
+        width: 100%;
+    }
+}
+
+/* Responsif HP */
+@media (max-width: 600px) {
+    .fb-detail-card {
+        padding: 16px;
+    }
+
+    .fb-detail-item {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .fb-detail-photo {
+        height: 220px;
+    }
+
+    .fb-detail-heading h1 {
+        font-size: 21px;
+    }
+}
+
+/* =========================================================
+   DETAIL LAPORAN SAYA - FINAL DESIGN
+   Tema: Maroon, putih, dan soft pink
+========================================================= */
+
+.fb-detail-page {
+    width: 100%;
+    max-width: 1490px;
+    margin: 0 auto;
+    padding: 0 24px 35px;
+    color: #3b2030;
+    box-sizing: border-box;
+}
+
+.fb-detail-page * {
+    box-sizing: border-box;
+}
+
+/* BREADCRUMB */
+.fb-detail-breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 0 0 36px;
+    color: #850c2d;
+    font-size: 13px;
+}
+
+.fb-detail-breadcrumb a {
+    color: #a20e38;
+    text-decoration: none;
+}
+
+.fb-detail-breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.fb-detail-breadcrumb strong {
+    color: #382333;
+    font-weight: 700;
+}
+
+/* JUDUL HALAMAN */
+.fb-detail-heading {
+    display: flex;
+    align-items: center;
+    gap: 19px;
+    margin-bottom: 34px;
+}
+
+.fb-detail-heading-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 74px;
+    height: 74px;
+    min-width: 74px;
+    border-radius: 21px;
+    background: #f9e9ee;
+    color: #970b34;
+}
+
+.fb-detail-heading-icon svg {
+    width: 32px !important;
+    height: 32px !important;
+}
+
+.fb-detail-heading h1 {
+    margin: 0 0 8px;
+    color: #920b32;
+    font-size: 28px;
+    font-weight: 750;
+    line-height: 1.2;
+}
+
+.fb-detail-heading p {
+    margin: 0;
+    color: #82777c;
+    font-size: 14px;
+}
+
+/* GRID UTAMA */
+.fb-detail-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    align-items: stretch;
+    gap: 28px;
+}
+
+/* KARTU LAPORAN DAN RIWAYAT */
+.fb-detail-card,
+.fb-detail-history .fb-cycle-history {
+    position: relative;
+    min-width: 0;
+    height: 100%;
+    padding: 32px;
+    overflow: hidden;
+    border: 1px solid #f0dce3;
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 12px 35px rgba(76, 26, 45, .045);
+}
+
+/* Garis aksen kartu laporan */
+.fb-detail-card::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 126px;
+    height: 7px;
+    border-radius: 0 0 8px 0;
+    background: #970b34;
+    content: "";
+}
+
+/* BAGIAN ATAS LAPORAN */
+.fb-detail-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 30px;
+    padding-bottom: 0;
+    border: 0;
+}
+
+.fb-detail-number {
+    display: inline-flex;
+    align-items: center;
+    min-height: 46px;
+    padding: 0 19px;
+    border-radius: 30px;
+    background: #f9e9ee;
+    color: #940c34;
+    font-size: 13px;
+    font-weight: 750;
+}
+
+/* STATUS LAPORAN */
+.fb-detail-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 30px;
+    padding: 6px 13px;
+    border-radius: 8px;
+    background: #e1f2e7;
+    color: #237443;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* INFORMASI BARANG */
+.fb-detail-item {
+    display: grid;
+    grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+    align-items: center;
+    gap: 28px;
+}
+
+.fb-detail-photo {
+    width: 100%;
+    height: 300px;
+    min-height: 0;
+    overflow: hidden;
+    border: 0;
+    border-radius: 17px;
+    background: #f8f6f7;
+}
+
+.fb-detail-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    object-fit: cover;
+    object-position: center;
+}
+
+.fb-detail-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    color: #9b8790;
+    font-size: 13px;
+    text-align: center;
+}
+
+/* NAMA DAN DESKRIPSI BARANG */
+.fb-detail-item-content {
+    min-width: 0;
+}
+
+.fb-detail-item-content h2 {
+    margin: 0 0 13px;
+    color: #3b2030;
+    font-size: 25px;
+    font-weight: 750;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.fb-detail-description {
+    margin: 0 0 22px;
+    color: #766873;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+/* INFORMASI JENIS, LOKASI, TANGGAL */
+.fb-detail-facts {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.fb-detail-facts > div {
+    display: grid;
+    grid-template-columns: minmax(100px, .8fr) minmax(0, 1.2fr);
+    align-items: center;
+    gap: 12px;
+    min-height: 62px;
+    padding: 12px 15px;
+    border: 0;
+    border-radius: 14px;
+    background: #faf5f7;
+}
+
+.fb-detail-facts dt {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #826d78;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* UKURAN IKON INFORMASI */
+.fb-detail-page .fb-detail-facts dt svg {
+    display: block !important;
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    max-width: 16px !important;
+    min-height: 16px !important;
+    max-height: 16px !important;
+    flex: 0 0 16px !important;
+    color: #970b34;
+}
+
+.fb-detail-facts dd {
+    margin: 0;
+    color: #432a39;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+/* PEMBERITAHUAN */
+.fb-detail-notice {
+    margin-top: 20px;
+    padding: 16px 18px;
+    border: 1px solid #f0dfc4;
+    border-left: 4px solid #b77b1c;
+    border-radius: 12px;
+    background: #fffaf1;
+}
+
+.fb-detail-notice strong {
+    display: block;
+    margin-bottom: 7px;
+    color: #80520e;
+    font-size: 13px;
+}
+
+.fb-detail-notice p {
+    margin: 0;
+    color: #65564a;
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+/* =========================================================
+   RIWAYAT VERIFIKASI
+========================================================= */
+
+.fb-detail-history {
+    min-width: 0;
+    height: 100%;
+}
+
+.fb-detail-history .fb-cycle-history {
+    padding: 32px;
+}
+
+/* JUDUL RIWAYAT */
+.fb-detail-history .fb-history-heading {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    margin: 0 0 33px;
+}
+
+.fb-detail-history .fb-history-icon {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 66px !important;
+    height: 66px !important;
+    min-width: 66px !important;
+    max-width: 66px !important;
+    flex: 0 0 66px !important;
+    border-radius: 50%;
+    background: #f9e9ee;
+    color: #970b34;
+}
+
+/* Ikon judul riwayat */
+.fb-detail-history .fb-history-icon svg {
+    display: block !important;
+    width: 27px !important;
+    height: 27px !important;
+    min-width: 27px !important;
+    max-width: 27px !important;
+    min-height: 27px !important;
+    max-height: 27px !important;
+}
+
+.fb-detail-history .fb-history-heading h2 {
+    margin: 0 0 8px;
+    color: #920b32;
+    font-size: 21px;
+    font-weight: 750;
+    line-height: 1.3;
+}
+
+.fb-detail-history .fb-history-heading p {
+    margin: 0;
+    color: #83747d;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* TIMELINE */
+.fb-detail-history .fb-history-event {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin: 0 0 17px;
+    padding: 0;
+}
+
+/* Garis penghubung timeline */
+.fb-detail-history .fb-history-event:not(:last-child)::before {
+    position: absolute;
+    top: 35px;
+    left: 17px;
+    width: 2px;
+    height: calc(100% + 17px);
+    background: #ead3dc;
+    content: "";
+}
+
+/* Ikon setiap tahapan */
+.fb-detail-history .fb-history-event-icon {
+    position: relative;
+    z-index: 1;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 35px !important;
+    height: 35px !important;
+    min-width: 35px !important;
+    max-width: 35px !important;
+    flex: 0 0 35px !important;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background: #970b34;
+    color: #fff;
+}
+
+/* SVG ikon timeline */
+.fb-detail-history .fb-history-event-icon svg {
+    display: block !important;
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    max-width: 18px !important;
+    min-height: 18px !important;
+    max-height: 18px !important;
+    color: #fff;
+}
+
+/* Isi aktivitas */
+.fb-detail-history .fb-history-event-content {
+    flex: 1;
+    min-width: 0;
+    padding: 21px 20px;
+    border-radius: 15px;
+    background: #faf5f7;
+}
+
+.fb-detail-history .fb-history-event-content h3 {
+    margin: 0 0 12px;
+    color: #970b34;
+    font-size: 14px;
+    font-weight: 750;
+}
+
+.fb-detail-history .fb-history-event-content p {
+    margin: 0;
+    color: #81727b;
+    font-size: 12px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* RIWAYAT KOSONG */
+.fb-detail-history .fb-history-empty {
+    padding: 24px;
+    border-radius: 14px;
+    background: #faf5f7;
+    color: #84747c;
+    font-size: 13px;
+    text-align: center;
+}
+
+/* TOMBOL KEMBALI */
+.fb-detail-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 72px;
+    margin-top: 27px;
+    padding: 0 25px;
+    border: 1px solid #970b34;
+    border-radius: 15px;
+    background: #fff;
+    color: #452438;
+    font-size: 14px;
+    font-weight: 750;
+    text-decoration: none;
+    transition: .2s ease;
+}
+
+.fb-detail-back:hover {
+    background: #970b34;
+    color: #fff;
+}
+
+.fb-detail-back svg {
+    width: 22px !important;
+    height: 22px !important;
+}
+
+/* =========================================================
+   RESPONSIVE TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+    .fb-detail-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 22px;
+    }
+
+    .fb-detail-history .fb-cycle-history {
+        height: auto;
+    }
+}
+
+/* =========================================================
+   RESPONSIVE MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+    .fb-detail-page {
+        padding: 0 15px 25px;
+    }
+
+    .fb-detail-breadcrumb {
+        gap: 7px;
+        margin-bottom: 23px;
+        font-size: 11px;
+    }
+
+    .fb-detail-heading {
+        gap: 12px;
+        margin-bottom: 23px;
+    }
+
+    .fb-detail-heading-icon {
+        width: 52px;
+        height: 52px;
+        min-width: 52px;
+        border-radius: 14px;
+    }
+
+    .fb-detail-heading-icon svg {
+        width: 25px !important;
+        height: 25px !important;
+    }
+
+    .fb-detail-heading h1 {
+        font-size: 22px;
+    }
+
+    .fb-detail-heading p {
+        font-size: 12px;
+    }
+
+    .fb-detail-grid {
+        gap: 16px;
+    }
+
+    .fb-detail-card,
+    .fb-detail-history .fb-cycle-history {
+        padding: 19px;
+        border-radius: 17px;
+    }
+
+    .fb-detail-card-top {
+        margin-bottom: 22px;
+    }
+
+    .fb-detail-number {
+        min-height: 38px;
+        padding: 0 13px;
+        font-size: 11px;
+    }
+
+    .fb-detail-item {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 19px;
+    }
+
+    .fb-detail-photo {
+        height: 230px;
+    }
+
+    .fb-detail-item-content h2 {
+        font-size: 20px;
+    }
+
+    .fb-detail-description {
+        font-size: 13px;
+    }
+
+    .fb-detail-facts > div {
+        grid-template-columns: 95px minmax(0, 1fr);
+        min-height: 55px;
+        padding: 10px 12px;
+        gap: 8px;
+    }
+
+    .fb-detail-facts dt,
+    .fb-detail-facts dd {
+        font-size: 11px;
+    }
+
+    .fb-detail-history .fb-history-heading {
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+
+    .fb-detail-history .fb-history-icon {
+        width: 48px !important;
+        height: 48px !important;
+        min-width: 48px !important;
+        max-width: 48px !important;
+        flex-basis: 48px !important;
+    }
+
+    .fb-detail-history .fb-history-icon svg {
+        width: 22px !important;
+        height: 22px !important;
+    }
+
+    .fb-detail-history .fb-history-heading h2 {
+        font-size: 17px;
+    }
+
+    .fb-detail-history .fb-history-heading p {
+        font-size: 11px;
+    }
+
+    .fb-detail-history .fb-history-event-content {
+        padding: 15px;
+    }
+
+    .fb-detail-history .fb-history-event-content h3 {
+        font-size: 12px;
+    }
+
+    .fb-detail-back {
+        width: 100%;
+        min-height: 50px;
+        margin-top: 18px;
+        font-size: 12px;
+    }
+}
+
+/* ==========================================
+   FINAL FIX - DETAIL LAPORAN
+========================================== */
+
+/* Posisi kedua kartu */
+.fb-detail-page .fb-detail-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) !important;
+    align-items: stretch !important;
+    gap: 24px !important;
+}
+
+/* Kartu detail laporan */
+.fb-detail-page .fb-detail-card {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    margin: 0 !important;
+    padding: 28px !important;
+    border: 1px solid #f0dce3;
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 8px 28px rgba(65, 25, 42, .04);
+}
+
+/* Kartu riwayat verifikasi */
+.fb-detail-page .fb-detail-history {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    align-self: stretch !important;
+}
+
+.fb-detail-page .fb-detail-history .fb-cycle-history {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    margin: 0 !important;
+    padding: 28px !important;
+    border: 1px solid #f0dce3;
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 8px 28px rgba(65, 25, 42, .04);
+}
+
+/* Bagian atas kartu */
+.fb-detail-page .fb-detail-card-top {
+    margin-bottom: 25px;
+}
+
+/* Foto barang */
+.fb-detail-page .fb-detail-photo {
+    height: 290px;
+    min-height: 0;
+    border-radius: 15px;
+    overflow: hidden;
+    background: #faf7f8;
+}
+
+.fb-detail-page .fb-detail-photo img {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Informasi barang */
+.fb-detail-page .fb-detail-item {
+    gap: 25px;
+    align-items: center;
+}
+
+.fb-detail-page .fb-detail-item-content h2 {
+    margin-bottom: 10px;
+    font-size: 23px;
+    line-height: 1.4;
+}
+
+.fb-detail-page .fb-detail-description {
+    margin-bottom: 18px;
+    font-size: 13px;
+}
+
+/* Baris informasi */
+.fb-detail-page .fb-detail-facts {
+    gap: 10px;
+}
+
+.fb-detail-page .fb-detail-facts > div {
+    min-height: 58px;
+    padding: 12px 15px;
+    border-radius: 13px;
+    background: #faf6f8;
+}
+
+/* Judul riwayat */
+.fb-detail-page .fb-history-heading {
+    margin-bottom: 28px !important;
+}
+
+/* Jarak aktivitas */
+.fb-detail-page .fb-history-event {
+    margin-bottom: 15px !important;
+}
+
+/* Responsif */
+@media (max-width: 1100px) {
+    .fb-detail-page .fb-detail-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .fb-detail-page .fb-detail-card,
+    .fb-detail-page .fb-detail-history .fb-cycle-history {
+        height: auto;
+        min-height: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .fb-detail-page .fb-detail-card,
+    .fb-detail-page .fb-detail-history .fb-cycle-history {
+        padding: 18px !important;
+        border-radius: 16px;
+    }
+
+    .fb-detail-page .fb-detail-item {
+        grid-template-columns: 1fr;
+        gap: 17px;
+    }
+
+    .fb-detail-page .fb-detail-photo {
+        height: 230px;
+    }
+}
+
+/* =====================================================
+   PENYELARASAN DETAIL LAPORAN
+   Typography, icon, spacing, dan alignment
+===================================================== */
+
+/* 1. JUDUL DETAIL LAPORAN */
+.fb-detail-heading {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+}
+
+.fb-detail-heading-icon {
+    width: 64px !important;
+    height: 64px !important;
+    min-width: 64px !important;
+    flex: 0 0 64px !important;
+    border-radius: 17px !important;
+}
+
+.fb-detail-heading-icon svg {
+    width: 27px !important;
+    height: 27px !important;
+}
+
+.fb-detail-heading h1 {
+    margin: 0 0 7px !important;
+    font-size: 27px !important;
+    line-height: 1.25 !important;
+    letter-spacing: -.4px;
+}
+
+.fb-detail-heading p {
+    margin: 0 !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+}
+
+/* 2. JARAK DAN POSISI KEDUA KARTU */
+.fb-detail-grid {
+    align-items: stretch !important;
+    gap: 24px !important;
+}
+
+.fb-detail-card,
+.fb-detail-history .fb-cycle-history {
+    border-radius: 21px !important;
+}
+
+/* 3. FOTO DAN INFORMASI BARANG */
+.fb-detail-item {
+    align-items: center !important;
+    gap: 24px !important;
+}
+
+.fb-detail-photo {
+    border-radius: 14px !important;
+}
+
+.fb-detail-item-content h2 {
+    margin: 0 0 10px !important;
+    font-size: 22px !important;
+    line-height: 1.35 !important;
+    letter-spacing: -.25px;
+}
+
+.fb-detail-description {
+    margin: 0 0 19px !important;
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+}
+
+/* 4. BARIS INFORMASI JENIS, LOKASI, TANGGAL */
+.fb-detail-facts {
+    gap: 10px !important;
+}
+
+.fb-detail-facts > div {
+    display: grid !important;
+    grid-template-columns: 110px minmax(0, 1fr) !important;
+    align-items: center !important;
+    gap: 10px !important;
+    min-height: 58px !important;
+    padding: 12px 15px !important;
+    border-radius: 13px !important;
+}
+
+.fb-detail-facts dt {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin: 0 !important;
+    color: #806d78 !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+}
+
+/* Samakan ukuran seluruh ikon informasi */
+.fb-detail-page .fb-detail-facts dt svg {
+    display: block !important;
+    width: 15px !important;
+    height: 15px !important;
+    min-width: 15px !important;
+    max-width: 15px !important;
+    min-height: 15px !important;
+    max-height: 15px !important;
+    flex: 0 0 15px !important;
+    stroke-width: 1.8 !important;
+}
+
+.fb-detail-facts dd {
+    margin: 0 !important;
+    color: #382535 !important;
+    font-size: 12px !important;
+    font-weight: 650 !important;
+    line-height: 1.5 !important;
+}
+
+/* 5. JUDUL RIWAYAT VERIFIKASI */
+.fb-detail-history .fb-history-heading {
+    display: flex !important;
+    align-items: center !important;
+    gap: 15px !important;
+    margin-bottom: 28px !important;
+}
+
+/* Lingkaran ikon riwayat */
+.fb-detail-history .fb-history-icon {
+    width: 64px !important;
+    height: 64px !important;
+    min-width: 64px !important;
+    max-width: 64px !important;
+    flex: 0 0 64px !important;
+    border-radius: 50% !important;
+}
+
+/* Ukuran ikon Layers */
+.fb-detail-history .fb-history-icon svg {
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
+    max-width: 26px !important;
+    min-height: 26px !important;
+    max-height: 26px !important;
+    stroke-width: 1.8 !important;
+}
+
+.fb-detail-history .fb-history-heading h2 {
+    margin: 0 0 7px !important;
+    font-size: 20px !important;
+    line-height: 1.35 !important;
+    letter-spacing: -.3px;
+}
+
+.fb-detail-history .fb-history-heading p {
+    margin: 0 !important;
+    font-size: 12px !important;
+    line-height: 1.55 !important;
+}
+
+/* 6. IKON DAN TEKS TIMELINE */
+.fb-detail-history .fb-history-event {
+    gap: 14px !important;
+    align-items: flex-start !important;
+}
+
+.fb-detail-history .fb-history-event-icon {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    max-width: 34px !important;
+    flex: 0 0 34px !important;
+}
+
+.fb-detail-history .fb-history-event-icon svg {
+    width: 17px !important;
+    height: 17px !important;
+    min-width: 17px !important;
+    max-width: 17px !important;
+    min-height: 17px !important;
+    max-height: 17px !important;
+}
+
+.fb-detail-history .fb-history-event-content {
+    padding: 18px 19px !important;
+    border-radius: 14px !important;
+}
+
+.fb-detail-history .fb-history-event-content h3 {
+    margin: 0 0 9px !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+}
+
+.fb-detail-history .fb-history-event-content p {
+    margin: 0 !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+}
+
+/* 7. TOMBOL KEMBALI */
+.fb-detail-back {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    min-height: 54px !important;
+    padding: 0 20px !important;
+    border-radius: 13px !important;
+    font-size: 13px !important;
+}
+
+.fb-detail-back svg {
+    width: 19px !important;
+    height: 19px !important;
+}
+
+/* 8. RESPONSIVE */
+@media (max-width: 600px) {
+    .fb-detail-heading-icon {
+        width: 52px !important;
+        height: 52px !important;
+        min-width: 52px !important;
+        flex-basis: 52px !important;
+    }
+
+    .fb-detail-heading-icon svg {
+        width: 23px !important;
+        height: 23px !important;
+    }
+
+    .fb-detail-heading h1 {
+        font-size: 22px !important;
+    }
+
+    .fb-detail-item {
+        grid-template-columns: 1fr !important;
+    }
+
+    .fb-detail-facts > div {
+        grid-template-columns: 95px minmax(0, 1fr) !important;
+    }
+
+    .fb-detail-history .fb-history-icon {
+        width: 50px !important;
+        height: 50px !important;
+        min-width: 50px !important;
+        max-width: 50px !important;
+        flex-basis: 50px !important;
+    }
+
+    .fb-detail-history .fb-history-icon svg {
+        width: 22px !important;
+        height: 22px !important;
+        min-width: 22px !important;
+        max-width: 22px !important;
+        min-height: 22px !important;
+        max-height: 22px !important;
+    }
+
+    .fb-detail-history .fb-history-heading h2 {
+        font-size: 17px !important;
+    }
+}
+
+/* Sembunyikan nomor laporan pada halaman detail */
+.fb-detail-page .fb-detail-card-top .fb-detail-number {
+    display: none !important;
+}
+
+/* Hilangkan nomor laporan pada breadcrumb halaman detail */
+.fb-detail-page .fb-detail-breadcrumb strong {
+    display: none !important;
+}
+
+/* Hilangkan panah terakhir pada breadcrumb detail laporan */
+.fb-detail-page .fb-detail-breadcrumb > :last-child,
+.fb-detail-page .fb-detail-breadcrumb > :nth-last-child(2) {
+    display: none !important;
+}

@@ -66,7 +66,7 @@
             <div class="fb-v26-flow-copy"><strong>Alur pemeriksaan laporan</strong>
                 <p>Laporan yang disetujui masuk ke Laporan Barang. Laporan yang dikembalikan untuk revisi ada di tab Menunggu Perbaikan.</p>
             </div>
-            <a class="fb-v26-flow-link" href="{{ route('admin.items.index', ['group' => 'semua']) }}"
+            <a class="fb-v26-flow-link" href="{{ route('admin.items.index') }}"
                 aria-label="Buka pusat Laporan Barang">Buka Laporan Barang <span aria-hidden="true">→</span></a>
         </aside>
         <div class="fb-table-scroll fb-v25-table-wrap">

@@ -4131,6 +4131,61 @@ form.cu-filter + .cu-result + .cu-cards .cu-empty {
     margin-top: 0;
 }
 
+/* ===== Formulir klaim barang: tema merah muda ===== */
+.req {
+    color: #d92d20;
+    font-weight: 700;
+}
+.cu-claim-form {
+    background: #fff8fa;
+    border: 1px solid #f7d3df;
+    box-shadow: 0 10px 30px rgba(217, 72, 125, 0.1);
+}
+.cu-claim-form label {
+    color: #6b1d3a;
+    font-weight: 600;
+}
+.cu-claim-form textarea {
+    background: #ffeef3;
+    border: 1.5px solid #f4b8cc;
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: #3d0b1f;
+}
+.cu-claim-form textarea::placeholder {
+    color: #b8869b;
+}
+.cu-claim-form textarea:focus {
+    outline: none;
+    background: #fff;
+    border-color: #e0558a;
+    box-shadow: 0 0 0 4px rgba(224, 85, 138, 0.18);
+}
+.cu-claim-form .cu-upload {
+    background: #ffeef3;
+    border-color: #f0a6c0;
+}
+.cu-claim-form .cu-upload:hover {
+    background: #fde0ea;
+    border-color: #e0558a;
+}
+.cu-claim-form .cu-note {
+    background: #fff0f5;
+    border: 1px solid #f4b8cc;
+    color: #8a1c46;
+}
+.cu-claim-form .cu-btn:not(.light) {
+    background: #e0558a;
+    box-shadow: 0 2px 8px rgba(224, 85, 138, 0.3);
+}
+.cu-claim-form .cu-btn:not(.light):hover {
+    background: #c2255c;
+}
+.cu-claim-form .cu-btn.light {
+    background: #fde7ef;
+    border-color: #f4b8cc;
+    color: #8a1c46 !important;
+}
 
 /* =========================================
    FINDBACK TOAST - WHITE PREMIUM STYLE

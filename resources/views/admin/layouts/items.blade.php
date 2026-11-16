@@ -50,8 +50,8 @@
     <link rel="stylesheet"
         href="{{ asset('css/shared/view-utilities.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('css/shared/confirmation-modal-v14.css') }}?v=14">
-    <script src="{{ asset('js/shared/confirmation-modal-v14.js') }}?v=14" defer></script>
+    <link rel="stylesheet" href="{{ asset('css/shared/confirmation-modal-v14.css') }}?v=15">
+    <script src="{{ asset('js/shared/confirmation-modal-v14.js') }}?v=15" defer></script>
     <script src="{{ asset('js/shared/view-interactions.js') }}" defer></script>
     @yield('page-styles')
     <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
@@ -312,6 +312,7 @@
             {{-- KONTEN UTAMA --}}
             @php
                 $adminNavPage = [
+                    'admin.dashboard' => 'dashboard',
                     'admin.reports.verification' => 'verification',
                     'admin.items.index' => 'items',
                     'admin.matching.index' => 'matching',
@@ -372,7 +373,7 @@
         <script src="{{ asset('js/admin/users-filter-navigation.js') }}?v=2" defer></script>
         <script src="{{ asset('js/admin/settings-score.js') }}?v=2" defer></script>
         @include('admin.partials.detail-interactions')
-        <script src="{{ asset('js/admin/dashboard-verification-navigation.js') }}?v=10" defer
+        <script src="{{ asset('js/admin/dashboard-verification-navigation.js') }}?v=21" defer
             data-dashboard="{{ route('admin.dashboard') }}"
             data-verification="{{ route('admin.reports.verification') }}"
             data-items="{{ route('admin.items.index') }}"

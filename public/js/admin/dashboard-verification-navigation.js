@@ -29,7 +29,14 @@
             const previous = sessionStorage.getItem(key);
             if (previous) {
                 const saved = new URL(previous, url.href);
-                if (saved.origin === url.origin && saved.pathname === url.pathname && saved.search) return saved;
+                if (saved.origin === url.origin && saved.pathname === url.pathname && saved.search) {
+                    // Abaikan status filter lama yang tidak lagi didukung controller.
+                    if (page === 'matching' && saved.searchParams.has('status') &&
+                        !['all', 'pending', 'confirmed', 'rejected'].includes(saved.searchParams.get('status'))) {
+                        saved.searchParams.delete('status');
+                    }
+                    return saved.searchParams.toString() ? saved : url;
+                }
             }
         } catch {}
         return url;
@@ -71,6 +78,162 @@
         return Promise.all(ready).then(links => ({unused: reusable, links}));
     }
 
+    // Fast path khusus Dashboard <-> Verifikasi:
+    // ambil HTML halaman tujuan lebih awal, lalu gunakan cache singkat saat diklik.
+    const quickPages = new Set([
+        'dashboard', 'verification', 'items', 'matching',
+        'claims', 'statistics', 'users', 'settings',
+        'verification-detail', 'item-detail', 'match-detail',
+        'claim-detail', 'user-detail'
+    ]);
+    const quickHTMLCache = new Map();
+    const quickHTMLPending = new Map();
+    const QUICK_CACHE_TTL = 8000;
+    const quickStylePreloads = new Set();
+
+    // Panaskan CSS halaman tujuan saat HTML diprefetch, bukan setelah menu diklik.
+    // Link preload tidak menerapkan CSS sebelum navigasi, jadi tampilan halaman aktif
+    // tidak berubah. Browser dapat memakai hasil unduhan saat stylesheet dipasang.
+    function warmQuickStyles(html) {
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        for (const source of doc.head.querySelectorAll('link[rel="stylesheet"][href]')) {
+            const href = new URL(source.href, location.href);
+            if (href.origin !== location.origin || quickStylePreloads.has(href.href)) continue;
+            const alreadyLoaded = [...document.head.querySelectorAll('link[rel="stylesheet"][href]')]
+                .some(link => link.href === href.href && link.sheet);
+            if (alreadyLoaded) {
+                quickStylePreloads.add(href.href);
+                continue;
+            }
+            const preload = document.createElement('link');
+            preload.rel = 'preload';
+            preload.as = 'style';
+            preload.href = href.href;
+            if (source.crossOrigin) preload.crossOrigin = source.crossOrigin;
+            if (source.integrity) preload.integrity = source.integrity;
+            if (source.referrerPolicy) preload.referrerPolicy = source.referrerPolicy;
+            preload.addEventListener('error', () => quickStylePreloads.delete(href.href), { once: true });
+            document.head.append(preload);
+            quickStylePreloads.add(href.href);
+        }
+    }
+
+    function isQuickNavigation(url) {
+        return quickPages.has(pageOf(url.pathname));
+    }
+
+    async function fetchQuickHTML(url) {
+        const key = url.href;
+        const cached = quickHTMLCache.get(key);
+        if (cached && Date.now() - cached.time < QUICK_CACHE_TTL) return cached.html;
+
+        if (quickHTMLPending.has(key)) return quickHTMLPending.get(key);
+
+        const task = (async () => {
+            const response = await fetch(url, {
+                cache: 'no-store',
+                credentials: 'same-origin',
+                headers: { Accept: 'text/html', 'X-FB-Navigation-Prefetch': '1' }
+            });
+            if (!response.ok || response.redirected || response.url !== key ||
+                !(response.headers.get('content-type') || '').includes('text/html')) {
+                throw Error('Prefetch response');
+            }
+            const html = await response.text();
+            warmQuickStyles(html);
+            quickHTMLCache.set(key, { html, time: Date.now() });
+            return html;
+        })();
+
+        quickHTMLPending.set(key, task);
+        try {
+            return await task;
+        } finally {
+            if (quickHTMLPending.get(key) === task) quickHTMLPending.delete(key);
+        }
+    }
+
+    function warmQuickURL(value) {
+        if (!value || document.hidden || navigator.connection?.saveData) return Promise.resolve();
+        const url = new URL(value, location.href);
+        if (url.origin !== location.origin || !isQuickNavigation(url) || url.href === location.href) {
+            return Promise.resolve();
+        }
+        // Kembalikan promise agar halaman prioritas dapat disiapkan lebih dulu.
+        return fetchQuickHTML(url).catch(() => {});
+    }
+
+    function warmQuickDestinations() {
+        if (document.hidden || navigator.connection?.saveData) return Promise.resolve();
+
+        const currentPage = main()?.dataset.fbNavPage;
+        const destinations = {
+            dashboard: [config.verification, config.items],
+            verification: [config.dashboard, config.items],
+            items: [config.dashboard, config.verification],
+            matching: [config.items, config.claims],
+            claims: [config.matching, config.statistics],
+            statistics: [config.claims, config.users],
+            users: [config.statistics, config.settings],
+            settings: [config.users, config.dashboard]
+        }[currentPage] || [];
+
+        // Ketiga halaman memakai aturan identik:
+        // dua tujuan langsung diprefetch paralel sejak halaman asal aktif.
+        // fetchQuickHTML menggabungkan request duplikat dan menyimpan HTML 20 detik.
+        return Promise.all(destinations.map(value => warmQuickURL(value)));
+    }
+
+    // Mulai prefetch saat pengguna mengarahkan pointer/fokus ke tautan.
+    // Permintaan yang sama digabung dengan cache/pending yang sudah berjalan.
+    function warmFromInteraction(event) {
+        const link = event.target.closest?.('.fb-sidebar a.fb-nav-link[href], main[data-fb-nav-page] a[href]');
+        if (!link || link.target || link.hasAttribute('download')) return;
+        warmQuickURL(link.href);
+    }
+    document.addEventListener('pointerover', warmFromInteraction, { passive: true });
+    document.addEventListener('focusin', warmFromInteraction);
+    document.addEventListener('pointerdown', warmFromInteraction, { passive: true });
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) warmQuickDestinations();
+    });
+
+    function navigationHTML(url, signal) {
+        if (isQuickNavigation(url)) {
+            const cached = quickHTMLCache.get(url.href);
+            if (cached && Date.now() - cached.time < QUICK_CACHE_TTL) {
+                return Promise.resolve(cached.html);
+            }
+            const pendingTask = quickHTMLPending.get(url.href);
+            if (pendingTask) {
+                return new Promise((resolve, reject) => {
+                    if (signal.aborted) return reject(Error('Navigation aborted'));
+                    const onAbort = () => reject(Error('Navigation aborted'));
+                    signal.addEventListener('abort', onAbort, { once: true });
+                    pendingTask.then(resolve, reject).finally(() => {
+                        signal.removeEventListener('abort', onAbort);
+                    });
+                });
+            }
+        }
+        return fetch(url, {
+            cache: 'no-store',
+            credentials: 'same-origin',
+            signal,
+            headers: { Accept: 'text/html' }
+        }).then(response => {
+            if (!response.ok || response.redirected || response.url !== url.href ||
+                !(response.headers.get('content-type') || '').includes('text/html')) {
+                throw Error('Navigation response');
+            }
+            return response.text();
+        });
+    }
+
+    // Mulai memanaskan semua tujuan segera setelah skrip navigasi aktif.
+    // Angka 50 ms bukan jeda buatan: targetnya adalah klik memakai cache siap.
+    warmQuickDestinations();
+
     async function navigate(url, historyMode, scroll, back) {
         if (submitting || (pending && !pending.signal.aborted && pendingURL === url.href)) return;
         pending?.abort();
@@ -78,6 +241,8 @@
         pending = controller;
         pendingURL = url.href;
         const from = location.href;
+        const fromPage = main()?.dataset.fbNavPage || pageOf(new URL(from).pathname) || 'unknown';
+        const navigationStartedAt = performance.now();
         let timedOut = false;
         const timeout = setTimeout(() => {
             timedOut = true;
@@ -87,10 +252,9 @@
         const staged = [];
         let committed = false;
         try {
-            const response = await fetch(url, { cache: 'no-store', signal, headers: { Accept: 'text/html' } });
-            if (!response.ok || response.redirected || response.url !== url.href ||
-                !(response.headers.get('content-type') || '').includes('text/html')) throw Error('Navigation response');
-            const doc = new DOMParser().parseFromString(await response.text(), 'text/html');
+            const html = await navigationHTML(url, signal);
+            if (signal.aborted) return;
+            const doc = new DOMParser().parseFromString(html, 'text/html');
             const next = doc.querySelector('main[data-fb-nav-page]');
             const crumb = doc.querySelector('.fb-breadcrumb');
             const topbar = doc.querySelector('.fb-topbar-right');
@@ -144,8 +308,11 @@
             const menu = document.getElementById('fb-menu-toggle');
             if (menu?.getAttribute('aria-expanded') === 'true') menu.click();
             committed = true;
+            const navigationDuration = performance.now() - navigationStartedAt;
+            console.info(`[FindBack Nav] ${fromPage} -> ${next.dataset.fbNavPage}: ${navigationDuration.toFixed(1)} ms`);
             document.dispatchEvent(new Event('fb:admin-page'));
             window.scrollTo({top: 0, left: 0, ...scroll, behavior: 'instant'});
+            warmQuickDestinations();
         } catch {
             if ((!signal.aborted || timedOut) && (location.href === from || location.href === url.href)) {
                 if (historyMode === 'pop' || location.href === url.href) location.reload();
@@ -162,6 +329,7 @@
         if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
         const link = event.target.closest?.('.fb-sidebar a.fb-nav-link[href], main[data-fb-nav-page] a[href], #fb-notif a.fb-notif-action[href]');
         if (!link || link.target || link.hasAttribute('download') || !main()) return;
+
         let url = new URL(link.href);
         const target = pageOf(url.pathname);
         if (url.origin !== location.origin || url.hash || !target) return;

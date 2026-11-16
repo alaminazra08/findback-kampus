@@ -33,6 +33,23 @@
       if (!search?.startsWith('?')) return null;
       const url = new URL(route, location.origin);
       url.search = search;
+
+      // Filter lama dapat tersimpan di browser setelah pilihan status berubah.
+      // Jangan kirim nilai status yang tidak dikenal ke validasi Laravel.
+      const path = normalize(url.pathname);
+      const allowedStatus = {
+        '/admin/matching': ['all', 'pending', 'confirmed', 'rejected'],
+        '/admin/claims': ['pending', 'approved', 'rejected', 'returned']
+      }[path];
+      if (url.searchParams.has('status') && allowedStatus) {
+        const status = url.searchParams.get('status');
+        if (!allowedStatus.includes(status)) url.searchParams.delete('status');
+      }
+      if (path === '/admin/claims' && url.searchParams.has('evidence') &&
+          url.searchParams.get('evidence') !== 'open') {
+        url.searchParams.delete('evidence');
+      }
+      if (!url.searchParams.toString()) return null;
       return url;
     } catch (_) { return null; }
   }

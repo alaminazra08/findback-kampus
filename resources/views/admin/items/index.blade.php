@@ -3,7 +3,7 @@
 @section('title', 'Laporan Barang')
 
 @section('item-upload-style')
-    <link rel="stylesheet" href="{{ asset('css/admin/admin-items-upload.css') }}?v=20261111-2">
+    <link rel="stylesheet" href="{{ asset('css/admin/admin-items-upload.css') }}?v=premium-v2">
 @endsection
 
 @section('page-styles')
@@ -315,7 +315,7 @@
 
                 </svg><span>Terapkan</span></button>
 
-            <a href="{{ route('admin.items.index', ['group' => 'semua']) }}" class="fb-items-reset fb-v20-action"><svg
+            <a href="{{ route('admin.items.index') }}" class="fb-items-reset fb-v20-action"><svg
                     viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
                     <path d="M4 8.5H13.5C17.5 8.5 20 11 20 14.5C20 18 17.5 20 14 20H10"
                         stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
@@ -481,7 +481,7 @@
                                     @else
                                         <strong>Tidak ada barang yang cocok dengan filter ini</strong>
                                         <p>Ubah filter atau tampilkan semua laporan.</p>
-                                        <a class="fb-items-reset" href="{{ route('admin.items.index', ['group' => 'semua']) }}">Atur Ulang Filter</a>
+                                        <a class="fb-items-reset" href="{{ route('admin.items.index') }}">Atur Ulang Filter</a>
                                     @endif
                                 </div>
 

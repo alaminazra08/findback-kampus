@@ -14,12 +14,18 @@ class ChatMessage extends Model
         'message',
         'attachment_path',
         'read_at',
+        'edited_at',
+        'recalled_at',
+        'hidden_for_user',
     ];
 
     protected function casts(): array
     {
         return [
             'read_at' => 'datetime',
+            'edited_at' => 'datetime',
+            'recalled_at' => 'datetime',
+            'hidden_for_user' => 'boolean',
         ];
     }
 

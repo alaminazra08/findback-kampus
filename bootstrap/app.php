@@ -34,6 +34,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'role' => \App\Http\Middleware\EnsureUserHasRole::class,
+            'admin-tab' => \App\Http\Middleware\EnsureAdminTabSession::class,
         ]);
 
         // ====================================================
@@ -73,6 +74,24 @@ return Application::configure(basePath: dirname(__DIR__))
 
             return redirect()->route('login', [], 303)
                 ->with('login_expired', 'Sesi formulir login berakhir. Silakan masukkan kembali email dan kata sandi.')
+                ->header('Cache-Control', 'no-store');
+        });
+
+        // FindBack: tangani token CSRF kedaluwarsa saat generate pencocokan.
+        // Tidak menonaktifkan CSRF, tidak memperpanjang sesi, dan tidak mengubah logout.
+        $exceptions->render(function (\Symfony\Component\HttpKernel\Exception\HttpExceptionInterface $exception, \Illuminate\Http\Request $request) {
+            if ($exception->getStatusCode() !== 419 || !$request->isMethod('POST') || !$request->is('admin/matching/generate') || $request->expectsJson()) {
+                return null;
+            }
+
+            if (!\Illuminate\Support\Facades\Auth::check()) {
+                return redirect()->route('login', [], 303)
+                    ->with('login_expired', 'Sesi admin telah berakhir. Silakan login kembali sebelum menjalankan pencocokan.')
+                    ->header('Cache-Control', 'no-store');
+            }
+
+            return redirect()->route('admin.matching.index', [], 303)
+                ->with('error', 'Formulir pencocokan telah kedaluwarsa. Silakan klik Generate Pencocokan kembali.')
                 ->header('Cache-Control', 'no-store');
         });
 

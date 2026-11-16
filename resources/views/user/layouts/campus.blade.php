@@ -115,33 +115,44 @@
 
                 {{-- LAPOR BARANG --}}
 
-                <details class="cu-dropdown">
-                    <summary class="{{ request()->routeIs('user.reports.*create') ? 'active' : '' }}">
-                        <svg class="fb-nav-icon" viewBox="0 0 24 24"
-                             fill="none" stroke="currentColor"
-                             stroke-width="1.8" stroke-linecap="round"
-                             stroke-linejoin="round" aria-hidden="true">
-                            <path d="M6 3h9l4 4v14H6z" />
-                            <path d="M15 3v5h4M9 13h7M9 17h7" />
-                        </svg>
-                        <span>Lapor Barang</span>
-                        <svg class="fb-nav-icon" viewBox="0 0 24 24"
-                             fill="none" stroke="currentColor"
-                             stroke-width="1.8" stroke-linecap="round"
-                             stroke-linejoin="round" aria-hidden="true">
-                            <path d="m6 9 6 6 6-6" />
-                        </svg>
-                    </summary>
-                    <div>
-                        <a href="{{ route('user.reports.lost.create') }}">
-                            Barang hilang
-                        </a>
-                        <a href="{{ route('user.reports.found.create') }}">
-                            Barang ditemukan
-                        </a>
-                    </div>
+                
+{{-- LAPOR BARANG --}}
+<details class="cu-dropdown cu-report-dropdown">
+    <summary class="{{ request()->routeIs('user.reports.*create') ? 'active' : '' }}">
+        <svg class="fb-nav-icon" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="round"
+             stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 3h9l4 4v14H6z" />
+            <path d="M15 3v5h4M9 13h7M9 17h7" />
+        </svg>
 
-                </details>
+        <span>
+            {{ request()->routeIs('user.reports.lost.create')
+                ? 'Barang Hilang'
+                : (request()->routeIs('user.reports.found.create')
+                    ? 'Barang Ditemukan'
+                    : 'Lapor Barang') }}
+        </span>
+
+        <svg class="fb-nav-icon" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="round"
+             stroke-linejoin="round" aria-hidden="true">
+            <path d="m6 9 6 6 6-6" />
+        </svg>
+    </summary>
+
+    <div>
+        <a href="{{ route('user.reports.lost.create') }}">
+            Barang hilang
+        </a>
+
+        <a href="{{ route('user.reports.found.create') }}">
+            Barang ditemukan
+        </a>
+    </div>
+</details>
 
                 {{-- AKTIVITAS SAYA --}}
 

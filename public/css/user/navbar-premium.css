@@ -611,3 +611,100 @@
         border-radius: 17px;
     }
 }
+
+
+
+/* ==========================================
+   DROPDOWN LAPOR BARANG - STABIL
+========================================== */
+
+.cu-nav .cu-report-dropdown {
+    position: relative;
+    flex: 0 0 190px;
+    width: 190px;
+}
+
+/* Tombol memiliki lebar tetap */
+.cu-nav .cu-report-dropdown > summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 190px;
+    min-width: 190px;
+    min-height: 48px;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+/* Tulisan tidak membuat tombol melebar */
+.cu-nav .cu-report-dropdown > summary span {
+    display: inline-block;
+    width: 112px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Ukuran ikon konsisten */
+.cu-nav .cu-report-dropdown > summary svg {
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    flex-shrink: 0;
+}
+
+/* Dropdown melayang, tidak mendorong navbar */
+.cu-nav .cu-report-dropdown > div {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 0;
+    z-index: 1000;
+    width: 220px;
+}
+
+/* Tampilan layar kecil */
+@media (max-width: 900px) {
+    .cu-nav .cu-report-dropdown {
+        flex: initial;
+        width: 100%;
+    }
+
+    .cu-nav .cu-report-dropdown > summary {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .cu-nav .cu-report-dropdown > div {
+        width: 100%;
+    }
+}
+
+/* Perlebar tombol dropdown Lapor Barang */
+.cu-nav .cu-report-dropdown {
+    flex: 0 0 230px !important;
+    width: 230px !important;
+}
+
+.cu-nav .cu-report-dropdown > summary {
+    width: 230px !important;
+    min-width: 230px !important;
+    justify-content: space-around !important;
+    padding: 0 15px !important;
+}
+
+/* Tampilkan tulisan secara utuh */
+.cu-nav .cu-report-dropdown > summary span {
+    width: auto !important;
+    flex: 1;
+    text-align: center;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: nowrap !important;
+}
+
+/* Ikon tetap proporsional */
+.cu-nav .cu-report-dropdown > summary svg {
+    flex-shrink: 0 !important;
+}

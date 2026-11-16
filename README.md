@@ -23,11 +23,11 @@ Fakultas Sains dan Teknologi · UIN Imam Bonjol Padang
 
 ## Tentang proyek
 
-**FindBack Kampus** adalah sistem informasi *lost and found* berbasis website untuk membantu sivitas akademika **Fakultas Sains dan Teknologi, UIN Imam Bonjol Padang** dalam melaporkan barang hilang atau ditemukan, mencari informasi barang, dan mengajukan klaim secara terpusat.
+<p align="justify"><strong>FindBack Kampus</strong> adalah sistem informasi <em>lost and found</em> berbasis website untuk membantu sivitas akademika <strong>Fakultas Sains dan Teknologi, UIN Imam Bonjol Padang</strong> dalam melaporkan barang hilang atau ditemukan, mencari informasi barang, dan mengajukan klaim secara terpusat.</p>
 
-Proyek ini dikembangkan sebagai bagian dari **Mata Kuliah Manajemen Proyek Sistem Informasi** dengan metode **Prototype**. Sistem dirancang untuk menggantikan penyampaian informasi yang tersebar melalui komunikasi langsung dan grup percakapan menjadi proses yang lebih terstruktur, dapat ditelusuri, dan terdokumentasi.
+<p align="justify">Proyek ini dikembangkan sebagai bagian dari <strong>Mata Kuliah Manajemen Proyek Sistem Informasi</strong> dengan metode <strong>Prototype</strong>. Sistem dirancang untuk menggantikan penyampaian informasi yang tersebar melalui komunikasi langsung dan grup percakapan menjadi proses yang lebih terstruktur, dapat ditelusuri, dan terdokumentasi.</p>
 
-Laporan barang diperiksa oleh administrator sebelum dipublikasikan. Hasil pencocokan otomatis merupakan **indikasi kemungkinan kecocokan**, bukan penetapan kepemilikan; konfirmasi dan verifikasi klaim tetap dilakukan oleh administrator.
+<p align="justify">Laporan barang diperiksa oleh administrator sebelum dipublikasikan. Hasil pencocokan otomatis merupakan <strong>indikasi kemungkinan kecocokan</strong>, bukan penetapan kepemilikan; konfirmasi dan verifikasi klaim tetap dilakukan oleh administrator.</p>
 
 ## Tampilan aplikasi
 
@@ -36,7 +36,7 @@ Laporan barang diperiksa oleh administrator sebelum dipublikasikan. Hasil pencoc
   <p><sub>Pratinjau halaman login FindBack Kampus · Tampilan pada desktop dan perangkat seluler menyesuaikan ukuran layar.</sub></p>
 </div>
 
-> Cuplikan di atas merupakan pratinjau antarmuka, bukan bukti bahwa seluruh fungsi telah lulus pengujian. Dokumentasi visual halaman lainnya dapat ditambahkan setelah diverifikasi.
+<blockquote><p align="justify">Cuplikan di atas merupakan pratinjau antarmuka, bukan bukti bahwa seluruh fungsi telah lulus pengujian. Dokumentasi visual halaman lainnya dapat ditambahkan setelah diverifikasi.</p></blockquote>
 
 ## Fitur utama
 
@@ -69,7 +69,7 @@ Verifikasi kepemilikan dan komunikasi klaim
 Serah terima barang serta pembaruan status
 ```
 
-> Proses pencocokan dan klaim tetap memerlukan pemeriksaan administrator. Hak akses dibedakan antara pengguna dan administrator.
+<blockquote><p align="justify">Proses pencocokan dan klaim tetap memerlukan pemeriksaan administrator. Hak akses dibedakan antara pengguna dan administrator.</p></blockquote>
 
 ## Teknologi
 
@@ -103,33 +103,33 @@ composer install
 
 ### 2. Konfigurasi lingkungan
 
-Untuk **instalasi baru**, buat `.env` dari contoh. Di **Windows CMD**:
+<p align="justify">Untuk <strong>instalasi baru</strong>, buat <code>.env</code> dari contoh. Di <strong>Windows CMD</strong>:</p>
 
 ```bat
 copy .env.example .env
 php artisan key:generate
 ```
 
-Di Linux/macOS gunakan `cp .env.example .env`. Sesuaikan `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, dan `DB_PASSWORD` pada `.env` dengan database lokal.
+<p align="justify">Di Linux/macOS gunakan <code>cp .env.example .env</code>. Sesuaikan <code>DB_HOST</code>, <code>DB_PORT</code>, <code>DB_DATABASE</code>, <code>DB_USERNAME</code>, dan <code>DB_PASSWORD</code> pada <code>.env</code> dengan database lokal.</p>
 
-**Jangan menimpa `.env` dari instalasi yang sudah berjalan.** Jangan mengunggah `.env`, kata sandi, database, file privat, atau cadangan ke repositori publik.
+<p align="justify"><strong>Jangan menimpa <code>.env</code> dari instalasi yang sudah berjalan.</strong> Jangan mengunggah <code>.env</code>, kata sandi, database, file privat, atau cadangan ke repositori publik.</p>
 
 ### 3. Siapkan database dan aset
 
-Jalankan migrasi **hanya untuk database baru yang telah diperiksa**:
+<p align="justify">Jalankan migrasi <strong>hanya untuk database baru yang telah diperiksa</strong>:</p>
 
 ```bash
 php artisan migrate
 ```
 
-Jika aset Vite belum tersedia atau perlu dibangun:
+<p align="justify">Jika aset Vite belum tersedia atau perlu dibangun:</p>
 
 ```bash
 npm install
 npm run build
 ```
 
-> Jangan menggunakan `migrate:fresh`, `db:wipe`, atau perintah penghapusan data pada database tim. Lakukan pemeriksaan dan pencadangan sebelum migrasi pada instalasi yang sudah berisi data.
+<blockquote><p align="justify">Jangan menggunakan <code>migrate:fresh</code>, <code>db:wipe</code>, atau perintah penghapusan data pada database tim. Lakukan pemeriksaan dan pencadangan sebelum migrasi pada instalasi yang sudah berisi data.</p></blockquote>
 
 ### 4. Jalankan aplikasi
 
@@ -137,7 +137,7 @@ npm run build
 php artisan serve
 ```
 
-Buka alamat lokal yang tampil pada terminal, umumnya **http://127.0.0.1:8000**. Port dapat berbeda bila sudah digunakan proses lain.
+<p align="justify">Buka alamat lokal yang tampil pada terminal, umumnya <strong>http://127.0.0.1:8000</strong>. Port dapat berbeda bila sudah digunakan proses lain.</p>
 
 ## Struktur proyek
 
@@ -158,31 +158,31 @@ tests/                  # Pengujian
 
 ## Kualitas kode dan pengujian
 
-Repositori memuat konfigurasi **Laravel Pint**, **Blade Formatter**, dan **Prettier**. Untuk menjalankan tes pada **database pengujian yang terisolasi**:
+<p align="justify">Repositori memuat konfigurasi <strong>Laravel Pint</strong>, <strong>Blade Formatter</strong>, dan <strong>Prettier</strong>. Untuk menjalankan tes pada <strong>database pengujian yang terisolasi</strong>:</p>
 
 ```bash
 php artisan test
 ```
 
-Pemeriksaan gaya kode menggunakan Laravel Pint (apabila dependensi pengembangan telah terpasang):
+<p align="justify">Pemeriksaan gaya kode menggunakan Laravel Pint (apabila dependensi pengembangan telah terpasang):</p>
 
 ```bash
 php vendor/bin/pint --test --config=pint.json app routes config tests
 ```
 
-Pengujian mencakup kebutuhan pelaporan, verifikasi, pencarian, pencocokan, klaim, chat, pengelolaan hak akses, dan laporan. **Keberadaan kode dan skenario tes tidak berarti seluruh fungsi sudah lulus pengujian end-to-end.** Pastikan lingkungan tes tidak terhubung ke database proyek yang berisi data asli.
+<p align="justify">Pengujian mencakup kebutuhan pelaporan, verifikasi, pencarian, pencocokan, klaim, chat, pengelolaan hak akses, dan laporan. <strong>Keberadaan kode dan skenario tes tidak berarti seluruh fungsi sudah lulus pengujian end-to-end.</strong> Pastikan lingkungan tes tidak terhubung ke database proyek yang berisi data asli.</p>
 
 ## Ruang lingkup
 
-FindBack Kampus dirancang untuk **Fakultas Sains dan Teknologi UIN Imam Bonjol Padang**, dengan dua peran utama: **Pengguna** dan **Administrator**. Fokus implementasinya adalah **website responsif**, bukan aplikasi Android/iOS native. Integrasi dengan sistem akademik kampus tidak termasuk ruang lingkup proyek.
+<p align="justify">FindBack Kampus dirancang untuk <strong>Fakultas Sains dan Teknologi UIN Imam Bonjol Padang</strong>, dengan dua peran utama: <strong>Pengguna</strong> dan <strong>Administrator</strong>. Fokus implementasinya adalah <strong>website responsif</strong>, bukan aplikasi Android/iOS native. Integrasi dengan sistem akademik kampus tidak termasuk ruang lingkup proyek.</p>
 
 ## Status pengembangan dan pengujian
 
-**Status: pengembangan dan validasi.** Proyek belum dinyatakan siap produksi melalui README ini. Sebelum deployment, tim perlu memverifikasi alur pengguna–admin secara menyeluruh, hak akses, integritas data, kinerja, tampilan desktop/mobile, serta hasil uji fungsional, integrasi, dan penerimaan pengguna (UAT).
+<p align="justify"><strong>Status: pengembangan dan validasi.</strong> Proyek belum dinyatakan siap produksi melalui README ini. Sebelum deployment, tim perlu memverifikasi alur pengguna–admin secara menyeluruh, hak akses, integritas data, kinerja, tampilan desktop/mobile, serta hasil uji fungsional, integrasi, dan penerimaan pengguna (UAT).</p>
 
 ## Tim pengembang
 
-Proyek disusun oleh **Kelompok II**, Program Studi Sistem Informasi, Fakultas Sains dan Teknologi, UIN Imam Bonjol Padang (2026).
+<p align="justify">Proyek disusun oleh <strong>Kelompok II</strong>, Program Studi Sistem Informasi, Fakultas Sains dan Teknologi, UIN Imam Bonjol Padang (2026).</p>
 
 | Nama | Peran proyek |
 | :--- | :--- |
@@ -192,13 +192,13 @@ Proyek disusun oleh **Kelompok II**, Program Studi Sistem Informasi, Fakultas Sa
 | **Al Amin Azra** | Programmer |
 | **Mach Y Sa** | Quality Assurance |
 
-**Dosen pengampu:** Haditya Prasetyo, S.Kom., M.Kom.
+<p align="justify"><strong>Dosen pengampu:</strong> Haditya Prasetyo, S.Kom., M.Kom.</p>
 
-Aktivitas kolaborasi kode dapat dilihat melalui [riwayat commit](https://github.com/alaminazra08/findback-kampus/commits/main/) dan [kontributor GitHub](https://github.com/alaminazra08/findback-kampus/graphs/contributors). Riwayat Git mencatat kontribusi kode dan tidak selalu sama dengan pembagian tanggung jawab pada laporan proyek.
+<p align="justify">Aktivitas kolaborasi kode dapat dilihat melalui <a href="https://github.com/alaminazra08/findback-kampus/commits/main/">riwayat commit</a> dan <a href="https://github.com/alaminazra08/findback-kampus/graphs/contributors">kontributor GitHub</a>. Riwayat Git mencatat kontribusi kode dan tidak selalu sama dengan pembagian tanggung jawab pada laporan proyek.</p>
 
 ## Keamanan dan penggunaan data
 
-Pastikan `.env`, kredensial, data pribadi, gambar atau bukti klaim pengguna, serta backup tidak dipublikasikan. Gunakan data uji untuk demonstrasi dan lakukan audit akses administrator, validasi unggahan, keamanan formulir, serta backup sebelum penerapan nyata.
+<p align="justify">Pastikan <code>.env</code>, kredensial, data pribadi, gambar atau bukti klaim pengguna, serta backup tidak dipublikasikan. Gunakan data uji untuk demonstrasi dan lakukan audit akses administrator, validasi unggahan, keamanan formulir, serta backup sebelum penerapan nyata.</p>
 
 ---
 

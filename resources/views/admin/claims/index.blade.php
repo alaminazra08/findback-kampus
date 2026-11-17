@@ -92,6 +92,7 @@
                 </svg><span>Atur Ulang</span></a>
         </form>
 
+
         <div class="fb-claim-table-scroll">
             <table class="fb-claim-table">
                 <thead>

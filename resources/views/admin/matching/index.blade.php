@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="{{ asset('css/admin/admin-matching.css') }}?v=match-header-align-1">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/matching/index.css') }}?v=3-verification-layout">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/matching/consistency-v3.css') }}?v=20261115-1">
-    <link rel=stylesheet href={{ asset('css/pages/admin/matching/animation-v4.css') }}?v=20261115-4>
     <link rel=stylesheet href={{ asset('css/pages/admin/matching/hover-v5.css') }}?v=20261115-5>
     <link rel="stylesheet" href="{{ asset('css/admin/statistics-motion-v12.css') }}?v=12">
 @endsection

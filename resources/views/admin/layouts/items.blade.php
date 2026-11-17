@@ -373,7 +373,7 @@
         <script src="{{ asset('js/admin/users-filter-navigation.js') }}?v=2" defer></script>
         <script src="{{ asset('js/admin/settings-score.js') }}?v=2" defer></script>
         @include('admin.partials.detail-interactions')
-        <script src="{{ asset('js/admin/dashboard-verification-navigation.js') }}?v=21" defer
+        <script src="{{ asset('js/admin/dashboard-verification-navigation.js') }}?v=31" defer
             data-dashboard="{{ route('admin.dashboard') }}"
             data-verification="{{ route('admin.reports.verification') }}"
             data-items="{{ route('admin.items.index') }}"

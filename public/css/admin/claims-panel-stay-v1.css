@@ -1,0 +1,55 @@
+/*
+ * FindBack Kampus — Klaim & Pengembalian
+ * Daftar Pengajuan Klaim — Stay V1
+ *
+ * Tujuan:
+ * - Panel "Daftar Pengajuan Klaim" tetap stabil/stay.
+ * - Tidak ada animasi masuk ulang pada panel.
+ * - Tidak ada pergeseran/transform saat panel diklik.
+ * - Animasi 5 kartu statistik di atas tetap berjalan normal.
+ *
+ * Visual-only. Tidak mengubah route, query, form, data, atau workflow.
+ */
+
+.fb-claim-panel {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+/* Pastikan klik/fokus pada isi panel tidak membuat seluruh panel ikut bergeser. */
+.fb-claim-panel:focus,
+.fb-claim-panel:focus-within,
+.fb-claim-panel:active {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+/* Panel tetap diam; hanya kontrol yang memang punya interaksi boleh bergerak sendiri. */
+.fb-claim-panel .fb-claim-panel-head,
+.fb-claim-panel .fb-claim-filter-note,
+.fb-claim-panel .fb-claim-tabs,
+.fb-claim-panel .fb-claim-filters,
+.fb-claim-panel .fb-claim-table-wrap,
+.fb-claim-panel .fb-claim-table {
+    animation: none !important;
+}
+
+/* Menghindari efek transform dari parent ketika area daftar diklik. */
+@media (hover: hover) {
+    .fb-claim-panel:hover {
+        transform: none !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fb-claim-panel,
+    .fb-claim-panel * {
+        animation: none !important;
+    }
+
+    .fb-claim-panel {
+        transform: none !important;
+    }
+}

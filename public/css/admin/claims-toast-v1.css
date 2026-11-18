@@ -12,3 +12,26 @@
 @keyframes fb-claim-toast-in{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:767px){.fb-claim-toast{top:calc(env(safe-area-inset-top,0px) + 88px);left:12px;right:12px;width:auto;padding:13px;gap:10px;max-height:calc(100dvh - 110px);overflow:auto}}
 @media(prefers-reduced-motion:reduce){.fb-claim-toast{animation:none}}
+
+/* Consolidated toast alignment rules (previously claims-toast-alignment-v2.css). */
+/* FindBack Toast Klaim V2 - parity with Verification toast V1 */
+.fb-claim-toast {
+  top: 90px !important;
+  right: 24px !important;
+  left: auto !important;
+  width: min(390px, calc(100vw - 32px)) !important;
+  max-width: calc(100vw - 32px) !important;
+  padding: 14px 15px !important;
+  gap: 12px !important;
+  align-items: center !important;
+  border-radius: 16px !important;
+  box-shadow: 0 12px 36px rgba(45,12,29,.16) !important;
+}
+.fb-claim-toast-icon {flex: 0 0 36px !important; width: 36px !important; height: 36px !important; border-radius: 12px !important; font-size: 19px !important;}
+.fb-claim-toast-copy {gap: 4px !important; padding-top: 0 !important;}
+.fb-claim-toast-copy strong {font-size: 14px !important; line-height: 1.3 !important;}
+.fb-claim-toast-copy small, .fb-claim-toast-copy li {font-size: 12px !important; line-height: 1.5 !important;}
+.fb-claim-toast-close {flex: 0 0 36px !important; width: 36px !important; height: 36px !important;}
+@media (max-width: 767px) {
+ .fb-claim-toast {top: calc(env(safe-area-inset-top, 0px) + 88px) !important; left: 12px !important; right: 12px !important; width: auto !important; max-width: none !important; padding: 13px !important; gap: 10px !important; align-items: flex-start !important; max-height: calc(100dvh - 110px); overflow: auto;}
+}

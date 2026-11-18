@@ -20,19 +20,33 @@
   if (!store) return;
   const current = getURL(location.href);
   const active = routeOf(current);
+  function canonicalizeListURL(url) {
+    const path = normalize(url.pathname);
+    if (path === '/admin/claims') {
+      // Laravel mengalihkan /admin/claims?search= ke URL kanonis dengan HTTP 302.
+      // Hapus nilai kosong sebelum URL disimpan atau dipakai untuk navigasi SPA.
+      for (const name of ['search', 'status']) {
+        if (url.searchParams.has(name) && !String(url.searchParams.get(name) ?? '').trim()) {
+          url.searchParams.delete(name);
+        }
+      }
+    }
+    return url;
+  }
   function save(url) {
     const route = routeOf(url);
     if (!route || loggingOut) return;
     try {
-      store.setItem(prefix + route, url.search);
+      const canonical = canonicalizeListURL(new URL(url.href));
+      if (canonical.search) store.setItem(prefix + route, canonical.search);
+      else store.removeItem(prefix + route);
     } catch (_) {}
   }
   function last(route) {
     try {
       const search = store.getItem(prefix + route);
       if (!search?.startsWith('?')) return null;
-      const url = new URL(route, location.origin);
-      url.search = search;
+      const url = canonicalizeListURL(new URL(route + search, location.origin));
 
       // Filter lama dapat tersimpan di browser setelah pilihan status berubah.
       // Jangan kirim nilai status yang tidak dikenal ke validasi Laravel.
@@ -49,7 +63,12 @@
           url.searchParams.get('evidence') !== 'open') {
         url.searchParams.delete('evidence');
       }
-      if (!url.searchParams.toString()) return null;
+      if (!url.searchParams.toString()) {
+        store.removeItem(prefix + route);
+        return null;
+      }
+      // Simpan ulang URL yang sudah dibersihkan agar nilai lama tidak muncul lagi.
+      store.setItem(prefix + route, url.search);
       return url;
     } catch (_) { return null; }
   }

@@ -3,7 +3,7 @@
 @section('breadcrumb', 'Klaim Barang')
 @section('page-styles')
     <link rel="stylesheet" href="{{ asset('css/admin/claims-toast-v1.css') }}?v=1">
-    <link rel="stylesheet" href="{{ asset('css/admin/admin-claims.css') }}?v=20261101-final">
+    <link rel="stylesheet" href="{{ asset('css/admin/admin-claims.css') }}?v=20261118-claims-v1">
     <link rel="stylesheet" href="{{ asset('css/admin/claim-detail-compact.css') }}?v=6">
     <link rel="stylesheet" href="{{ asset('css/admin/claim-detail-premium.css') }}?v=7">
     <link rel="stylesheet" href="{{ asset('css/admin/claim-detail-spacing.css') }}?v=9">
@@ -12,14 +12,10 @@
     <link rel="stylesheet" href="{{ asset('css/admin/claim-detail-responsive.css') }}?v=14">
     <link rel="stylesheet" href="{{ asset('css/chat/claim-chat-premium.css') }}?v=20261111">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/detail-back.css') }}?v=1">
-    <link rel="stylesheet" href="{{ asset('css/admin/claims-toast-alignment-v2.css') }}?v=2">
 @endsection
 
 @section('content')
-    <script defer src="{{ asset('js/admin/claims-toast-v1.js') }}?v=1"></script>
-
-
-    <div class="fb-page-heading fb-claim-heading fb-detail-return-heading">
+<div class="fb-page-heading fb-claim-heading fb-detail-return-heading">
         <a class="fb-detail-return" data-fb-detail-back href="{{ route('admin.claims.index') }}"><span aria-hidden="true">←</span> Kembali ke daftar</a>
         <div>
             <p class="fb-eyebrow">ADMINISTRASI · FINDBACK KAMPUS</p>

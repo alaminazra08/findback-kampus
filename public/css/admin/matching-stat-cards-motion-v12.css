@@ -1,0 +1,121 @@
+/* FindBack Matching — Stat Card Motion V12
+ * Verification-style interaction polish for Matching statistics.
+ * Scoped ONLY to the four .match-stat cards on the Matching index.
+ * Desktop: hover + click pulse.
+ * Mobile/touch: press/tap feedback through .fb-match-stat-active.
+ */
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat {
+    position: relative;
+    overflow: hidden;
+    transform: translateY(0);
+    transform-origin: center center;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+        transform 220ms cubic-bezier(.2,.75,.25,1),
+        box-shadow 220ms ease,
+        border-color 220ms ease,
+        filter 220ms ease,
+        background-color 220ms ease !important;
+}
+
+/* The short colored corner line is the animated accent. */
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat::before {
+    transition:
+        width 240ms cubic-bezier(.2,.75,.25,1),
+        height 180ms ease,
+        opacity 180ms ease !important;
+    transform-origin: left center;
+}
+
+/* The icon badge follows the card movement subtly. */
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat::after {
+    transition:
+        transform 220ms cubic-bezier(.2,.75,.25,1),
+        box-shadow 220ms ease,
+        filter 220ms ease !important;
+}
+
+/* Desktop / mouse: hover exactly like the Verification cards. */
+@media (hover:hover) and (pointer:fine) {
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 17px 35px rgba(81,15,43,.13) !important;
+        border-color: #d9a1b7 !important;
+        filter: brightness(1.008);
+    }
+
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat:hover::before {
+        width: 68px !important;
+    }
+
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat:hover::after {
+        transform: translateY(-2px) scale(1.035);
+        box-shadow: 0 5px 12px rgba(81,15,43,.08);
+    }
+
+    /* Mouse click gives a short confirmation pulse. */
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat.fb-match-stat-active {
+        transform: translateY(-2px) scale(.992);
+        box-shadow: 0 11px 25px rgba(81,15,43,.12) !important;
+    }
+
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat.fb-match-stat-active::before {
+        width: 72px !important;
+    }
+
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat.fb-match-stat-active::after {
+        transform: translateY(-1px) scale(1.025);
+    }
+}
+
+/* Touch / mobile: the same visual language without relying on :hover. */
+@media (hover:none), (pointer:coarse) {
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat {
+        transition:
+            transform 190ms cubic-bezier(.2,.75,.25,1),
+            box-shadow 190ms ease,
+            border-color 190ms ease !important;
+    }
+
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat::before {
+        transition: width 220ms cubic-bezier(.2,.75,.25,1) !important;
+    }
+
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat::after {
+        transition: transform 190ms ease, box-shadow 190ms ease !important;
+    }
+
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat.fb-match-stat-active {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 14px 28px rgba(81,15,43,.15) !important;
+        border-color: #e7a0bd !important;
+    }
+
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat.fb-match-stat-active::before {
+        width: 58px !important;
+    }
+
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat.fb-match-stat-active::after {
+        transform: translateY(-2px) scale(1.025);
+        box-shadow: 0 5px 12px rgba(81,15,43,.08);
+    }
+}
+
+/* Keep the motion proportional on narrow cards. */
+@media (max-width:700px) {
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat:hover::before {
+        width: 54px !important;
+    }
+}
+
+@media (prefers-reduced-motion:reduce) {
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat,
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat::before,
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat::after {
+        transition: none !important;
+    }
+
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat.fb-match-stat-active {
+        transform: none !important;
+    }
+}

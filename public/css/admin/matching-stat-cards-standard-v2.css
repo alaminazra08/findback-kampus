@@ -1,0 +1,103 @@
+/* FINDBACK MATCHING STAT CARDS — ALIGN WITH VERIFICATION REFERENCE
+   Scoped exclusively to the Matching index page.
+   Preserve each card's existing status color and icon treatment. */
+
+.match-wrap:has(> .match-index-heading) > .match-stats {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    align-items: stretch !important;
+    grid-auto-rows: 1fr !important;
+    gap: 14px !important;
+    margin-bottom: 22px !important;
+}
+
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat {
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    min-height: 196px !important;
+    height: 100% !important;
+    padding: 22px 22px 20px !important;
+    border-radius: 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    gap: 0 !important;
+}
+
+/* Match the label / number / description rhythm of Verification. */
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat > small {
+    display: block !important;
+    min-height: 18px !important;
+    max-width: calc(100% - 52px) !important;
+    padding-right: 0 !important;
+    font-size: 12px !important;
+    font-weight: 750 !important;
+    line-height: 1.4 !important;
+}
+
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat > strong {
+    display: block !important;
+    margin-top: 21px !important;
+    font-size: 38px !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.045em !important;
+    font-variant-numeric: tabular-nums !important;
+}
+
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat > span {
+    display: block !important;
+    margin-top: 8px !important;
+    font-size: 11.5px !important;
+    line-height: 1.5 !important;
+}
+
+/* Tablet: two equal columns. */
+@media (max-width: 1050px) {
+    .match-wrap:has(> .match-index-heading) > .match-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+/* Mobile: preserve the two-column card rhythm and comfortable touch spacing. */
+@media (max-width: 700px) {
+    .match-wrap:has(> .match-index-heading) > .match-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+        margin-bottom: 20px !important;
+    }
+
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat {
+        min-height: 220px !important;
+        height: 220px !important;
+        padding: 22px 18px 19px !important;
+        border-radius: 18px !important;
+    }
+
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat > small {
+        max-width: calc(100% - 38px) !important;
+        font-size: 11.5px !important;
+    }
+
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat > strong {
+        margin-top: 20px !important;
+        font-size: 36px !important;
+    }
+
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat > span {
+        font-size: 11px !important;
+    }
+}
+
+/* Very narrow phones: one column prevents cramped labels. */
+@media (max-width: 360px) {
+    .match-wrap:has(> .match-index-heading) > .match-stats {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat {
+        transition: none !important;
+        animation: none !important;
+    }
+}

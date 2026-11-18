@@ -1,0 +1,100 @@
+/*
+ * FindBack — Stat Card Accent Animation V2
+ * Hover/focus/tap animation for statistic cards.
+ * Does not move the page or the surrounding panel.
+ */
+.findback-stat-card-animated {
+    position: relative !important;
+    overflow: hidden !important;
+    isolation: isolate;
+    transition:
+        transform .22s cubic-bezier(.22,.61,.36,1),
+        box-shadow .22s ease,
+        border-color .22s ease;
+}
+
+/* Keep the original corner accent, then add a moving highlight over it. */
+.findback-stat-card-animated::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 24px;
+    width: 62px;
+    height: 4px;
+    border-radius: 0 0 999px 999px;
+    background: currentColor;
+    color: var(--findback-stat-accent, #a10d3f);
+    transform: translateX(-90px);
+    opacity: 0;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.findback-stat-card-animated::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -80px;
+    width: 70px;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.95),
+        transparent
+    );
+    opacity: 0;
+    transform: translateX(0);
+    z-index: 6;
+    pointer-events: none;
+}
+
+/* Desktop hover/focus. */
+.findback-stat-card-animated:hover,
+.findback-stat-card-animated:focus-within,
+.findback-stat-card-animated.is-active {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--findback-stat-accent, #a10d3f) 42%, #f0dbe4);
+    box-shadow: 0 14px 30px rgba(90, 12, 48, .10);
+}
+
+.findback-stat-card-animated:hover::before,
+.findback-stat-card-animated:focus-within::before,
+.findback-stat-card-animated.is-active::before {
+    animation: findbackStatAccentMove .72s cubic-bezier(.22,.61,.36,1) both;
+    opacity: 1;
+}
+
+.findback-stat-card-animated:hover::after,
+.findback-stat-card-animated:focus-within::after,
+.findback-stat-card-animated.is-active::after {
+    animation: findbackStatShine .72s cubic-bezier(.22,.61,.36,1) both;
+    opacity: .9;
+}
+
+/* Mobile/touch: JS adds .is-active so the animation is visible after tapping. */
+@keyframes findbackStatAccentMove {
+    0%   { transform: translateX(-90px); opacity: 0; }
+    18%  { opacity: 1; }
+    100% { transform: translateX(235px); opacity: 1; }
+}
+
+@keyframes findbackStatShine {
+    0%   { transform: translateX(0); opacity: 0; }
+    15%  { opacity: .9; }
+    100% { transform: translateX(430px); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .findback-stat-card-animated,
+    .findback-stat-card-animated:hover,
+    .findback-stat-card-animated.is-active {
+        transition: none;
+        transform: none;
+    }
+    .findback-stat-card-animated::before,
+    .findback-stat-card-animated::after {
+        animation: none !important;
+    }
+}

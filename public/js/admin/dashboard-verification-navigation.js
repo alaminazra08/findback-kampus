@@ -20,6 +20,20 @@
         const match = path.match(/^(.*)\/[0-9]+\/?$/);
         return match ? detailPages.get(pages.get(match[1])) : undefined;
     }
+    function canonicalNavigationURL(value) {
+        const url = value instanceof URL ? new URL(value.href) : new URL(value, location.href);
+        if (pageOf(url.pathname) === 'claims') {
+            // Controller mengkanonisasi query kosong dengan HTTP 302.
+            // Buang parameter kosong sebelum fetch agar SPA menerima respons 200 langsung.
+            for (const name of ['search', 'status']) {
+                if (url.searchParams.has(name) && !String(url.searchParams.get(name) ?? '').trim()) {
+                    url.searchParams.delete(name);
+                }
+            }
+        }
+        return url;
+    }
+
     function rememberedListURL(url) {
         const page = pageOf(url.pathname);
         if ((page !== 'matching' && page !== 'users') || url.search) return url;
@@ -80,11 +94,10 @@
             location.assign(url.href);
             return;
         }
-        if (typeof navigate === 'function') {
-            navigate(url, 'push');
-        } else {
-            location.assign(url.href);
-        }
+        if (url.href === location.href && url.href === displayedURL) return;
+        // Filter Klaim memakai mesin navigasi global yang sama dengan perpindahan halaman.
+        // Pertahankan posisi baca agar hasil filter tidak memaksa halaman melompat ke atas.
+        navigate(url, 'push', position());
     }, true);
 
     history.replaceState({...history.state, fbAdminURL: location.href}, '');
@@ -193,7 +206,7 @@
         if (!value || document.hidden || navigator.connection?.saveData) return Promise.resolve();
         // Prefetch URL yang sama persis dengan URL yang akan dipakai klik,
         // termasuk filter terakhir yang dipulihkan untuk halaman Pencocokan.
-        const url = rememberedListURL(new URL(value, location.href));
+        const url = rememberedListURL(canonicalNavigationURL(new URL(value, location.href)));
         if (url.origin !== location.origin || !isQuickNavigation(url) || url.href === location.href) {
             return Promise.resolve();
         }
@@ -258,15 +271,17 @@
             signal,
             headers: { Accept: 'text/html' }
         }).then(response => {
+            const contentType = response.headers.get('content-type') || '';
             if (!response.ok || response.redirected || response.url !== url.href ||
-                !(response.headers.get('content-type') || '').includes('text/html')) {
-                throw Error('Navigation response');
+                !contentType.includes('text/html')) {
+                throw Error(`Navigation response (status=${response.status}, redirected=${response.redirected}, finalURL=${response.url}, contentType=${contentType})`);
             }
             return response.text();
         });
     }
 
     async function navigate(url, historyMode, scroll, back) {
+        url = canonicalNavigationURL(url);
         if (submitting || (pending && !pending.signal.aborted && pendingURL === url.href)) return;
         pending?.abort();
         const controller = new AbortController();
@@ -368,13 +383,13 @@
         const link = event.target.closest?.('.fb-sidebar a.fb-nav-link[href], main[data-fb-nav-page] a[href], #fb-notif a.fb-notif-action[href]');
         if (!link || link.target || link.hasAttribute('download') || !main()) return;
 
-        let url = new URL(link.href);
+        let url = canonicalNavigationURL(new URL(link.href));
         const target = pageOf(url.pathname);
         if (url.origin !== location.origin || url.hash || !target) return;
         const current = main().dataset.fbNavPage;
-        if (current === target && !target.endsWith('-detail')) {
+        if (current === target && !target.endsWith('-detail') && target !== 'claims') {
             pending?.abort();
-            return; // Existing listing scripts own filters, tabs and pagination.
+            return; // Listing lain tetap ditangani oleh pengelola halaman masing-masing.
         }
         event.preventDefault();
         if (url.href === location.href && url.href === displayedURL) {
@@ -396,7 +411,10 @@
         } else if (target.endsWith('-detail')) {
             back = current.endsWith('-detail') ? history.state?.fbAdminBack : {url: location.href, scroll: position()};
         }
-        navigate(scroll ? url : rememberedListURL(url), 'push', scroll, back);
+        // Tab, reset, dan pagination Klaim juga melalui mesin global.
+        // Ini menghindari dua pengelola AJAX yang saling berebut event/history.
+        const preserveClaimsScroll = current === 'claims' && target === 'claims' ? position() : scroll;
+        navigate(scroll ? url : rememberedListURL(url), 'push', preserveClaimsScroll, back);
     });
 
     document.addEventListener('fb:notification-open', event => {
@@ -460,7 +478,7 @@
         const current = main()?.dataset.fbNavPage;
         const target = pageOf(url.pathname);
         if (!current || !target) return;
-        if (current === target && target !== 'statistics' && !target.endsWith('-detail')) {
+        if (current === target && target !== 'statistics' && target !== 'claims' && !target.endsWith('-detail')) {
             displayedURL = url.href;
             return;
         }

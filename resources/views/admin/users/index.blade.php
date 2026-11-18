@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="{{ asset('css/admin/users-filter-final.css') }}?v=4">
     {{-- FINDBACK_USERS_MOBILE_COMPACT_V1 --}}
     <link rel="stylesheet" href="{{ asset('css/admin/users-mobile-compact.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/users-stat-cards-verification-size-v1.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/admin/users-stat-cards-signature-rail-v3.css') }}?v=3">
 @endsection
 
 @section('content')
@@ -39,16 +41,31 @@
             @endif
         @endforeach
 
-        <div class="fb-users-stats">
-            <article><span>Total Akun</span><strong>{{ number_format($stats['total'], 0, ',', '.') }}</strong><small>Seluruh
-                    pengguna terdaftar</small></article>
-            <article><span>Administrator</span><strong>{{ number_format($stats['admin'], 0, ',', '.') }}</strong><small>Akun
-                    pengelola sistem</small></article>
-            <article><span>Pengguna Biasa</span><strong>{{ number_format($stats['user'], 0, ',', '.') }}</strong><small>Akun
-                    dengan role user</small></article>
-            <article><span>Akun
-                    Google</span><strong>{{ number_format($stats['google'], 0, ',', '.') }}</strong><small>Terhubung dengan
-                    Google OAuth</small></article>
+        <div class="fb-users-stats" aria-label="Ringkasan statistik akun">
+            <article class="fb-users-stat-card fb-users-stat-card--total">
+                <span>Total Akun</span>
+                <strong>{{ number_format($stats['total'], 0, ',', '.') }}</strong>
+                <small>Seluruh pengguna terdaftar</small>
+                <span class="fb-users-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></span>
+            </article>
+            <article class="fb-users-stat-card fb-users-stat-card--admin">
+                <span>Administrator</span>
+                <strong>{{ number_format($stats['admin'], 0, ',', '.') }}</strong>
+                <small>Akun pengelola sistem</small>
+                <span class="fb-users-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            </article>
+            <article class="fb-users-stat-card fb-users-stat-card--users">
+                <span>Pengguna Biasa</span>
+                <strong>{{ number_format($stats['user'], 0, ',', '.') }}</strong>
+                <small>Akun dengan role user</small>
+                <span class="fb-users-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M3 21v-2a6 6 0 0 1 12 0v2M19 8v6M16 11h6"/></svg></span>
+            </article>
+            <article class="fb-users-stat-card fb-users-stat-card--google">
+                <span>Akun Google</span>
+                <strong>{{ number_format($stats['google'], 0, ',', '.') }}</strong>
+                <small>Terhubung dengan Google OAuth</small>
+                <span class="fb-users-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M20.2 9H12v4h4.8a5 5 0 1 1-1.5-5.6"/></svg></span>
+            </article>
         </div>
 
         <section class="fb-users-panel" aria-labelledby="fb-users-list-heading">
@@ -115,7 +132,7 @@
                                 <td><span
                                         class="fb-users-verified {{ $account->email_verified_at ? 'yes' : '' }}">{{ $account->email_verified_at ? 'Terverifikasi' : 'Belum verifikasi' }}</span>
                                 </td>
-                                <td>{{ $account->created_at?->timezone('Asia/Jakarta')->format('d/m/Y') ?? 'â€”' }}</td>
+                                <td>{{ $account->created_at?->timezone('Asia/Jakarta')->format('d/m/Y') ?? '—' }}</td>
                                 <td><a class="fb-users-detail-link" href="{{ route('admin.users.show', $account) }}"><span
                                             class="fb-users-detail-icon"><svg xmlns="http://www.w3.org/2000/svg"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
@@ -135,19 +152,19 @@
             </div>
             @if ($users->hasPages())
                 <div class="fb-users-pagination">
-                    <span>Menampilkan {{ $users->firstItem() }}â€“{{ $users->lastItem() }} dari {{ $users->total() }}
+                    <span>Menampilkan {{ $users->firstItem() }}–{{ $users->lastItem() }} dari {{ $users->total() }}
                         akun</span>
                     <div>
                         @if ($users->onFirstPage())
-                            <span class="is-disabled">â† Sebelumnya</span>
+                            <span class="is-disabled">← Sebelumnya</span>
                         @else
-                            <a href="{{ $users->previousPageUrl() }}">â† Sebelumnya</a>
+                            <a href="{{ $users->previousPageUrl() }}">← Sebelumnya</a>
                         @endif
                         <span>Hal. {{ $users->currentPage() }} / {{ $users->lastPage() }}</span>
                         @if ($users->hasMorePages())
-                            <a href="{{ $users->nextPageUrl() }}">Berikutnya â†’</a>
+                            <a href="{{ $users->nextPageUrl() }}">Berikutnya →</a>
                         @else
-                            <span class="is-disabled">Berikutnya â†’</span>
+                            <span class="is-disabled">Berikutnya →</span>
                         @endif
                     </div>
                 </div>
@@ -157,3 +174,4 @@
         </p>
     </div>
 @endsection
+

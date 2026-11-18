@@ -1,4 +1,4 @@
-@extends('admin.layouts.items')
+﻿@extends('admin.layouts.items')
 
 @section('title', 'Pencocokan Barang')
 @section('breadcrumb', 'Pencocokan Barang')
@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="{{ asset('css/pages/admin/matching/index.css') }}?v=3-verification-layout">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/matching/consistency-v3.css') }}?v=20261115-1">
     <link rel=stylesheet href={{ asset('css/pages/admin/matching/hover-v5.css') }}?v=20261115-5>
-    <link rel="stylesheet" href="{{ asset('css/admin/statistics-motion-v12.css') }}?v=12">
+    <link rel="stylesheet" href="{{ asset('css/admin/matching-stat-cards-verification-reference-v3.css') }}?v=3">
+    <link rel="stylesheet" href="{{ asset('css/admin/matching-page-premium-responsive-v4.css') }}?v=4">
 @endsection
 
 @section('content')
-    <script defer src="{{ asset('js/admin/statistics-motion-v12.js') }}?v=12"></script>
 
     {{-- FINDBACK_ICON_PREMIUM_FIX_V2 --}}
     
@@ -26,11 +26,11 @@
                 <p>Bandingkan laporan barang hilang dan ditemukan untuk menghasilkan kandidat yang ditinjau administrator.
                 </p>
             </div>
-            <form method="POST" action="{{ route('admin.matching.generate') }}"
+            <form class="fb-admin-header-action-group" method="POST" action="{{ route('admin.matching.generate') }}"
                 data-confirm="Jalankan pencocokan laporan terverifikasi? Kandidat yang sudah diperiksa tidak akan diubah."
                 data-fb-match-generate>
                 @csrf
-                <button class="match-button" type="submit"><svg class="match-action-svg" viewBox="0 0 24 24"
+                <button class="match-button fb-admin-header-action" type="submit"><svg class="match-action-svg" viewBox="0 0 24 24"
                         aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9"
                         stroke-linecap="round" stroke-linejoin="round">
                         <path d="M16 3h5v5" />
@@ -40,7 +40,7 @@
                         <path d="M21 16v5h-5" />
                         <path d="M4 4l6 6" />
                     </svg><span>Jalankan Pencocokan</span></button>
-                <p class="match-generation-hint">Kandidat baru tetap membutuhkan keputusan Admin.</p>
+                <p class="match-generation-hint fb-admin-header-action-hint">Kandidat baru tetap membutuhkan keputusan Admin.</p>
             </form>
         </div>
 
@@ -51,7 +51,7 @@
         @if ($matchingMessage)
             <div data-fb-matching-toast class="fb-settings-toast is-visible{{ $matchingError ? ' is-error' : '' }}"
                 role="{{ $matchingError ? 'alert' : 'status' }}" aria-atomic="true">
-                <span class="fb-settings-toast-icon" aria-hidden="true">{{ $matchingError ? '!' : '✓' }}</span>
+                <span class="fb-settings-toast-icon" aria-hidden="true">{{ $matchingError ? '!' : 'âœ“' }}</span>
                 <span class="fb-settings-toast-copy" style="overflow-wrap:anywhere">
                     <strong>{{ $matchingError ? 'Pencocokan gagal' : 'Pencocokan selesai' }}</strong>
                     <small>{{ $matchingError ? $matchingMessage : (preg_replace('/^Pencocokan selesai\.?\s*/i', '', $matchingMessage) ?: $matchingMessage) }}</small>
@@ -176,3 +176,4 @@
     </div>
 
 @endsection
+

@@ -1,0 +1,102 @@
+/* FindBack Statistics — Illustration Icon Alignment Fix V2
+   Only corrects the six icon tiles. Card geometry and content layout remain owned
+   by statistics-cards-consistency-v1.css. */
+.fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-icon.fs-card-icon-illustrated {
+    position: absolute !important;
+    z-index: 3 !important;
+    top: 22px !important;
+    right: 21px !important;
+    left: auto !important;
+    bottom: auto !important;
+    display: grid !important;
+    place-items: center !important;
+    box-sizing: border-box !important;
+    width: 43px !important;
+    min-width: 43px !important;
+    max-width: 43px !important;
+    height: 43px !important;
+    min-height: 43px !important;
+    max-height: 43px !important;
+    flex: 0 0 43px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 1px solid #f2dce6 !important;
+    border-radius: 13px !important;
+    color: #941542 !important;
+    background: linear-gradient(145deg, #fff8fb 0%, #f9e8ef 100%) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 4px 12px rgba(117,22,59,.055) !important;
+    line-height: 1 !important;
+    overflow: visible !important;
+    transform: none;
+    transition: transform .24s cubic-bezier(.2,.75,.25,1), background-color .24s ease, box-shadow .24s ease !important;
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-icon.fs-card-icon-illustrated::after {
+    content: none !important;
+    display: none !important;
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-icon.fs-card-icon-illustrated svg {
+    display: block !important;
+    width: 25px !important;
+    min-width: 25px !important;
+    max-width: 25px !important;
+    height: 25px !important;
+    min-height: 25px !important;
+    max-height: 25px !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    color: currentColor !important;
+    filter: none !important;
+    transition: transform .24s cubic-bezier(.2,.75,.25,1), filter .24s ease !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .fs-page .fs-cards > article.fs-card.fs-card-v4:hover .fs-card-icon.fs-card-icon-illustrated {
+        transform: translateY(-2px) !important;
+        background: linear-gradient(145deg, #fff5f9 0%, #f6e1ea 100%) !important;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.98), 0 6px 15px rgba(117,22,59,.10) !important;
+    }
+
+    .fs-page .fs-cards > article.fs-card.fs-card-v4:hover .fs-card-icon.fs-card-icon-illustrated svg {
+        transform: scale(1.06) !important;
+        filter: drop-shadow(0 1px 1px rgba(117,22,59,.12)) !important;
+    }
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4.is-animating .fs-card-icon.fs-card-icon-illustrated {
+    transform: scale(1.04) !important;
+}
+
+@media (max-width: 600px) {
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-icon.fs-card-icon-illustrated {
+        top: 17px !important;
+        right: 13px !important;
+        left: auto !important;
+        width: 40px !important;
+        min-width: 40px !important;
+        max-width: 40px !important;
+        height: 40px !important;
+        min-height: 40px !important;
+        max-height: 40px !important;
+        flex: 0 0 40px !important;
+        border-radius: 12px !important;
+    }
+
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-icon.fs-card-icon-illustrated svg {
+        width: 23px !important;
+        min-width: 23px !important;
+        max-width: 23px !important;
+        height: 23px !important;
+        min-height: 23px !important;
+        max-height: 23px !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-icon.fs-card-icon-illustrated,
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-icon.fs-card-icon-illustrated svg {
+        transition: none !important;
+        animation: none !important;
+    }
+}

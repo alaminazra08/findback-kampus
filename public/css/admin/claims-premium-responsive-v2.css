@@ -1,0 +1,378 @@
+/*
+ * FindBack Kampus — Klaim & Pengembalian
+ * Premium Responsive Consistency V2
+ *
+ * Visual-only layer. Does not alter routes, forms, queries, workflow, or data.
+ * Reference: Verifikasi Laporan V18 statistic-card proportions.
+ */
+
+.fb-claim-executive .fb-claim-stats {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px !important;
+    margin: 25px 0 22px !important;
+}
+
+.fb-claim-executive .fb-claim-stat {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 166px !important;
+    padding: 23px 21px 20px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background: linear-gradient(135deg, #fff 58%, #fffbfd) !important;
+    border: 1px solid #ecdce4 !important;
+    border-radius: 19px !important;
+    box-shadow: 0 9px 25px rgba(67, 20, 41, 0.045) !important;
+    transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease,
+        border-color 0.22s ease;
+    animation: fbClaimsCardIn 0.42s ease both;
+}
+
+.fb-claim-executive .fb-claim-stat:nth-child(2) { animation-delay: 45ms; }
+.fb-claim-executive .fb-claim-stat:nth-child(3) { animation-delay: 90ms; }
+.fb-claim-executive .fb-claim-stat:nth-child(4) { animation-delay: 135ms; }
+.fb-claim-executive .fb-claim-stat:nth-child(5) { animation-delay: 180ms; }
+
+.fb-claim-executive .fb-claim-stat::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 22px;
+    width: 48px;
+    height: 3px;
+    border-radius: 0 0 6px 6px;
+    background: #a56c21;
+}
+
+.fb-claim-executive .fb-claim-stat::after {
+    content: "";
+    position: absolute;
+    top: 19px;
+    right: 19px;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background-color: #fff5e6;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 21px 21px;
+}
+
+.fb-claim-executive .fb-claim-stat.is-pending::before {
+    background: #a56c21;
+}
+.fb-claim-executive .fb-claim-stat.is-pending::after {
+    background-color: #fff5e6;
+}
+.fb-claim-executive .fb-claim-stat.is-approved::before,
+.fb-claim-executive .fb-claim-stat.is-returned::before {
+    background: #207751;
+}
+.fb-claim-executive .fb-claim-stat.is-approved::after,
+.fb-claim-executive .fb-claim-stat.is-returned::after {
+    background-color: #ebf7ef;
+}
+.fb-claim-executive .fb-claim-stat.is-rejected::before {
+    background: #b43b55;
+}
+.fb-claim-executive .fb-claim-stat.is-rejected::after {
+    background-color: #fff0f3;
+}
+
+/* Simple line icons, matching Verifikasi's visual language. */
+.fb-claim-executive .fb-claim-stat:not(.is-pending):not(.is-approved):not(.is-rejected):not(.is-returned)::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23850c2d' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='4' width='14' height='16' rx='2'/%3E%3Cpath d='M8 8h8M8 12h8M8 16h5'/%3E%3C/svg%3E");
+}
+.fb-claim-executive .fb-claim-stat.is-pending::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a66b12' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3 2'/%3E%3C/svg%3E");
+}
+.fb-claim-executive .fb-claim-stat.is-approved::after,
+.fb-claim-executive .fb-claim-stat.is-returned::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23187653' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='m8 12 3 3 5-6'/%3E%3C/svg%3E");
+}
+.fb-claim-executive .fb-claim-stat.is-rejected::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23aa3751' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='m9 9 6 6M15 9l-6 6'/%3E%3C/svg%3E");
+}
+
+.fb-claim-executive .fb-claim-stat span {
+    position: relative;
+    z-index: 1;
+    display: block;
+    max-width: calc(100% - 50px);
+    color: #755366 !important;
+    font-size: 12px !important;
+    font-weight: 750 !important;
+    line-height: 1.4;
+}
+
+.fb-claim-executive .fb-claim-stat strong {
+    position: relative;
+    z-index: 1;
+    display: block;
+    margin-top: 21px !important;
+    color: #45162e;
+    font-size: 38px !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.045em;
+    font-variant-numeric: tabular-nums;
+}
+
+.fb-claim-executive .fb-claim-stat.is-pending strong {
+    color: #a5691c !important;
+}
+.fb-claim-executive .fb-claim-stat.is-approved strong,
+.fb-claim-executive .fb-claim-stat.is-returned strong {
+    color: #227449 !important;
+}
+.fb-claim-executive .fb-claim-stat.is-rejected strong {
+    color: #9a2443 !important;
+}
+
+.fb-claim-executive .fb-claim-stat-note {
+    position: relative;
+    z-index: 1;
+    margin: 8px 0 0 !important;
+    color: #927986 !important;
+    font-size: 11.5px !important;
+    line-height: 1.5 !important;
+}
+
+/* Keep the panel rhythm close to Verifikasi. */
+.fb-claim-panel {
+    border-radius: 19px !important;
+    padding: 26px !important;
+    transition: box-shadow 0.22s ease, border-color 0.22s ease;
+    animation: fbClaimsPanelIn 0.48s ease both;
+}
+.fb-claim-panel-head {
+    min-width: 0;
+}
+.fb-claim-tabs .fb-claim-tab,
+.fb-claim-filters input,
+.fb-claim-filters select,
+.fb-claim-filters button,
+.fb-claim-reset {
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease,
+        background-color 0.18s ease;
+}
+.fb-claim-filters input:focus,
+.fb-claim-filters select:focus {
+    transform: translateY(-1px);
+}
+.fb-claim-filters button:hover,
+.fb-claim-reset:hover,
+.fb-claim-tabs .fb-claim-tab:hover {
+    transform: translateY(-1px);
+}
+
+@keyframes fbClaimsCardIn {
+    from {
+        opacity: 0;
+        transform: translateY(9px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes fbClaimsPanelIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* FINDBACK_CLAIMS_STAT_INTERACTION_V4
+ * Referensi interaksi: Verifikasi Laporan.
+ *
+ * HANYA 5 kartu statistik Klaim yang interaktif.
+ * Bagian halaman lainnya tidak diberi transform/hover motion.
+ *
+ * Hover:
+ * - kartu naik sangat halus seperti Verifikasi Laporan
+ * - shadow sedikit menguat
+ * - emblem ikut memberi micro-interaction
+ *
+ * Active/click:
+ * - kartu memberi respons tekan kecil
+ * - tidak mengubah layout atau posisi scroll
+ */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .fb-claim-executive .fb-claim-stat {
+        transform: translateZ(0);
+        transition:
+            transform 0.20s ease,
+            box-shadow 0.20s ease,
+            border-color 0.20s ease !important;
+        will-change: transform, box-shadow;
+    }
+
+    .fb-claim-executive .fb-claim-stat:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 15px 28px rgba(67, 20, 41, 0.085) !important;
+        border-color: #e5cbd6 !important;
+    }
+
+    .fb-claim-executive .fb-claim-stat::after {
+        transform: translateZ(0);
+        transform-origin: center;
+        transition:
+            transform 0.20s cubic-bezier(.2,.75,.25,1),
+            box-shadow 0.20s ease,
+            background-color 0.20s ease !important;
+        will-change: transform;
+    }
+
+    .fb-claim-executive .fb-claim-stat:hover::after {
+        transform: translateY(-1px) scale(1.06);
+        box-shadow: 0 6px 14px rgba(81, 15, 43, 0.09);
+    }
+
+    .fb-claim-executive .fb-claim-stat:active {
+        transform: translateY(-1px) scale(0.995) !important;
+        box-shadow: 0 9px 20px rgba(67, 20, 41, 0.07) !important;
+    }
+
+    .fb-claim-executive .fb-claim-stat:active::after {
+        transform: translateY(0) scale(1.02);
+        box-shadow: none;
+    }
+}
+
+/* Touch devices: no hover lift; tap remains visually stable. */
+@media (hover: none), (pointer: coarse) {
+    .fb-claim-executive .fb-claim-stat {
+        transform: none !important;
+        transition: box-shadow 0.18s ease, border-color 0.18s ease !important;
+    }
+
+    .fb-claim-executive .fb-claim-stat:active {
+        transform: scale(0.995) !important;
+        box-shadow: 0 9px 20px rgba(67, 20, 41, 0.07) !important;
+    }
+}
+
+/* The request is intentionally limited to the five statistic cards:
+   no panel/page hover transform and no entrance animation on the rest. */
+.fb-claim-executive .fb-claim-panel {
+    animation: none !important;
+}
+
+/* Prevent the five cards from running an entrance animation that can
+   make the whole section feel like it is moving on page load. */
+.fb-claim-executive .fb-claim-stat,
+.fb-claim-executive .fb-claim-stat:nth-child(2),
+.fb-claim-executive .fb-claim-stat:nth-child(3),
+.fb-claim-executive .fb-claim-stat:nth-child(4),
+.fb-claim-executive .fb-claim-stat:nth-child(5) {
+    animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fb-claim-executive .fb-claim-stat,
+    .fb-claim-executive .fb-claim-stat::after,
+    .fb-claim-executive .fb-claim-panel {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    .fb-claim-executive .fb-claim-stat:hover,
+    .fb-claim-executive .fb-claim-stat:active {
+        transform: none !important;
+        box-shadow: inherit !important;
+    }
+
+    .fb-claim-executive .fb-claim-stat:hover::after,
+    .fb-claim-executive .fb-claim-stat:active::after {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+}
+
+@media (max-width: 1180px) {
+    .fb-claim-executive .fb-claim-stats {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 900px) {
+    .fb-claim-executive .fb-claim-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 720px) {
+    .fb-claim-executive .fb-claim-stat {
+        min-height: 146px !important;
+        padding: 17px 13px 15px !important;
+    }
+    .fb-claim-executive .fb-claim-stat::before {
+        left: 13px;
+        width: 33px;
+    }
+    .fb-claim-executive .fb-claim-stat::after {
+        top: 12px;
+        right: 11px;
+        width: 31px;
+        height: 31px;
+        background-size: 18px 18px;
+    }
+    .fb-claim-executive .fb-claim-stat span {
+        max-width: calc(100% - 32px);
+        font-size: 11px !important;
+    }
+    .fb-claim-executive .fb-claim-stat strong {
+        font-size: 31px !important;
+        margin-top: 18px !important;
+    }
+    .fb-claim-executive .fb-claim-stat-note {
+        font-size: 10.5px !important;
+    }
+    .fb-claim-panel {
+        padding: 20px !important;
+    }
+}
+
+@media (max-width: 540px) {
+    .fb-claim-executive .fb-claim-stats {
+        gap: 11px !important;
+    }
+    .fb-claim-executive .fb-claim-stat {
+        min-height: 146px !important;
+    }
+}
+
+@media (max-width: 340px) {
+    .fb-claim-executive .fb-claim-stats {
+        grid-template-columns: 1fr !important;
+    }
+    .fb-claim-executive .fb-claim-stat {
+        min-height: 125px !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fb-claim-executive .fb-claim-stat,
+    .fb-claim-panel {
+        animation: none !important;
+        transition: none !important;
+    }
+    .fb-claim-executive .fb-claim-stat:hover {
+        transform: none !important;
+    }
+}

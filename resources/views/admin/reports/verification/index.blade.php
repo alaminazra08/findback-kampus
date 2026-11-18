@@ -11,12 +11,9 @@
     <link rel="stylesheet" href="{{ asset('css/admin/report-list-polish.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/hover-consistency-v6.css') }}?v=20261115-6">
     <link rel="stylesheet" href="{{ asset('css/admin/hover-line-v7.css') }}?v=20261115-7">
-    <link rel="stylesheet" href="{{ asset('css/admin/hover-responsive-v8.css') }}?v=20261115-8">
-    <link rel="stylesheet" href="{{ asset('css/admin/statistics-motion-v12.css') }}?v=12">
 @endsection
 
 @section('content')
-    <script defer src="{{ asset('js/admin/statistics-motion-v12.js') }}?v=12"></script>
 
     <div class="fb-page-heading fb-work-heading">
         <div>

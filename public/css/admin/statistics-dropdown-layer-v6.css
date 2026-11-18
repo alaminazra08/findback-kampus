@@ -1,0 +1,43 @@
+/*
+ * FindBack Kampus — Statistics dropdown layer coordination V6
+ * Ensures the period menu appears above the PDF control without changing layout.
+ */
+.fs-page .fs-header-actions.fs-period-layer-open {
+    position: relative !important;
+    z-index: 110 !important;
+    overflow: visible !important;
+}
+
+.fs-page .fs-header-actions.fs-period-layer-open > .fs-filter {
+    position: relative !important;
+    z-index: 111 !important;
+    overflow: visible !important;
+}
+
+.fs-page .fs-header-actions.fs-period-layer-open .fs-period-control {
+    position: relative !important;
+    z-index: 112 !important;
+}
+
+.fs-page .fs-header-actions.fs-period-layer-open .fs-period-menu {
+    z-index: 113 !important;
+}
+
+/* The PDF menu keeps its existing floating behavior when it is the active menu. */
+.fs-page .fs-header-actions:not(.fs-period-layer-open) .fs-report-download-wrap {
+    z-index: 26 !important;
+}
+
+@media (max-width: 760px) {
+    .fs-page .fs-header-actions.fs-period-layer-open,
+    .fs-page .fs-header-actions.fs-period-layer-open > .fs-filter,
+    .fs-page .fs-header-actions.fs-period-layer-open .fs-period-control {
+        overflow: visible !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fs-page .fs-period-menu {
+        animation: none !important;
+    }
+}

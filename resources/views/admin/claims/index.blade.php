@@ -1,18 +1,18 @@
+<link rel='stylesheet' href='{{ asset('css/shared/findback-claims-navigation-v1.css') }}' >
 @extends('admin.layouts.items')
 @section('title', 'Klaim Barang')
 @section('breadcrumb', 'Klaim Barang')
 @section('page-styles')
+    <link rel="stylesheet" href="{{ asset('css/admin/claims-panel-stay-v1.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/claims-toast-v1.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/header-consistency.css') }}?v=2">
-    <link rel="stylesheet" href="{{ asset('css/admin/admin-claims.css') }}?v=20261101-executive">
-    <link rel="stylesheet" href="{{ asset('css/admin/claims-table-consistency.css') }}?v=1">
-    <link rel="stylesheet" href="{{ asset('css/admin/claims-toast-alignment-v2.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/admin/admin-claims.css') }}?v=20261118-claims-v1">
+    <link rel="stylesheet" href="{{ asset('css/admin/claims-premium-responsive-v2.css') }}?v=20261118-claims-v3">
+    <script defer src="{{ asset('js/admin/claims-premium-motion-v1.js') }}?v=20261118-claims-v1"></script>
 @endsection
 
 @section('content')
-    <script defer src="{{ asset('js/admin/claims-toast-v1.js') }}?v=1"></script>
-
-    <section class="fb-claim-executive fb-work-claims" aria-label="Ringkasan Klaim Barang">
+<section class="fb-claim-executive fb-work-claims" aria-label="Ringkasan Klaim Barang">
         <div class="fb-page-heading fb-work-heading">
             <div>
                 <p class="fb-eyebrow">ADMINISTRASI · FINDBACK KAMPUS</p>
@@ -37,7 +37,7 @@
 
     @if (session('success'))
         <div class="fb-claim-toast" data-fb-claim-toast data-duration="5000" role="status" aria-live="polite" aria-atomic="true">
-            <span class="fb-claim-toast-icon" aria-hidden="true">✓</span>
+            <span class="fb-claim-toast-icon" aria-hidden="true">âœ“</span>
             <span class="fb-claim-toast-copy"><strong>Proses berhasil</strong><small>{{ session('success') }}</small></span>
             <button type="button" class="fb-claim-toast-close" aria-label="Tutup notifikasi" data-fb-claim-toast-close>&times;</button>
         </div>
@@ -158,7 +158,7 @@
                             <td colspan="6">
                                 @if (request('evidence') === 'open')
                                     <div class="fb-claim-empty" role="status"><span
-                                            aria-hidden="true">◇</span><strong>Tidak ada permintaan bukti tambahan yang
+                                            aria-hidden="true">â—‡</span><strong>Tidak ada permintaan bukti tambahan yang
                                             aktif</strong>
                                         <p>Saat ini tidak ada klaim yang sedang menunggu kelengkapan bukti. Klaim lain tetap
                                             tersedia di daftar Semua Klaim.</p><a class="fb-claim-empty-action"
@@ -166,14 +166,14 @@
                                     </div>
                                 @elseif(request()->filled('search') || request()->filled('status'))
                                     <div class="fb-claim-empty" role="status"><span
-                                            aria-hidden="true">◇</span><strong>Tidak ada klaim yang sesuai filter</strong>
+                                            aria-hidden="true">â—‡</span><strong>Tidak ada klaim yang sesuai filter</strong>
                                         <p>Coba ubah kata pencarian atau pilihan status untuk melihat pengajuan lainnya.</p>
                                         <a class="fb-claim-empty-action" href="{{ route('admin.claims.index') }}">Hapus
                                             Filter</a>
                                     </div>
                                 @else
                                     <div class="fb-claim-empty" role="status"><span
-                                            aria-hidden="true">◇</span><strong>Belum ada pengajuan klaim</strong>
+                                            aria-hidden="true">â—‡</span><strong>Belum ada pengajuan klaim</strong>
                                         <p>Pengajuan akan muncul setelah pengguna mengirimkan klaim melalui sistem.</p>
                                     </div>
                                 @endif
@@ -189,3 +189,8 @@
     </section>
     <footer class="fb-footer">© {{ date('Y') }} FindBack Kampus · Fakultas Sains dan Teknologi</footer>
 @endsection
+
+<script src='{{ asset('js/shared/findback-claims-navigation-v1.js') }}' defer></script>
+
+
+

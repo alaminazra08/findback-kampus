@@ -153,7 +153,6 @@
                 <img
                     src="{{ asset('storage/' . $report->photo_path) }}"
                     alt="Foto {{ $report->title }}"
-                    loading="lazy"
                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                 >
                 <div class="fb-report-photo-placeholder" style="display:none;">

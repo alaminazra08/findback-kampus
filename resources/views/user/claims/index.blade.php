@@ -7,43 +7,49 @@
 <div class="ucx-page">
 
     {{-- HEADER HALAMAN --}}
-    <section class="ucx-hero">
-        <div class="ucx-hero-icon">✓</div>
-        <div>
-            <h1>Aktivitas Saya</h1>
-            <p>Pantau laporan dan proses pengajuan klaim barang kamu.</p>
-        </div>
-    </section>
+        <link rel="stylesheet" href="{{ asset('css/report-cycle.css') }}?v=7">
 
-    {{-- TAB --}}
-    <nav class="ucx-tabs">
+    {{-- HEADER AKTIVITAS SAYA --}}
+    <div class="fb-activity-heading"
+        style="display:flex !important; flex-direction:row !important; align-items:center !important; gap:16px !important;">
+        <div class="fb-activity-heading-icon" style="flex:0 0 64px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"
+                aria-hidden="true">
+                <path d="m5 12.5 4.5 4.5L19 7.5"/>
+            </svg>
+        </div>
+
+        <div class="fb-activity-heading-text">
+            <h1>Aktivitas Saya</h1>
+            <p>Pantau perkembangan laporan dan klaim barangmu.</p>
+        </div>
+    </div>
+
+    {{-- TAB AKTIVITAS --}}
+    <nav class="fb-activity-tabs" aria-label="Navigasi aktivitas">
         <a href="{{ route('user.reports.index') }}">
-            <span>▤</span> Riwayat Laporan
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                aria-hidden="true">
+                <path d="M6 3h9l4 4v14H6z"/>
+                <path d="M14 3v5h5M9 12h7M9 16h7"/>
+            </svg>
+            <span>Riwayat Laporan</span>
         </a>
 
         <a class="active" href="{{ route('user.claims.index') }}">
-            <span>◆</span> Pengajuan Klaim
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                aria-hidden="true">
+                <path d="m20.5 13.5-7.5 7.5-10-10 7.5-7.5a2 2 0 0 1 2.8 0l7.2 7.2a2 2 0 0 1 0 2.8Z"/>
+                <circle cx="8.5" cy="8.5" r="1.3"/>
+            </svg>
+            <span>Pengajuan Klaim</span>
         </a>
     </nav>
 
-    {{-- NOTIFIKASI --}}
-    @if (session('success'))
-        <div class="ucx-alert success">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    @if ($errors->any())
-        <div class="ucx-alert error">
-            <strong>Periksa kembali isian:</strong>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
+   
     {{-- FILTER PENCARIAN --}}
     <section class="ucx-filter-card">
 
@@ -104,10 +110,6 @@
     <section class="ucx-results">
 
         <div class="ucx-results-heading">
-            <div>
-                <span>RIWAYAT PENGAJUAN</span>
-                <h2>Daftar Klaim Saya</h2>
-            </div>
 
             <div class="ucx-total">
                 ▤ &nbsp; {{ $claims->total() }} Pengajuan
@@ -135,14 +137,19 @@
                     <div class="ucx-card-main">
 
                         {{-- IKON BARANG TANPA FOTO --}}
-                        <div class="ucx-item-icon">▣</div>
+                        <div class="ucx-item-icon">
+                             @if($claim->item_photo)
+                                <img
+                                    src="{{ asset('storage/' . $claim->item_photo) }}"
+                                    alt="Foto Barang"
+                                >
+                            @else
+                                <span>Foto tidak tersedia</span>
+                             @endif
+                        </div>
 
                         {{-- INFORMASI KLAIM --}}
                         <div class="ucx-item-info">
-
-                            <span class="ucx-number">
-                                KLAIM #{{ $claim->id }}
-                            </span>
 
                             <h3>
                                 {{ $claim->item_title ?: 'Barang tidak tersedia' }}
@@ -151,7 +158,7 @@
                             <div class="ucx-meta">
                                 <span>⌖ {{ $claim->location ?: 'Lokasi tidak tersedia' }}</span>
                                 <span>•</span>
-                                <span>▦ {{ \Carbon\Carbon::parse($claim->created_at)->format('d M Y') }}</span>
+                                <span>📅 {{ \Carbon\Carbon::parse($claim->created_at)->format('d M Y') }}</span>
                             </div>
 
                         </div>
@@ -168,10 +175,10 @@
                     <div class="ucx-divider"></div>
 
                     {{-- BUKTI DAN PERKEMBANGAN --}}
-                    <details class="ucx-details" open>
+                    <details class="ucx-details">
 
                         <summary>
-                            <span>⌄</span>
+                            <span></span>
                             Lihat bukti dan perkembangan
                         </summary>
 

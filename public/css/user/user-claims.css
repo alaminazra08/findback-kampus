@@ -7,55 +7,66 @@
     width: 100%;
     max-width: 1450px;
     margin: 0 auto;
-    padding: 30px 0 45px;
+    padding: 0 0 45px;
     color: #38202c;
 }
+
 
 /* HEADER */
 .ucx-hero {
     display: flex;
     align-items: center;
-    gap: 28px;
-    min-height: 120px;
-    padding: 24px 38px;
-    border-radius: 22px;
-    background: linear-gradient(110deg, #650d2d, #8c103e);
-    color: #fff;
-    box-shadow: 0 12px 28px rgba(105, 10, 47, .13);
+    gap: 20px;
+    height: 100px;
+    min-height: 100px;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #38202c;
+    box-shadow: none;
+    box-sizing: border-box;
 }
+
 
 .ucx-hero-icon {
     display: grid;
-    flex: 0 0 88px;
+    flex: 0 0 80px;
     place-items: center;
-    width: 88px;
-    height: 88px;
-    border: 1px solid rgba(255,255,255,.4);
-    border-radius: 18px;
-    background: rgba(255,255,255,.94);
+    width: 80px;
+    height: 80px;
+    border: none;
+    border-radius: 22px;
+    background: #f8e3eb;
     color: #971442;
-    font-size: 43px;
+    font-size: 36px;
     font-weight: 800;
+}
+
+.ucx-hero-icon svg {
+    width: 36px;
+    height: 36px;
 }
 
 .ucx-hero h1 {
     margin: 0 0 8px;
-    color: white;
+    color: #920b36;
     font-size: 30px;
     font-weight: 800;
 }
 
 .ucx-hero p {
     margin: 0;
-    color: #f6dce6;
-    font-size: 13px;
+    color: #806b77;
+    font-size: 14px;
 }
+
 
 /* TAB */
 .ucx-tabs {
     display: flex;
     gap: 28px;
-    margin: 20px 0 18px;
+    margin: 0 0 18px;
     border-bottom: 1px solid #e9dfe4;
 }
 
@@ -265,6 +276,12 @@
     color: #92113f;
     font-size: 46px;
 }
+.ucx-item-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
 
 .ucx-item-info {
     flex: 1;
@@ -314,10 +331,11 @@
 .ucx-details summary {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     color: #941342;
     font-size: 12px;
     font-weight: 800;
+    line-height: 20px;
     cursor: pointer;
     list-style: none;
 }
@@ -327,7 +345,21 @@
 }
 
 .ucx-details summary span {
-    font-size: 17px;
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+    font-size: 0;
+    border-right: 2px solid #941342;
+    border-bottom: 2px solid #941342;
+    transform: rotate(45deg);
+    margin-top: -4px;
+    transition: transform 0.2s ease;
+}
+
+.ucx-details[open] summary span {
+    transform: rotate(225deg);
+    margin-top: 4px;
 }
 
 .ucx-details[open] summary {
@@ -676,10 +708,10 @@
     }
 
     .ucx-item-icon {
-        flex-basis: 60px;
-        width: 60px;
-        height: 60px;
-        font-size: 32px;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 16px;
     }
 
     .ucx-item-info h3 {

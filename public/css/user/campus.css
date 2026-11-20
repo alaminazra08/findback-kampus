@@ -1085,9 +1085,40 @@
 .cu-claim-list details {
     margin: 16px 0;
 }
-.cu-claim-list summary {
+.cu-claim-list details {
+    margin: 16px 0;
+}
+
+.cu-claim-list details > summary {
     color: var(--wine);
     font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1.5;
+    list-style: none;
+    cursor: pointer;
+}
+
+.cu-claim-list details > summary::-webkit-details-marker {
+    display: none;
+}
+
+.cu-claim-list details > summary::before {
+    content: "›";
+    display: inline-block;
+    font-size: 20px;
+    line-height: 1;
+    transform: rotate(90deg);
+    transition: transform 0.2s;
+}
+
+.cu-claim-list details[open] > summary::before {
+    transform: rotate(180deg);
+}
+
+.cu-claim-list details p {
+    margin-top: 15px;
 }
 .cu-claim-list details p {
     margin-top: 15px;

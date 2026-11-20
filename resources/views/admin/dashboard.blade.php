@@ -36,6 +36,7 @@
 <link rel="stylesheet" href="{{ asset('css/shared/typography.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/notification-toast.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-date.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/design-system.css') }}?v=4">
 </head>
 
 <body class="fb-responsive fb-admin-body">

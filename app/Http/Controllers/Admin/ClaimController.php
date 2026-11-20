@@ -16,8 +16,25 @@ use Illuminate\Validation\ValidationException;
 
 class ClaimController extends Controller
 {
-    public function index(Request $request): View
+    public function index(Request $request): View|RedirectResponse
     {
+        // Canonicalize empty query parameters on the server.
+        // This guarantees /admin/claims instead of /admin/claims?search=
+        // even when the request comes from native GET, AJAX, or a copied URL.
+        $query = $request->query();
+        $canonicalQuery = $query;
+
+        foreach (['search', 'status'] as $key) {
+            if (array_key_exists($key, $canonicalQuery) &&
+                trim((string) $canonicalQuery[$key]) === '') {
+                unset($canonicalQuery[$key]);
+            }
+        }
+
+        if ($canonicalQuery !== $query) {
+            return redirect()->route('admin.claims.index', $canonicalQuery);
+        }
+
         $filters = $request->validate([
             'search' => ['nullable', 'string', 'max:100'],
             'status' => ['nullable', 'in:pending,approved,rejected,returned'],

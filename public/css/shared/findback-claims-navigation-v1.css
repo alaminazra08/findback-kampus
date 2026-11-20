@@ -1,0 +1,37 @@
+
+/* FindBack Claims Navigation Transition v1
+   Purpose: make navigation from Klaim & Pengembalian feel consistent with
+   the already-standardized admin pages. This is a PAGE transition only;
+   cards, tables, filters, and content do not animate on load.
+*/
+html.findback-nav-transition-enabled,
+body.findback-nav-transition-enabled {
+    overflow-x: hidden;
+}
+
+.findback-page-transition {
+    animation: findbackPageEnter 180ms cubic-bezier(.22,.61,.36,1) both;
+    will-change: transform, opacity;
+}
+
+.findback-page-transition.is-leaving {
+    animation: findbackPageLeave 120ms cubic-bezier(.4,0,1,1) both;
+    pointer-events: none;
+}
+
+@keyframes findbackPageEnter {
+    from { opacity: .82; transform: translate3d(10px, 0, 0); }
+    to   { opacity: 1;   transform: translate3d(0, 0, 0); }
+}
+
+@keyframes findbackPageLeave {
+    from { opacity: 1; transform: translate3d(0, 0, 0); }
+    to   { opacity: .92; transform: translate3d(-8px, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .findback-page-transition,
+    .findback-page-transition.is-leaving {
+        animation: none !important;
+    }
+}

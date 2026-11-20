@@ -482,3 +482,185 @@
 }
 /* FINDBACK_PREMIUM_UPLOAD_MODAL_V2_END */
 
+/* The form owns the height budget; only its middle section scrolls. */
+.fb-admin-add-dialog {
+    --fb-add-dialog-limit: min(880px, calc(100dvh - 32px));
+    max-height: var(--fb-add-dialog-limit);
+    overflow: hidden;
+    scrollbar-gutter: auto;
+}
+.fb-admin-add-dialog .fb-admin-add-form {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(var(--fb-add-dialog-limit) - 2px);
+}
+.fb-admin-add-dialog :is(.fb-admin-add-top, .fb-admin-add-actions) {
+    position: static;
+    flex: 0 0 auto;
+}
+.fb-admin-add-dialog .fb-admin-add-top {
+    background: linear-gradient(125deg, #531029, #8b1745 78%);
+    border-bottom-color: #a44166;
+}
+.fb-admin-add-dialog .fb-add-close {
+    box-sizing: border-box;
+    width: 44px;
+    height: 44px;
+    flex-basis: 44px;
+}
+.fb-admin-add-dialog .fb-add-fields {
+    position: relative;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-content: start;
+    align-items: start;
+    gap: 15px 18px;
+}
+.fb-admin-add-dialog .fb-add-fields > :is(.fb-admin-add-error) {
+    grid-column: 1 / -1;
+}
+.fb-admin-add-dialog .fb-add-fields > .fb-admin-add-error {
+    margin: 0;
+}
+.fb-admin-add-dialog .fb-add-fields > .fb-admin-add-error ul {
+    margin: .375rem 0 0;
+    padding-inline-start: 1.25rem;
+}
+.fb-admin-add-dialog .fb-admin-add-form .fb-add-field > :is(input:not([type="file"]), select, textarea) {
+    min-width: 0;
+}
+.fb-admin-add-dialog .fb-admin-add-form .fb-add-field > :is(input, textarea)::placeholder {
+    color: #806b77;
+}
+.fb-admin-add-dialog .fb-admin-add-form .fb-add-field > textarea {
+    min-height: 6.875rem;
+}
+.fb-admin-add-dialog .fb-admin-add-form .fb-add-photo-field > .fb-add-upload-zone {
+    min-height: 110px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: repeat(3, auto);
+    justify-content: stretch;
+    align-content: center;
+    align-items: center;
+    gap: .25rem .875rem;
+    text-align: start;
+}
+.fb-admin-add-dialog .fb-admin-add-form .fb-add-upload-illustration {
+    grid-row: 1 / 4;
+}
+.fb-admin-add-dialog .fb-admin-add-form .fb-add-photo-preview {
+    grid-column: 1 / -1;
+}
+.fb-admin-add-dialog .fb-admin-add-form .fb-add-photo-field:has(.fb-add-file-input:focus-visible) .fb-add-upload-zone {
+    outline: 2px solid #9d3154;
+    outline-offset: 2px;
+}
+.fb-admin-add-dialog .fb-admin-add-actions button {
+    min-height: 44px;
+    white-space: normal;
+}
+@media (max-width: 650px) {
+    .fb-admin-add-dialog {
+        --fb-add-dialog-limit: calc(100dvh - 20px);
+    }
+    .fb-admin-add-dialog .fb-add-fields {
+        grid-template-columns: minmax(0, 1fr);
+        scrollbar-gutter: auto;
+    }
+    .fb-admin-add-dialog .fb-admin-add-form .fb-add-field > :is(input:not([type="file"]), select, textarea) {
+        font-size: 16px;
+    }
+    .fb-admin-add-dialog .fb-admin-add-actions {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+        padding-bottom: max(12px, env(safe-area-inset-bottom));
+    }
+}
+
+/* Match the plus-in-circle action and keep publication status next to Submit. */
+.fb-admin-add-dialog .fb-admin-add-top h2 {
+    color: #fff;
+}
+.fb-admin-add-dialog .fb-admin-add-top p {
+    color: #ffe7f0;
+}
+.fb-admin-add-dialog .fb-add-title-icon {
+    border: 1px solid rgb(255 255 255 / 35%);
+    background: rgb(255 255 255 / 14%);
+    box-shadow: 0 6px 15px rgb(37 4 19 / 24%);
+}
+.fb-admin-add-dialog .fb-add-close {
+    border-color: rgb(255 255 255 / 42%);
+    background: rgb(255 255 255 / 12%);
+    color: #fff;
+}
+.fb-admin-add-dialog .fb-add-close:hover {
+    background: #fff;
+    color: #711336;
+}
+.fb-admin-add-dialog .fb-add-close:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+}
+.fb-admin-add-dialog .fb-add-fields {
+    padding-block: 1rem;
+}
+.fb-admin-add-dialog .fb-admin-add-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: .5rem .625rem;
+}
+.fb-admin-add-dialog .fb-admin-add-actions > .fb-admin-add-note {
+    min-width: 0;
+    padding: .375rem .625rem;
+    border-color: #cbe4d4;
+    background: #eff8f2;
+    color: #21583b;
+    line-height: 1.45;
+}
+.fb-admin-add-dialog .fb-admin-add-actions > .fb-admin-add-note svg {
+    margin-top: 0;
+}
+@media (max-width: 650px) {
+    .fb-admin-add-dialog .fb-add-title-icon {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        flex-basis: 34px;
+    }
+    .fb-admin-add-dialog .fb-add-title-icon svg {
+        width: 19px;
+        height: 19px;
+    }
+    .fb-admin-add-dialog .fb-admin-add-actions {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    }
+    .fb-admin-add-dialog .fb-admin-add-actions > .fb-admin-add-note {
+        grid-column: 1 / -1;
+    }
+}
+@media (max-height: 420px) {
+    .fb-admin-add-dialog .fb-admin-add-form {
+        max-height: none;
+    }
+    .fb-admin-add-dialog {
+        overflow-y: auto;
+    }
+    .fb-admin-add-dialog .fb-add-fields {
+        overflow: visible;
+    }
+}
+@media (prefers-reduced-motion: no-preference) {
+    .fb-admin-add-dialog[open] .fb-add-title-icon {
+        animation: fb-add-icon-settle 320ms cubic-bezier(.2, .75, .25, 1) both;
+    }
+}
+@keyframes fb-add-icon-settle {
+    from { transform: perspective(180px) rotateY(-22deg) translateY(4px); opacity: .65; }
+    to { transform: none; opacity: 1; }
+}

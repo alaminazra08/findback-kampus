@@ -62,6 +62,8 @@
 <link rel="stylesheet" href="{{ asset('css/shared/typography.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/notification-toast.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/work-page-heading.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/design-system.css') }}?v=8">
+    <script src="{{ asset('js/admin/stat-icon-motion.js') }}?v=2" defer></script>
 </head>
 
 <body class="fb-responsive fb-admin-body">
@@ -353,7 +355,7 @@
     </script>
 
     <script src="{{ asset('js/shared/responsive-viewport.js') }}?v=20261111" defer></script>
-    <script src="{{ asset('js/admin/smart-navigation-session.js') }}?v=3" defer
+    <script src="{{ asset('js/admin/smart-navigation-session.js') }}?v=4" defer
         data-account="{{ auth()->id() }}"
         data-list-1="{{ route('admin.reports.verification') }}"
         data-list-2="{{ route('admin.items.index') }}"
@@ -368,12 +370,12 @@
         <script src="{{ asset('js/admin/admin-items-upload.js') }}?v=2" defer></script>
         <script src="{{ asset('js/admin/items-filter-ajax-scroll.js') }}?v=2" defer></script>
         <script src="{{ asset('js/pages/admin/matching/filter-navigation.js') }}?v=4-matching-feedback" defer></script>
-        <script src="{{ asset('js/admin/claims-filter-ajax-scroll.js') }}?v=2" defer></script>
         <script src="{{ asset('js/pages/admin/statistics/index.js') }}?v=2" defer></script>
         <script src="{{ asset('js/admin/users-filter-navigation.js') }}?v=2" defer></script>
         <script src="{{ asset('js/admin/settings-score.js') }}?v=2" defer></script>
         @include('admin.partials.detail-interactions')
-        <script src="{{ asset('js/admin/dashboard-verification-navigation.js') }}?v=21" defer
+        <script src="{{ asset('js/admin/claims-toast-v1.js') }}?v=2" defer></script>
+        <script src="{{ asset('js/admin/dashboard-verification-navigation.js') }}?v=33" defer
             data-dashboard="{{ route('admin.dashboard') }}"
             data-verification="{{ route('admin.reports.verification') }}"
             data-items="{{ route('admin.items.index') }}"

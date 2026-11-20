@@ -1,0 +1,114 @@
+/*
+ * FindBack Klaim Barang — Stat Card Motion V3
+ * Scope: ONLY the 5 statistic cards on /admin/claims.
+ * Purpose: make the top-left accent line visibly slide/extend on hover/tap,
+ * matching the interaction language used on Verifikasi Laporan.
+ */
+
+.fb-claim-executive .fb-claim-stat {
+    position: relative !important;
+    overflow: hidden !important;
+    -webkit-tap-highlight-color: transparent;
+    transform-origin: center center;
+    transition:
+        transform 220ms cubic-bezier(.2,.75,.25,1),
+        box-shadow 220ms ease,
+        border-color 220ms ease,
+        filter 220ms ease !important;
+}
+
+/* The existing colored line at the top-left becomes the animated accent. */
+.fb-claim-executive .fb-claim-stat::before {
+    transition:
+        width 240ms cubic-bezier(.2,.75,.25,1),
+        transform 240ms cubic-bezier(.2,.75,.25,1),
+        box-shadow 240ms ease,
+        opacity 180ms ease !important;
+    transform-origin: left center !important;
+}
+
+/* Desktop: hover interaction like Verifikasi. */
+@media (hover: hover) and (pointer: fine) {
+    .fb-claim-executive .fb-claim-stat:hover {
+        transform: translateY(-4px) !important;
+        box-shadow: 0 17px 35px rgba(81,15,43,.13) !important;
+        border-color: #d9a1b7 !important;
+        filter: brightness(1.008);
+    }
+
+    .fb-claim-executive .fb-claim-stat:hover::before {
+        width: 78px !important;
+        transform: translateX(5px) !important;
+        box-shadow: 0 0 0 1px rgba(255,255,255,.02);
+    }
+
+    /* Mouse click: short confirmation pulse. */
+    .fb-claim-executive .fb-claim-stat.fb-claim-stat-active {
+        transform: translateY(-2px) scale(.992) !important;
+        box-shadow: 0 11px 25px rgba(81,15,43,.12) !important;
+    }
+
+    .fb-claim-executive .fb-claim-stat.fb-claim-stat-active::before {
+        width: 82px !important;
+        transform: translateX(7px) !important;
+    }
+}
+
+/* Mobile / touch: tap feedback without relying on :hover. */
+@media (hover: none), (pointer: coarse) {
+    .fb-claim-executive .fb-claim-stat {
+        transition:
+            transform 190ms cubic-bezier(.2,.75,.25,1),
+            box-shadow 190ms ease,
+            border-color 190ms ease !important;
+    }
+
+    .fb-claim-executive .fb-claim-stat::before {
+        transition:
+            width 220ms cubic-bezier(.2,.75,.25,1),
+            transform 220ms cubic-bezier(.2,.75,.25,1),
+            box-shadow 220ms ease !important;
+    }
+
+    .fb-claim-executive .fb-claim-stat.fb-claim-stat-active {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 14px 28px rgba(81,15,43,.15) !important;
+        border-color: #e7a0bd !important;
+    }
+
+    .fb-claim-executive .fb-claim-stat.fb-claim-stat-active::before {
+        width: 62px !important;
+        transform: translateX(4px) !important;
+        box-shadow: 0 0 0 1px rgba(255,255,255,.02);
+    }
+}
+
+/* Keep the effect proportional on narrow cards. */
+@media (max-width: 580px) {
+    .fb-claim-executive .fb-claim-stat::before {
+        left: 14px !important;
+        width: 42px;
+    }
+
+    .fb-claim-executive .fb-claim-stat:hover::before {
+        width: 64px !important;
+        transform: translateX(4px) !important;
+    }
+
+    .fb-claim-executive .fb-claim-stat.fb-claim-stat-active::before {
+        width: 56px !important;
+        transform: translateX(3px) !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fb-claim-executive .fb-claim-stat,
+    .fb-claim-executive .fb-claim-stat::before {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    .fb-claim-executive .fb-claim-stat.fb-claim-stat-active {
+        transform: none !important;
+    }
+}

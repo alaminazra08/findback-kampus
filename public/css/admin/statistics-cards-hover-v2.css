@@ -1,0 +1,144 @@
+/* FINDBACK STATISTICS CARDS — HOVER SIGNATURE V2
+   Mirrors the Manajemen Akun statistic-card interaction.
+   Visual-only: preserves all six card dimensions, content and data behavior. */
+.fs-page .fs-cards > article.fs-card.fs-card-v4 {
+    --fs-stat-accent: #a3134c;
+    position: relative !important;
+    overflow: hidden !important;
+    isolation: isolate;
+    transform: translate3d(0, 0, 0);
+    transform-origin: center center;
+    transition:
+        transform .26s cubic-bezier(.2,.75,.25,1),
+        border-color .26s ease,
+        box-shadow .26s ease,
+        background-color .26s ease !important;
+    will-change: transform;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* The slim top rail is always visible, then extends on hover/tap. */
+.fs-page .fs-cards > article.fs-card.fs-card-v4::before {
+    z-index: 5 !important;
+    width: 66px !important;
+    transition:
+        width .34s cubic-bezier(.2,.75,.25,1),
+        box-shadow .28s ease !important;
+    pointer-events: none !important;
+}
+
+/* A restrained light sweep gives the rail the same signature as Manajemen Akun. */
+.fs-page .fs-cards > article.fs-card.fs-card-v4::after {
+    content: "" !important;
+    position: absolute !important;
+    z-index: 6 !important;
+    top: 0 !important;
+    left: 22px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 66px !important;
+    height: 5px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 0 7px 7px !important;
+    opacity: 0 !important;
+    background: linear-gradient(105deg, transparent 0%, rgba(255,255,255,.96) 48%, transparent 100%) !important;
+    background-size: 220% 100% !important;
+    background-position: -120% 0 !important;
+    pointer-events: none !important;
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-icon {
+    transform: translate3d(0,0,0);
+    transition:
+        transform .28s cubic-bezier(.2,.75,.25,1),
+        box-shadow .26s ease,
+        background-color .26s ease !important;
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4 > strong {
+    transition: transform .26s ease, color .26s ease !important;
+}
+
+/* Desktop pointer: lift, deepen the shadow, extend the rail and animate the icon. */
+@media (hover: hover) and (pointer: fine) {
+    .fs-page .fs-cards > article.fs-card.fs-card-v4:hover {
+        transform: translate3d(0,-4px,0) !important;
+        border-color: #e7a0bd !important;
+        box-shadow: 0 16px 30px rgba(64,17,41,.12) !important;
+    }
+    .fs-page .fs-cards > article.fs-card.fs-card-v4:hover::before {
+        width: 108px !important;
+        box-shadow: 0 2px 11px rgba(163,19,76,.25) !important;
+    }
+    .fs-page .fs-cards > article.fs-card.fs-card-v4:hover::after {
+        width: 108px !important;
+        opacity: 1 !important;
+        animation: fb-statistics-rail-sweep-v2 .78s ease-out both !important;
+    }
+    .fs-page .fs-cards > article.fs-card.fs-card-v4:hover .fs-card-icon {
+        transform: translate3d(0,-3px,0) rotate(-5deg) scale(1.045) !important;
+        background-color: #f9e5ed !important;
+        box-shadow: 0 7px 16px rgba(163,19,76,.16) !important;
+    }
+    .fs-page .fs-cards > article.fs-card.fs-card-v4:hover > strong {
+        transform: translate3d(0,-2px,0) !important;
+        color: #8e1746 !important;
+    }
+}
+
+/* Touch/click feedback for mobile and repeated clicks on desktop. */
+.fs-page .fs-cards > article.fs-card.fs-card-v4.fb-statistics-card-active-v2 {
+    transform: translate3d(0,-3px,0) !important;
+    border-color: #e7a0bd !important;
+    box-shadow: 0 14px 27px rgba(64,17,41,.12) !important;
+}
+.fs-page .fs-cards > article.fs-card.fs-card-v4.fb-statistics-card-active-v2::before {
+    width: 108px !important;
+    box-shadow: 0 2px 11px rgba(163,19,76,.25) !important;
+}
+.fs-page .fs-cards > article.fs-card.fs-card-v4.fb-statistics-card-active-v2::after {
+    width: 108px !important;
+    opacity: 1 !important;
+    animation: fb-statistics-rail-sweep-v2 .78s ease-out both !important;
+}
+.fs-page .fs-cards > article.fs-card.fs-card-v4.fb-statistics-card-active-v2 .fs-card-icon {
+    transform: translate3d(0,-2px,0) rotate(-5deg) scale(1.04) !important;
+    background-color: #f9e5ed !important;
+    box-shadow: 0 7px 16px rgba(163,19,76,.16) !important;
+}
+.fs-page .fs-cards > article.fs-card.fs-card-v4.fb-statistics-card-active-v2 > strong {
+    transform: translate3d(0,-1px,0) !important;
+    color: #8e1746 !important;
+}
+
+@keyframes fb-statistics-rail-sweep-v2 {
+    0% { background-position: -120% 0; opacity: .95; }
+    100% { background-position: 220% 0; opacity: 0; }
+}
+
+@media (max-width: 600px) {
+    .fs-page .fs-cards > article.fs-card.fs-card-v4::after {
+        left: 19px !important;
+    }
+    .fs-page .fs-cards > article.fs-card.fs-card-v4.fb-statistics-card-active-v2 {
+        transform: translate3d(0,-2px,0) !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fs-page .fs-cards > article.fs-card.fs-card-v4,
+    .fs-page .fs-cards > article.fs-card.fs-card-v4::before,
+    .fs-page .fs-cards > article.fs-card.fs-card-v4::after,
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-icon,
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 > strong {
+        transition: none !important;
+        animation: none !important;
+        will-change: auto !important;
+    }
+    .fs-page .fs-cards > article.fs-card.fs-card-v4:hover,
+    .fs-page .fs-cards > article.fs-card.fs-card-v4.fb-statistics-card-active-v2 {
+        transform: none !important;
+    }
+}

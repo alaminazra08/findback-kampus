@@ -3,7 +3,7 @@
 @section('title', 'Laporan Barang')
 
 @section('item-upload-style')
-    <link rel="stylesheet" href="{{ asset('css/admin/admin-items-upload.css') }}?v=premium-v2">
+    <link rel="stylesheet" href="{{ asset('css/admin/admin-items-upload.css') }}?v=premium-v4">
 @endsection
 
 @section('page-styles')
@@ -13,12 +13,9 @@
     <link rel="stylesheet" href="{{ asset('css/admin/report-list-polish.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/hover-consistency-v6.css') }}?v=20261115-6">
     <link rel="stylesheet" href="{{ asset('css/admin/hover-line-v7.css') }}?v=20261115-7">
-    <link rel="stylesheet" href="{{ asset('css/admin/hover-responsive-v8.css') }}?v=20261115-8">
-    <link rel="stylesheet" href="{{ asset('css/admin/statistics-motion-v12.css') }}?v=12">
 @endsection
 
 @section('content')
-    <script defer src="{{ asset('js/admin/statistics-motion-v12.js') }}?v=12"></script>
 
 
     {{-- FINDBACK_ADMIN_ITEMS_V16 --}}
@@ -37,7 +34,15 @@
 
         </div>
 
-        <button type="button" class="fb-items-tag fb-admin-add-button" data-dialog-open="fb-admin-add-dialog">＋ Tambah Barang</button>
+        <div class="fb-admin-header-action-group">
+            <button type="button" class="fb-items-tag fb-admin-add-button fb-admin-header-action"
+                data-dialog-open="fb-admin-add-dialog" aria-describedby="fb-add-item-hint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                    stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" /><path d="M12 8v8M8 12h8" /></svg>
+                <span>Tambah Barang</span>
+            </button>
+            <p class="fb-admin-header-action-hint" id="fb-add-item-hint">Buat laporan barang hilang atau ditemukan.</p>
+        </div>
 
     </div>
 
@@ -49,7 +54,7 @@
 
         {{-- Popup laporan: SVG internal tanpa dependensi ikon eksternal --}}
     {{-- FORM UNGGAH LAPORAN ADMIN --}}
-    <dialog id="fb-admin-add-dialog" class="fb-admin-add-dialog" aria-labelledby="fb-admin-add-title"
+    <dialog id="fb-admin-add-dialog" class="fb-admin-add-dialog" aria-labelledby="fb-admin-add-title" aria-describedby="fb-admin-add-description"
             data-has-errors="{{ $errors->any() ? 'true' : 'false' }}">
         <form method="POST"
               action="{{ route('admin.items.store') }}"
@@ -63,15 +68,13 @@
                     <span class="fb-add-title-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m12 3-9 5 9 5 9-5-9-5Z" />
-                            <path d="M3 8v8l9 5 9-5V8" />
-                            <path d="M12 13v8M16 5.2 7.5 10" />
-                            <path d="M19 13v6M16 16h6" />
+                            <circle cx="12" cy="12" r="9" />
+                            <path d="M12 8v8M8 12h8" />
                         </svg>
                     </span>
                     <div class="fb-add-title-copy">
-                        <h2 id="fb-admin-add-title">Unggah Laporan Barang</h2>
-                        <p>Lengkapi informasi barang hilang atau ditemukan secara akurat sebelum dipublikasikan.</p>
+                        <h2 id="fb-admin-add-title">Tambah Laporan Barang</h2>
+                        <p id="fb-admin-add-description">Laporkan barang hilang atau ditemukan. Semua kolom wajib diisi.</p>
                     </div>
                 </div>
                 <button type="button" class="fb-add-close" aria-label="Tutup formulir"
@@ -85,13 +88,25 @@
 
             {{-- 02. INPUT LAPORAN --}}
             <div class="fb-add-fields">
+                {{-- PESAN VALIDASI --}}
+                @if ($errors->any())
+                    <div class="fb-admin-add-alert fb-admin-add-error" role="alert">
+                        <strong>Data belum berhasil disimpan:</strong>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <label class="fb-add-field">
                     <span class="fb-add-label">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                             <rect x="3" y="7" width="18" height="14" rx="2" />
                             <path d="m3 10 9 5 9-5M12 15v6M8 3h8" />
                         </svg>
-                        Jenis Laporan <b aria-label="wajib"></b>
+                        Jenis Laporan
                     </span>
                     <select name="type" required>
                         <option value="lost" @selected(old('type', 'lost') === 'lost')>Barang Hilang</option>
@@ -104,7 +119,7 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                             <path d="M4 7h16v13H4zM8 7V4h8v3M4 12h16" />
                         </svg>
-                        Nama Barang <b aria-label="wajib"></b>
+                        Nama Barang
                     </span>
                     <input type="text" name="title" maxlength="150" required
                            value="{{ old('title') }}" placeholder="Contoh: Dompet hitam">
@@ -116,7 +131,7 @@
                             <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" />
                             <circle cx="12" cy="10" r="2.5" />
                         </svg>
-                        Lokasi Kejadian <b aria-label="wajib"></b>
+                        Lokasi Kejadian
                     </span>
                     <input type="text" name="location" maxlength="255" required
                            value="{{ old('location') }}" placeholder="Contoh: Kantin kampus">
@@ -128,20 +143,20 @@
                             <rect x="3" y="5" width="18" height="16" rx="2" />
                             <path d="M7 3v4M17 3v4M3 10h18" />
                         </svg>
-                        Tanggal Kejadian <b aria-label="wajib"></b>
+                        Tanggal Kejadian
                     </span>
                     <input type="date" name="event_date" required
                            max="{{ now()->toDateString() }}"
                            value="{{ old('event_date', now()->toDateString()) }}">
                 </label>
 
-                <label class="fb-add-field">
+                <label class="fb-add-field fb-add-field-wide">
                     <span class="fb-add-label">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                              stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
                             <path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5" />
                         </svg>
-                        Deskripsi Barang <b aria-label="wajib"></b>
+                        Deskripsi Barang
                     </span>
                     <textarea name="description" maxlength="5000" rows="4" required
                               placeholder="Tuliskan warna, ciri-ciri, dan kondisi barang...">{{ old('description') }}</textarea>
@@ -155,7 +170,7 @@
                             <circle cx="8.5" cy="8.5" r="1.5" />
                             <path d="m4 18 5-5 4 4 3-3 4 4" />
                         </svg>
-                        Unggah Foto Barang <b aria-label="wajib"></b>
+                        Unggah Foto Barang
                     </label>
                     <label for="fb-add-photo" class="fb-add-upload-zone" id="fb-add-upload-zone">
                         <span class="fb-add-upload-illustration" aria-hidden="true">
@@ -168,29 +183,27 @@
                             </svg>
                         </span>
                         <strong class="fb-add-upload-title">Pilih foto barang</strong>
-                        <span class="fb-add-upload-hint">Format JPG, PNG, atau WebP · Maksimal 5 MB</span>
+                        <span class="fb-add-upload-hint" id="fb-add-file-rules">Format JPG, PNG, atau WebP · Maksimal 5 MB</span>
                         <span class="fb-add-file-name" id="fb-add-file-name" aria-live="polite">Belum ada foto yang dipilih</span>
                         <img id="fb-add-photo-preview" class="fb-add-photo-preview"
                              alt="Pratinjau foto barang" hidden>
                     </label>
                     <input id="fb-add-photo" class="fb-add-file-input" type="file" name="photo"
                            accept="image/jpeg,image/png,image/webp"
-                           aria-describedby="fb-add-file-name" required>
+                           aria-describedby="fb-add-file-rules fb-add-file-name" required>
                 </div>
+            </div>
 
+            {{-- 05. TOMBOL AKSI --}}
+            <footer class="fb-admin-add-actions">
                 {{-- 04. INFORMASI PUBLIKASI --}}
                 <div class="fb-admin-add-note" role="note">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                         <circle cx="12" cy="12" r="9" />
                         <path d="m8 12 3 3 5-6" />
                     </svg>
-                    <span>Laporan yang dibuat administrator akan langsung berstatus
-                        <strong>Disetujui</strong> dan tersedia di pencarian pengguna.</span>
+                    <span>Laporan langsung <strong>Disetujui</strong> dan tampil di pencarian pengguna.</span>
                 </div>
-            </div>
-
-            {{-- 05. TOMBOL AKSI --}}
-            <footer class="fb-admin-add-actions">
                 <button type="button" class="fb-add-cancel"
                         data-dialog-close="fb-admin-add-dialog">Batal</button>
                 <button type="submit" class="fb-add-submit">
@@ -198,23 +211,11 @@
                          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M12 16V3m-5 5 5-5 5 5M4 16v4h16v-4" />
                     </svg>
-                    Unggah Laporan
+                    Publikasikan Laporan
                 </button>
             </footer>
         </form>
     </dialog>
-
-    {{-- PESAN VALIDASI --}}
-    @if ($errors->any())
-        <div class="fb-admin-add-alert fb-admin-add-error" role="alert">
-            <strong>Data belum berhasil disimpan:</strong>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
     {{-- CSS dan JavaScript popup dimuat dari layout admin.items --}}
 

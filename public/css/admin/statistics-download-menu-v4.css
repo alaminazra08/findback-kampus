@@ -1,0 +1,111 @@
+/*
+ * FindBack Kampus — Floating PDF menu V4
+ * The dropdown overlays the page instead of changing the header/card layout.
+ */
+.fs-page .fs-header {
+    position: relative !important;
+    z-index: 24 !important;
+    overflow: visible !important;
+}
+
+.fs-page .fs-header-actions {
+    position: relative !important;
+    z-index: 25 !important;
+    overflow: visible !important;
+}
+
+.fs-page .fs-report-download-wrap {
+    position: relative !important;
+    z-index: 26 !important;
+    overflow: visible !important;
+}
+
+.fs-page .fs-report-download {
+    position: relative !important;
+    z-index: 27 !important;
+    overflow: visible !important;
+}
+
+/* Override V2/V3's in-flow menu rules: this layer floats over the page. */
+.fs-page .fs-report-download-menu {
+    position: absolute !important;
+    top: calc(100% + 8px) !important;
+    right: 0 !important;
+    bottom: auto !important;
+    left: auto !important;
+    inset-inline: auto 0 !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: min(390px, calc(100vw - 32px)) !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 7px !important;
+    box-sizing: border-box !important;
+    border: 1px solid #efdce4 !important;
+    border-radius: 15px !important;
+    background: #fff !important;
+    box-shadow: 0 18px 42px rgba(54, 19, 36, .18) !important;
+    transform-origin: top right !important;
+    animation: fs-report-floating-in-v4 .18s cubic-bezier(.2,.75,.25,1) both !important;
+    z-index: 80 !important;
+}
+
+@keyframes fs-report-floating-in-v4 {
+    from { opacity: 0; transform: translateY(-7px) scale(.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.fs-page .fs-report-download-option {
+    min-height: 62px !important;
+    padding: 9px 10px !important;
+    border-radius: 11px !important;
+    box-sizing: border-box !important;
+}
+
+.fs-page .fs-report-download-option + .fs-report-download-option {
+    border-top: 1px solid #f3e8ed !important;
+}
+
+.fs-page .fs-report-download-option:focus-visible {
+    outline: 2px solid #a20f4b !important;
+    outline-offset: 2px !important;
+}
+
+.fs-page .fs-report-download-trigger {
+    position: relative;
+    z-index: 28;
+}
+
+.fs-page .fs-report-download[open] .fs-report-download-trigger {
+    box-shadow: 0 8px 22px rgba(105, 13, 51, .16) !important;
+}
+
+@media (max-width: 760px) {
+    .fs-page .fs-header,
+    .fs-page .fs-header-actions,
+    .fs-page .fs-report-download-wrap,
+    .fs-page .fs-report-download {
+        overflow: visible !important;
+    }
+
+    .fs-page .fs-report-download-menu {
+        width: 100% !important;
+        max-width: 100% !important;
+        right: 0 !important;
+        top: calc(100% + 7px) !important;
+        padding: 6px !important;
+        border-radius: 13px !important;
+        box-shadow: 0 16px 36px rgba(54, 19, 36, .17) !important;
+    }
+
+    .fs-page .fs-report-download-option {
+        min-height: 58px !important;
+        padding: 8px !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fs-page .fs-report-download-menu {
+        animation: none !important;
+    }
+}

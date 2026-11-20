@@ -1,0 +1,337 @@
+/* FINDBACK — Statistics cards aligned with Manajemen Akun V1
+   Scoped to the six summary cards on Admin > Laporan & Statistik only. */
+.fs-page .fs-cards {
+    align-items: stretch !important;
+    grid-auto-rows: 1fr;
+    gap: 14px !important;
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4 {
+    --fs-stat-accent: #a3134c;
+    position: relative !important;
+    isolation: isolate;
+    box-sizing: border-box !important;
+    min-width: 0;
+    min-height: 166px !important;
+    height: 100% !important;
+    padding: 18px 21px 16px !important;
+    border: 1px solid #efdce5 !important;
+    border-radius: 19px !important;
+    background: linear-gradient(145deg, #fff 0%, #fff 72%, #fffafd 100%) !important;
+    box-shadow: 0 8px 22px rgba(64, 17, 41, .045) !important;
+    overflow: hidden !important;
+    transform: translate3d(0, 0, 0);
+    transition:
+        transform .24s cubic-bezier(.2,.75,.25,1),
+        border-color .24s ease,
+        box-shadow .24s ease !important;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4::before {
+    content: "" !important;
+    position: absolute !important;
+    z-index: 5 !important;
+    top: 0 !important;
+    left: 22px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 66px !important;
+    height: 5px !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 0 7px 7px !important;
+    background: var(--fs-stat-accent) !important;
+    opacity: 1 !important;
+    transform: translateX(0) scaleX(1) !important;
+    transform-origin: left center !important;
+    transition:
+        width .34s cubic-bezier(.2,.75,.25,1),
+        box-shadow .28s ease !important;
+    pointer-events: none !important;
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4::after {
+    content: "" !important;
+    position: absolute !important;
+    z-index: 6 !important;
+    top: 0 !important;
+    left: 22px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 66px !important;
+    height: 5px !important;
+    border: 0 !important;
+    border-radius: 0 0 7px 7px !important;
+    opacity: 0 !important;
+    background: linear-gradient(105deg, transparent 0%, rgba(255,255,255,.96) 48%, transparent 100%) !important;
+    background-size: 220% 100% !important;
+    background-position: -120% 0 !important;
+    pointer-events: none !important;
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-top {
+    position: relative;
+    z-index: 1;
+    min-height: 43px;
+    margin-bottom: 7px !important;
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-icon {
+    flex: 0 0 43px !important;
+    width: 43px !important;
+    height: 43px !important;
+    border-radius: 13px !important;
+    transition: transform .24s cubic-bezier(.2,.75,.25,1), background-color .24s ease !important;
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-period {
+    font-size: 9px !important;
+    line-height: 1.35 !important;
+    letter-spacing: 1px !important;
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4 > strong {
+    position: relative;
+    z-index: 1;
+    margin: 0 0 5px !important;
+    font-size: 36px !important;
+    line-height: 1.05 !important;
+    letter-spacing: -.045em !important;
+    font-variant-numeric: tabular-nums;
+    transition: transform .24s ease, color .24s ease !important;
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-name {
+    position: relative;
+    z-index: 1;
+    margin: 0 0 3px !important;
+    font-size: 12.5px !important;
+    line-height: 1.35 !important;
+    font-weight: 800 !important;
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4 > small {
+    position: relative;
+    z-index: 1;
+    font-size: 10.5px !important;
+    line-height: 1.45 !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .fs-page .fs-cards > article.fs-card.fs-card-v4:hover {
+        transform: translate3d(0, -4px, 0) !important;
+        border-color: #e7a0bd !important;
+        box-shadow: 0 17px 34px rgba(81, 15, 43, .13) !important;
+    }
+    .fs-page .fs-cards > article.fs-card.fs-card-v4:hover::before {
+        width: 82px !important;
+        box-shadow: 0 3px 10px rgba(163, 19, 76, .18);
+    }
+    .fs-page .fs-cards > article.fs-card.fs-card-v4:hover .fs-card-icon {
+        transform: translateY(-2px) scale(1.045);
+        background-color: #f9e5ed !important;
+    }
+    .fs-page .fs-cards > article.fs-card.fs-card-v4:hover > strong {
+        transform: translateY(-2px);
+        color: #8e1746 !important;
+    }
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4.is-animating {
+    transform: translate3d(0, -2px, 0) scale(.992) !important;
+    border-color: #e7a0bd !important;
+    box-shadow: 0 13px 27px rgba(81, 15, 43, .12) !important;
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4.is-animating::before {
+    width: 82px !important;
+    box-shadow: 0 3px 10px rgba(163, 19, 76, .18);
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4.is-animating::after {
+    opacity: 1 !important;
+    animation: fs-stat-rail-sweep-v1 .72s ease-out both;
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4.is-animating .fs-card-icon {
+    transform: scale(1.06);
+}
+
+@keyframes fs-stat-rail-sweep-v1 {
+    from { background-position: -120% 0; opacity: .95; }
+    to { background-position: 120% 0; opacity: 0; }
+}
+
+@media (max-width: 600px) {
+    .fs-page .fs-cards { gap: 11px !important; }
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 {
+        min-height: 146px !important;
+        padding: 16px 14px 14px !important;
+        border-radius: 17px !important;
+    }
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-top {
+        min-height: 38px;
+        margin-bottom: 5px !important;
+    }
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-icon {
+        flex-basis: 38px !important;
+        width: 38px !important;
+        height: 38px !important;
+        border-radius: 12px !important;
+    }
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-icon svg {
+        width: 19px;
+        height: 19px;
+    }
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 > strong {
+        font-size: 31px !important;
+    }
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-name {
+        font-size: 11.5px !important;
+    }
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 > small {
+        font-size: 10px !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fs-page .fs-cards > article.fs-card.fs-card-v4,
+    .fs-page .fs-cards > article.fs-card.fs-card-v4::before,
+    .fs-page .fs-cards > article.fs-card.fs-card-v4::after,
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-icon,
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 > strong {
+        transition: none !important;
+        animation: none !important;
+    }
+    .fs-page .fs-cards > article.fs-card.fs-card-v4:hover,
+    .fs-page .fs-cards > article.fs-card.fs-card-v4.is-animating {
+        transform: none !important;
+    }
+}
+
+
+/* V2 — Layout follows the Admin > Manajemen Akun statistic cards.
+   Existing card content, values, period label and tactile animation are preserved. */
+.fs-page .fs-cards > article.fs-card.fs-card-v4 {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    padding: 23px 21px 20px !important;
+}
+
+/* Flatten the original icon/period wrapper so the title can lead the visual order. */
+.fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-top {
+    display: contents !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-name {
+    order: 0 !important;
+    display: block !important;
+    min-height: 18px;
+    max-width: calc(100% - 62px);
+    margin: 0 !important;
+    color: #6b5362 !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    line-height: 1.4 !important;
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4 > strong {
+    order: 1 !important;
+    display: block !important;
+    margin: 21px 0 0 !important;
+    color: #48132c !important;
+    font-size: 38px !important;
+    font-weight: 850 !important;
+    line-height: 1.05 !important;
+    letter-spacing: -.045em !important;
+    font-variant-numeric: tabular-nums;
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4 > small {
+    order: 2 !important;
+    display: block !important;
+    margin: 8px 0 0 !important;
+    padding-right: 0;
+    font-size: 11.5px !important;
+    line-height: 1.5 !important;
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-icon {
+    position: absolute !important;
+    z-index: 3 !important;
+    top: 22px !important;
+    right: 21px !important;
+    left: auto !important;
+    width: 43px !important;
+    height: 43px !important;
+    flex: 0 0 43px !important;
+    margin: 0 !important;
+}
+
+.fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-period {
+    position: absolute !important;
+    z-index: 2 !important;
+    right: 21px !important;
+    bottom: 20px !important;
+    left: auto !important;
+    max-width: 48%;
+    text-align: right !important;
+    white-space: nowrap;
+}
+
+/* Keep descriptions readable when the period label occupies the lower-right corner. */
+.fs-page .fs-cards > article.fs-card.fs-card-v4 > small {
+    max-width: calc(100% - 4px);
+}
+
+@media (max-width: 600px) {
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 {
+        min-height: 146px !important;
+        padding: 17px 13px 15px !important;
+    }
+
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-name {
+        max-width: calc(100% - 48px);
+        font-size: 11px !important;
+    }
+
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 > strong {
+        margin-top: 17px !important;
+        font-size: 32px !important;
+    }
+
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 > small {
+        margin-top: 7px !important;
+        padding-right: 0;
+        font-size: 10.5px !important;
+    }
+
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-icon {
+        top: 17px !important;
+        right: 13px !important;
+        width: 40px !important;
+        height: 40px !important;
+        flex-basis: 40px !important;
+    }
+
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-period {
+        right: 13px !important;
+        bottom: 15px !important;
+        max-width: 52%;
+        font-size: 8px !important;
+    }
+}
+
+@media (max-width: 360px) {
+    .fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-period {
+        font-size: 7px !important;
+        letter-spacing: .55px !important;
+    }
+}
+

@@ -1,0 +1,99 @@
+/* FINDBACK MATCHING STAT CARDS — EXACT VERIFICATION REFERENCE V3
+   Geometry mirrors .fb-v-stats-v18 .fb-v-stat in admin-verification.css.
+   Scoped only to the Matching index statistics; preserve colors and icon artwork. */
+
+.match-wrap:has(> .match-index-heading) > .match-stats {
+    gap: 14px !important;
+    grid-auto-rows: auto !important;
+}
+
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat {
+    box-sizing: border-box !important;
+    min-height: 166px !important;
+    height: auto !important;
+    padding: 23px 21px 20px !important;
+    border-radius: 19px !important;
+}
+
+/* Keep the same label / value / description rhythm as Verification. */
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat > small {
+    min-height: 0 !important;
+    padding-right: 48px !important;
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    font-weight: 750 !important;
+}
+
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat > strong {
+    margin-top: 21px !important;
+    font-size: 38px !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.045em !important;
+}
+
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat > span {
+    margin-top: 8px !important;
+    font-size: 11.5px !important;
+    line-height: 1.5 !important;
+}
+
+/* Match Verification tablet behavior. */
+@media (max-width: 1050px) {
+    .match-wrap:has(> .match-index-heading) > .match-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+/* Match Verification mobile geometry (V18 reference). */
+@media (max-width: 580px) {
+    .match-wrap:has(> .match-index-heading) > .match-stats {
+        gap: 11px !important;
+    }
+
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat {
+        min-height: 146px !important;
+        height: auto !important;
+        padding: 17px 13px 15px !important;
+    }
+
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat::before {
+        left: 13px !important;
+        width: 33px !important;
+    }
+
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat::after {
+        top: 12px !important;
+        right: 11px !important;
+        width: 31px !important;
+        height: 31px !important;
+        background-size: 18px 18px !important;
+    }
+
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat > small {
+        max-width: calc(100% - 32px) !important;
+        padding-right: 0 !important;
+        font-size: 11px !important;
+    }
+
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat > strong {
+        margin-top: 18px !important;
+        font-size: 31px !important;
+    }
+
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat > span {
+        font-size: 10.5px !important;
+    }
+}
+
+@media (max-width: 340px) {
+    .match-wrap:has(> .match-index-heading) > .match-stats {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat {
+        transition: none !important;
+        animation: none !important;
+    }
+}

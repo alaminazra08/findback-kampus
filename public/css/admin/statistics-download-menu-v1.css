@@ -1,0 +1,139 @@
+/* FindBack - unified PDF report download menu */
+.fs-report-download-wrap {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    position: relative;
+    z-index: 12;
+}
+
+.fs-report-download {
+    position: relative;
+    width: min(100%, 340px);
+}
+
+.fs-report-download-trigger {
+    min-height: 56px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 0 20px;
+    border: 1px solid #e8cbd7;
+    border-radius: 16px;
+    background: #8d103c;
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(105, 13, 51, .12);
+    cursor: pointer;
+    list-style: none;
+    font: inherit;
+    font-weight: 700;
+    transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+.fs-report-download-trigger::-webkit-details-marker { display: none; }
+.fs-report-download-trigger::marker { content: ""; }
+.fs-report-download-trigger:hover {
+    background: #741033;
+    box-shadow: 0 11px 24px rgba(105, 13, 51, .18);
+    transform: translateY(-1px);
+}
+.fs-report-download-trigger:focus-visible {
+    outline: 3px solid rgba(177, 35, 91, .25);
+    outline-offset: 3px;
+}
+.fs-report-download-trigger-main {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+}
+.fs-report-download-trigger svg,
+.fs-report-download-option svg {
+    width: 21px;
+    height: 21px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex: 0 0 auto;
+}
+.fs-report-download-chevron {
+    width: 18px !important;
+    height: 18px !important;
+    transition: transform .2s ease;
+}
+.fs-report-download[open] .fs-report-download-chevron { transform: rotate(180deg); }
+
+.fs-report-download-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: min(370px, calc(100vw - 36px));
+    padding: 8px;
+    border: 1px solid #efdce4;
+    border-radius: 17px;
+    background: #fff;
+    box-shadow: 0 18px 48px rgba(54, 19, 36, .16);
+    animation: fs-report-menu-in .16s ease-out;
+}
+@keyframes fs-report-menu-in {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.fs-report-download-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 72px;
+    padding: 12px;
+    border-radius: 12px;
+    color: #351a29;
+    text-decoration: none;
+    transition: background .18s ease, transform .18s ease;
+}
+.fs-report-download-option + .fs-report-download-option { border-top: 1px solid #f4e9ee; }
+.fs-report-download-option:hover {
+    background: #fff5f8;
+    transform: translateX(2px);
+}
+.fs-report-download-option:focus-visible {
+    outline: 2px solid #a71950;
+    outline-offset: -2px;
+}
+.fs-report-download-option-icon {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 42px;
+    border-radius: 12px;
+    color: #941542;
+    background: #fbeaf0;
+}
+.fs-report-download-option-icon.is-tv { background: #f5edf2; color: #512238; }
+.fs-report-download-option-icon svg { width: 22px; height: 22px; }
+.fs-report-download-option-copy {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+    gap: 4px;
+}
+.fs-report-download-option-copy strong { font-size: 13px; line-height: 1.35; }
+.fs-report-download-option-copy small { color: #8b7581; font-size: 11px; line-height: 1.4; }
+.fs-report-download-option-arrow { width: 17px !important; height: 17px !important; color: #a17f8e; }
+
+@media (max-width: 760px) {
+    .fs-report-download-wrap { justify-content: stretch; }
+    .fs-report-download { width: 100%; }
+    .fs-report-download-trigger { min-height: 52px; }
+    .fs-report-download-menu { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .fs-report-download-trigger,
+    .fs-report-download-chevron,
+    .fs-report-download-option { transition: none; }
+    .fs-report-download-menu { animation: none; }
+}

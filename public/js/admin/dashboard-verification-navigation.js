@@ -20,6 +20,20 @@
         const match = path.match(/^(.*)\/[0-9]+\/?$/);
         return match ? detailPages.get(pages.get(match[1])) : undefined;
     }
+    function canonicalNavigationURL(value) {
+        const url = value instanceof URL ? new URL(value.href) : new URL(value, location.href);
+        if (pageOf(url.pathname) === 'claims') {
+            // Controller mengkanonisasi query kosong dengan HTTP 302.
+            // Buang parameter kosong sebelum fetch agar SPA menerima respons 200 langsung.
+            for (const name of ['search', 'status']) {
+                if (url.searchParams.has(name) && !String(url.searchParams.get(name) ?? '').trim()) {
+                    url.searchParams.delete(name);
+                }
+            }
+        }
+        return url;
+    }
+
     function rememberedListURL(url) {
         const page = pageOf(url.pathname);
         if ((page !== 'matching' && page !== 'users') || url.search) return url;
@@ -48,6 +62,44 @@
     let submitting = false;
     let displayedURL = location.href;
     const position = () => ({left: window.scrollX, top: window.scrollY});
+
+    // Form Klaim selalu diproses oleh navigasi global.
+    // Parameter kosong tidak pernah dimasukkan ke URL, termasuk setelah AJAX navigation.
+    document.addEventListener('formdata', function (event) {
+        const form = event.target;
+        if (!(form instanceof HTMLFormElement) || !form.matches('form.fb-claim-filters')) return;
+
+        for (const name of ['search', 'status']) {
+            const value = String(event.formData.get(name) ?? '').trim();
+            if (!value) event.formData.delete(name);
+        }
+    }, true);
+
+    document.addEventListener('submit', function (event) {
+        const form = event.target;
+        if (!(form instanceof HTMLFormElement) || !form.matches('form.fb-claim-filters')) return;
+
+        event.preventDefault();
+        const url = new URL(form.action || location.href, location.href);
+        const data = new FormData(form);
+        const params = new URLSearchParams();
+
+        for (const [name, rawValue] of data.entries()) {
+            const value = String(rawValue ?? '').trim();
+            if (value !== '') params.append(name, value);
+        }
+
+        url.search = params.toString();
+        if (url.origin !== location.origin) {
+            location.assign(url.href);
+            return;
+        }
+        if (url.href === location.href && url.href === displayedURL) return;
+        // Filter Klaim memakai mesin navigasi global yang sama dengan perpindahan halaman.
+        // Pertahankan posisi baca agar hasil filter tidak memaksa halaman melompat ke atas.
+        navigate(url, 'push', position());
+    }, true);
+
     history.replaceState({...history.state, fbAdminURL: location.href}, '');
 
     function prepareStyles(doc, signal, staged) {
@@ -69,9 +121,36 @@
             link.media = 'not all';
             staged.push(link);
             return new Promise((resolve, reject) => {
-                link.addEventListener('load', () => resolve([link, media]), { once: true });
-                link.addEventListener('error', reject, { once: true });
-                signal.addEventListener('abort', reject, { once: true });
+                let settled = false;
+                let timer = null;
+                const finish = () => {
+                    if (settled) return;
+                    settled = true;
+                    if (timer) clearTimeout(timer);
+                    signal.removeEventListener('abort', abort);
+                    resolve([link, media]);
+                };
+                const fail = () => {
+                    if (settled) return;
+                    settled = true;
+                    if (timer) clearTimeout(timer);
+                    signal.removeEventListener('abort', abort);
+                    link.remove();
+                    console.warn('[FindBack Nav] Stylesheet gagal dimuat:', source.href);
+                    resolve([link, media]);
+                };
+                const abort = () => {
+                    if (settled) return;
+                    settled = true;
+                    if (timer) clearTimeout(timer);
+                    reject(new Error('Navigation aborted'));
+                };
+                link.addEventListener('load', finish, { once: true });
+                link.addEventListener('error', fail, { once: true });
+                signal.addEventListener('abort', abort, { once: true });
+                // Batasi waktu tunggu stylesheet; file tetap aktif dan akan diterapkan
+                // saat unduhan selesai, tanpa menahan navigasi seluruh halaman.
+                timer = setTimeout(finish, 250);
                 document.head.append(link);
             });
         });
@@ -88,36 +167,7 @@
     ]);
     const quickHTMLCache = new Map();
     const quickHTMLPending = new Map();
-    const QUICK_CACHE_TTL = 8000;
-    const quickStylePreloads = new Set();
-
-    // Panaskan CSS halaman tujuan saat HTML diprefetch, bukan setelah menu diklik.
-    // Link preload tidak menerapkan CSS sebelum navigasi, jadi tampilan halaman aktif
-    // tidak berubah. Browser dapat memakai hasil unduhan saat stylesheet dipasang.
-    function warmQuickStyles(html) {
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-        for (const source of doc.head.querySelectorAll('link[rel="stylesheet"][href]')) {
-            const href = new URL(source.href, location.href);
-            if (href.origin !== location.origin || quickStylePreloads.has(href.href)) continue;
-            const alreadyLoaded = [...document.head.querySelectorAll('link[rel="stylesheet"][href]')]
-                .some(link => link.href === href.href && link.sheet);
-            if (alreadyLoaded) {
-                quickStylePreloads.add(href.href);
-                continue;
-            }
-            const preload = document.createElement('link');
-            preload.rel = 'preload';
-            preload.as = 'style';
-            preload.href = href.href;
-            if (source.crossOrigin) preload.crossOrigin = source.crossOrigin;
-            if (source.integrity) preload.integrity = source.integrity;
-            if (source.referrerPolicy) preload.referrerPolicy = source.referrerPolicy;
-            preload.addEventListener('error', () => quickStylePreloads.delete(href.href), { once: true });
-            document.head.append(preload);
-            quickStylePreloads.add(href.href);
-        }
-    }
-
+    const QUICK_CACHE_TTL = 15000;
     function isQuickNavigation(url) {
         return quickPages.has(pageOf(url.pathname));
     }
@@ -140,7 +190,6 @@
                 throw Error('Prefetch response');
             }
             const html = await response.text();
-            warmQuickStyles(html);
             quickHTMLCache.set(key, { html, time: Date.now() });
             return html;
         })();
@@ -155,7 +204,9 @@
 
     function warmQuickURL(value) {
         if (!value || document.hidden || navigator.connection?.saveData) return Promise.resolve();
-        const url = new URL(value, location.href);
+        // Prefetch URL yang sama persis dengan URL yang akan dipakai klik,
+        // termasuk filter terakhir yang dipulihkan untuk halaman Pencocokan.
+        const url = rememberedListURL(canonicalNavigationURL(new URL(value, location.href)));
         if (url.origin !== location.origin || !isQuickNavigation(url) || url.href === location.href) {
             return Promise.resolve();
         }
@@ -168,14 +219,16 @@
 
         const currentPage = main()?.dataset.fbNavPage;
         const destinations = {
-            dashboard: [config.verification, config.items],
-            verification: [config.dashboard, config.items],
-            items: [config.dashboard, config.verification],
-            matching: [config.items, config.claims],
-            claims: [config.matching, config.statistics],
-            statistics: [config.claims, config.users],
-            users: [config.statistics, config.settings],
-            settings: [config.users, config.dashboard]
+            // Klaim & Pengembalian dipersiapkan dari seluruh halaman admin.
+            // Pencocokan tetap menjadi tujuan prioritas kedua.
+            dashboard: [config.claims, config.matching],
+            verification: [config.claims, config.matching],
+            items: [config.claims, config.matching],
+            matching: [config.claims, config.items],
+            claims: [config.dashboard, config.matching],
+            statistics: [config.claims, config.matching],
+            users: [config.claims, config.matching],
+            settings: [config.claims, config.users]
         }[currentPage] || [];
 
         // Ketiga halaman memakai aturan identik:
@@ -193,10 +246,6 @@
     }
     document.addEventListener('pointerover', warmFromInteraction, { passive: true });
     document.addEventListener('focusin', warmFromInteraction);
-    document.addEventListener('pointerdown', warmFromInteraction, { passive: true });
-    document.addEventListener('visibilitychange', () => {
-        if (!document.hidden) warmQuickDestinations();
-    });
 
     function navigationHTML(url, signal) {
         if (isQuickNavigation(url)) {
@@ -222,19 +271,17 @@
             signal,
             headers: { Accept: 'text/html' }
         }).then(response => {
+            const contentType = response.headers.get('content-type') || '';
             if (!response.ok || response.redirected || response.url !== url.href ||
-                !(response.headers.get('content-type') || '').includes('text/html')) {
-                throw Error('Navigation response');
+                !contentType.includes('text/html')) {
+                throw Error(`Navigation response (status=${response.status}, redirected=${response.redirected}, finalURL=${response.url}, contentType=${contentType})`);
             }
             return response.text();
         });
     }
 
-    // Mulai memanaskan semua tujuan segera setelah skrip navigasi aktif.
-    // Angka 50 ms bukan jeda buatan: targetnya adalah klik memakai cache siap.
-    warmQuickDestinations();
-
     async function navigate(url, historyMode, scroll, back) {
+        url = canonicalNavigationURL(url);
         if (submitting || (pending && !pending.signal.aborted && pendingURL === url.href)) return;
         pending?.abort();
         const controller = new AbortController();
@@ -312,11 +359,17 @@
             console.info(`[FindBack Nav] ${fromPage} -> ${next.dataset.fbNavPage}: ${navigationDuration.toFixed(1)} ms`);
             document.dispatchEvent(new Event('fb:admin-page'));
             window.scrollTo({top: 0, left: 0, ...scroll, behavior: 'instant'});
-            warmQuickDestinations();
-        } catch {
-            if ((!signal.aborted || timedOut) && (location.href === from || location.href === url.href)) {
-                if (historyMode === 'pop' || location.href === url.href) location.reload();
-                else location.assign(url.href);
+        } catch (error) {
+            if (!signal.aborted || timedOut) {
+                console.warn('[FindBack Nav] Navigasi SPA gagal, menggunakan fallback:', {
+                    from: fromPage,
+                    to: pageOf(url.pathname),
+                    reason: error?.message || error
+                });
+                if (location.href === from || location.href === url.href) {
+                    if (historyMode === 'pop' || location.href === url.href) location.reload();
+                    else location.assign(url.href);
+                }
             }
         } finally {
             clearTimeout(timeout);
@@ -330,13 +383,13 @@
         const link = event.target.closest?.('.fb-sidebar a.fb-nav-link[href], main[data-fb-nav-page] a[href], #fb-notif a.fb-notif-action[href]');
         if (!link || link.target || link.hasAttribute('download') || !main()) return;
 
-        let url = new URL(link.href);
+        let url = canonicalNavigationURL(new URL(link.href));
         const target = pageOf(url.pathname);
         if (url.origin !== location.origin || url.hash || !target) return;
         const current = main().dataset.fbNavPage;
-        if (current === target && !target.endsWith('-detail')) {
+        if (current === target && !target.endsWith('-detail') && target !== 'claims') {
             pending?.abort();
-            return; // Existing listing scripts own filters, tabs and pagination.
+            return; // Listing lain tetap ditangani oleh pengelola halaman masing-masing.
         }
         event.preventDefault();
         if (url.href === location.href && url.href === displayedURL) {
@@ -358,7 +411,10 @@
         } else if (target.endsWith('-detail')) {
             back = current.endsWith('-detail') ? history.state?.fbAdminBack : {url: location.href, scroll: position()};
         }
-        navigate(scroll ? url : rememberedListURL(url), 'push', scroll, back);
+        // Tab, reset, dan pagination Klaim juga melalui mesin global.
+        // Ini menghindari dua pengelola AJAX yang saling berebut event/history.
+        const preserveClaimsScroll = current === 'claims' && target === 'claims' ? position() : scroll;
+        navigate(scroll ? url : rememberedListURL(url), 'push', preserveClaimsScroll, back);
     });
 
     document.addEventListener('fb:notification-open', event => {
@@ -422,7 +478,7 @@
         const current = main()?.dataset.fbNavPage;
         const target = pageOf(url.pathname);
         if (!current || !target) return;
-        if (current === target && target !== 'statistics' && !target.endsWith('-detail')) {
+        if (current === target && target !== 'statistics' && target !== 'claims' && !target.endsWith('-detail')) {
             displayedURL = url.href;
             return;
         }

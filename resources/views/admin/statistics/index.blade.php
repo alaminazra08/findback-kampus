@@ -8,6 +8,18 @@
     <link rel="stylesheet" href="{{ asset('css/admin/admin-statistics.css') }}?v=33">
     <link rel="stylesheet" href="{{ asset('css/admin/findback-statistics-premium.css') }}?v=4">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/statistics/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/statistics-download-menu-v1.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/statistics-download-menu-v2.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/admin/statistics-download-menu-v3.css') }}?v=3">
+    <link rel="stylesheet" href="{{ asset('css/admin/statistics-download-menu-v4.css') }}?v=4">
+    <link rel="stylesheet" href="{{ asset('css/admin/statistics-period-dropdown-v5.css') }}?v=5">
+    <link rel="stylesheet" href="{{ asset('css/admin/statistics-dropdown-layer-v6.css') }}?v=6">
+    <link rel="stylesheet" href="{{ asset('css/admin/statistics-cards-consistency-v1.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/statistics-illustration-icons-v1.css') }}?v=1">
+    <script defer src="{{ asset('js/admin/statistics-cards-consistency-v1.js') }}?v=1"></script>
+    <script defer src="{{ asset('js/admin/statistics-download-menu-v4.js') }}?v=4"></script>
+    <script defer src="{{ asset('js/admin/statistics-period-dropdown-v5.js') }}?v=5"></script>
+    <script defer src="{{ asset('js/admin/statistics-dropdown-layer-v6.js') }}?v=6"></script>
 @endsection
 
 @section('content')
@@ -30,19 +42,40 @@
                     </select>
                     <noscript><button type="submit">Terapkan</button></noscript>
                 </form>
-                <div class="fs-export-actions" aria-label="Ekspor laporan">
-                    <a class="fs-export-button"
-                        href="{{ route('admin.statistics.export.csv', ['period' => $period]) }}"><span
-                            class="fs-export-icon" aria-hidden="true">▤</span> CSV (Excel)</a>
-                    <a class="fs-export-button is-secondary"
-                        href="{{ route('admin.statistics.export.pdf', ['period' => $period]) }}"><span
-                            class="fs-export-icon" aria-hidden="true">▧</span> PDF Admin</a>
-                    <a class="fs-export-button fs-export-tv"
-                        href="{{ route('admin.statistics.export.board', ['period' => $period]) }}"><span
-                            class="fs-export-icon" aria-hidden="true">▣</span> PDF TV (9:16)</a>
+                <div class="fs-report-download-wrap">
+                    <details class="fs-report-download">
+                        <summary class="fs-report-download-trigger">
+                            <span class="fs-report-download-trigger-main">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v3h14v-3" /></svg>
+                                <span>Unduh Laporan PDF</span>
+                            </span>
+                            <svg class="fs-report-download-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+                        </summary>
+                        <div class="fs-report-download-menu" role="group" aria-label="Pilih format laporan PDF">
+                            <a class="fs-report-download-option" href="{{ route('admin.statistics.export.pdf', ['period' => $period]) }}">
+                                <span class="fs-report-download-option-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6" /></svg>
+                                </span>
+                                <span class="fs-report-download-option-copy">
+                                    <strong>PDF Laporan Administrasi</strong>
+                                    <small>Format A4 · Dokumentasi dan arsip</small>
+                                </span>
+                                <svg class="fs-report-download-option-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg>
+                            </a>
+                            <a class="fs-report-download-option" href="{{ route('admin.statistics.export.board', ['period' => $period]) }}">
+                                <span class="fs-report-download-option-icon is-tv" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4" /></svg>
+                                </span>
+                                <span class="fs-report-download-option-copy">
+                                    <strong>PDF Informasi TV Fakultas</strong>
+                                    <small>Format 9:16 · Tampilan layar informasi</small>
+                                </span>
+                                <svg class="fs-report-download-option-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg>
+                            </a>
+                        </div>
+                    </details>
                 </div>
-                <small class="fs-export-hint">Semua unduhan mengikuti periode. PDF TV menampilkan laporan terverifikasi yang
-                    masih aktif, 4 barang per halaman.</small>
+                <small class="fs-export-hint">Pilihan laporan mengikuti periode yang dipilih. Versi TV menampilkan laporan terverifikasi yang masih aktif, 4 barang per halaman.</small>
             </div>
         </div>
 
@@ -58,71 +91,37 @@
         @endphp
         <div class="fs-cards" aria-label="Ringkasan statistik pada periode terpilih">
             <article class="fs-card fs-card-v4">
-                <div class="fs-card-top"><span class="fs-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <rect x="6" y="3" width="13" height="16" rx="2" />
-                            <path d="M3 7v13a2 2 0 0 0 2 2h11" />
-                            <path d="M9 8h7M9 12h7" />
-                        </svg></span><span class="fs-card-period">{{ $activePeriodLabel }}</span></div>
+                <div class="fs-card-top"><span class="fs-card-icon fs-card-icon-illustrated" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="7" width="25" height="34" rx="4"/><path d="M18 14h13M18 21h9M18 28h11M18 35h7"/><path d="M8 12v27a4 4 0 0 0 4 4h21"/><circle cx="33" cy="33" r="8" fill="#FBEAF0" stroke="currentColor"/><path d="M30 35v-4m3 4v-7m3 7v-5"/></svg></span><span class="fs-card-period">{{ $activePeriodLabel }}</span></div>
                 <strong>{{ number_format($total, 0, ',', '.') }}</strong>
                 <span class="fs-card-name">Total Laporan</span>
                 <small>Seluruh laporan periode ini</small>
             </article>
             <article class="fs-card fs-card-v4">
-                <div class="fs-card-top"><span class="fs-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="7" />
-                            <path d="m20 20-4-4" />
-                        </svg></span><span class="fs-card-period">{{ $activePeriodLabel }}</span></div>
+                <div class="fs-card-top"><span class="fs-card-icon fs-card-icon-illustrated" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m10 17 13-7 13 7v14l-13 7-13-7V17Z"/><path d="m10 17 13 7 13-7M23 24v14M17 13l13 7"/><circle cx="33" cy="32" r="7" fill="#FBEAF0"/><path d="m38 37 5 5"/></svg></span><span class="fs-card-period">{{ $activePeriodLabel }}</span></div>
                 <strong>{{ number_format($lost, 0, ',', '.') }}</strong>
                 <span class="fs-card-name">Barang Hilang</span>
                 <small>Laporan berjenis hilang</small>
             </article>
             <article class="fs-card fs-card-v4">
-                <div class="fs-card-top"><span class="fs-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <path d="m12 3 9 5v9l-9 5-9-5V8l9-5Z" />
-                            <path d="m3 8 9 5 9-5M12 13v9" />
-                            <path d="m9 10 2 2 4-4" />
-                        </svg></span><span class="fs-card-period">{{ $activePeriodLabel }}</span></div>
+                <div class="fs-card-top"><span class="fs-card-icon fs-card-icon-illustrated" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m9 16 14-8 16 8v17l-16 8-14-8V16Z"/><path d="m9 16 14 8 16-8M23 24v17M16 12l16 8"/><path d="m18 28 4 4 8-9" stroke-width="2.4"/><path d="M35 8v-3m5 6 2-2" opacity=".65"/></svg></span><span class="fs-card-period">{{ $activePeriodLabel }}</span></div>
                 <strong>{{ number_format($found, 0, ',', '.') }}</strong>
                 <span class="fs-card-name">Barang Ditemukan</span>
                 <small>Laporan berjenis ditemukan</small>
             </article>
             <article class="fs-card fs-card-v4">
-                <div class="fs-card-top"><span class="fs-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <rect x="5" y="5" width="14" height="17" rx="2" />
-                            <rect x="9" y="2" width="6" height="5" rx="1" />
-                            <path d="m9 14 2 2 4-4" />
-                        </svg></span><span class="fs-card-period">{{ $activePeriodLabel }}</span></div>
+                <div class="fs-card-top"><span class="fs-card-icon fs-card-icon-illustrated" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="9" width="27" height="34" rx="4"/><path d="M18 9V6a3 3 0 0 1 3-3h5a3 3 0 0 1 3 3v3"/><path d="m16 20 2 2 4-4m3 2h7M16 29l2 2 4-4m3 2h7"/><path d="m29 39 10-10 4 4-10 10-5 1 1-5Z" fill="#FBEAF0"/></svg></span><span class="fs-card-period">{{ $activePeriodLabel }}</span></div>
                 <strong>{{ number_format($claimTotal, 0, ',', '.') }}</strong>
                 <span class="fs-card-name">Pengajuan Klaim</span>
                 <small>Seluruh klaim periode ini</small>
             </article>
             <article class="fs-card fs-card-v4">
-                <div class="fs-card-top"><span class="fs-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <circle cx="6" cy="6" r="2" />
-                            <circle cx="18" cy="18" r="2" />
-                            <path d="M6 8v8a2 2 0 0 0 2 2h8M18 16V8a2 2 0 0 0-2-2H8" />
-                        </svg></span><span class="fs-card-period">{{ $activePeriodLabel }}</span></div>
+                <div class="fs-card-top"><span class="fs-card-icon fs-card-icon-illustrated" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="10" width="13" height="13" rx="3"/><rect x="29" y="26" width="13" height="13" rx="3"/><path d="M20 16h5a5 5 0 0 1 5 5v5M28 32h-5a5 5 0 0 1-5-5v-4"/><path d="m24 12 4 4-4 4M24 36l-4-4 4-4" fill="#FBEAF0"/></svg></span><span class="fs-card-period">{{ $activePeriodLabel }}</span></div>
                 <strong>{{ number_format($matchTotal, 0, ',', '.') }}</strong>
                 <span class="fs-card-name">Kandidat Pencocokan</span>
                 <small>Hasil pencocokan tersimpan</small>
             </article>
             <article class="fs-card fs-card-v4">
-                <div class="fs-card-top"><span class="fs-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <path d="m2 9 4-4 5 2 3-2 8 5-3 6-5 5-3-2-3 1-6-7Z" />
-                            <path d="m8 12 4 4 2-1 3 2" />
-                        </svg></span><span class="fs-card-period">{{ $activePeriodLabel }}</span></div>
+                <div class="fs-card-top"><span class="fs-card-icon fs-card-icon-illustrated" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m5 20 8-8 8 3 5-3 17 10-5 8-7 8-6-2-5 2-15-13Z"/><path d="m15 22 8 8a4 4 0 0 0 6-1l3-4M21 18l8 7a4 4 0 0 0 6-1l2-3"/><path d="m18 31 4 4m1-7 5 5m-1-9 5 4" opacity=".9"/></svg></span><span class="fs-card-period">{{ $activePeriodLabel }}</span></div>
                 <strong>{{ number_format($statuses['returned'] ?? 0, 0, ',', '.') }}</strong>
                 <span class="fs-card-name">Barang Dikembalikan</span>
                 <small>Berdasarkan status laporan barang</small>

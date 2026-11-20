@@ -148,7 +148,7 @@ class CampusController extends Controller
 
         $notifications = $user->notifications()
             ->latest('created_at')
-            ->paginate(15)
+            ->paginate(10)
             ->withQueryString();
 
         return view('user.notifications.index', compact('notifications'));

@@ -18,6 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
         article.className = "chat-message " + (message.is_mine ? "mine" : "theirs");
 
         article.dataset.messageId = message.id;
+        if (message.sent_at) article.dataset.sentAt = message.sent_at;
+        if (message.recalled) article.dataset.recalled = "true";
 
         const bubble = document.createElement("div");
         bubble.className = "chat-bubble";
@@ -29,19 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
         bubble.appendChild(sender);
 
         if (message.attachment_url) {
-            const link = document.createElement("a");
-            link.href = message.attachment_url;
-            link.target = "_blank";
-            link.rel = "noopener noreferrer";
-
-            const image = document.createElement("img");
-            image.className = "chat-attachment";
-            image.src = message.attachment_url;
-            image.alt = "Lampiran pesan";
-            image.loading = "lazy";
-
-            link.appendChild(image);
-            bubble.appendChild(link);
+            window.findBackChat.appendAttachment(bubble, message.attachment_url, message.attachment_type, message.attachment_photo_ratio);
         }
 
         if (message.message) {
@@ -50,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
             bubble.appendChild(paragraph);
         }
 
+        window.findBackChat.addAdminOptions(bubble, message);
         const time = document.createElement("small");
         time.textContent = message.created_at;
         bubble.appendChild(time);
@@ -82,6 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!response.ok) return;
 
             const data = await response.json();
+            window.findBackChat.markAdminRecalls(container, data.recalled_ids);
 
             if (!Array.isArray(data.messages) || !data.messages.length) {
                 return;
@@ -116,5 +108,5 @@ document.addEventListener("DOMContentLoaded", function () {
     container.scrollTop = container.scrollHeight;
 
     refreshMessages();
-    setInterval(refreshMessages, 4000);
+    setInterval(refreshMessages, 1500);
 });

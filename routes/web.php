@@ -183,6 +183,11 @@ Route::middleware(['auth', 'role:admin', 'admin-tab'])
         // 01. NOTIFIKASI
         // ----------------------------------------------------
 
+        Route::get('/notifications', [AdminNotificationController::class, 'index'])->name('notifications.index');
+
+        Route::get('/notifications/stats', [AdminNotificationController::class, 'stats'])
+            ->name('notifications.stats');
+
         Route::get('/notifications/feed', [AdminNotificationController::class, 'feed'])
             ->name('notifications.feed');
 
@@ -462,6 +467,12 @@ Route::middleware(['auth', 'role:admin', 'admin-tab'])
             ->whereNumber('user')
             ->name('show');
 
+        Route::patch('/messages/{message}/recall', [\App\Http\Controllers\Admin\ChatController::class, 'recall'])
+            ->whereNumber('message')->name('recall');
+
+        Route::patch('/messages/{message}/hide', [\App\Http\Controllers\Admin\ChatController::class, 'hide'])
+            ->whereNumber('message')->name('hide');
+
         Route::post('/{user}/send', [\App\Http\Controllers\Admin\ChatController::class, 'store'])
             ->whereNumber('user')
             ->middleware('throttle:30,1')
@@ -472,11 +483,11 @@ Route::middleware(['auth', 'role:admin', 'admin-tab'])
 // ============================================================
 
 Route::middleware(['auth', 'role:user'])
-    ->get('/chat/messages', [\App\Http\Controllers\User\ChatController::class, 'messages'])
+    ->match(['GET', 'POST'], '/chat/messages', [\App\Http\Controllers\User\ChatController::class, 'messages'])
     ->name('user.chat.messages');
 
 Route::middleware(['auth', 'role:admin', 'admin-tab'])
-    ->get('/admin/chat/{user}/messages', [
+    ->match(['GET', 'POST'], '/admin/chat/{user}/messages', [
         \App\Http\Controllers\Admin\ChatController::class,
         'messages',
     ])

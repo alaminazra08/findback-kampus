@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ asset('css/pages/admin/matching/consistency-v3.css') }}?v=20261115-1">
     <link rel=stylesheet href={{ asset('css/pages/admin/matching/hover-v5.css') }}?v=20261115-5>
     <link rel="stylesheet" href="{{ asset('css/admin/matching-stat-cards-verification-reference-v3.css') }}?v=3">
-    <link rel="stylesheet" href="{{ asset('css/admin/matching-page-premium-responsive-v4.css') }}?v=4">
+    <link rel="stylesheet" href="{{ asset('css/admin/matching-page-premium-responsive-v4.css') }}?v=6">
 @endsection
 
 @section('content')
@@ -46,18 +46,26 @@
 
         @php
             $matchingError = session('error');
-            $matchingMessage = $matchingError ?? session('success');
+            $matchingResult = session('matching_result');
+            $matchingTone = $matchingError ? 'error' : ($matchingResult['tone'] ?? 'success');
+            $matchingTitle = $matchingError ? 'Pencocokan gagal' : ($matchingResult['title'] ?? 'Pencocokan selesai');
+            $matchingMessage = $matchingError ?? $matchingResult['message'] ?? session('success');
+            $matchingIcon = match ($matchingTone) {
+                'error' => '!',
+                'info' => 'i',
+                default => '✓',
+            };
         @endphp
         @if ($matchingMessage)
-            <div data-fb-matching-toast class="fb-settings-toast is-visible{{ $matchingError ? ' is-error' : '' }}"
+            <div data-fb-matching-toast class="fb-settings-toast is-visible is-{{ $matchingTone }}"
                 role="{{ $matchingError ? 'alert' : 'status' }}" aria-atomic="true">
-                <span class="fb-settings-toast-icon" aria-hidden="true">{{ $matchingError ? '!' : 'âœ“' }}</span>
-                <span class="fb-settings-toast-copy" style="overflow-wrap:anywhere">
-                    <strong>{{ $matchingError ? 'Pencocokan gagal' : 'Pencocokan selesai' }}</strong>
-                    <small>{{ $matchingError ? $matchingMessage : (preg_replace('/^Pencocokan selesai\.?\s*/i', '', $matchingMessage) ?: $matchingMessage) }}</small>
+                <span class="fb-settings-toast-icon" aria-hidden="true">{{ $matchingIcon }}</span>
+                <span class="fb-settings-toast-copy">
+                    <strong>{{ $matchingTitle }}</strong>
+                    <small>{{ $matchingMessage }}</small>
                 </span>
                 <button type="button" data-fb-matching-toast-close aria-label="Tutup notifikasi"
-                    style="flex:0 0 44px;min-height:44px;border:0;background:transparent;color:inherit;cursor:pointer;font-size:22px">×</button>
+                    class="fb-matching-toast-close">×</button>
             </div>
         @endif
         @if ($errors->any())
@@ -90,7 +98,7 @@
                 </div>
                 <form class="match-filters" method="GET" action="{{ route('admin.matching.index') }}">
                     <input type="search" name="q" maxlength="100" placeholder="Cari nama barang / lokasi ..."
-                        value="{{ $search }}" aria-label="Cari kandidat">
+                        value="{{ $search }}" aria-label="Cari kandidat" spellcheck="false" autocorrect="off" autocapitalize="off">
                     <select name="status" aria-label="Filter status">
                         <option value="all" @selected($status === 'all')>Semua status</option>
                         <option value="pending" @selected($status === 'pending')>Perlu Pemeriksaan</option>

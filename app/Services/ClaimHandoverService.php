@@ -21,7 +21,7 @@ class ClaimHandoverService
             ]);
         }
         try {
-            $closedClaims = DB::transaction(function () use (
+            DB::transaction(function () use (
                 $claim,
                 $data,
                 $actor,
@@ -109,7 +109,6 @@ class ClaimHandoverService
                         'reviewed_at' => $at,
                     ]);
                 }
-                return $others;
             }, 3);
         } catch (\Throwable $exception) {
             Storage::disk('local')->delete($path);
@@ -120,15 +119,5 @@ class ClaimHandoverService
             $claim->claimant,
             new HandoverResultNotification($claim->handover_item_title, $claim->handover_code),
         );
-        foreach ($closedClaims as $closed) {
-            AdminAlerts::notify(
-                $closed->claimant,
-                new HandoverResultNotification(
-                    $claim->handover_item_title,
-                    $claim->handover_code,
-                    false,
-                ),
-            );
-        }
     }
 }

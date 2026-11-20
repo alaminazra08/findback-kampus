@@ -14,6 +14,7 @@ class AdminMessageNotification extends Notification
         public string $message,
         public ?string $category = null,
         public ?int $recordId = null,
+        public array $extraData = [],
     ) {
     }
 
@@ -29,6 +30,6 @@ class AdminMessageNotification extends Notification
             'message' => $this->message,
             'category' => $this->category,
             'record_id' => $this->recordId,
-        ];
+        ] + $this->extraData;
     }
 }

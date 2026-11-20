@@ -3,7 +3,10 @@
  * Native <details> keeps keyboard behavior; this adds outside-click and Escape close.
  */
 (() => {
+    let lifecycle;
     const init = () => {
+        lifecycle?.abort();
+        lifecycle = new AbortController();
         document.querySelectorAll('.fs-page .fs-report-download').forEach((details) => {
             if (details.dataset.floatingMenuV4 === 'ready') return;
             details.dataset.floatingMenuV4 = 'ready';
@@ -12,7 +15,7 @@
                 if (details.open && !details.contains(event.target)) {
                     details.open = false;
                 }
-            });
+            }, { signal: lifecycle.signal });
 
             details.addEventListener('keydown', (event) => {
                 if (event.key === 'Escape' && details.open) {
@@ -35,4 +38,5 @@
     } else {
         init();
     }
+    document.addEventListener('fb:admin-page', init);
 })();

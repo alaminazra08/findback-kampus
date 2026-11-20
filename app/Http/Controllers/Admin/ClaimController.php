@@ -107,6 +107,7 @@ class ClaimController extends Controller
         $claimMessages = collect();
         if (in_array($claim->status, ['approved', 'returned'], true) && $claim->claimant) {
             $claimMessages = \App\Models\ChatMessage::with('sender')
+                ->visibleToAdmin(auth()->id())
                 ->where('user_id', $claim->claimant->id)
                 ->where('claim_id', $claim->id)
                 ->latest('id')

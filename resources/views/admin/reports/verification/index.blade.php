@@ -32,8 +32,7 @@
                 <strong>{{ $verificationToastWarning ? 'Perlu perhatian' : 'Verifikasi berhasil' }}</strong>
                 <small>{{ $verificationToastWarning ? session('warning') : session('success') }}</small>
             </span>
-            <button type="button" class="fb-verification-toast-close" aria-label="Tutup notifikasi"
-                    onclick="this.closest('.fb-verification-toast').remove()">&times;</button>
+            <button type="button" class="fb-verification-toast-close" aria-label="Tutup notifikasi">&times;</button>
         </div>
     @endif
     @include('admin.reports.verification.results')

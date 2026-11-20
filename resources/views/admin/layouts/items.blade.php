@@ -11,6 +11,8 @@
     <meta name="theme-color" content="#121114">
 
     <title>FindBack Kampus</title>
+    <script src="{{ asset('js/admin/admin-tab-guard.js') }}"
+        data-logout="{{ route('logout') }}" data-token="{{ csrf_token() }}"></script>
     <script src="{{ asset('js/admin/sidebar-prepaint.js') }}"></script>
 
     <link rel="icon"
@@ -19,7 +21,7 @@
 
     {{-- CSS UTAMA --}}
     <link rel="stylesheet"
-        href="{{ asset('css/admin/admin-dashboard.css') }}?v=40">
+        href="{{ asset('css/admin/admin-dashboard.css') }}?v=41">
 
     <link rel="stylesheet"
         href="{{ asset('css/admin/admin-items.css') }}?v=34">
@@ -37,7 +39,7 @@
         href="{{ asset('css/admin/sidebar-theme.css') }}?v=43">
 
     <link rel="stylesheet"
-        href="{{ asset('css/admin/sidebar-layout.css') }}?v=44">
+        href="{{ asset('css/admin/sidebar-layout.css') }}?v=46">
 
 
     <link rel="stylesheet"
@@ -60,10 +62,11 @@
     <link rel="stylesheet" href="{{ asset('css/admin/brand-polish.css') }}?v=1">
 <!-- FINDBACK_TYPOGRAPHY_V1 -->
 <link rel="stylesheet" href="{{ asset('css/shared/typography.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/admin/notification-toast.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/admin/notification-toast.css') }}?v=6">
     <link rel="stylesheet" href="{{ asset('css/admin/work-page-heading.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/design-system.css') }}?v=8">
-    <script src="{{ asset('js/admin/stat-icon-motion.js') }}?v=2" defer></script>
+    {{-- FINDBACK: hide native search clear controls consistently on all admin pages --}}
+    <link rel="stylesheet" href="{{ asset('css/admin/search-input-consistency.css') }}?v=20261120-3">
 </head>
 
 <body class="fb-responsive fb-admin-body">
@@ -239,7 +242,7 @@
 
                     {{-- BRAND MOBILE DINAMIS --}}
                     <div class="fb-mobile-brand"
-                        aria-label="FindBack, panel admin">
+                        aria-label="{{ $adminSettings['site_name'] }}, panel admin">
 
                         <strong>
                             FindBack
@@ -256,7 +259,11 @@
 
                         <strong>
 
-                            @if (request()->routeIs('admin.chat.*'))
+                            @if (request()->routeIs('admin.notifications.*'))
+
+                                Pusat Notifikasi
+
+                            @elseif (request()->routeIs('admin.chat.*'))
 
                                 Pesan Pengguna
 
@@ -315,6 +322,7 @@
             @php
                 $adminNavPage = [
                     'admin.dashboard' => 'dashboard',
+                    'admin.notifications.index' => 'notifications',
                     'admin.reports.verification' => 'verification',
                     'admin.items.index' => 'items',
                     'admin.matching.index' => 'matching',
@@ -329,7 +337,7 @@
                     'admin.settings.index' => 'settings',
                 ][request()->route()?->getName()] ?? null;
             @endphp
-            <main class="fb-main fb-items-main" @if ($adminNavPage) data-fb-nav-page="{{ $adminNavPage }}" @endif>
+            <main class="fb-main{{ request()->routeIs('admin.dashboard') ? '' : ' fb-items-main' }}" @if ($adminNavPage) data-fb-nav-page="{{ $adminNavPage }}" @endif>
 
                 @yield('content')
 
@@ -341,7 +349,7 @@
 
     {{-- NOTIFIKASI --}}
     <script
-        src="{{ asset('js/admin/admin-notifications.js') }}?v=4"
+        src="{{ asset('js/admin/admin-notifications.js') }}?v=6"
         defer>
     </script>
 
@@ -355,40 +363,31 @@
     </script>
 
     <script src="{{ asset('js/shared/responsive-viewport.js') }}?v=20261111" defer></script>
-    <script src="{{ asset('js/admin/smart-navigation-session.js') }}?v=4" defer
-        data-account="{{ auth()->id() }}"
-        data-list-1="{{ route('admin.reports.verification') }}"
-        data-list-2="{{ route('admin.items.index') }}"
-        data-list-3="{{ route('admin.matching.index') }}"
-        data-list-4="{{ route('admin.claims.index') }}"
-        data-list-5="{{ route('admin.statistics.index') }}"
-        data-list-6="{{ route('admin.users.index') }}"></script>
-    @if ($adminNavPage)
-        <script src="{{ asset('js/admin/admin-analytics.js') }}?v=2" defer></script>
-        <script src="{{ asset('js/admin/dashboard-date.js') }}?v=3" defer></script>
-        <script src="{{ asset('js/pages/admin/reports/verification/fast-tabs.js') }}?v=3" defer></script>
-        <script src="{{ asset('js/admin/admin-items-upload.js') }}?v=2" defer></script>
-        <script src="{{ asset('js/admin/items-filter-ajax-scroll.js') }}?v=2" defer></script>
-        <script src="{{ asset('js/pages/admin/matching/filter-navigation.js') }}?v=4-matching-feedback" defer></script>
-        <script src="{{ asset('js/pages/admin/statistics/index.js') }}?v=2" defer></script>
-        <script src="{{ asset('js/admin/users-filter-navigation.js') }}?v=2" defer></script>
-        <script src="{{ asset('js/admin/settings-score.js') }}?v=2" defer></script>
-        @include('admin.partials.detail-interactions')
-        <script src="{{ asset('js/admin/claims-toast-v1.js') }}?v=2" defer></script>
-        <script src="{{ asset('js/admin/dashboard-verification-navigation.js') }}?v=33" defer
-            data-dashboard="{{ route('admin.dashboard') }}"
-            data-verification="{{ route('admin.reports.verification') }}"
-            data-items="{{ route('admin.items.index') }}"
-            data-matching="{{ route('admin.matching.index') }}"
-            data-claims="{{ route('admin.claims.index') }}"
-            data-statistics="{{ route('admin.statistics.index') }}"
-            data-users="{{ route('admin.users.index') }}"
-            data-settings="{{ route('admin.settings.index') }}"></script>
-    @endif
-    {{-- Smart Save harus sudah siap sebelum navigasi AJAX menuju Pengaturan. --}}
+    <script src="{{ asset('js/admin/admin-analytics.js') }}?v=2" defer></script>
+    <script src="{{ asset('js/admin/dashboard-date.js') }}?v=3" defer></script>
+    <script src="{{ asset('js/admin/admin-items-upload.js') }}?v=2" defer></script>
+    <script src="{{ asset('js/pages/admin/matching/filter-navigation.js') }}?v=6" defer></script>
+    <script src="{{ asset('js/pages/admin/statistics/index.js') }}?v=2" defer></script>
+    <script src="{{ asset('js/admin/settings-score.js') }}?v=2" defer></script>
     <script src="{{ asset('js/admin/settings-smart-save.js') }}?v=11" defer></script>
-    <script src="{{ asset('js/admin/admin-toast-standard-v1.js') }}?v=1" defer></script>
-    <script src="{{ asset('js/admin/admin-scroll-continuity-v1.js') }}?v=1" defer></script>
+    <script src="{{ asset('js/admin/claims-toast-v1.js') }}?v=2" defer></script>
+    <script defer src="{{ asset('js/admin/statistics-cards-consistency-v1.js') }}?v=1"></script>
+    <script defer src="{{ asset('js/admin/statistics-download-menu-v4.js') }}?v=5"></script>
+    <script defer src="{{ asset('js/admin/statistics-period-dropdown-v5.js') }}?v=6"></script>
+    <script defer src="{{ asset('js/admin/statistics-dropdown-layer-v6.js') }}?v=7"></script>
+    @include('admin.partials.detail-interactions')
+    <script src="{{ asset('js/admin/admin-toast-standard-v1.js') }}?v=3" defer></script>
+    <script src="{{ asset('js/admin/admin-scroll-continuity-v1.js') }}?v=2" defer></script>
+    <script src="{{ asset('js/admin/admin-fast-navigation.js') }}?v=2" defer
+        data-account="{{ auth()->id() }}"
+        data-dashboard="{{ route('admin.dashboard') }}"
+        data-verification="{{ route('admin.reports.verification') }}"
+        data-items="{{ route('admin.items.index') }}"
+        data-matching="{{ route('admin.matching.index') }}"
+        data-claims="{{ route('admin.claims.index') }}"
+        data-statistics="{{ route('admin.statistics.index') }}"
+        data-users="{{ route('admin.users.index') }}"
+        data-settings="{{ route('admin.settings.index') }}"></script>
 </body>
 
 </html>

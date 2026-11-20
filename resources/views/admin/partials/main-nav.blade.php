@@ -32,7 +32,8 @@
             class="fb-nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M4 7h16v14H4zM8 7V4h8v3m-8 7 3 3 5-6" />
-            </svg></span><span class="fb-nav-text">Klaim & Pengembalian</span></a>
+            </svg></span><span class="fb-nav-text">Klaim & Pengembalian</span>
+        <span class="fb-claim-sidebar-count" data-fb-claim-sidebar-count hidden></span></a>
     <a class="fb-nav-link {{ request()->routeIs('admin.statistics.*') ? 'is-active' : '' }}"
         href="{{ route('admin.statistics.index') }}" @if (request()->routeIs('admin.statistics.*')) aria-current="page" @endif><span
             class="fb-nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"

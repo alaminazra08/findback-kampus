@@ -2164,3 +2164,84 @@
 @media (max-width: 600px) {
   .match-wrap > .match-index-heading { margin-top: 0; margin-bottom: 20px; }
 }
+
+.match-wrap .match-reason-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.match-wrap .match-reason-list li {
+    align-items: center;
+    justify-content: space-between;
+    min-height: 50px;
+}
+
+.match-factor-points {
+    flex: none;
+    min-width: 2.6em;
+    padding: 3px 8px;
+    border-radius: 7px;
+    background: #f9e5ee;
+    color: #850c2d;
+    font-weight: 750;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.match-factor-points.is-neutral {
+    background: #f0edf0;
+    color: #625561;
+}
+
+.match-wrap .match-review-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 12px;
+}
+
+.match-wrap .match-review-actions > form {
+    padding: 0;
+    background: transparent;
+    border: 0;
+    min-width: 0;
+}
+
+.match-wrap .match-review-actions .match-button {
+    box-sizing: border-box;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    min-height: 44px;
+    text-align: center;
+}
+
+.match-rejection-details {
+    min-width: 0;
+}
+
+.match-rejection-details summary {
+    list-style: none;
+    cursor: pointer;
+}
+
+.match-rejection-details summary::-webkit-details-marker {
+    display: none;
+}
+
+.match-rejection-details > form {
+    display: grid;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.match-rejection-details textarea {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+@media (max-width: 680px) {
+    .match-wrap .match-reason-list,
+    .match-wrap .match-review-actions {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

@@ -4380,3 +4380,17 @@ a {
         transition: none;
     }
 }
+
+/* FindBack admin notification dropdown: 4 latest items, no list scroll on regular screens.
+   Only on exceptionally short viewports do we allow scrolling to prevent clipped actions. */
+#fb-notif-panel {
+    max-height: none;
+    overflow: visible;
+}
+@media (max-height: 650px) {
+    #fb-notif-panel {
+        max-height: calc(100dvh - 105px);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+}

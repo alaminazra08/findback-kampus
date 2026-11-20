@@ -1,0 +1,1194 @@
+#fcp-dialog {
+    width: min(960px, calc(100% - 32px));
+    height: min(740px, calc(var(--fb-viewport-height, 100dvh) - 32px));
+    inset: var(--fb-viewport-top, 0px) 0 0;
+    margin: auto;
+    max-inline-size: none;
+    max-height: none;
+}
+
+#fcp-dialog .fcp-dialog-shell,
+#fcp-dialog .fcp-panel {
+    height: 100%;
+    max-block-size: none;
+    overflow: hidden;
+}
+
+.fcp-dialog .fcp-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+#fcp-dialog .fcp-messages {
+    flex: 1 1 0;
+    block-size: auto;
+    max-block-size: none;
+    min-height: 0;
+    padding: 14px clamp(12px, 3vw, 26px);
+}
+
+.fcp-dialog .fcp-compact-header,
+.fb-chat-modal .fb-chat-compact-header {
+    display: flex;
+    flex: 0 0 auto;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 10px;
+    padding: 9px clamp(10px, 2vw, 18px);
+}
+
+.fcp-compact-header .fcp-avatar,
+.fb-chat-compact-header .fb-chat-avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+}
+
+.fcp-contact-copy,
+.fb-chat-contact-copy {
+    flex: 1;
+    min-width: 0;
+}
+
+.fcp-compact-header h2,
+.fb-chat-modal .fb-chat-compact-header h2,
+.chat-inbox-name {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.25;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.fcp-compact-header .fcp-contact-copy small,
+.fb-chat-modal .fb-chat-contact-copy p {
+    display: block;
+    margin: 0;
+    color: #71525f;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#fcp-dialog .fcp-dialog-close,
+#fb-chat-overlay .fb-chat-close {
+    position: static;
+    flex: none;
+    margin: 0;
+    width: 44px;
+    height: 44px;
+}
+
+.fb-chat-action-slot {
+    --chat-control-height: 44px;
+    --chat-action-width: clamp(68px, 12vw, 88px);
+    --chat-gutter: clamp(10px, 2vw, 18px);
+    display: grid;
+    flex: none;
+    min-width: 0;
+}
+
+.fb-chat-action-slot > [data-chat-compose],
+.fb-chat-action-slot > .fb-chat-selection-bar {
+    grid-area: 1 / 1;
+}
+
+.fb-chat-action-slot.is-selecting > [data-chat-compose] {
+    visibility: hidden;
+}
+
+.fb-chat-action-slot > .fb-chat-selection-bar {
+    z-index: 1;
+    align-content: end;
+}
+
+#fcp-dialog .fcp-compose,
+.chat-panel .chat-form[data-chat-compose],
+.fb-inbox-main .fb-inbox-compose[data-chat-compose],
+.fb-chat-modal .fb-chat-composer {
+    display: grid;
+    grid-template-columns: var(--chat-control-height) minmax(0, 1fr) var(--chat-action-width);
+    align-items: center;
+    gap: 8px;
+}
+
+#fcp-dialog .fcp-compose {
+    position: static;
+}
+
+#fcp-dialog .fb-chat-action-slot > [data-chat-compose],
+.fb-chat-action-slot > [data-chat-compose] {
+    box-sizing: border-box;
+    min-width: 0;
+    margin: 0;
+    padding: 8px var(--chat-gutter);
+    border: 0;
+    border-top: 1px solid #ead8e0;
+}
+
+.fb-chat-page .fb-chat-action-slot > .chat-form {
+    padding: 8px var(--chat-gutter) !important;
+}
+
+#fb-modal-stream ~ .fb-chat-bottom:has(.fb-chat-action-slot) {
+    padding: 0;
+    border-top: 0;
+}
+
+#fcp-dialog .fb-chat-action-slot > [data-chat-compose] > button[type="submit"],
+.fb-chat-action-slot > [data-chat-compose] > button[data-chat-pick],
+.fb-chat-action-slot > [data-chat-compose] > button[type="submit"] {
+    grid-row: auto;
+    grid-column: auto;
+    align-self: end;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    height: var(--chat-control-height);
+    min-height: var(--chat-control-height);
+    padding-inline: 6px;
+}
+
+.fb-chat-action-slot > [data-chat-compose] > textarea {
+    min-height: var(--chat-control-height);
+    min-width: 0;
+    margin: 0;
+}
+
+.fb-chat-action-slot > [data-chat-compose]:not(.fb-chat-composer) > textarea {
+    height: var(--chat-control-height);
+}
+
+.fb-chat-action-slot > .fb-chat-composer > .fb-chat-primary:is(:hover, :active) {
+    transform: none;
+}
+
+.fcp-compose > button[data-chat-pick],
+.chat-form > button[data-chat-pick],
+.fb-inbox-compose > button[data-chat-pick] {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+    color: #850c2d;
+    background: #f9e8ef;
+    font-size: 24px;
+    border: 0;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.fcp-dialog .fcp-compose textarea,
+.chat-panel .chat-form textarea,
+.fb-inbox-main .fb-inbox-compose textarea {
+    width: 100%;
+    min-height: 44px;
+    box-sizing: border-box;
+    font-size: 16px;
+    resize: none;
+}
+
+.fcp-dialog .fcp-compose textarea {
+    padding: 10px;
+}
+
+.chat-form .chat-error,
+.chat-form .chat-success {
+    grid-column: 1 / -1;
+}
+
+.fcp-bubble img,
+.fb-chat-bubble img,
+.chat-bubble img,
+.fb-inbox-bubble img {
+    display: block;
+    max-width: min(100%, 320px);
+    max-height: min(230px, 34dvh);
+    object-fit: contain;
+}
+
+.fb-chat-photo-preview {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    padding: 5px 8px;
+    border: 1px solid #eedde4;
+    border-radius: 12px;
+    background: #fbf5f8;
+    color: #351521;
+    font-size: 13px;
+}
+
+.fb-chat-photo-preview span {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+[data-chat-compose] .fb-chat-photo-preview button,
+.fb-chat-options,
+.fb-chat-tool-close {
+    width: 40px;
+    height: 40px;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+
+[data-chat-compose] .fb-chat-photo-preview button:hover,
+.fb-chat-options:hover {
+    background: #a16b831f;
+}
+
+.fb-chat-photo-preview :is(img, video) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.fb-chat-tool-dialog {
+    box-sizing: border-box;
+    width: max-content;
+    max-width: calc(100vw - 24px);
+    max-height: calc(100dvh - 24px);
+    margin: auto;
+    padding: 48px 12px 12px;
+    border: 0;
+    border-radius: 14px;
+    background: #fff;
+    color: #351521;
+}
+
+.fb-chat-tool-dialog::backdrop {
+    background: #1f0e1acc;
+}
+
+.fb-chat-tool-dialog > img {
+    display: block;
+    max-width: min(950px, calc(100vw - 48px));
+    max-height: calc(100dvh - 90px);
+    object-fit: contain;
+}
+
+.fb-chat-tool-close {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    background: #fbf0f5;
+    font-size: 24px;
+}
+
+.fb-chat-tool-actions {
+    display: grid;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.fb-chat-tool-actions button {
+    min-height: 44px;
+    padding: 8px 12px;
+    border: 1px solid #eedde4;
+    border-radius: 8px;
+    background: #fbf5f8;
+    color: #850c2d;
+    text-align: left;
+    cursor: pointer;
+}
+
+.fb-chat-tool-dialog [role="alert"] {
+    margin: 8px 0 0;
+    color: #850c2d;
+}
+
+.fb-chat-tool-dialog [role="alert"]:empty {
+    display: none;
+}
+
+@media (max-width: 680px) {
+    #fcp-dialog {
+        width: 100%;
+        height: var(--fb-viewport-height, 100dvh);
+        max-block-size: none;
+        border-radius: 0;
+    }
+
+    .fb-chat-modal .fb-chat-composer #fb-chat-textarea {
+        font-size: 16px;
+    }
+
+}
+
+.fb-inbox-messages + [role="status"]:empty {
+    display: none;
+}
+
+#fcp-dialog .fcp-compose > button[data-chat-pick]:hover {
+    background: #f3d7e3;
+}
+
+:is(.fcp-bubble, .fb-chat-bubble, .chat-bubble, .fb-inbox-bubble) {
+    position: relative;
+}
+
+.fb-chat-options {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    clip-path: inset(50%);
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.fb-chat-context-choice {
+    position: fixed;
+    z-index: 20;
+    min-height: 40px;
+    padding: 0 14px;
+    color: #790d36;
+    background: #fff;
+    border: 1px solid #ead8e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgb(66 25 43 / 15%);
+    cursor: pointer;
+}
+
+.fb-chat-selecting .fb-chat-options {
+    display: none;
+}
+
+.fb-chat-selecting :is([data-message-id], .fb-chat-bubble-row[data-id]) {
+    position: relative;
+    cursor: pointer;
+    padding-inline-start: 30px;
+    border-radius: 12px;
+}
+
+.fb-chat-selecting :is([data-message-id], .fb-chat-bubble-row[data-id]).fb-chat-selected {
+    outline: 1px solid #ca8da6;
+    outline-offset: -1px;
+    box-shadow: inset 30px 0 #f4e1ea;
+}
+
+.fb-chat-selecting .fb-chat-selected:not(.fb-inbox-bubble) {
+    background-color: #f9edf3;
+}
+
+.fb-chat-check {
+    position: absolute;
+    inset: 50% auto auto 7px;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: #910e3d;
+    cursor: pointer;
+}
+
+.fb-chat-selection-bar {
+    flex: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 8px;
+    align-items: center;
+    padding: 8px var(--chat-gutter, 12px);
+    color: #42192b;
+    background: #fbf2f6;
+    border-top: 1px solid #ead8e0;
+}
+
+.fb-chat-selection-bar span {
+    min-width: 0;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 650;
+}
+
+.fb-chat-selection-bar button {
+    min-width: 44px;
+    height: var(--chat-control-height, 44px);
+    padding: 0 8px;
+    border: 0;
+    border-radius: 12px;
+    background: #840c35;
+    color: #fff;
+    font: inherit;
+    cursor: pointer;
+}
+
+.fb-chat-selection-bar button:first-child {
+    justify-self: start;
+    background: transparent;
+    color: #840c35;
+    font-size: 14px;
+}
+
+.fb-chat-selection-bar button:last-child {
+    justify-self: end;
+}
+
+.fb-chat-selection-bar button:disabled {
+    opacity: .45;
+    cursor: default;
+}
+
+.fb-chat-tool-dialog.fb-chat-delete-dialog {
+    width: min(350px, calc(100% - 28px));
+    padding: 20px;
+}
+
+.fb-chat-delete-dialog .fb-chat-tool-actions button {
+    text-align: center;
+}
+
+.fb-chat-delete-dialog .fb-chat-tool-actions .fb-chat-delete-shared {
+    color: #fff;
+    background: #840c35;
+}
+
+.fb-chat-delete-dialog .fb-chat-tool-actions button:last-child {
+    background: #fff;
+}
+
+.fb-chat-delete-dialog .fb-chat-tool-actions button:disabled {
+    opacity: .55;
+}
+
+/* Apply the same media layout to loaded, live and pending messages. */
+:is(.fcp-messages, .fb-chat-messages, .chat-messages, .fb-inbox-messages)
+    :is(.fcp-bubble, .fb-chat-bubble, .chat-bubble, .fb-inbox-bubble):has(> a > :is(img, video)) {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    box-sizing: border-box;
+    --chat-media-width: min(82%, 352px);
+    inline-size: var(--chat-media-width);
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    padding: 3px;
+    border-radius: 12px;
+}
+
+:is(.fcp-messages, .fb-chat-messages, .chat-messages, .fb-inbox-messages)
+    :is(.fcp-bubble, .fb-chat-bubble, .chat-bubble, .fb-inbox-bubble):has(> a > img) {
+    inline-size: min(var(--chat-media-width), calc(min(278px, 43dvh) * var(--chat-photo-ratio, 2) + 6px));
+    padding: 2px;
+}
+
+:is(.fcp-messages, .fb-chat-messages, .chat-messages, .fb-inbox-messages)
+    :is(.fcp-bubble, .fb-chat-bubble, .chat-bubble, .fb-inbox-bubble):has(> a > :is(img, video)) > a {
+    order: 0;
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: var(--chat-photo-ratio, 1.6);
+    inline-size: 100%;
+    overflow: hidden;
+    background: #eadde3;
+    margin: 0;
+    border-radius: 8px;
+}
+
+:is(.fcp-messages, .fb-chat-messages, .chat-messages, .fb-inbox-messages)
+    :is(.fcp-bubble, .fb-chat-bubble, .chat-bubble, .fb-inbox-bubble) > a > :is(img, video) {
+    display: block;
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    max-inline-size: 100%;
+    max-block-size: 100%;
+    margin: 0;
+    border: 0;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+:is(.fcp-messages, .fb-chat-messages, .chat-messages, .fb-inbox-messages)
+    :is(.fcp-bubble, .fb-chat-bubble, .chat-bubble, .fb-inbox-bubble):has(> a > :is(img, video)) > :is(strong, .chat-sender) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+:is(.fcp-messages, .fb-chat-messages, .chat-messages, .fb-inbox-messages)
+    :is(.fcp-bubble, .fb-chat-bubble, .chat-bubble, .fb-inbox-bubble):has(> a > :is(img, video)):has(> p) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 6px;
+    align-items: end;
+}
+
+:is(.fcp-messages, .fb-chat-messages, .chat-messages, .fb-inbox-messages)
+    :is(.fcp-bubble, .fb-chat-bubble, .chat-bubble, .fb-inbox-bubble):has(> a > :is(img, video)):has(> p) > a {
+    grid-column: 1 / -1;
+}
+
+:is(.fcp-messages, .fb-chat-messages, .chat-messages, .fb-inbox-messages)
+    :is(.fcp-bubble, .fb-chat-bubble, .chat-bubble, .fb-inbox-bubble):has(> a > :is(img, video)):has(> p) > p {
+    order: 1;
+    grid-column: 1;
+    align-self: last baseline;
+    margin: 5px 0 4px 7px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+:is(.fcp-messages, .fb-chat-messages, .chat-messages, .fb-inbox-messages)
+    :is(.fcp-bubble, .fb-chat-bubble, .chat-bubble, .fb-inbox-bubble):has(> a > :is(img, video)):has(> p) > :is(small:last-child, footer) {
+    order: 2;
+    grid-column: 2;
+    align-self: last baseline;
+    margin: 5px 7px 4px 0;
+    white-space: nowrap;
+    text-align: end;
+}
+
+:is(.fcp-messages, .fb-chat-messages, .chat-messages, .fb-inbox-messages)
+    :is(.fcp-bubble, .fb-chat-bubble, .chat-bubble, .fb-inbox-bubble):has(> a > :is(img, video)):has(> p) > .chat-edited {
+    order: 3;
+    grid-column: 1 / -1;
+    margin: 0 7px 4px;
+}
+
+:is(.fcp-messages, .fb-chat-messages, .chat-messages, .fb-inbox-messages)
+    :is(.fcp-bubble, .fb-chat-bubble, .chat-bubble, .fb-inbox-bubble):has(> a > :is(img, video)):not(:has(> p)) > :is(small:last-child, footer) {
+    position: absolute;
+    inset: auto 8px 8px auto;
+    max-inline-size: calc(100% - 16px);
+    white-space: nowrap;
+    min-inline-size: 0;
+    margin: 0;
+    padding: 3px 6px;
+    border-radius: 5px;
+    background: rgb(24 12 19 / 85%);
+    color: #fff;
+    text-align: end;
+    font-size: 10px;
+    line-height: 1.25;
+    opacity: 1;
+    pointer-events: none;
+}
+
+:is(.fcp-messages, .fb-chat-messages, .chat-messages, .fb-inbox-messages)
+    :is(.fcp-bubble, .fb-chat-bubble, .chat-bubble, .fb-inbox-bubble):has(> a > :is(img, video)) > .fb-chat-options {
+    inset: 7px 7px auto auto;
+}
+
+@media (max-width: 680px) {
+    :is(.fcp-messages, .fb-chat-messages, .chat-messages, .fb-inbox-messages)
+    :is(.fcp-bubble, .fb-chat-bubble, .chat-bubble, .fb-inbox-bubble):has(> a > :is(img, video)) {
+        --chat-media-width: min(85%, 300px);
+    }
+
+}
+
+.fb-chat-media-unavailable img {
+    visibility: hidden;
+}
+
+.fb-chat-media-unavailable::after {
+    content: "Foto tidak tersedia";
+    padding: 8px 14px;
+    border-radius: 8px;
+    color: #62354b;
+    background: #fff8fb;
+    font-size: 13px;
+}
+
+/* Conversation wallpaper carries through the scroll area only. */
+#fcp-dialog #fcp-messages,
+.fb-chat-modal #fb-modal-stream,
+.fb-chat-page #chat-messages,
+.fb-inbox-main #fb-inbox-messages {
+    background: url("data:image/png;base64,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") repeat #f9eef2 !important;
+    background-size: 448px auto !important;
+}
+
+.fb-chat-date-divider {
+    box-sizing: border-box;
+    display: table;
+    align-self: center;
+    flex: none;
+    margin: 8px auto;
+    padding: 4px 12px;
+    color: #654151;
+    background: #f0dfe7;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+:is(.fcp-messages, .fb-chat-messages, .chat-messages, .fb-inbox-messages)
+    :is(.fcp-bubble, .fb-chat-bubble, .chat-bubble, .fb-inbox-bubble) > :is(strong, .chat-sender) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+:is(.fcp-messages, .fb-chat-messages, .chat-messages, .fb-inbox-messages)
+    :is(.fcp-bubble, .fb-chat-bubble, .chat-bubble, .fb-inbox-bubble):not(:has(> a > :is(img, video))) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: last baseline;
+    gap: 3px 9px;
+    min-width: 0;
+    padding: 7px 10px;
+    border-radius: 11px;
+    box-shadow: 0 2px 4px rgb(68 28 46 / 6%);
+}
+
+#chat-messages .chat-bubble:not(:has(> a > :is(img, video))) {
+    padding: 7px 10px !important;
+    border-radius: 11px !important;
+}
+
+:is(.fcp-messages, .fb-chat-messages, .chat-messages, .fb-inbox-messages)
+    :is(.fcp-bubble, .fb-chat-bubble, .chat-bubble, .fb-inbox-bubble):not(:has(> a > :is(img, video))) > p {
+    min-width: 0;
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+:is(.fcp-messages, .fb-chat-messages, .chat-messages, .fb-inbox-messages)
+    :is(.fcp-bubble, .fb-chat-bubble, .chat-bubble, .fb-inbox-bubble):not(:has(> a > :is(img, video))) > :is(small:last-child, footer) {
+    position: relative;
+    inset-block-start: 3px;
+    margin: 0 0 0 auto;
+    white-space: nowrap;
+}
+
+.fb-chat-action-slot {
+    --chat-action-width: var(--chat-control-height);
+}
+
+:is(#fcp-dialog, .fb-chat-page, .fb-inbox-main, .fb-chat-modal)
+    .fb-chat-action-slot > form > .fb-chat-send-button,
+.fb-chat-selection-bar .fb-chat-delete-button {
+    box-sizing: border-box;
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+    border-radius: 50% !important;
+}
+
+:is(#fcp-dialog, .fb-chat-page, .fb-inbox-main, .fb-chat-modal)
+    .fb-chat-action-slot > form > .fb-chat-send-button {
+    background: #840c35;
+    color: #fff;
+}
+
+:is(#fcp-dialog, .fb-chat-page, .fb-inbox-main, .fb-chat-modal)
+    .fb-chat-action-slot > form > .fb-chat-send-button:hover {
+    background: #670829;
+}
+
+.fb-chat-selection-bar .fb-chat-delete-button {
+    border: 1px solid #e7bdd0;
+    background: #faeaf0;
+    color: #810d36;
+}
+
+.fb-chat-selection-bar .fb-chat-delete-button:not(:disabled):hover {
+    background: #f5d8e5;
+}
+
+.fb-chat-send-button svg,
+.fb-chat-delete-button svg {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+@media (max-width: 680px) {
+    #fcp-dialog #fcp-messages,
+    .fb-chat-modal #fb-modal-stream,
+    .fb-chat-page #chat-messages,
+    .fb-inbox-main #fb-inbox-messages {
+        background-size: 336px auto !important;
+    }
+}
+
+.fb-chat-tool-dialog.fb-chat-attachment-menu {
+    inset: auto auto var(--chat-menu-bottom, 12px) var(--chat-menu-left, 12px);
+    margin: 0;
+    width: min(218px, calc(100vw - 24px));
+    padding: 4px;
+    border: 1px solid #eedee5;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 10px 24px rgb(70 27 47 / 16%);
+}
+
+.fb-chat-attachment-menu::backdrop {
+    background: transparent;
+}
+
+.fb-chat-attachment-menu .fb-chat-tool-close {
+    display: none;
+}
+
+.fb-chat-camera-actions button {
+    min-height: 44px;
+    border: 1px solid #ead6e0;
+    border-radius: 10px;
+    padding: 7px 12px;
+    color: #790d36;
+    background: #fff8fb;
+    font: inherit;
+    cursor: pointer;
+}
+
+.fb-chat-attachment-option {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    min-height: 48px;
+    padding: 5px 8px;
+    color: #3e2331;
+    background: transparent;
+    border: 0;
+    border-radius: 11px;
+    text-align: start;
+    cursor: pointer;
+}
+
+.fb-chat-attachment-option:hover {
+    background: #fbf1f6;
+}
+
+.fb-chat-attachment-option:focus-visible {
+    outline: 2px solid #a12c58;
+    outline-offset: -2px;
+    background: #fbf1f6;
+}
+
+.fb-chat-attachment-option strong,
+.fb-chat-attachment-option small {
+    display: block;
+}
+
+.fb-chat-attachment-option strong {
+    font-size: 14px;
+    font-weight: 650;
+}
+
+.fb-chat-attachment-option small {
+    margin-top: 2px;
+    color: #755465;
+    font-size: 12px;
+}
+
+.fb-chat-attachment-icon {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: #f5e9f5;
+    color: #743b81;
+}
+
+.fb-chat-attachment-option.is-camera .fb-chat-attachment-icon {
+    background: #fae8ef;
+    color: #a42153;
+}
+
+.fb-chat-attachment-icon svg {
+    width: 21px;
+    height: 21px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.fb-chat-tool-dialog.fb-chat-camera {
+    width: min(472px, calc(100vw - 24px));
+    max-height: calc(100dvh - 24px);
+    padding: 12px;
+    overflow: auto;
+    position: fixed;
+    box-shadow: 0 18px 50px rgb(54 20 36 / 25%);
+}
+
+.fb-chat-tool-dialog > video {
+    display: block;
+    width: min(640px, calc(100vw - 48px));
+    max-height: calc(100dvh - 90px);
+    object-fit: contain;
+    background: #24151e;
+    border-radius: 10px;
+}
+
+.fb-chat-camera > video,
+.fb-chat-camera > img {
+    width: 100%;
+    max-width: 100%;
+    max-height: min(300px, 44dvh);
+    border-radius: 10px;
+    object-fit: contain;
+}
+
+.fb-chat-camera [hidden] {
+    display: none;
+}
+
+.fb-chat-camera-clock {
+    position: absolute;
+    inset: 61px auto auto 21px;
+    padding: 4px 9px;
+    border-radius: 9px;
+    background: #811333;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+}
+
+.fb-chat-camera-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.fb-chat-camera-actions .fb-chat-camera-send {
+    background: #811333;
+    color: #fff;
+}
+
+.fb-chat-camera textarea {
+    width: 100%;
+    min-height: 44px;
+    box-sizing: border-box;
+    padding: 7px 9px;
+    margin-top: 8px;
+    resize: vertical;
+    border: 1px solid #ead6e0;
+    border-radius: 10px;
+    font: inherit;
+    font-size: 16px;
+}
+
+.fb-chat-video-play {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    translate: -50% -50%;
+    padding: 8px 13px;
+    border-radius: 50%;
+    background: rgb(44 19 32 / 75%);
+    color: #fff;
+    pointer-events: none;
+}
+
+@media (max-width: 640px) {
+    .fb-chat-tool-dialog.fb-chat-attachment-menu {
+        inset: auto 0 max(8px, env(safe-area-inset-bottom));
+        width: min(300px, calc(100vw - 16px));
+        margin-inline: auto;
+        padding: 5px;
+    }
+
+    .fb-chat-attachment-menu::backdrop {
+        background: rgb(36 21 30 / 30%);
+    }
+
+    .fb-chat-tool-dialog.fb-chat-camera {
+        width: min(390px, calc(100vw - 16px));
+        max-height: calc(100dvh - 16px);
+        padding: 10px;
+    }
+}
+
+
+.fb-chat-camera > h2 {
+    display: flex;
+    align-items: center;
+    min-height: 34px;
+    margin: 0 48px 8px 2px;
+    color: #462737;
+    font-size: 16px;
+}
+
+.fb-chat-camera > p {
+    margin: 6px 0;
+    font-size: 13px;
+}
+
+.fb-chat-camera > p:empty {
+    display: none;
+}
+
+.fb-chat-camera .fb-chat-tool-close {
+    min-width: 44px;
+    min-height: 44px;
+    inset: 6px 8px auto auto;
+}
+
+.fb-chat-camera-actions button:not([hidden]) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding-inline: 9px;
+    font-size: 13px;
+    font-weight: 650;
+}
+
+.fb-chat-camera-actions button:disabled {
+    opacity: .48;
+    cursor: default;
+}
+
+.fb-chat-camera-actions svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.fb-chat-camera-actions .fb-chat-camera-photo,
+.fb-chat-camera-actions .fb-chat-camera-record.is-recording {
+    background: #811333;
+    border-color: #811333;
+    color: #fff;
+}
+
+/* Keep the claim chat controls and bubble styles aligned in both views. */
+#fb-chat-overlay > .fb-chat-modal {
+    width: min(960px, calc(100% - 32px));
+    height: min(740px, calc(var(--fb-viewport-height, 100dvh) - 32px));
+    max-height: none;
+}
+
+#fb-modal-stream {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 14px clamp(12px, 3vw, 26px);
+    overflow-anchor: auto;
+}
+
+#fb-modal-stream .fb-chat-bubble-row {
+    flex: none;
+    margin-block: 0;
+}
+
+#fb-modal-stream .fb-chat-bubble-row.mine:not(.is-recalled) > .fb-chat-bubble {
+    background: linear-gradient(135deg, #850c2d, #a31648);
+    border-color: #850c2d;
+}
+
+#fb-modal-stream .fb-chat-bubble:not(:has(> a > :is(img, video))) {
+    display: flex;
+    flex-direction: row;
+    inline-size: fit-content;
+    min-inline-size: 0;
+    text-align: start;
+}
+
+#fb-chat-form #fb-chat-textarea {
+    height: var(--chat-control-height);
+    min-height: var(--chat-control-height);
+    max-height: var(--chat-control-height);
+    resize: none;
+    overflow-y: auto;
+}
+
+#fb-chat-form > button[data-chat-pick] {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+@media (max-width: 680px) {
+    body > #fb-chat-overlay {
+        inset: var(--fb-viewport-top, 0px) 0 auto;
+        block-size: var(--fb-viewport-height, 100dvh);
+    }
+
+    #fb-chat-overlay > .fb-chat-modal {
+        width: 100%;
+        height: 100%;
+    }
+
+    #fb-modal-stream {
+        gap: 11px;
+    }
+}
+
+#fb-chat-overlay .fb-chat-compact-header {
+    background: #fff;
+    border-color: #f0e2e8;
+}
+
+#fb-chat-overlay .fb-chat-contact-copy {
+    display: grid;
+    gap: 4px;
+}
+
+#fb-chat-overlay .fb-chat-avatar {
+    border-radius: 15px;
+    background: linear-gradient(135deg, #850c2d, #bd2958);
+}
+
+#fb-chat-overlay .fb-chat-close {
+    border: 1px solid #ecd8e0;
+    border-radius: 12px;
+    background: #fff;
+    color: #850c2d;
+}
+
+#fb-modal-stream .fb-chat-message-menu {
+    inset: auto;
+}
+
+#fb-modal-stream .fb-chat-menu-content {
+    box-sizing: border-box;
+    width: max-content;
+    max-width: min(208px, calc(100vw - 46px));
+    padding: 4px;
+    border-color: #ead8e0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 4px 14px rgb(66 25 43 / 15%);
+    backdrop-filter: none;
+}
+
+#fb-modal-stream .fb-chat-menu-content button {
+    min-height: 40px;
+    padding: 6px 10px;
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+.fb-chat-tool-dialog.fb-chat-media-viewer {
+    --viewer-viewport: var(--fb-viewport-height, 100dvh);
+    --viewer-padding: clamp(8px, 1.2vw, 12px);
+    inset: var(--fb-viewport-top, 0px) 0 auto;
+    margin: 0 auto;
+    top: calc(var(--fb-viewport-top, 0px) + var(--viewer-viewport) / 2);
+    translate: 0 -50%;
+    padding: 54px var(--viewer-padding) var(--viewer-padding);
+    max-width: calc(100vw - 16px);
+    max-height: calc(var(--viewer-viewport) - 16px);
+    -webkit-user-select: none;
+    user-select: none;
+    caret-color: transparent;
+}
+
+.fb-chat-media-viewer > :is(img, video) {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: min(950px, calc(100vw - 16px - 2 * var(--viewer-padding)));
+    max-height: calc(var(--viewer-viewport) - 70px - var(--viewer-padding));
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.fb-chat-media-viewer > .fb-chat-tool-close {
+    display: grid;
+    place-items: center;
+    top: 5px;
+    right: var(--viewer-padding);
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid #ecd8e0;
+    border-radius: 10px;
+    color: #850c2d;
+    cursor: pointer;
+}
+
+.fb-chat-media-viewer > .fb-chat-tool-close svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+}
+
+.fb-chat-delete-dialog > strong,
+.fb-chat-delete-dialog .fb-chat-tool-actions button {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.fb-chat-receipt {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    inline-size: 18px;
+    block-size: 16px;
+    margin-inline-start: 3px;
+    padding: 0;
+    border: 0;
+    border-radius: 3px;
+    background: transparent;
+    color: #eadce4;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1;
+    vertical-align: middle;
+    letter-spacing: -2px;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.fb-chat-receipt[data-read] {
+    color: #9cddff;
+}
+
+.fb-chat-receipt:is(:hover, :focus-visible, [data-show-label])::after {
+    content: attr(data-label);
+    position: absolute;
+    z-index: 3;
+    inset: auto 0 calc(100% + 5px) auto;
+    border-radius: 5px;
+    padding: 4px 7px;
+    background: #271923;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: normal;
+    white-space: nowrap;
+    pointer-events: none;
+}

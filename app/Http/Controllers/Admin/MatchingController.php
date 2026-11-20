@@ -89,6 +89,14 @@ class MatchingController extends Controller
         $lost = $eligible->where('type', 'lost');
         $found = $eligible->where('type', 'found');
 
+        if ($lost->isEmpty() || $found->isEmpty()) {
+            return redirect()->route('admin.matching.index')->with('matching_result', [
+                'tone' => 'info',
+                'title' => 'Laporan belum lengkap',
+                'message' => 'Pencocokan memerlukan laporan barang hilang dan barang ditemukan yang sudah terverifikasi.',
+            ]);
+        }
+
         // Prevent large synchronous matching jobs from exhausting the server.
         if ($lost->count() * $found->count() > 25000) {
             return back()->with(
@@ -129,12 +137,13 @@ class MatchingController extends Controller
             );
         }
 
-        return redirect()
-            ->route('admin.matching.index')
-            ->with(
-                'success',
-                "Pencocokan selesai. {$created} kandidat baru ditambahkan. Pasangan lama tidak diubah.",
-            );
+        return redirect()->route('admin.matching.index')->with('matching_result', [
+            'tone' => $created > 0 ? 'success' : 'info',
+            'title' => $created > 0 ? "{$created} kandidat baru ditemukan" : 'Tidak ada kandidat baru',
+            'message' => $created > 0
+                ? 'Buka Perlu Pemeriksaan untuk meninjau pasangan laporan.'
+                : 'Pemeriksaan selesai. Kandidat yang sudah tersimpan tetap tersedia.',
+        ]);
     }
 
     public function review(Request $request, ItemMatch $match): RedirectResponse

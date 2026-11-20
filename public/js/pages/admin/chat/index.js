@@ -16,12 +16,16 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await fetch(url, { headers: { Accept: "application/json" }, credentials: "same-origin" });
             if (!response.ok) throw new Error("poll");
             const data = await response.json();
+            window.findBackChat.markAdminRecalls(stream, data.recalled_ids);
             const nearBottom = stream.scrollHeight - stream.scrollTop - stream.clientHeight < 80;
             for (const message of data.messages || []) {
                 if (Number(message.id) <= after) continue;
                 stream.querySelector(".fb-inbox-empty")?.remove();
                 const bubble = document.createElement("div");
                 bubble.className = "fb-inbox-bubble" + (message.is_mine ? " mine" : "");
+                bubble.dataset.messageId = message.id;
+                if (message.sent_at) bubble.dataset.sentAt = message.sent_at;
+                if (message.recalled) bubble.dataset.recalled = "true";
                 const name = document.createElement("strong");
                 name.textContent = message.sender_name;
                 bubble.append(name);
@@ -31,27 +35,21 @@ document.addEventListener("DOMContentLoaded", () => {
                     bubble.append(body);
                 }
                 if (message.attachment_url) {
-                    const url = new URL(message.attachment_url, location.origin);
-                    if (["https:", "http:"].includes(url.protocol)) {
-                        const link = document.createElement("a");
-                        link.href = url.href; link.target = "_blank"; link.rel = "noopener noreferrer";
-                        const image = document.createElement("img");
-                        image.src = url.href; image.alt = "Lampiran pesan";
-                        link.append(image); bubble.append(link);
-                    }
+                    window.findBackChat.appendAttachment(bubble, message.attachment_url, message.attachment_type, message.attachment_photo_ratio);
                 }
+                window.findBackChat.addAdminOptions(bubble, message);
                 const time = document.createElement("small");
                 time.textContent = message.created_at;
                 bubble.append(time); stream.append(bubble);
                 after = Number(message.id);
             }
-            if (nearBottom) stream.scrollTop = stream.scrollHeight;
-            status.textContent = "Pesan diperbarui otomatis.";
+            if (nearBottom && data.messages?.length) stream.scrollTop = stream.scrollHeight;
+            status.textContent = "";
         } catch {
             status.textContent = "Pembaruan pesan gagal. Mencoba kembali otomatis.";
         } finally {
-            window.setTimeout(poll, 5000);
+            window.setTimeout(poll, 1500);
         }
     }
-    window.setTimeout(poll, 3000);
+    window.setTimeout(poll, 0);
 });

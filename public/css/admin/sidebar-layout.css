@@ -256,3 +256,8 @@ body.fb-responsive #fb-sidebar .fb-nav-link[aria-current="page"] {
         flex-shrink: 0;
     }
 }
+
+/* Reserve the same menu width whether the scrollbar is visible or not. */
+.fb-sidebar .fb-sidebar-nav-scroll {
+    scrollbar-gutter: stable;
+}

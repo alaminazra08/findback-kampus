@@ -1,0 +1,9 @@
+.chat-recalled {
+    font-style: italic;
+    opacity: 0.75;
+}
+
+.chat-edited {
+    font-size: 11px;
+    opacity: 0.7;
+}

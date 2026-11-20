@@ -1,0 +1,29 @@
+/* FindBack Admin — consistent search input behavior across every admin page. */
+body.fb-admin-body input[type="search"] {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Chromium, Edge and Safari native clear (X) control. Reset is handled by each page's Atur Ulang action. */
+body.fb-admin-body input[type="search"]::-webkit-search-cancel-button,
+body.fb-admin-body input[type="search"]::-webkit-search-decoration,
+body.fb-admin-body input[type="search"]::-webkit-search-results-button,
+body.fb-admin-body input[type="search"]::-webkit-search-results-decoration {
+    display: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+
+/* Legacy Microsoft clear affordance. */
+body.fb-admin-body input[type="search"]::-ms-clear,
+body.fb-admin-body input[type="search"]::-ms-reveal {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+/* Keep the search field's own dimensions predictable. */
+body.fb-admin-body input[type="search"] {
+    min-width: 0;
+    background-clip: padding-box;
+}

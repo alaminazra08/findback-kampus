@@ -1,0 +1,29 @@
+FINDBACK KAMPUS - NOTIFICATION TOOLBAR TWO-ROW RESPONSIVE V3
+
+Perubahan:
+- Desktop: filter kategori menjadi baris pertama, tidak memakai horizontal scrollbar.
+- Desktop: pencarian, urutan, Terapkan, dan Atur Ulang menjadi baris kedua.
+- Tablet: kontrol membungkus rapi tanpa overflow horizontal.
+- Mobile: kategori tampil sebagai grid (3 kolom, 2 kolom untuk layar <= 420px); pencarian dan urutan full-width; tombol Terapkan dan Atur Ulang berdampingan dengan tinggi sama.
+- Ukuran tombol Terapkan dan Atur Ulang disamakan dengan pola tombol halaman Klaim (49px desktop).
+- Fungsi GET filter, pencarian, sort, reset, pagination, dan real-time tidak diubah.
+- Versi asset CSS dinaikkan ke v=6 untuk memaksa refresh cache.
+
+CARA PASANG (Windows CMD):
+1. Pastikan ZIP ini berada di folder Downloads.
+2. Buka CMD, jalankan satu per satu:
+
+cd /d C:\xampp\htdocs\findback-kampus
+
+tar -xf "%USERPROFILE%\Downloads\findback-notification-toolbar-two-row-v3.zip" -C "C:\xampp\htdocs\findback-kampus"
+
+php artisan view:clear
+
+3. Buka http://127.0.0.1:8000/admin/notifications
+4. Tekan Ctrl+F5.
+
+CATATAN:
+- Tidak ada perubahan database.
+- Tidak ada perintah git, commit, atau push.
+- File backup asli tersedia di folder backup/notification-toolbar-two-row-before-20261120/ pada ZIP.
+- Ekstraksi ZIP menimpa dua file target dengan versi upgrade.

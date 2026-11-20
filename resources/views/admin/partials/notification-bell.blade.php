@@ -1,11 +1,20 @@
 @php
-    $adminNotifications = auth()->user()->notifications()->latest()->orderByDesc('id')->limit(8)->get();
+    $adminNotifications = auth()->user()->notifications()->latest()->orderByDesc('id')->limit(4)->get();
     $links = \App\Http\Controllers\Admin\NotificationController::destinations(
         $adminNotifications->filter(fn ($notification) => $notification->read_at !== null)
     );
     $unreadCount = auth()->user()->unreadNotifications()->count();
+    $claimChatUnread = \App\Models\ChatMessage::query()
+        ->whereNull('read_at')
+        ->whereNull('recalled_at')
+        ->whereColumn('sender_id', 'user_id')
+        ->whereHas('claim', fn ($query) => $query->where('status', 'approved')
+            ->whereColumn('item_claims.user_id', 'chat_messages.user_id'))
+        ->selectRaw('claim_id, COUNT(*) as unread_total')
+        ->groupBy('claim_id')
+        ->pluck('unread_total', 'claim_id');
 @endphp
-<div class="fb-notif" id="fb-notif" data-feed="{{ route('admin.notifications.feed') }}">
+<div class="fb-notif" id="fb-notif" data-fb-claim-unread="{{ $claimChatUnread->toJson() }}" data-feed="{{ route('admin.notifications.feed') }}">
     <button class="fb-notif-trigger" type="button" id="fb-notif-trigger"
         aria-label="Notifikasi{{ $unreadCount ? ', ' . $unreadCount . ' belum dibaca' : '' }}" aria-expanded="false"
         aria-controls="fb-notif-panel" aria-haspopup="true">
@@ -23,11 +32,14 @@
                     ({{ $unreadCount }})
                 @endif
             </strong>
-            @if ($unreadCount)
-                <form action="{{ route('admin.notifications.read-all') }}" method="POST">@csrf
-                    <button class="fb-notif-action" type="submit">Tandai semua dibaca</button>
-                </form>
-            @endif
+            <a class="fb-notif-view-all" href="{{ route('admin.notifications.index') }}"
+                aria-label="Lihat semua notifikasi">
+                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"
+                    stroke-linecap="round" aria-hidden="true" focusable="false">
+                    <path d="M7 5h9M7 10h9M7 15h9M3.5 5h.1M3.5 10h.1M3.5 15h.1"/>
+                </svg>
+                Lihat semua
+            </a>
         </div>
         @if ($adminNotifications->isEmpty())
             <p class="fb-notif-empty">Belum ada pemberitahuan.</p>
@@ -47,14 +59,12 @@
                             <form method="POST" action="{{ route('admin.notifications.read', $notification->id) }}">
                                 @csrf @method('PATCH')
                                 <button class="fb-notif-action" type="submit"
-                                    aria-label="Baca dan buka: {{ $notification->data['title'] ?? 'Notifikasi' }}">Buka
-                                    →</button>
+                                    aria-label="Baca dan buka: {{ $notification->data['title'] ?? 'Notifikasi' }}">Buka</button>
                             </form>
                         @else
                             <a class="fb-notif-action"
                                 href="{{ $links[$notification->id] }}"
-                                aria-label="Buka kembali: {{ $notification->data['title'] ?? 'Notifikasi' }}">Buka
-                                →</a>
+                                aria-label="Buka kembali: {{ $notification->data['title'] ?? 'Notifikasi' }}">Buka</a>
                         @endif
                     </li>
                 @endforeach

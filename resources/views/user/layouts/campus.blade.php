@@ -50,6 +50,8 @@
         <link rel="stylesheet" href="{{ asset('css/chat/chat-ui.css') }}?v=2">
         <link rel="stylesheet" href="{{ asset('css/chat/user-chat-modal.css') }}?v=14">
         <link rel="stylesheet" href="{{ asset('css/chat/findback-chat-compact.css') }}?v=7">
+        <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
+        @include('shared.chat-tools-style')
     @endif
 </head>
 
@@ -317,7 +319,9 @@
         <span>{{ $institutionName }}</span>
         <small>© {{ date('Y') }}</small>
     </footer>
-    <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
+    @unless (request()->routeIs('user.chat.index'))
+        <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
+    @endunless
     <script src="{{ asset('js/shared/responsive-viewport.js') }}?v=20261111" defer></script>
 </body>
 </html>

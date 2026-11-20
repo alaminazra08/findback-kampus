@@ -30,13 +30,13 @@ class CampusController extends Controller
 
     /**
      * Memeriksa kelayakan barang untuk diklaim.
-     * (Syarat "bukan pelapor" dimatikan sementara untuk tes.)
      */
     private function eligible(Request $request, LostFoundItem $item): void
     {
         abort_unless(
             $item->type === 'found' &&
-            $item->status === 'verified',
+            $item->status === 'verified' &&
+            (int) $item->user_id !== (int) $request->user()->id,
             404
         );
     }

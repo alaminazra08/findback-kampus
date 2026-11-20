@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\RegistrationAdminNotifier;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,7 @@ class GoogleAuthController extends Controller
     }
 
     /** Complete OAuth sign-in, or create a new Google-only account. */
-    public function callback(Request $request): RedirectResponse
+    public function callback(Request $request, RegistrationAdminNotifier $registrationNotifier): RedirectResponse
     {
         if ($request->has('error')) {
             return redirect()
@@ -79,6 +80,8 @@ class GoogleAuthController extends Controller
                 'password' => Hash::make(Str::random(64)),
                 'email_verified_at' => now(),
             ]);
+
+            $registrationNotifier->notify($user, 'Google');
         }
 
         Auth::login($user);

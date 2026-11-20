@@ -58,6 +58,7 @@ class ChatController extends Controller
             $selectedClaim = $claimOptions->firstWhere('id', $request->integer('claim_id'));
             $selectedMessages = $selectedClaim
                 ? ChatMessage::where('user_id', $selectedUser->id)
+                    ->visibleToAdmin($request->user()->id)
                     ->where('claim_id', $selectedClaim->id)
                     ->with('sender')
                     ->latest('id')
@@ -67,6 +68,7 @@ class ChatController extends Controller
                 : collect();
             if (!$selectedClaim && $request->boolean('legacy')) {
                 $selectedMessages = ChatMessage::where('user_id', $selectedUser->id)
+                    ->visibleToAdmin($request->user()->id)
                     ->whereNull('claim_id')
                     ->with('sender')
                     ->latest('id')
@@ -75,7 +77,9 @@ class ChatController extends Controller
                     ->reverse();
             }
             $canChat = $selectedClaim && $selectedClaim->status === 'approved';
-            $this->markMessagesRead($selectedUser, $selectedMessages->pluck('id'));
+            if (!$selectedClaim && $request->boolean('legacy')) {
+                $this->markMessagesRead($selectedUser, $selectedMessages->pluck('id'));
+            }
         }
         return view(
             'admin.chat.index',
@@ -106,6 +110,7 @@ class ChatController extends Controller
         $canChat = $selectedClaim && $selectedClaim->status === 'approved';
         $legacyMode = !$selectedClaim && $request->boolean('legacy');
         $messages = ChatMessage::with('sender')
+            ->visibleToAdmin($request->user()->id)
             ->where('user_id', $user->id)
             ->when(
                 $selectedClaim,
@@ -115,7 +120,9 @@ class ChatController extends Controller
             ->latest('id')
             ->paginate(50)
             ->withQueryString();
-        $this->markMessagesRead($user, $messages->pluck('id'));
+        if ($legacyMode) {
+            $this->markMessagesRead($user, $messages->pluck('id'));
+        }
 
         return view(
             'admin.chat.show',
@@ -157,8 +164,7 @@ class ChatController extends Controller
             'message' => ['nullable', 'string', 'max:3000', 'required_without:attachment'],
             'attachment' => [
                 'nullable',
-                'image',
-                'mimes:jpg,jpeg,png,webp',
+                'mimetypes:image/jpeg,image/png,image/webp,video/webm,video/mp4',
                 'max:4096',
                 'required_without:message',
             ],
@@ -167,6 +173,10 @@ class ChatController extends Controller
         app(\App\Services\ClaimChatService::class)->send(
             $claim, $request->user(), $validated, $request->file('attachment'),
         );
+
+        if ($request->expectsJson()) {
+            return response()->noContent();
+        }
 
         // Tetap di halaman Detail Klaim ketika pesan dikirim dari modal klaim.
         if ($request->boolean('from_inbox')) {
@@ -196,9 +206,18 @@ class ChatController extends Controller
             ->where('user_id', $user->id)
             ->first();
         abort_unless($claim, 403, 'Pilih klaim yang sesuai.');
+
+        if ($request->isMethod('post')) {
+            $scope = ChatMessage::where('user_id', $user->id)
+                ->where('claim_id', $claim->id)
+                ->visibleToAdmin($request->user()->id);
+            return ChatMessage::syncReadReceipts($request, $scope, $user->id);
+        }
+
         $after = max(0, (int) $request->query('after', 0));
 
         $messages = ChatMessage::with('sender')
+            ->visibleToAdmin($request->user()->id)
             ->where('user_id', $user->id)
             ->where('claim_id', $claim->id)
             ->where('id', '>', $after)
@@ -211,22 +230,45 @@ class ChatController extends Controller
                     'sender_id' => $message->sender_id,
                     'sender_name' => $message->sender?->name ?? 'Pengguna',
                     'is_mine' => (int) $message->sender_id === (int) auth()->id(),
-                    'message' => $message->message,
-                    'attachment_url' => $message->attachment_path
+                    'recall_until' => $message->recallDeadline()?->toIso8601String(),
+                    'recalled' => (bool) $message->recalled_at,
+                    'message' => $message->recalled_at ? 'Pesan telah ditarik' : $message->message,
+                    'attachment_photo_ratio' => $message->attachmentPhotoRatio(),
+                    'attachment_url' => !$message->recalled_at && $message->attachment_path
                         ? \Illuminate\Support\Facades\Storage::disk('public')->url(
                             $message->attachment_path,
                         )
                         : null,
+                    'sent_at' => $message->created_at->toIso8601String(),
                     'created_at' => $message->created_at
                         ->timezone('Asia/Jakarta')
                         ->format('d/m/Y H:i'),
                 ];
             });
 
-        $this->markMessagesRead($user, $messages->pluck('id'));
         return response()->json([
             'messages' => $messages,
+            'recalled_ids' => ChatMessage::where('claim_id', $claim->id)
+                ->where('user_id', $user->id)->where('id', '<=', $after)
+                ->whereNotNull('recalled_at')->pluck('id'),
         ]);
+    }
+
+    public function recall(Request $request, ChatMessage $message)
+    {
+        app(\App\Services\ClaimChatService::class)->recall($message, $request->user());
+
+        return response()->noContent();
+    }
+
+    public function hide(Request $request, ChatMessage $message)
+    {
+        \Illuminate\Support\Facades\DB::table('chat_admin_hidden_messages')->insertOrIgnore([
+            'chat_message_id' => $message->id,
+            'user_id' => $request->user()->id,
+        ]);
+
+        return response()->noContent();
     }
 
     private function markMessagesRead(User $user, Collection $ids): void

@@ -15,7 +15,7 @@
     --fb-muted: #806e75;
     --fb-white: #ffffff;
     --fb-shadow: 0 24px 80px rgb(68 14 33 / 11%);
-    --fb-poster: url("/images/register-banner.jpg");
+    --fb-poster: url("../../images/login-fst-premium.jpg");
 }
 
 /* 02. Page reset ------------------------------------------------------------ */

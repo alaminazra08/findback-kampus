@@ -1,14 +1,13 @@
-<link rel='stylesheet' href='{{ asset('css/shared/findback-claims-navigation-v1.css') }}' >
 @extends('admin.layouts.items')
 @section('title', 'Klaim Barang')
 @section('breadcrumb', 'Klaim Barang')
 @section('page-styles')
+    <link rel='stylesheet' href='{{ asset('css/shared/findback-claims-navigation-v1.css') }}' >
     <link rel="stylesheet" href="{{ asset('css/admin/claims-panel-stay-v1.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/claims-toast-v1.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/header-consistency.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/admin-claims.css') }}?v=20261118-claims-v1">
     <link rel="stylesheet" href="{{ asset('css/admin/claims-premium-responsive-v2.css') }}?v=20261118-claims-v3">
-    <script defer src="{{ asset('js/admin/claims-premium-motion-v1.js') }}?v=20261118-claims-v1"></script>
 @endsection
 
 @section('content')
@@ -37,7 +36,7 @@
 
     @if (session('success'))
         <div class="fb-claim-toast" data-fb-claim-toast data-duration="5000" role="status" aria-live="polite" aria-atomic="true">
-            <span class="fb-claim-toast-icon" aria-hidden="true">âœ“</span>
+            <span class="fb-claim-toast-icon" aria-hidden="true">✓</span>
             <span class="fb-claim-toast-copy"><strong>Proses berhasil</strong><small>{{ session('success') }}</small></span>
             <button type="button" class="fb-claim-toast-close" aria-label="Tutup notifikasi" data-fb-claim-toast-close>&times;</button>
         </div>
@@ -76,7 +75,7 @@
                 <input type="hidden" name="evidence" value="open">
             @endif
             <input type="search" name="search" maxlength="100" value="{{ request('search') }}"
-                placeholder="Cari barang, pengaju, lokasi, atau ID klaim..." aria-label="Cari pengajuan klaim">
+                placeholder="Cari barang, pengaju, lokasi, atau ID klaim..." aria-label="Cari pengajuan klaim" spellcheck="false" autocorrect="off" autocapitalize="off">
             <select name="status" aria-label="Status klaim">
                 <option value="">Semua Status</option>
                 @foreach (\App\Support\WorkflowStatus::claims() as $key => $label)
@@ -150,7 +149,13 @@
                             <td><span
                                     class="fb-claim-status status-{{ $claim->status }}">{{ \App\Support\WorkflowStatus::claims()[$claim->status] ?? $claim->status }}</span>
                             </td>
-                            <td><a class="fb-claim-detail-link" href="{{ route('admin.claims.show', $claim) }}">Periksa</a>
+                            <td><div class="fb-claim-actions">
+                                <a class="fb-claim-detail-link" href="{{ route('admin.claims.show', $claim) }}">Periksa</a>
+                                @if ($claim->status === 'approved')
+                                    <a class="fb-claim-chat-count" href="{{ route('admin.claims.show', ['claim' => $claim->id, 'chat' => 1]) }}"
+                                        data-fb-claim-chat-count="{{ $claim->id }}" hidden></a>
+                                @endif
+                            </div>
                             </td>
                         </tr>
                     @empty
@@ -190,7 +195,6 @@
     <footer class="fb-footer">© {{ date('Y') }} FindBack Kampus · Fakultas Sains dan Teknologi</footer>
 @endsection
 
-<script src='{{ asset('js/shared/findback-claims-navigation-v1.js') }}' defer></script>
 
 
 

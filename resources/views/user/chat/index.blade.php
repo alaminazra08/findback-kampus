@@ -76,60 +76,19 @@
              aria-modal="true"
              aria-labelledby="fb-modal-title">
 
-        {{-- Header modal --}}
-        <header class="fb-chat-modal-head">
-
-            <div>
-                <span class="fb-chat-eyebrow">
-                    KOMUNIKASI SERAH TERIMA
-                </span>
-
-                <h2 id="fb-modal-title">
-                    {{ $selectedClaim
-                        ? 'Percakapan Klaim K'.$selectedClaim->id
-                        : 'Arsip Chat Lama' }}
-                </h2>
-
-                <p>
-                    Koordinasikan pengambilan dan penyerahan
-                    barang dengan Admin FindBack.
-                </p>
+        <header class="fb-chat-modal-head fb-chat-compact-header">
+            <span class="fb-chat-avatar" aria-hidden="true">A</span>
+            <div class="fb-chat-contact-copy">
+                <h2 id="fb-modal-title">Admin FindBack</h2>
+                <p>{{ $selectedClaim ? 'Klaim K'.$selectedClaim->id.' · '.($selectedClaim->item?->title ?? 'Barang') : 'Arsip Chat Lama' }}</p>
             </div>
-
             <div class="fb-chat-head-actions">
-
-                <span class="fb-chat-status">
-                    {{ $canChat ? 'Chat Aktif' : 'Arsip' }}
-                </span>
-
-                <a href="{{ route('user.chat.index') }}"
-                   class="fb-chat-close"
-                   aria-label="Tutup percakapan">
-                    &times;
-                </a>
-
+                @unless ($canChat)
+                    <span class="fb-chat-status">Arsip</span>
+                @endunless
+                <a href="{{ route('user.chat.index') }}" class="fb-chat-close" aria-label="Tutup percakapan">&times;</a>
             </div>
         </header>
-
-        {{-- Informasi penerima pesan --}}
-        <div class="fb-chat-person">
-
-            <span class="fb-chat-avatar">A</span>
-
-            <span>
-                <strong>Admin FindBack</strong>
-                <small>
-                    Tim layanan Fakultas Sains dan Teknologi
-                </small>
-            </span>
-
-            @if ($selectedClaim)
-                <span class="fb-chat-claim">
-                    Klaim K{{ $selectedClaim->id }} ·
-                    {{ $selectedClaim->item?->title ?? 'Barang' }}
-                </span>
-            @endif
-        </div>
 
         {{-- Pemberitahuan --}}
         @if (session('success'))
@@ -150,6 +109,7 @@
             id="fb-modal-stream"
             
 
+            data-receipts-url="{{ $selectedClaim ? route('user.chat.messages', ['claim_id' => $selectedClaim->id]) : '' }}"
             data-poll="{{ $messages->currentPage() === 1
                 && $selectedClaim
                 ? route('user.chat.messages', [
@@ -157,6 +117,7 @@
                   ])
                 : '' }}"
 
+            data-chat-token="{{ csrf_token() }}"
             data-update-url="{{ route(
                 'user.chat.messages.update',
                 ['message' => '__MESSAGE_ID__']
@@ -188,10 +149,13 @@
 
                     <article
                         class="fb-chat-bubble-row {{ $isMine ? 'mine' : '' }} {{ $message->recalled_at ? 'is-recalled' : '' }}"
-                        data-id="{{ $message->id }}"
+                        @if ($isMine && $message->recallDeadline())
+                            data-recall-until="{{ $message->recallDeadline()->toIso8601String() }}"
+                        @endif
+                        data-id="{{ $message->id }}" data-sent-at="{{ $message->created_at->toIso8601String() }}" @if ($message->read_at) data-read-at="{{ $message->read_at->toIso8601String() }}" @endif
                     >
 
-                        <div class="fb-chat-bubble">
+                        <div class="fb-chat-bubble" @if ($ratio = $message->attachmentPhotoRatio()) style="--chat-photo-ratio: {{ $ratio }}" @endif>
 
                             <strong>
                                 {{ $isMine
@@ -200,43 +164,24 @@
                             </strong>
 
                             @if ($message->recalled_at)
-                                <p class="fb-chat-recalled">
-                                    Pesan telah ditarik
-                                </p>
+                                <p class="fb-chat-recalled">Pesan telah ditarik</p>
                             @else
 
                                 @if ($message->message)
-                                    <p class="fb-chat-text">
-                                        {{ $message->message }}
-                                    </p>
+                                    <p class="fb-chat-text">{{ $message->message }}</p>
                                 @endif
 
                                 @if ($message->attachment_path)
-                                    <a
-                                        href="{{ asset(
-                                            'storage/'.$message->attachment_path
-                                        ) }}"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <img
-                                            src="{{ asset(
-                                                'storage/'.$message->attachment_path
-                                            ) }}"
-                                            alt="Lampiran gambar"
-                                            loading="lazy"
-                                        >
-                                    </a>
+                                    @include('shared.chat-attachment', ['path' => $message->attachment_path, 'label' => 'Lampiran gambar'])
                                 @endif
 
                             @endif
 
+                            <button type="button" class="fb-chat-options" aria-label="Opsi pesan" data-user-chat-options>⌄</button>
                             <footer>
-                                <time datetime="{{ $message->created_at->toIso8601String() }}">
-                                    {{ $message->created_at
-                                        ->timezone('Asia/Jakarta')
-                                        ->format('d M Y · H:i') }} WIB
-                                </time>
+                                <time datetime="{{ $message->created_at->toIso8601String() }}"
+                                      title="{{ $message->created_at->timezone('Asia/Jakarta')->format('d M Y, H:i') }} WIB"
+                                      data-compact-time="true">{{ $message->created_at->timezone('Asia/Jakarta')->format('H.i') }}</time>
 
                                @if ($message->edited_at && !$message->recalled_at)
                                     <span> · Diedit</span>
@@ -244,8 +189,6 @@
                             </footer>
                         </div>
 
-                        {{-- Menu tindakan pesan milik sendiri --}}
-                        @if ($isMine)
 
                             <div
                                 class="fb-chat-message-menu"
@@ -258,9 +201,10 @@
                                     role="group"
                                     aria-label="Tindakan pesan"
                                 >
+                                    <button type="button" data-chat-select>Pilih pesan</button>
 
                                     @if (
-                                        !$message->recalled_at &&
+                                        $isMine && !$message->recalled_at &&
                                         $message->message
                                     )
                                         <button
@@ -276,49 +220,8 @@
                                         </button>
                                     @endif
 
-                                    @if (!$message->recalled_at)
-
-                                        <form
-                                            method="POST"
-                                            action="{{ route(
-                                                'user.chat.messages.recall',
-                                                $message
-                                            ) }}"
-                                            data-confirm="Tarik pesan untuk semua pihak?"
-                                        >
-                                            @csrf
-                                            @method('PATCH')
-
-                                            <button type="submit">
-                                                ↶ Tarik pesan
-                                            </button>
-                                        </form>
-
-                                    @endif
-
-                                    <form
-                                        method="POST"
-                                        action="{{ route(
-                                            'user.chat.messages.hide',
-                                            $message
-                                        ) }}"
-                                        data-confirm="Hapus pesan hanya dari tampilan kamu?"
-                                    >
-                                        @csrf
-                                        @method('PATCH')
-
-                                        <button
-                                            type="submit"
-                                            class="fb-chat-danger"
-                                        >
-                                            Hapus untuk saya
-                                        </button>
-                                    </form>
-
                                 </div>
                             </div>
-
-                        @endif
 
                     </article>
                 @endif
@@ -339,8 +242,9 @@
 
             @if ($canChat)
 
+                <div class="fb-chat-action-slot">
                 <form
-                    class="fb-chat-composer"
+                    class="fb-chat-composer" data-chat-compose
                     method="POST"
                     action="{{ route('user.chat.store') }}"
                     enctype="multipart/form-data"
@@ -356,23 +260,14 @@
 
                    
 
-<label
-    for="fb-chat-file"
-    class="fb-chat-attach fb-chat-attach-plus"
-    title="Lampirkan gambar"
-    aria-label="Lampirkan gambar"
->
-    <span class="fb-chat-attach-symbol"
-          aria-hidden="true">+</span>
-</label>
-
-
+                    <button type="button" class="fb-chat-attach fb-chat-attach-plus" aria-label="Buka menu lampiran" aria-haspopup="dialog"
+                            data-chat-pick>+</button>
 
                     <input
                         type="file"
                         name="attachment"
                         id="fb-chat-file"
-                        accept="image/jpeg,image/png,image/webp"
+                        accept="image/jpeg,image/png,image/webp,video/mp4,video/webm"
                         hidden
                     >
 
@@ -386,37 +281,17 @@
                     <textarea
                         id="fb-chat-textarea"
                         name="message"
-                        rows="2"
+                        rows="1"
                         maxlength="3000"
                         placeholder="Tulis pesan untuk Admin..."
                     >{{ old('message') }}</textarea>
 
                    
-<button
-    type="submit"
-    class="fb-chat-primary"
-    id="fb-chat-send"
->
-    <span>Kirim</span>
-
-    <svg
-        aria-hidden="true"
-        width="18"
-        height="18"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    >
-        <path d="m22 2-7 20-4-9-9-4Z"/>
-        <path d="M22 2 11 13"/>
-    </svg>
-</button>
+                    @include('shared.chat-send-button', ['chatSendId' => 'fb-chat-send', 'chatSendClass' => 'fb-chat-primary'])
 
 
                 </form>
+                </div>
 
 <p
     class="fb-chat-ajax-error"
@@ -424,14 +299,6 @@
     role="alert"
     hidden
 ></p>
-
-                <small
-                    class="fb-chat-file-label"
-                    id="fb-chat-file-label"
-                >
-                    JPG, PNG, atau WebP · Maks. 4 MB ·
-                    Enter kirim, Shift+Enter baris baru
-                </small>
 
             @else
                 <p class="fb-chat-archive-warning">
@@ -457,61 +324,6 @@
         id="fb-chat-edit-value"
     ></textarea>
 </form>
-
-{{-- Dialog konfirmasi custom --}}
-<div
-    class="fb-dialog-overlay"
-    id="fb-confirm-overlay"
-    hidden
->
-    <div
-        class="fb-dialog-card"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="fb-confirm-title"
-    >
-        <div class="fb-dialog-head">
-            <h3 id="fb-confirm-title">
-                Konfirmasi tindakan
-            </h3>
-
-            <button
-                type="button"
-                class="fb-dialog-close"
-                id="fb-confirm-close"
-                aria-label="Tutup"
-            >
-                &times;
-            </button>
-        </div>
-
-        <p
-            class="fb-dialog-text"
-            id="fb-confirm-message"
-        >
-            Apakah kamu yakin?
-        </p>
-
-        <div class="fb-dialog-actions">
-            <button
-                type="button"
-                class="fb-dialog-btn fb-dialog-btn-light"
-                id="fb-confirm-cancel"
-            >
-                Batal
-            </button>
-
-            <button
-                type="button"
-                class="fb-dialog-btn fb-dialog-btn-danger"
-                id="fb-confirm-submit"
-            >
-                Ya, lanjutkan
-            </button>
-        </div>
-    </div>
-</div>
-
 
 {{-- Dialog Edit Pesan --}}
 <div
@@ -582,8 +394,9 @@
 
 @endif
 
+<script src="{{ asset('js/shared/chat-tools.js') }}?v=17" defer></script>
 <script
-    src="{{ asset('js/user/chat-modal.js') }}?v=18"
+    src="{{ asset('js/user/chat-modal.js') }}?v=29"
     defer>
 </script>
 @endsection

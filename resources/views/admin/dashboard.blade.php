@@ -1,141 +1,20 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('admin.layouts.items')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{{ $adminSettings['site_description'] }}">
-    <meta name="theme-color" content="#121114">
-    <title>FindBack Kampus</title>
-    <script src="{{ asset('js/admin/sidebar-prepaint.js') }}"></script>
-    <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
-    <link rel="stylesheet" href="{{ asset('css/admin/admin-dashboard.css') }}?v=40">
+@section('breadcrumb', 'Dashboard')
+
+@section('page-styles')
     <link rel="stylesheet" href="{{ asset('css/admin/quick-actions-base.css') }}?v=17">
     <link rel="stylesheet" href="{{ asset('css/admin/quick-actions-compact.css') }}?v=18">
     <link rel="stylesheet" href="{{ asset('css/admin/quick-actions-layout.css') }}?v=19">
-    {{-- Sidebar visual: ukuran, posisi, dan ritme identik di semua halaman Admin. --}}
-    <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/admin/admin-workflow.css') }}?v=1">
-    {{-- FINDBACK_SIDEBAR_V43 --}}
-    <link rel="stylesheet" href="{{ asset('css/admin/sidebar-theme.css') }}?v=43">
-    {{-- FINDBACK_SIDEBAR_V44 --}}
-    <link rel="stylesheet" href="{{ asset('css/admin/sidebar-layout.css') }}?v=44">
-    <link rel="stylesheet" href="{{ asset('css/admin/sidebar-prepaint.css') }}?v=48">
     <link rel="stylesheet" href="{{ asset('css/report-cycle.css') }}?v=2">
-    <link rel="stylesheet" href="{{ asset('css/shared/view-utilities.css') }}">
-    <script src="{{ asset('js/shared/view-interactions.js') }}" defer></script>
     <link rel="stylesheet" href="{{ asset('css/admin/findback-pm-detail-date.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/header-consistency.css') }}?v=2">
-    <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-report-cards.css') }}?v=20261111">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-recent-consistency.css') }}?v=1">
-    <!-- FINDBACK_UI_TEXT_KONSISTEN_V1 -->
-    <link rel="stylesheet" href="{{ asset('css/shared/ui-text-consistency.css') }}?v=1">
-    <link rel="stylesheet" href="{{ asset('css/admin/brand-polish.css') }}?v=1">
-<!-- FINDBACK_TYPOGRAPHY_V1 -->
-<link rel="stylesheet" href="{{ asset('css/shared/typography.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/admin/notification-toast.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-date.css') }}?v=1">
-    <link rel="stylesheet" href="{{ asset('css/admin/design-system.css') }}?v=4">
-</head>
+@endsection
 
-<body class="fb-responsive fb-admin-body">
-    <div class="fb-admin-shell">
-        <aside class="fb-sidebar" id="fb-sidebar" aria-label="Navigasi administrator">
-            <button type="button" class="fb-v43-close" aria-label="Tutup navigasi" data-close-admin-nav>&#215;</button>
-            @include('admin.partials.brand')
-
-            <div class="fb-sidebar-nav-scroll" aria-label="Daftar menu administrator">
-                <div class="fb-sidebar-divider" aria-hidden="true"></div>
-                <p class="fb-nav-label">MENU UTAMA</p>
-                @include('admin.partials.main-nav')
-
-                <p class="fb-nav-label fb-nav-label-secondary">PENGELOLAAN</p>
-                <nav class="fb-nav" aria-label="Pengelolaan administrator">
-                    {{-- Manajemen Akun — menu aktif bila route tersedia --}}
-                    @if (\Illuminate\Support\Facades\Route::has('admin.users.index'))
-                        <a href="{{ route('admin.users.index') }}"
-                            class="fb-nav-link {{ request()->routeIs('admin.users.*') ? 'is-active' : '' }}"
-                            @if (request()->routeIs('admin.users.*')) aria-current="page" @endif>
-                            <span class="fb-nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"
-                                    aria-hidden="true">
-                                    <circle cx="9" cy="8" r="3" />
-                                    <path d="M3 20v-2a6 6 0 0 1 12 0v2M17 6a3 3 0 0 1 0 6m1 4a5 5 0 0 1 3 4" />
-                                </svg></span>
-                            <span class="fb-nav-text">Manajemen Akun</span>
-                        </a>
-                    @else
-                        <span class="fb-nav-link is-disabled" aria-disabled="true" title="Fitur segera hadir"><span
-                                class="fb-nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"
-                                    aria-hidden="true">
-                                    <circle cx="9" cy="8" r="3" />
-                                    <path d="M3 20v-2a6 6 0 0 1 12 0v2M17 6a3 3 0 0 1 0 6m1 4a5 5 0 0 1 3 4" />
-                                </svg></span><span class="fb-nav-text">Manajemen Akun</span></span>
-                    @endif
-                    {{-- Pengaturan — aktif apabila route terdaftar --}}
-                    @if (\Illuminate\Support\Facades\Route::has('admin.settings.index'))
-                        <a href="{{ route('admin.settings.index') }}"
-                            class="fb-nav-link {{ request()->routeIs('admin.settings.*') ? 'is-active' : '' }}"
-                            @if (request()->routeIs('admin.settings.*')) aria-current="page" @endif>
-                            <span class="fb-nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"
-                                    aria-hidden="true">
-                                    <circle cx="12" cy="12" r="3" />
-                                    <path
-                                        d="M19 13.7 21 12l-2-1.7-.7-2.5-2.5-.7L14 5l-2 1-2-1-1.8 2.1-2.5.7L5 10.3 3 12l2 1.7.7 2.5 2.5.7L10 19l2-1 2 1 1.8-2.1 2.5-.7z" />
-                                </svg></span>
-                            <span class="fb-nav-text">Pengaturan</span>
-                        </a>
-                    @else
-                        <span class="fb-nav-link is-disabled" aria-disabled="true" title="Fitur segera hadir"><span
-                                class="fb-nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"
-                                    aria-hidden="true">
-                                    <circle cx="12" cy="12" r="3" />
-                                    <path
-                                        d="M19 13.7 21 12l-2-1.7-.7-2.5-2.5-.7L14 5l-2 1-2-1-1.8 2.1-2.5.7L5 10.3 3 12l2 1.7.7 2.5 2.5.7L10 19l2-1 2 1 1.8-2.1 2.5-.7z" />
-                                </svg></span><span class="fb-nav-text">Pengaturan</span></span>
-                    @endif
-                </nav>
-
-            </div> {{-- Akhir area scroll menu --}}
-
-            <div class="fb-sidebar-bottom">
-
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button class="fb-sidebar-logout" type="submit"><svg viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"
-                            aria-hidden="true">
-                            <path d="M10 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h5M14 8l4 4-4 4m-8-4h12" />
-                        </svg><span>Keluar dari Akun</span></button>
-                </form>
-            </div>
-
-        </aside>
-
-        <div class="fb-sidebar-backdrop" id="fb-sidebar-backdrop" hidden></div>
-
-        <div class="fb-workspace">
-            <header class="fb-topbar">
-                <div class="fb-topbar-left">
-                    <button class="fb-menu-toggle" type="button" aria-label="Buka menu" aria-controls="fb-sidebar"
-                        aria-expanded="false" id="fb-menu-toggle"><svg class="fb-hamburger-svg" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-                    <div class="fb-mobile-brand" aria-label="{{ $adminSettings['site_name'] }}, panel admin">
-                        <strong>FindBack</strong>
-                        <small>ADMIN PANEL</small>
-                    </div>
-                    <div class="fb-breadcrumb">Administrasi <span>/</span> <strong>Dashboard</strong></div>
-                </div>
-                <div class="fb-topbar-right">
-                    @include('admin.partials.notification-bell')
-                    @include('admin.partials.account')
-                </div>
-            </header>
-
-            <main class="fb-main" data-fb-nav-page="dashboard">
+@section('content')
                 <div class="fb-page-heading">
                     <div>
                         <p class="fb-eyebrow">ADMINISTRASI · FINDBACK KAMPUS</p>
@@ -532,47 +411,4 @@
                 </a>
             @endif
         </footer>
-        </main>
-    </div>
-    </div>
-    <script src="{{ asset('js/admin/admin-notifications.js') }}?v=4" defer></script>
-    <script src="{{ asset('js/admin/sidebar-mobile.js') }}?v=20261111" defer></script>
-    {{-- Animasi klik logo saja; menu lain tetap menggunakan navigasi normal. --}}
-    <script src="{{ asset('js/admin/sidebar-branding.js') }}?v=50" defer></script>
-    <script src="{{ asset('js/shared/responsive-viewport.js') }}?v=20261111" defer></script>
-    {{-- Smart Navigation: sama dengan layout Verifikasi dan Laporan Barang. --}}
-    <script src="{{ asset('js/admin/smart-navigation-session.js') }}?v=3" defer
-        data-account="{{ auth()->id() }}"
-        data-list-1="{{ route('admin.reports.verification') }}"
-        data-list-2="{{ route('admin.items.index') }}"
-        data-list-3="{{ route('admin.matching.index') }}"
-        data-list-4="{{ route('admin.claims.index') }}"
-        data-list-5="{{ route('admin.statistics.index') }}"
-        data-list-6="{{ route('admin.users.index') }}"></script>
-    <script src="{{ asset('js/admin/admin-analytics.js') }}?v=2" defer></script>
-    <script src="{{ asset('js/admin/dashboard-date.js') }}?v=3" defer></script>
-    <script src="{{ asset('js/pages/admin/reports/verification/fast-tabs.js') }}?v=3" defer></script>
-    <script src="{{ asset('js/admin/admin-items-upload.js') }}?v=2" defer></script>
-    <script src="{{ asset('js/admin/items-filter-ajax-scroll.js') }}?v=2" defer></script>
-    <script src="{{ asset('js/pages/admin/matching/filter-navigation.js') }}?v=4-matching-feedback" defer></script>
-    <script src="{{ asset('js/admin/claims-filter-ajax-scroll.js') }}?v=2" defer></script>
-    <script src="{{ asset('js/pages/admin/statistics/index.js') }}?v=2" defer></script>
-    <script src="{{ asset('js/admin/users-filter-navigation.js') }}?v=2" defer></script>
-    <script src="{{ asset('js/admin/settings-score.js') }}?v=2" defer></script>
-    @include('admin.partials.detail-interactions')
-    <script src="{{ asset('js/admin/dashboard-verification-navigation.js') }}?v=15" defer
-        data-dashboard="{{ route('admin.dashboard') }}"
-        data-verification="{{ route('admin.reports.verification') }}"
-        data-items="{{ route('admin.items.index') }}"
-        data-matching="{{ route('admin.matching.index') }}"
-        data-claims="{{ route('admin.claims.index') }}"
-        data-statistics="{{ route('admin.statistics.index') }}"
-        data-users="{{ route('admin.users.index') }}"
-        data-settings="{{ route('admin.settings.index') }}"></script>
-    {{-- Smart Save harus sudah siap sebelum navigasi AJAX menuju Pengaturan. --}}
-    <script src="{{ asset('js/admin/settings-smart-save.js') }}?v=11" defer></script>
-    <script src="{{ asset('js/admin/admin-toast-standard-v1.js') }}?v=1" defer></script>
-    <script src="{{ asset('js/admin/admin-scroll-continuity-v1.js') }}?v=1" defer></script>
-</body>
-
-</html>
+@endsection

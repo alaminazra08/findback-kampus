@@ -33,7 +33,7 @@
                     <path d="m16 16 5 5" />
                 </svg>
                 <input name="search" type="search" maxlength="100" value="{{ request('search') }}"
-                    placeholder="Cari barang, pelapor, lokasi, atau ID...">
+                    placeholder="Cari barang, pelapor, lokasi, atau ID..." spellcheck="false" autocorrect="off" autocapitalize="off">
             </label>
             <label class="fb-v30-field"><span>Jenis Barang</span>
                 <select name="type">
@@ -145,7 +145,7 @@
                                         <p>Ubah kata kunci atau jenis barang.</p>
                                         <a class="fb-v-reset" href="{{ route('admin.reports.verification', $revisionMode === 'history' ? ['revision' => 'history'] : []) }}">Atur Ulang Filter</a>
                                     @else
-                                        <strong>{{ $revisionMode === 'history' ? 'Tidak ada laporan yang menunggu perbaikan' : 'Tidak ada laporan yang menunggu verifikasi' }}</strong>
+                                        <strong>{{ $revisionMode === 'history' ? 'Tidak ada laporan yang menunggu perbaikan' : 'Tidak ada laporan yang menunggu verifikasi.' }}</strong>
                                     @endif
                                 </div>
                             </td>

@@ -503,3 +503,26 @@
         transform: none !important;
     }
 }
+
+[data-fb-matching-toast] .fb-settings-toast-copy {
+    overflow-wrap: anywhere;
+}
+
+.fb-matching-toast-close {
+    flex: 0 0 44px;
+    min-height: 44px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+[data-fb-matching-toast].is-info {
+    border-color: #cbd5e1;
+    color: #334155;
+}
+
+[data-fb-matching-toast].is-info .fb-settings-toast-icon {
+    background: #e2e8f0;
+}

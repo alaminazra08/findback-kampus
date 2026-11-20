@@ -4,6 +4,7 @@
 @section('page-styles')
     <link rel="stylesheet" href="{{ asset('css/chat/chat.css') }}?v=3">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/chat/index.css') }}">
+    @include('shared.chat-tools-style')
 @endsection
 
 @section('content')
@@ -15,7 +16,7 @@
                 <header>
                     <h2>Daftar Percakapan</h2><small>{{ $users->total() }} pengguna</small>
                     <form method="GET" action="{{ route('admin.chat.index') }}" class="fb-inbox-search"><input type="search"
-                            name="search" value="{{ $search }}" placeholder="Cari pengguna..."><button
+                            name="search" value="{{ $search }}" placeholder="Cari pengguna..." spellcheck="false" autocorrect="off" autocapitalize="off"><button
                             type="submit">Cari</button></form>
                 </header>
                 @forelse($users as $user)
@@ -55,21 +56,21 @@
                     @if ($selectedClaim)
                         <a href="{{ route('admin.chat.show', ['user' => $selectedUser->id, 'claim_id' => $selectedClaim->id]) }}">Buka seluruh riwayat percakapan</a>
                     @endif
-                    <div class="fb-inbox-messages" id="fb-inbox-messages"
+                    <div class="fb-inbox-messages" id="fb-inbox-messages" @include('admin.chat.stream-actions')
                         data-after="{{ $selectedMessages->max('id') ?? 0 }}"
                         data-poll="{{ $selectedClaim ? route('admin.chat.messages', ['user' => $selectedUser->id, 'claim_id' => $selectedClaim->id]) : '' }}">
                         @forelse($selectedMessages as $msg)
-                            <div class="fb-inbox-bubble {{ (int) $msg->sender_id === (int) auth()->id() ? 'mine' : '' }}">
+                            <div class="fb-inbox-bubble {{ (int) $msg->sender_id === (int) auth()->id() ? 'mine' : '' }}" @if ($ratio = $msg->attachmentPhotoRatio()) style="--chat-photo-ratio: {{ $ratio }}" @endif data-message-id="{{ $msg->id }}" data-sent-at="{{ $msg->created_at->toIso8601String() }}" @if ($msg->read_at) data-read-at="{{ $msg->read_at->toIso8601String() }}" @endif>
                                 <strong>{{ (int) $msg->sender_id === (int) auth()->id() ? 'Admin' : $selectedUser->name }}</strong>
                                 @if ($msg->attachment_path)
-                                    <p><a href="{{ \Illuminate\Support\Facades\Storage::url($msg->attachment_path) }}"
-                                            target="_blank" rel="noopener noreferrer"><img
-                                                src="{{ \Illuminate\Support\Facades\Storage::url($msg->attachment_path) }}"
-                                                alt="Lampiran pesan"></a></p>
+                                    @include('shared.chat-attachment', ['path' => $msg->attachment_path, 'label' => 'Lampiran pesan'])
                                 @endif
-                                @if ($msg->message)
+                                @if ($msg->recalled_at)
+                                    <p>Pesan telah ditarik</p>
+                                @elseif ($msg->message)
                                     <p>{{ $msg->message }}</p>
                                 @endif
+                                @include('admin.chat.message-actions')
                                 <small>{{ $msg->created_at->timezone('Asia/Jakarta')->format('d/m/Y H:i') }}</small>
                             </div>
                         @empty<div class="fb-inbox-empty"><strong>Belum Ada Pesan</strong><span>Belum ada riwayat pesan
@@ -77,13 +78,16 @@
                         @endforelse
                     </div>
                     @if ($canChat)
-                        <form class="fb-inbox-compose" method="POST"
+                        <div class="fb-chat-action-slot">
+                        <form class="fb-inbox-compose" data-chat-compose method="POST"
                             action="{{ route('admin.chat.store', $selectedUser->id) }}" enctype="multipart/form-data">
                             @csrf<input type="hidden" name="from_claim" value="{{ $selectedClaim->id }}"><input
-                                type="hidden" name="from_inbox" value="1"><input type="file" name="attachment"
-                                accept="image/jpeg,image/png,image/webp" aria-label="Lampiran foto">
-                            <textarea name="message" maxlength="3000" placeholder="Tulis pesan untuk {{ $selectedUser->name }}..."></textarea><button class="fb-inbox-submit" type="submit">Kirim</button>
+                                type="hidden" name="from_inbox" value="1">
+                            <button type="button" data-chat-pick aria-label="Buka menu lampiran" aria-haspopup="dialog">+</button>
+                            <input type="file" name="attachment" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm" hidden>
+                            <textarea name="message" maxlength="3000" placeholder="Tulis pesan untuk {{ $selectedUser->name }}..."></textarea>@include('shared.chat-send-button')
                         </form>
+                        </div>
                     @else<div class="fb-inbox-note">Riwayat pesan tersimpan. Pengiriman pesan hanya tersedia setelah
                             klaim disetujui dan sebelum barang dikembalikan.</div>
                     @endif
@@ -99,5 +103,5 @@
             </section>
         </div>
     </div>
-    <script src="{{ asset('js/pages/admin/chat/index.js') }}"></script>
+    <script src="{{ asset('js/pages/admin/chat/index.js') }}?v=chat6"></script>
 @endsection

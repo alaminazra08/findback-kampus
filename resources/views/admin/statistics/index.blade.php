@@ -16,10 +16,6 @@
     <link rel="stylesheet" href="{{ asset('css/admin/statistics-dropdown-layer-v6.css') }}?v=6">
     <link rel="stylesheet" href="{{ asset('css/admin/statistics-cards-consistency-v1.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/statistics-illustration-icons-v1.css') }}?v=1">
-    <script defer src="{{ asset('js/admin/statistics-cards-consistency-v1.js') }}?v=1"></script>
-    <script defer src="{{ asset('js/admin/statistics-download-menu-v4.js') }}?v=4"></script>
-    <script defer src="{{ asset('js/admin/statistics-period-dropdown-v5.js') }}?v=5"></script>
-    <script defer src="{{ asset('js/admin/statistics-dropdown-layer-v6.js') }}?v=6"></script>
 @endsection
 
 @section('content')

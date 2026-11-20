@@ -3,7 +3,10 @@
  * dispatches the same bubbling change event consumed by the existing AJAX navigation.
  */
 (() => {
+    let lifecycle;
     const init = (root = document) => {
+        lifecycle?.abort();
+        lifecycle = new AbortController();
         root.querySelectorAll('.fs-page select[data-fb-stat-period]').forEach((select) => {
             if (select.dataset.customPeriodV5 === 'ready' || !select.options.length) return;
             select.dataset.customPeriodV5 = 'ready';
@@ -116,10 +119,10 @@
             select.addEventListener('change', sync);
             document.addEventListener('pointerdown', (event) => {
                 if (!control.contains(event.target)) close(false);
-            });
+            }, { signal: lifecycle.signal });
             document.addEventListener('keydown', (event) => {
                 if (event.key === 'Escape' && !menu.hidden) close(true);
-            });
+            }, { signal: lifecycle.signal });
             sync();
         });
     };

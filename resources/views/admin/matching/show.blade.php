@@ -4,15 +4,13 @@
 @section('breadcrumb', 'Pencocokan Barang')
 
 @section('page-styles')
-    <link rel="stylesheet" href="{{ asset('css/admin/admin-matching.css') }}?v=36">
+    <link rel="stylesheet" href="{{ asset('css/admin/admin-matching.css') }}?v=37">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/detail-back.css') }}?v=2">
-    <link rel="stylesheet" href="{{ asset('css/pages/admin/matching/photo-preview-v1.css') }}?v=2">
-    <link rel="stylesheet" href="{{ asset('css/pages/admin/matching/photo-zoom-v3.css') }}?v=3fixed2">
-    <link rel="stylesheet" href="{{ asset('css/pages/admin/matching/photo-viewer-v6.css') }}?v=6-20261115">
+    <link rel="stylesheet" href="{{ asset('css/admin/claim-proof-modal.css') }}?v=16">
 @endsection
 
 @section('content')
-    <script defer src="{{ asset('js/pages/admin/matching/photo-viewer-v6.js') }}?v=6-20261115"></script>
+    <script defer src="{{ asset('js/pages/admin/matching/photo-viewer-v6.js') }}?v=7"></script>
 <div class="match-wrap">
         <div class="fb-match-return-bar">
             <a class="fb-detail-return" data-fb-detail-back href="{{ route('admin.matching.index') }}"><span aria-hidden="true">←</span> Kembali ke daftar</a>
@@ -98,7 +96,7 @@
                         </div>
                     </dl>
                     @if ($item && $item->photo_path)
-                        <a class="match-image-link" href="#fb-match-photo-dialog" data-fb-photo-src="{{ asset('storage/' . $item->photo_path) }}"
+                        <a class="match-image-link" href="{{ asset('storage/' . $item->photo_path) }}" aria-haspopup="dialog"
                             data-fb-match-photo data-photo-label="{{ $data['label'] }}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none"
                                 stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="3" y="3" width="18" height="18" rx="3" />
@@ -137,11 +135,19 @@
             @endphp
             <div class="match-reason-box">
                 <span class="match-reason-label">FAKTOR PENILAIAN KEMIRIPAN</span>
-                <p class="match-reason-help">Angka dalam tanda kurung adalah poin yang diberikan sistem untuk setiap faktor, bukan bukti kepemilikan.</p>
+                <p class="match-reason-help">Poin yang diberikan sistem untuk setiap faktor.</p>
                 @if (count($reasonParts))
                     <ul class="match-reason-list">
                         @foreach ($reasonParts as $part)
-                            <li><span class="match-reason-dot" aria-hidden="true"></span><span>{{ $part }}</span></li>
+                            @php
+                                $hasPoints = preg_match('/^(.+?)\s*\(([+-]?\d+)\)$/u', $part, $factor) === 1;
+                            @endphp
+                            <li>
+                                <span>{{ $hasPoints ? $factor[1] : $part }}</span>
+                                @if ($hasPoints)
+                                    <span @class(['match-factor-points', 'is-neutral' => (int) $factor[2] <= 0])>{{ $factor[2] }}</span>
+                                @endif
+                            </li>
                         @endforeach
                     </ul>
                 @else
@@ -167,8 +173,10 @@
                     <form method="POST" action="{{ route('admin.matching.review', $match) }}"
                         data-confirm="Konfirmasi pasangan pencocokan ini?" data-confirm-event="submit">
                         @csrf <input type="hidden" name="action" value="confirm">
-                        <button type="submit" class="match-button">✓ Konfirmasi Pencocokan</button>
+                        <button type="submit" class="match-button">Konfirmasi Pencocokan</button>
                     </form>
+                    <details class="match-rejection-details" @if ($errors->has('rejection_reason') || old('action') === 'reject') open @endif>
+                        <summary class="match-button danger">Tolak Kandidat</summary>
                     <form method="POST" action="{{ route('admin.matching.review', $match) }}"
                         data-confirm="Tolak kandidat pencocokan ini?" data-confirm-event="submit">
                         @csrf <input type="hidden" name="action" value="reject">
@@ -180,23 +188,34 @@
                             <p role="alert" class="fb-refactor fb-validation-error">{{ $message }}</p>
                         @enderror
 
-                        <button type="submit" class="match-button danger">✕ Tolak Kandidat</button>
+                        <button type="submit" class="match-button danger">Kirim Penolakan</button>
                     </form>
+                    </details>
                 </div>
             @endif
         </section>
     </div>
-    <dialog data-fb-photo-user="{{ auth()->id() }}" id="fb-match-photo-dialog" class="fb-match-photo-dialog" aria-labelledby="fb-match-photo-title">
-        <div class="fb-match-photo-box">
-            <header class="fb-match-photo-head">
-                <div><p class="fb-match-photo-kicker">FINDBACK KAMPUS</p><h2 id="fb-match-photo-title">Foto Laporan</h2></div>
-                <button type="button" class="fb-match-photo-close" data-fb-photo-close aria-label="Tutup foto">×</button>
+    <dialog id="fb-match-photo-dialog" class="fb-proof-dialog" aria-labelledby="fb-match-photo-title">
+        <div class="fb-proof-shell">
+            <header class="fb-proof-head">
+                <h2 id="fb-match-photo-title">Foto Laporan</h2>
+                <div class="fb-proof-actions">
+                    <button type="button" class="fb-proof-close" data-fb-photo-zoom aria-label="Perbesar foto"
+                        title="Perbesar foto" aria-pressed="false" disabled>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <circle cx="10" cy="10" r="6"/><path d="m15 15 5 5M7 10h6m-3-3v6"/>
+                        </svg>
+                    </button>
+                    <button type="button" class="fb-proof-close" data-fb-photo-close aria-label="Tutup foto" autofocus>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                    </button>
+                </div>
             </header>
-            <div class="fb-match-photo-stage">
-                <div class="fb-match-photo-canvas"><img data-fb-photo-image alt="Foto barang yang dilaporkan" /></div>
-                <p data-fb-photo-error hidden>Foto tidak dapat ditampilkan. Silakan coba kembali.</p>
+            <div class="fb-proof-content">
+                <img class="fb-proof-image" data-fb-photo-image alt="Foto barang yang dilaporkan" hidden>
+                <p data-fb-photo-error role="status" hidden>Foto tidak dapat ditampilkan.</p>
             </div>
-            <footer class="fb-match-photo-footer"><div class="fb-match-photo-controls" data-fb-photo-zoom aria-label="Kontrol zoom foto"><button type="button" data-fb-photo-zoom-out aria-label="Zoom out">-</button><span class="fb-match-photo-zoom-value" data-fb-photo-zoom-value>100%</span><button type="button" data-fb-photo-zoom-in aria-label="Zoom in">+</button><button type="button" data-fb-photo-reset>Reset</button></div><button type="button" data-fb-photo-close>Tutup</button></footer>
         </div>
     </dialog>
 @endsection

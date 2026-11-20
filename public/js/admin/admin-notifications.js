@@ -17,7 +17,7 @@
         const action = document.createElement('button');
         action.type = 'button';
         const single = rows.length === 1;
-        const noun = { reports: 'laporan', claims: 'klaim' }[first.dataset.category];
+        const noun = { reports: 'laporan', claims: 'klaim', users: 'akun baru' }[first.dataset.category];
         const message = rows.every(row => row.dataset.category === first.dataset.category)
             ? `${rows.length}${rows.length === 8 ? '+' : ''} ${noun} baru`
             : `${rows.length}${rows.length === 8 ? '+' : ''} notifikasi baru`;
@@ -56,6 +56,23 @@
         const button = wrapper?.querySelector('#fb-notif-trigger');
         const panel = wrapper?.querySelector('#fb-notif-panel');
         if (!button || !panel) return;
+        function updateClaimBadges(source) {
+            const counts = JSON.parse(source.dataset.fbClaimUnread || '{}');
+            const sidebar = document.querySelector('[data-fb-claim-sidebar-count]');
+            const total = Object.keys(counts).length;
+            if (sidebar) {
+                if (sidebar.textContent !== String(total)) sidebar.textContent = total;
+                sidebar.hidden = !total;
+                if (total) sidebar.setAttribute('aria-label', total + ' percakapan belum dibaca');
+            }
+            for (const badge of document.querySelectorAll('[data-fb-claim-chat-count]')) {
+                const count = Number(counts[badge.dataset.fbClaimChatCount]) || 0;
+                const label = count + ' pesan baru';
+                if (badge.textContent !== label) badge.textContent = label;
+                badge.hidden = !count;
+            }
+        }
+        updateClaimBadges(wrapper);
         const rows = root => [...root.querySelectorAll('[data-notification-id]')];
         if (!known) known = new Set(rows(wrapper).map(row => row.dataset.notificationId));
         const setOpen = open => {
@@ -133,6 +150,49 @@
             }
         }, { signal });
 
+        document.addEventListener('submit', async event => {
+            const form = event.target;
+            if (event.defaultPrevented || !form.matches?.('[data-fb-notif-read-all]')) return;
+            event.preventDefault();
+            if (opening) return;
+
+            opening = true;
+            readVersion++;
+            const action = form.querySelector('button[type="submit"]');
+            action.disabled = true;
+            form.querySelector('[data-fb-read-all-error]')?.remove();
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: { Accept: 'application/json' },
+                    signal,
+                });
+                if (response.status !== 204 || response.redirected) throw new Error('Read all failed');
+
+                const focused = document.activeElement === action;
+                if (panel.contains(form)) {
+                    form.remove();
+                    if (focused) panel.querySelector('.fb-notif-view-all')?.focus({ preventScroll: true });
+                }
+                document.dispatchEvent(new Event('fb:notifications-read-all'));
+                opening = false;
+                await refresh();
+            } catch {
+                if (signal.aborted) return;
+                action.disabled = false;
+                const message = document.createElement('p');
+                message.dataset.fbReadAllError = '';
+                message.className = 'fb-notif-open-error';
+                message.setAttribute('role', 'alert');
+                message.textContent = 'Gagal menandai notifikasi. Coba lagi.';
+                form.append(message);
+            } finally {
+                opening = false;
+            }
+        }, { signal });
+
         let busy = false;
         async function refresh() {
             if (busy || opening || document.hidden || !wrapper.dataset.feed) return;
@@ -145,9 +205,10 @@
                 if (signal.aborted || !wrapper.isConnected || opening || version !== readVersion) return;
                 const next = doc.getElementById('fb-notif');
                 if (!next) return;
+                updateClaimBadges(next);
                 const nextRows = rows(next);
                 const arrivals = nextRows.filter(row => !known.has(row.dataset.notificationId) &&
-                    row.classList.contains('is-unread') && ['reports', 'claims'].includes(row.dataset.category));
+                    row.classList.contains('is-unread') && ['reports', 'claims', 'users'].includes(row.dataset.category));
                 // Keep a bounded list of recent IDs per document.
                 known = new Set(nextRows.map(row => row.dataset.notificationId));
                 const nextButton = next.querySelector('#fb-notif-trigger');
@@ -158,7 +219,11 @@
                     if (count) button.append(document.importNode(count, true));
                 }
                 const nextPanel = next.querySelector('#fb-notif-panel');
-                const signature = root => rows(root).map(row => row.dataset.notificationId + ':' + row.classList.contains('is-unread')).join(',');
+                const signature = root => rows(root).map(row => {
+                    const message = row.querySelector('.fb-notif-content p')?.textContent?.trim() ?? '';
+                    const title = row.querySelector('.fb-notif-content strong')?.textContent?.trim() ?? '';
+                    return row.dataset.notificationId + ':' + row.classList.contains('is-unread') + ':' + title + ':' + message;
+                }).join(',');
                 if (signature(panel) !== signature(nextPanel) ||
                     panel.querySelector('.fb-notif-head strong').textContent !== nextPanel.querySelector('.fb-notif-head strong').textContent) {
                     const scroll = panel.scrollTop;
@@ -173,9 +238,11 @@
                 // Keep the existing list if the connection is interrupted.
             } finally {
                 busy = false;
+                if (!signal.aborted && version !== readVersion && !opening) refresh();
             }
         }
-        const timer = setInterval(refresh, 15000);
+        document.addEventListener('fb:claim-chat-read', refresh, { signal });
+        const timer = setInterval(refresh, 5000);
         signal.addEventListener('abort', () => clearInterval(timer), { once: true });
         document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); }, { signal });
     }

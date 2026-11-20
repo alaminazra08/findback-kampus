@@ -14,6 +14,7 @@ final class AdminAlerts
         string $title,
         string $message,
         ?int $recordId = null,
+        array $extraData = [],
     ): void {
         // Alert admin mengikuti preferensi; keputusan untuk pelapor tetap dikirim.
         try {
@@ -28,11 +29,12 @@ final class AdminAlerts
                 $message,
                 $category,
                 $recordId,
+                $extraData,
             ): void {
                 foreach ($admins as $admin) {
                     self::notify(
                         $admin,
-                        new AdminMessageNotification($title, $message, $category, $recordId),
+                        new AdminMessageNotification($title, $message, $category, $recordId, $extraData),
                     );
                 }
             });

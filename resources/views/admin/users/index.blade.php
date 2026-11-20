@@ -81,7 +81,7 @@
                 <label class="fb-users-search">
                     <span class="sr-only">Cari pengguna</span>
                     <input type="search" name="q" value="{{ $q }}" maxlength="100"
-                        placeholder="Cari nama atau email...">
+                        placeholder="Cari nama atau email..." spellcheck="false" autocorrect="off" autocapitalize="off">
                 </label>
                 <label>
                     <span class="sr-only">Filter role</span>

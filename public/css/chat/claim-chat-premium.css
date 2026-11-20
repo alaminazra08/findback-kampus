@@ -388,7 +388,7 @@
     background: linear-gradient(160deg, #fff5f9, #fff 60%) !important;
     padding: 24px !important;
 }
-.fb-chat-page .chat-bubble {
+.fb-chat-page .chat-bubble:not(:has(> a > img)) {
     border-radius: 17px !important;
     padding: 13px 16px !important;
     max-width: min(75%, 600px) !important;
@@ -416,7 +416,7 @@
         min-height: 300px;
         padding: 13px !important;
     }
-    .fb-chat-page .chat-bubble {
+    .fb-chat-page .chat-bubble:not(:has(> a > img)) {
         max-width: 92% !important;
     }
     .fb-chat-page .chat-form {
@@ -506,4 +506,23 @@
     .fcp-dialog .fcp-messages {
         height: clamp(220px, 36dvh, 350px);
     }
+}
+
+.fcp-dialog .fcp-panel {
+    display: flex;
+    flex-direction: column;
+    max-height: min(88dvh, 850px);
+}
+.fcp-dialog .fcp-messages {
+    min-height: 0;
+    flex: 0 1 auto;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scroll-behavior: auto;
+}
+.fcp-dialog .fcp-compose, .fcp-dialog .fcp-head, .fcp-dialog .fcp-closed { flex-shrink: 0; }
+.fcp-dialog .fcp-bubble { overflow-wrap: anywhere; }
+.fcp-send-error { padding: 0 .95rem .5rem; margin: 0; color: #a40d43; }
+@media (max-width: 620px) {
+    .fcp-dialog .fcp-panel { max-height: 95dvh; }
 }

@@ -3,7 +3,10 @@
  * Keeps period and PDF menus mutually exclusive and raises the period layer.
  */
 (() => {
+    let lifecycle;
     const init = () => {
+        lifecycle?.abort();
+        lifecycle = new AbortController();
         document.querySelectorAll('.fs-page .fs-header-actions').forEach((actions) => {
             if (actions.dataset.dropdownLayerV6 === 'ready') return;
 
@@ -22,6 +25,7 @@
             };
 
             const observer = new MutationObserver(syncLayer);
+            lifecycle.signal.addEventListener('abort', () => observer.disconnect(), { once: true });
             observer.observe(periodTrigger, {
                 attributes: true,
                 attributeFilter: ['aria-expanded']
@@ -44,13 +48,13 @@
                 if (!actions.contains(event.target)) {
                     queueMicrotask(syncLayer);
                 }
-            });
+            }, { signal: lifecycle.signal });
 
             document.addEventListener('keydown', (event) => {
                 if (event.key === 'Escape') {
                     queueMicrotask(syncLayer);
                 }
-            });
+            }, { signal: lifecycle.signal });
 
             syncLayer();
         });

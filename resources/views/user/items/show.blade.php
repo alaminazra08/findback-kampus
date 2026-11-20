@@ -34,7 +34,7 @@
             <div class="cu-actions">
                 <a class="cu-btn light" href="{{ route('user.items.index') }}">← Kembali</a>
 
-                @if ($item->type === 'found')
+                @if ($item->type === 'found' && (int) $item->user_id !== (int) auth()->id())
                     <a class="cu-btn" href="{{ route('user.claims.create', $item) }}">Ajukan klaim →</a>
                 @endif
             </div>

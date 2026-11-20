@@ -9,6 +9,9 @@
     <link rel="stylesheet"
       href="{{ asset('css/admin/admin-settings.css') }}?v=41">
     <link rel="stylesheet" href="{{ asset('css/admin/settings-clean-save.css') }}?v=9">
+    <link rel="stylesheet" href="{{ asset('css/admin/settings-notifications.css') }}?v=6">
+    <link rel="stylesheet" href="{{ asset('css/admin/settings-matching.css') }}?v=7">
+    <link rel="stylesheet" href="{{ asset('css/admin/settings-smart-save.css') }}?v=5">
 @endsection
 
 @section('content')
@@ -404,10 +407,6 @@
 
     </form>
 
-    <link rel="stylesheet" href="{{ asset('css/admin/settings-notifications.css') }}?v=6">
-    <link rel="stylesheet" href="{{ asset('css/admin/settings-matching.css') }}?v=7">
-    <link rel="stylesheet" href="{{ asset('css/admin/settings-smart-save.css') }}?v=5">
-    <script src="{{ asset('js/admin/settings-smart-save.js') }}?v=5" defer></script>
 
     {{-- INFORMASI SISTEM --}}
     <section class="fb-settings-card fb-settings-system"

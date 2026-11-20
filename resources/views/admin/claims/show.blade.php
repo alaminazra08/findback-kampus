@@ -10,8 +10,10 @@
     <link rel="stylesheet" href="{{ asset('css/admin/claim-evidence-actions.css') }}?v=11">
     <link rel="stylesheet" href="{{ asset('css/admin/claim-evidence-icons.css') }}?v=12">
     <link rel="stylesheet" href="{{ asset('css/admin/claim-detail-responsive.css') }}?v=14">
-    <link rel="stylesheet" href="{{ asset('css/chat/claim-chat-premium.css') }}?v=20261111">
+    <link rel="stylesheet" href="{{ asset('css/chat/claim-chat-premium.css') }}?v=20261120-chat2">
+    @include('shared.chat-tools-style')
     <link rel="stylesheet" href="{{ asset('css/pages/admin/detail-back.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/claim-proof-modal.css') }}?v=16">
 @endsection
 
 @section('content')
@@ -83,7 +85,9 @@
                 <h3>Deskripsi barang</h3>
                 <p class="fb-claim-description">{{ $claim->item?->description ?: 'Tidak ada deskripsi.' }}</p>
             </section>
-            @php($openEvidence = $claim->evidenceRequests->firstWhere('closed_at', null))
+            @php
+                $openEvidence = $claim->evidenceRequests->firstWhere('closed_at', null);
+            @endphp
 
             <section class="fb-claim-panel">
                 <div class="fb-claim-panel-head">
@@ -124,7 +128,7 @@
                                         stroke-linejoin="round" aria-hidden="true">
                                         <path
                                             d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-                                    </svg> Buka Chat</button>
+                                    </svg> Buka Chat <span class="fb-claim-chat-count fb-claim-chat-count-inverse" data-fb-claim-chat-count="{{ $claim->id }}" hidden></span></button>
                             @elseif($claim->status === 'returned')
                                 <button type="button" class="fb-claim-chat-jump is-archive fb-v11-btn fb-v11-chat"
                                     data-fcp-open><svg class="fb-v12-icon" xmlns="http://www.w3.org/2000/svg"
@@ -366,42 +370,36 @@
     @if (in_array($claim->status, ['approved', 'returned'], true) && $claim->claimant)
         <dialog class="fcp-dialog" id="fcp-dialog" aria-labelledby="fcp-title">
             <div class="fcp-dialog-shell">
-                <button class="fcp-dialog-close" type="button" data-fcp-close aria-label="Tutup percakapan">✕</button>
                 <section class="fcp-panel" id="percakapan-klaim" aria-labelledby="fcp-title">
-                    <div class="fcp-head">
-                        <div class="fcp-head-copy">
-                            <span class="fcp-eyebrow">KOMUNIKASI SERAH TERIMA</span>
-                            <h2 id="fcp-title">Percakapan Klaim K{{ $claim->id }}</h2>
-                            <p>Komunikasi dengan {{ $claim->claimant->name }} untuk mengatur pengambilan dan penyerahan
-                                barang.</p>
-                        </div>
-                        <span
-                            class="fcp-status {{ $claim->status === 'approved' ? 'is-active' : 'is-closed' }}">{{ $claim->status === 'approved' ? 'Chat Aktif' : 'Percakapan Ditutup' }}</span>
-                    </div>
-                    <div class="fcp-contact">
+                    <header class="fcp-contact fcp-compact-header">
                         <span class="fcp-avatar">{{ mb_strtoupper(mb_substr($claim->claimant->name, 0, 1)) }}</span>
-                        <div><strong>{{ $claim->claimant->name }}</strong><small>{{ $claim->claimant->email }}</small>
+                        <div class="fcp-contact-copy">
+                            <h2 id="fcp-title">{{ $claim->claimant->name }}</h2>
+                            <small>Klaim K{{ $claim->id }} · {{ $claim->item?->title ?? 'Barang' }}</small>
                         </div>
-                        <span class="fcp-context">Klaim K{{ $claim->id }} ·
-                            {{ $claim->item?->title ?? 'Barang' }}</span>
-                    </div>
-                    <div class="fcp-messages" id="fcp-messages"
+                        @if ($claim->status === 'returned')
+                            <span class="fcp-status is-closed">Arsip</span>
+                        @endif
+                        <button class="fcp-dialog-close" type="button" data-fcp-close aria-label="Tutup percakapan">✕</button>
+                    </header>
+                    <div class="fcp-messages" id="fcp-messages" @include('admin.chat.stream-actions')
+                        data-receipts-url="{{ route('admin.chat.messages', ['user' => $claim->claimant->id, 'claim_id' => $claim->id]) }}"
                         data-url="{{ $claim->status === 'approved' ? route('admin.chat.messages', ['user' => $claim->claimant->id, 'claim_id' => $claim->id]) : '' }}">
                         @forelse($claimMessages as $msg)
                             <article
                                 class="fcp-message {{ (int) $msg->sender_id === (int) auth()->id() ? 'mine' : 'theirs' }}"
-                                data-message-id="{{ $msg->id }}">
-                                <div class="fcp-bubble">
+                                data-message-id="{{ $msg->id }}" data-sent-at="{{ $msg->created_at->toIso8601String() }}" @if ($msg->read_at) data-read-at="{{ $msg->read_at->toIso8601String() }}" @endif>
+                                <div class="fcp-bubble" @if ($ratio = $msg->attachmentPhotoRatio()) style="--chat-photo-ratio: {{ $ratio }}" @endif>
                                     <strong>{{ (int) $msg->sender_id === (int) auth()->id() ? 'Admin FindBack' : $claim->claimant->name }}</strong>
-                                    @if ($msg->message)
+                                    @if ($msg->recalled_at)
+                                        <p>Pesan telah ditarik</p>
+                                    @elseif ($msg->message)
                                         <p>{{ $msg->message }}</p>
                                     @endif
-                                    @if ($msg->attachment_path)
-                                        <a href="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($msg->attachment_path) }}"
-                                            target="_blank" rel="noopener noreferrer"><img
-                                                src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($msg->attachment_path) }}"
-                                                alt="Lampiran percakapan" loading="lazy"></a>
+                                    @if (!$msg->recalled_at && $msg->attachment_path)
+                                        @include('shared.chat-attachment', ['path' => $msg->attachment_path, 'label' => 'Lampiran percakapan'])
                                     @endif
+                                    @include('admin.chat.message-actions')
                                     <small>{{ $msg->created_at->timezone('Asia/Jakarta')->format('d/m/Y H:i') }}
                                         WIB</small>
                                 </div>
@@ -414,17 +412,19 @@
                         @endforelse
                     </div>
                     @if ($claim->status === 'approved')
-                        <form class="fcp-compose" method="POST"
+                        <div class="fb-chat-action-slot">
+                        <form class="fcp-compose" data-chat-compose method="POST"
                             action="{{ route('admin.chat.store', $claim->claimant->id) }}" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="from_claim" value="{{ $claim->id }}">
-                            <label class="fcp-attach" title="Lampirkan foto"><span aria-hidden="true">＋</span><span
-                                    class="fcp-sr">Pilih foto</span><input type="file" name="attachment"
-                                    accept="image/jpeg,image/png,image/webp"></label>
-                            <textarea name="message" maxlength="3000" rows="2"
+                            <button type="button" class="fcp-attach" data-chat-pick aria-label="Buka menu lampiran" aria-haspopup="dialog">+</button>
+                            <input type="file" name="attachment" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm" hidden>
+                            <textarea name="message" maxlength="3000" rows="1"
                                 placeholder="Tulis pesan untuk {{ $claim->claimant->name }}..." aria-label="Tulis pesan"></textarea>
-                            <button type="submit">Kirim Pesan <span aria-hidden="true">↗</span></button>
+                            @include('shared.chat-send-button')
                         </form>
+                        </div>
+                        <p class="fcp-send-error" role="alert" hidden></p>
                     @else
                         <div class="fcp-closed">Serah terima telah selesai. Percakapan tersimpan sebagai arsip dan tidak
                             dapat digunakan untuk mengirim pesan baru.</div>
@@ -436,59 +436,39 @@
     @endif
 
     @if ($claim->proof_photo_path)
-        <link rel="stylesheet" href="{{ asset('css/admin/claim-proof-modal.css') }}?v=13">
-        <dialog id="fb-proof-dialog" class="fb-proof-dialog" aria-labelledby="fb-proof-title"
-            aria-describedby="fb-proof-description">
+        @php
+            $proofUrl = asset('storage/' . $claim->proof_photo_path);
+            $isProofPdf = strtolower(pathinfo($claim->proof_photo_path, PATHINFO_EXTENSION)) === 'pdf';
+        @endphp
+        <dialog id="fb-proof-dialog" class="fb-proof-dialog" aria-labelledby="fb-proof-title">
             <div class="fb-proof-shell">
                 <header class="fb-proof-head">
-                    <div class="fb-proof-head-copy">
-                        <span class="fb-proof-eyebrow">DOKUMENTASI KLAIM</span>
-                        <h2 id="fb-proof-title">Foto Bukti Klaim K{{ $claim->id }}</h2>
-                        <p id="fb-proof-description">Bukti yang diunggah pengaju untuk mendukung pemeriksaan klaim.</p>
+                    <h2 id="fb-proof-title">{{ $isProofPdf ? 'Dokumen' : 'Foto' }} Bukti Klaim K{{ $claim->id }}</h2>
+                    <div class="fb-proof-actions">
+                        <a class="fb-proof-download" href="{{ $proofUrl }}" download aria-label="Unduh bukti" title="Unduh bukti">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" aria-hidden="true">
+                                <path d="M12 3v12m-4-4 4 4 4-4M4 17v3h16v-3" />
+                            </svg>
+                        </a>
+                        <button type="button" class="fb-proof-close" data-fb-proof-close aria-label="Tutup pratinjau bukti" autofocus>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" aria-hidden="true">
+                                <path d="M18 6 6 18M6 6l12 12" />
+                            </svg>
+                        </button>
                     </div>
-                    <button type="button" class="fb-proof-close" data-fb-proof-close aria-label="Tutup foto bukti">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" aria-hidden="true">
-                            <path d="M18 6 6 18M6 6l12 12" />
-                        </svg>
-                    </button>
                 </header>
                 <div class="fb-proof-content">
-                    @if (strtolower(pathinfo($claim->proof_photo_path, PATHINFO_EXTENSION)) === 'pdf')
-                        <iframe class="fb-proof-document" title="Dokumen bukti klaim"
-                            src="{{ asset('storage/' . $claim->proof_photo_path) }}"></iframe>
+                    @if ($isProofPdf)
+                        <iframe class="fb-proof-document" title="Dokumen bukti klaim" src="{{ $proofUrl }}"></iframe>
                     @else
-                        <img class="fb-proof-image" src="{{ asset('storage/' . $claim->proof_photo_path) }}"
+                        <img class="fb-proof-image" src="{{ $proofUrl }}"
                             alt="Bukti kepemilikan klaim K{{ $claim->id }}" loading="lazy">
                     @endif
-                    <dl class="fb-proof-info">
-                        <div>
-                            <dt>Pengaju</dt>
-                            <dd>{{ $claim->claimant?->name ?? 'Tidak tersedia' }}</dd>
-                        </div>
-                        <div>
-                            <dt>Email</dt>
-                            <dd>{{ $claim->claimant?->email ?? 'Tidak tersedia' }}</dd>
-                        </div>
-                        <div>
-                            <dt>Tanggal klaim</dt>
-                            <dd>{{ $claim->created_at?->timezone('Asia/Jakarta')->format('d/m/Y H:i') }} WIB</dd>
-                        </div>
-                    </dl>
                 </div>
-                <footer class="fb-proof-footer">
-                    <button type="button" class="fb-proof-cancel" data-fb-proof-close>Tutup</button>
-                    <a class="fb-proof-download" href="{{ asset('storage/' . $claim->proof_photo_path) }}" download>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" aria-hidden="true">
-                            <path d="M12 3v12m-4-4 4 4 4-4M4 17v3h16v-3" />
-                        </svg>
-                        Unduh Bukti
-                    </a>
-                </footer>
             </div>
         </dialog>
-
     @endif
 
     <footer class="fb-footer">© {{ date('Y') }} FindBack Kampus · Fakultas Sains dan Teknologi</footer>

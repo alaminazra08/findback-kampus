@@ -5,11 +5,13 @@
 @section('breadcrumb', 'Pesan Pengguna')
 
 @section('page-styles')
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/chat/message-states.css') }}">
     <link rel="stylesheet" href="{{ asset('css/chat/chat-ui.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/chat/chat.css') }}?v=3">
     <link rel="stylesheet" href="{{ asset('css/chat/findback-claim-chat.css') }}?v=20261111">
-    <link rel="stylesheet" href="{{ asset('css/chat/claim-chat-premium.css') }}?v=20261111">
+    <link rel="stylesheet" href="{{ asset('css/chat/claim-chat-premium.css') }}?v=20261120-photo">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/chat/show.css') }}">
+    @include('shared.chat-tools-style')
 @endsection
 
 @section('content')
@@ -24,12 +26,6 @@
                 ← Semua Pesan
             </a>
 
-            <section class="chat-heading">
-                <span class="chat-kicker">RUANG PERCAKAPAN</span>
-                <h1>{{ $user->name }}</h1>
-                <p>{{ $user->email }}</p>
-            </section>
-
             <section class="chat-panel">
 
                 <div class="chat-panel-header">
@@ -39,8 +35,8 @@
                     </div>
 
                     <div>
-                        <strong>{{ $user->name }}</strong>
-                        <small>Pengguna FindBack Kampus</small>
+                        <h1 class="chat-inbox-name">{{ $user->name }}</h1>
+                        <small>{{ $selectedClaim ? 'Klaim K'.$selectedClaim->id.' · '.($selectedClaim->item?->title ?? 'Barang') : $user->email }}</small>
                     </div>
 
                     <span class="chat-secure">{{ $canChat ? 'Klaim disetujui · Chat aktif' : 'Arsip percakapan' }}</span>
@@ -59,15 +55,16 @@
                         <span>Pilih nomor klaim terlebih dahulu.</span>
                     @endif
                 </nav>
-                <div class="chat-messages" id="chat-messages"
+                <div class="chat-messages" id="chat-messages" @include('admin.chat.stream-actions')
+                    data-receipts-url="{{ $selectedClaim ? route('admin.chat.messages', ['user' => $user->id, 'claim_id' => $selectedClaim->id]) : '' }}"
                     data-messages-url="{{ $messages->currentPage() === 1 && $selectedClaim ? route('admin.chat.messages', ['user' => $user->id, 'claim_id' => $selectedClaim->id]) : '' }}">
 
                     @forelse($messages->getCollection()->reverse() as $msg)
                         <article
                             class="chat-message {{ (int) $msg->sender_id === (int) auth()->id() ? 'mine' : 'theirs' }}"
-                            data-message-id="{{ $msg->id }}">
+                            data-message-id="{{ $msg->id }}" data-sent-at="{{ $msg->created_at->toIso8601String() }}" @if ($msg->read_at) data-read-at="{{ $msg->read_at->toIso8601String() }}" @endif>
 
-                            <div class="chat-bubble">
+                            <div class="chat-bubble" @if ($ratio = $msg->attachmentPhotoRatio()) style="--chat-photo-ratio: {{ $ratio }}" @endif>
 
                                 <span class="chat-sender">
                                     {{ (int) $msg->sender_id === (int) auth()->id() ? 'Admin' : $user->name }}
@@ -85,18 +82,7 @@
 
     {{-- Lampiran gambar --}}
     @if ($msg->attachment_path)
-        <a
-            href="{{ \Illuminate\Support\Facades\Storage::url($msg->attachment_path) }}"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            <img
-                class="chat-attachment"
-                src="{{ \Illuminate\Support\Facades\Storage::url($msg->attachment_path) }}"
-                alt="Lampiran pesan"
-                loading="lazy"
-            >
-        </a>
+        @include('shared.chat-attachment', ['path' => $msg->attachment_path, 'label' => 'Lampiran pesan'])
     @endif
 
     {{-- Isi pesan --}}
@@ -114,6 +100,7 @@
 @endif
 
 
+                                @include('admin.chat.message-actions')
                                 <small>
                                     {{ $msg->created_at->timezone('Asia/Jakarta')->format('d/m/Y H:i') }}
                                 </small>
@@ -136,8 +123,9 @@
 
                 <div class="fb-workflow-pages">{{ $messages->links() }}</div>
                 @if ($canChat)
+                    <div class="fb-chat-action-slot">
                     <form action="{{ route('admin.chat.store', $user->id) }}" method="POST" enctype="multipart/form-data"
-                        class="chat-form">
+                        class="chat-form" data-chat-compose>
 
                         @csrf
                         <input type="hidden" name="from_claim" value="{{ $selectedClaim->id }}">
@@ -155,16 +143,15 @@
                             </div>
                         @endif
 
-                        <label class="chat-upload" title="Lampirkan gambar">
-                            +
-                            <input type="file" name="attachment" accept="image/jpeg,image/png,image/webp">
-                        </label>
+                        <button type="button" class="chat-upload" data-chat-pick aria-label="Buka menu lampiran" aria-haspopup="dialog">+</button>
+                        <input type="file" name="attachment" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm" hidden>
 
                         <textarea name="message" rows="1" placeholder="Balas pesan pengguna..." maxlength="3000"></textarea>
 
-                        <button type="submit">Kirim ↑</button>
+                        @include('shared.chat-send-button')
 
                     </form>
+                    </div>
                 @else
                     <div class="fb-chat-archive-note">Riwayat pesan tetap dapat dibaca. Pengiriman pesan hanya tersedia
                         setelah klaim disetujui dan sebelum barang dikembalikan.</div>
@@ -180,17 +167,7 @@
 
     </div>
 
-    <script src="{{ asset('js/pages/admin/chat/show.js') }}"></script>
+    <script src="{{ asset('js/pages/admin/chat/show.js') }}?v=chat6"></script>
 
-<style>
-.chat-recalled {
-    font-style: italic;
-    opacity: 0.75;
-}
-
-.chat-edited {
-    font-size: 11px;
-    opacity: 0.7;
-}
-</style>    
+    
 @endsection

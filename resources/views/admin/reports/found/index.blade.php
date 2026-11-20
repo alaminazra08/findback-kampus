@@ -41,7 +41,7 @@
                     <path d="m16 16 5 5" />
                 </svg>
                 <input name="search" type="search" maxlength="100" placeholder="Cari nama barang, lokasi, kategori, ID..."
-                    value="{{ request('search') }}">
+                    value="{{ request('search') }}" spellcheck="false" autocorrect="off" autocapitalize="off">
             </label>
             <label><span class="sr-only">Filter status laporan</span><select name="status">
                     <option value="">Semua Status</option>

@@ -116,7 +116,7 @@
 
             <input type="search" name="search" value="{{ request('search') }}"
                 placeholder="Cari nama barang, kategori, lokasi..." aria-label="Cari laporan hilang"
-                class="fb-refactor fb-report-search">
+                class="fb-refactor fb-report-search" spellcheck="false" autocorrect="off" autocapitalize="off">
 
             <select name="status" aria-label="Filter status" class="fb-refactor fb-report-select">
 

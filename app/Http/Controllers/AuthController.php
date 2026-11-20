@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\RegistrationAdminNotifier;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +27,7 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function register(Request $request): RedirectResponse
+    public function register(Request $request, RegistrationAdminNotifier $registrationNotifier): RedirectResponse
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -42,6 +43,8 @@ class AuthController extends Controller
         $user->role = 'user';
 
         $user->save();
+
+        $registrationNotifier->notify($user, 'Email');
 
         Auth::login($user);
 

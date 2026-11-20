@@ -7,7 +7,6 @@
   const KEY = 'findback:admin:scroll-continuity:v1';
   const current = location.pathname;
   if (!current.startsWith('/admin/')) return;
-  let restored = false;
   const storage = () => { try { return window.sessionStorage; } catch (_) { return null; } };
   const st = storage();
   if (!st) return;
@@ -16,16 +15,11 @@
     st.removeItem(KEY);
     if (saved && saved.path === current && Number.isFinite(saved.y) &&
         Date.now() - saved.at < 45000 && saved.y > 0) {
-      restored = true;
-      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
       const apply = () => {
         const max = Math.max(0, document.documentElement.scrollHeight - innerHeight);
         window.scrollTo({top: Math.min(saved.y, max), left: saved.x || 0, behavior: 'instant'});
       };
-      const ready = () => requestAnimationFrame(() => requestAnimationFrame(apply));
-      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ready, {once:true});
-      else ready();
-      window.addEventListener('load', apply, {once:true});
+      requestAnimationFrame(apply);
     }
   } catch (_) { try { st.removeItem(KEY); } catch (_) {} }
   document.addEventListener('submit', (event) => {

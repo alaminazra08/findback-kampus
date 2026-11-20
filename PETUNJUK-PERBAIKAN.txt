@@ -1,0 +1,20 @@
+PERBAIKAN PAGINATION PUSAT NOTIFIKASI
+
+Isi:
+- app/Http/Controllers/Admin/NotificationController.php
+- resources/views/admin/notifications/partials/live-list.blade.php
+- public/css/admin/admin-notifications-center.css
+
+Cara memasang:
+1. Ekstrak isi ZIP ke folder project Laravel (folder yang berisi artisan).
+2. Izinkan overwrite file jika diminta.
+3. Jalankan:
+   php artisan view:clear
+   php artisan optimize:clear
+4. Refresh halaman /admin/notifications.
+
+Perubahan:
+- Tombol halaman 2 dan seterusnya kembali ke /admin/notifications, bukan /admin/notifications/stats.
+- Filter kategori, pencarian, dan urutan tetap dipertahankan saat berpindah halaman.
+- Pagination dirapikan menjadi satu kontrol: sebelumnya, nomor halaman, berikutnya.
+- Tampilan pagination responsif pada desktop dan mobile.

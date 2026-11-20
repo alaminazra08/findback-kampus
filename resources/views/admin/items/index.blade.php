@@ -272,7 +272,7 @@
 
                 <input name="search" type="search" maxlength="100" placeholder="Cari barang, lokasi, atau BRG-0001..."
 
-                    value="{{ request('search') }}">
+                    value="{{ request('search') }}" spellcheck="false" autocorrect="off" autocapitalize="off">
 
             </label>
 

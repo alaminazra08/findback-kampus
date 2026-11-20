@@ -48,19 +48,19 @@
 
         /* Banner utama */
         .nf-hero{position:relative;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
-            padding:28px 38px;margin-bottom:20px;border-radius:30px;color:#fff;overflow:hidden;
+            padding:16px 30px;margin-bottom:16px;border-radius:30px;color:#fff;overflow:hidden;
             background:radial-gradient(120% 140% at 100% 0%,#b61e48 0%,rgba(182,30,72,0) 55%),linear-gradient(135deg,#5e0820 0%,#830d2c 55%,#9c1239 100%);
             box-shadow:0 22px 48px rgba(110,10,38,.30)}
         .nf-hero:before{content:"";position:absolute;left:-70px;bottom:-110px;width:280px;height:280px;border-radius:50%;border:38px solid rgba(255,255,255,.06)}
         .nf-hero:after{content:"";position:absolute;right:210px;top:-70px;width:190px;height:190px;border-radius:50%;background:rgba(255,255,255,.06)}
         .nf-hero>*{position:relative;z-index:1}
-        .nf .nf-hero h1{margin:0 0 6px;font-size:clamp(30px,4vw,42px);line-height:1.1;letter-spacing:-.04em;color:#fff}
+        .nf .nf-hero h1{margin:0 0 6px;font-size:clamp(24px,3vw,32px);line-height:1.1;letter-spacing:-.04em;color:#fff}
         .nf .nf-hero p{margin:0;max-width:460px;color:rgba(255,255,255,.82);line-height:1.6}
         .nf-hero-side{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
-        .nf-ring{display:grid;place-items:center;width:96px;height:96px;border-radius:50%;
+        .nf-ring{display:grid;place-items:center;width:72px;height:72px;border-radius:50%;
             background:conic-gradient(#fff calc(var(--p)*1%),rgba(255,255,255,.22) 0)}
-        .nf-ring span{display:grid;place-items:center;width:78px;height:78px;border-radius:50%;background:#7a0b28;text-align:center;line-height:1.1}
-        .nf-ring b{display:block;font-size:22px;letter-spacing:-.03em}
+        .nf-ring span{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:#7a0b28;text-align:center;line-height:1.1}
+        .nf-ring b{display:block;font-size:17px;letter-spacing:-.03em}
         .nf-ring i{display:block;font-style:normal;font-size:10.5px;color:rgba(255,255,255,.75);margin-top:2px}
         .nf-art{display:block;width:230px;height:120px;margin:-6px 6px -6px 0;color:#fff}
         .nf-hero form{margin:0}
@@ -74,12 +74,12 @@
 
         /* Kartu ringkasan */
         .nf-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:22px}
-        .nf-stat{position:relative;display:flex;align-items:center;gap:16px;padding:20px 22px;overflow:hidden;
+        .nf-stat{position:relative;display:flex;align-items:center;gap:16px;padding:14px 18px;overflow:hidden;
             border:1px solid var(--ln);border-radius:22px;background:#fff;box-shadow:0 10px 30px rgba(58,26,36,.05)}
         .nf-stat-ic{display:grid;place-items:center;flex:none;width:56px;height:56px;border-radius:18px}
         .nf-stat-ic .cu-icon{width:26px;height:26px}
         .nf-stat small{display:block;color:var(--mut);font-size:13.5px;font-weight:600}
-        .nf-stat strong{display:block;margin-top:2px;font-size:34px;line-height:1.05;letter-spacing:-.03em}
+        .nf-stat strong{display:block;margin-top:2px;font-size:26px;line-height:1.05;letter-spacing:-.03em}
         .nf-stat.total .nf-stat-ic{background:var(--w-soft);color:var(--w)}
         .nf-stat.read .nf-stat-ic{background:var(--ok-bg);color:var(--ok)}
         .nf-stat.unread{background:linear-gradient(135deg,#fff1f4,#fff);border-color:#efcdd6}
@@ -87,7 +87,8 @@
         .nf-stat.unread .nf-stat-ic{background:#fbdce4;color:var(--w)}
         .nf-stat>*{position:relative;z-index:1}
         .nf-stat-tx{flex:1;min-width:0}
-        .nf-bar{display:block;height:6px;margin-top:12px;border-radius:99px;background:#f0e9ec;overflow:hidden}
+        .nf-stat.total .nf-bar{visibility:hidden}
+        .nf-bar{display:block;height:5px;margin-top:8px;border-radius:99px;background:#f0e9ec;overflow:hidden}
         .nf-bar i{display:block;height:100%;border-radius:99px;background:var(--w);transition:none}
         .nf-stat.unread .nf-bar{background:#f7dbe2}.nf-stat.unread .nf-bar i{background:#e0436b}
         .nf-stat.read .nf-bar{background:#dcefe4}.nf-stat.read .nf-bar i{background:#2f9565}
@@ -115,12 +116,12 @@
         .nf-day:after{content:"";flex:1;height:1px;background:var(--ln)}
 
         /* Item */
-        .nf-item{position:relative;display:flex;gap:16px;padding:18px 20px;margin-bottom:10px;border:1px solid var(--ln);border-radius:20px;background:#fff;transition:.18s}
+        .nf-item{position:relative;display:flex;gap:14px;padding:14px 18px;margin-bottom:10px;border:1px solid var(--ln);border-radius:20px;background:#fff;transition:.18s}
         .nf-item:hover{border-color:#e2cbd2;box-shadow:0 10px 26px rgba(58,26,36,.07)}
         .nf-item[hidden]{display:none}
         .nf-item.is-unread{border-color:#ecc9d3;background:linear-gradient(95deg,#fff1f5 0%,#fff 72%);box-shadow:0 8px 24px rgba(131,13,44,.07)}
         .nf-item.is-unread:before{content:"";position:absolute;left:-1px;top:20px;bottom:20px;width:4px;border-radius:0 4px 4px 0;background:var(--w)}
-        .nf-ic{display:grid;place-items:center;flex:none;width:48px;height:48px;border-radius:16px;background:var(--in-bg);color:var(--in)}
+        .nf-ic{display:grid;place-items:center;flex:none;width:42px;height:42px;border-radius:14px;background:var(--in-bg);color:var(--in)}
         .nf-ic .cu-icon{width:23px;height:23px}
         .tone-success .nf-ic{background:var(--ok-bg);color:var(--ok)}
         .tone-warn .nf-ic{background:var(--wa-bg);color:var(--wa)}
@@ -134,14 +135,14 @@
         .tone-success .nf-badge{background:var(--ok-bg);color:var(--ok)}
         .tone-warn .nf-badge{background:var(--wa-bg);color:var(--wa)}
         .tone-danger .nf-badge{background:var(--er-bg);color:var(--er)}
-        .nf-dot{width:9px;height:9px;border-radius:50%;background:var(--w);box-shadow:0 0 0 4px rgba(131,13,44,.14)}
-        .nf-line time{flex:none;font-size:12.5px;color:var(--mut)}
-        .nf-body p{margin:6px 0 14px;color:#4d4247;line-height:1.6;overflow-wrap:anywhere}
+        .nf-dot{display:none;width:9px;height:9px;border-radius:50%;background:var(--w);box-shadow:0 0 0 4px rgba(131,13,44,.14)}
+        .nf-line time{flex:none;font-size:13px;color:var(--mut)}
+        .nf-body p{margin:4px 0 10px;color:#4d4247;font-size:14px;line-height:1.55;overflow-wrap:anywhere}
         .nf-act{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
         .nf-act form{margin:0}
         .nf-pill{display:inline-flex;align-items:center;min-height:34px;padding:0 15px;border-radius:999px;border:1px solid #e6d3d9;background:#fff;color:var(--w);font-weight:700;font-size:13px;cursor:pointer;transition:.18s}
         .nf-pill:hover{background:var(--w);border-color:var(--w);color:#fff}
-        .nf-pill.ghost{border-color:transparent;background:transparent;color:var(--mut)}
+        .nf-pill.ghost{border-color:transparent;background:transparent;color:var(--w)}
         .nf-pill.ghost:hover{background:#f5eff1;color:var(--ink)}
 
         /* Kosong */
@@ -161,7 +162,17 @@
             .nf-chips{width:100%}.nf-chip{flex:1;padding:8px 6px}
             .nf-item{padding:16px 14px;gap:12px}.nf-ic{width:42px;height:42px;border-radius:14px}
                     }
+             .nf-pager{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:18px 28px;border-top:1px solid var(--ln)}
+.nf-pager-info{font-size:13px;color:var(--mut)}
+.nf-pager-nav{display:flex;align-items:center;gap:8px}
+.nf-pg{display:grid;place-items:center;min-width:40px;height:40px;padding:0 10px;border:1px solid var(--ln);border-radius:12px;background:#fff;color:var(--ink);font-weight:700;font-size:14px;transition:.18s}
+a.nf-pg:hover{border-color:var(--w);color:var(--w);background:var(--w-soft)}
+.nf-pg.is-on{background:var(--w);border-color:var(--w);color:#fff;box-shadow:0 6px 16px rgba(131,13,44,.3)}
+.nf-pg.is-off{color:#c9bfc3;background:#fdfafb}
+@media(max-width:600px){.nf-pager{padding:14px;justify-content:center}}
+
     </style>
+    
 
     <div class="nf">
         <header class="nf-hero">
@@ -304,7 +315,32 @@
                 <p id="nf-filter-empty-text"></p>
             </div>
 
-            <div class="nf-foot">@include('user.components.pages', ['paginator' => $notifications])</div>
+            @if ($notifications->total() > 0)
+                <div class="nf-pager">
+                    <span class="nf-pager-info">Menampilkan {{ $notifications->firstItem() }}–{{ $notifications->lastItem() }} dari {{ $notifications->total() }} notifikasi</span>
+                    <nav class="nf-pager-nav" aria-label="Halaman notifikasi">
+                        @if ($notifications->onFirstPage())
+                            <span class="nf-pg is-off" aria-disabled="true">‹</span>
+                        @else
+                            <a class="nf-pg" href="{{ $notifications->previousPageUrl() }}" rel="prev" aria-label="Sebelumnya">‹</a>
+                        @endif
+
+                        @foreach ($notifications->getUrlRange(max(1, $notifications->currentPage() - 2), min($notifications->lastPage(), $notifications->currentPage() + 2)) as $page => $url)
+                            @if ($page == $notifications->currentPage())
+                                <span class="nf-pg is-on" aria-current="page">{{ $page }}</span>
+                            @else
+                                <a class="nf-pg" href="{{ $url }}">{{ $page }}</a>
+                            @endif
+                        @endforeach
+
+                        @if ($notifications->hasMorePages())
+                            <a class="nf-pg" href="{{ $notifications->nextPageUrl() }}" rel="next" aria-label="Berikutnya">›</a>
+                        @else
+                            <span class="nf-pg is-off" aria-disabled="true">›</span>
+                        @endif
+                    </nav>
+                </div>
+            @endif
         </section>
     </div>
 

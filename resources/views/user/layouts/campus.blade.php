@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{ asset('css/user/campus.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/user/navbar-premium.css') }}?v=5">
     @if (request()->routeIs('user.claims.index'))
-    <link rel="stylesheet" href="{{ asset('css/user/user-claims.css') }}?v=3">
+    <link rel="stylesheet" href="{{ asset('css/user/user-claims.css') }}?v=4">
     @endif
     <link rel="stylesheet" href="{{ asset('css/shared/view-utilities.css') }}">
 
@@ -27,6 +27,12 @@
 
     <!-- FINDBACK_TYPOGRAPHY_V1 -->
     <link rel="stylesheet" href="{{ asset('css/shared/typography.css') }}">
+        <style>
+        @view-transition { navigation: auto; }
+        ::view-transition-old(root),
+        ::view-transition-new(root) { animation: none; }
+        .cu-main, .cu-main *, .cu-main *::before, .cu-main *::after { animation: none !important; }
+    </style>
 
     @if (request()->routeIs('user.profile.index'))
         <script>
@@ -55,8 +61,7 @@
     @endif
 </head>
 
-<body class="fb-responsive cu-body {{ request()->routeIs('user.reports.index') ? 'fb-activity-page' : '' }}">
-    <a class="cu-skip" href="#main">Langsung ke konten</a>
+<body class="fb-responsive cu-body {{ request()->routeIs('user.reports.index', 'user.claims.index') ? 'fb-activity-page' : '' }}">
 
     @php
         $noticeCount = auth()->user()->unreadNotifications()->count();

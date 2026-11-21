@@ -54,7 +54,7 @@ class MatchingController extends Controller
             ->pluck('total', 'status');
 
         return view('admin.matching.index', [
-            'matches' => $query->paginate(12)->withQueryString(),
+            'matches' => $query->paginate(12)->withQueryString()->through($this->withCurrentScore(...)),
             'status' => $status,
             'search' => $search,
             'stats' => [
@@ -69,7 +69,7 @@ class MatchingController extends Controller
     public function show(ItemMatch $match): View
     {
         $match->load(['lostItem.reporter', 'foundItem.reporter', 'reviewer']);
-        return view('admin.matching.show', compact('match'));
+        return view('admin.matching.show', ['match' => $this->withCurrentScore($match)]);
     }
 
     /**
@@ -200,16 +200,20 @@ class MatchingController extends Controller
                 }
             }
 
+            [$score, $reasons] = $this->calculateScore($lostItem, $foundItem);
+            $reason = implode('; ', $reasons);
+
             $locked->update([
+                'match_score' => $score,
                 'status' => $validated['action'] === 'confirm' ? 'confirmed' : 'rejected',
                 'reviewed_by' => auth()->id(),
                 'reviewed_at' => now(),
                 'match_reason' =>
                     $validated['action'] === 'reject'
-                        ? $locked->match_reason .
+                        ? $reason .
                             '; Alasan penolakan admin: ' .
                             trim($validated['rejection_reason'])
-                        : $locked->match_reason,
+                        : $reason,
             ]);
             return null;
         }, 3);
@@ -226,6 +230,17 @@ class MatchingController extends Controller
                     ? 'Pasangan laporan dikonfirmasi. Status barang tidak diubah; lakukan verifikasi kepemilikan sebelum serah terima.'
                     : 'Kandidat pencocokan ditolak.',
             );
+    }
+
+    private function withCurrentScore(ItemMatch $match): ItemMatch
+    {
+        if ($match->status === 'pending' && $match->lostItem && $match->foundItem) {
+            [$score, $reasons] = $this->calculateScore($match->lostItem, $match->foundItem);
+            $match->match_score = $score;
+            $match->match_reason = implode('; ', $reasons);
+        }
+
+        return $match;
     }
 
     private function calculateScore(LostFoundItem $lost, LostFoundItem $found): array

@@ -666,6 +666,10 @@
     font-size: 13px;
     color: #4e2639;
 }
+.match-rejection-label .match-required-mark {
+    color: #b42318;
+}
+
 .match-rejection-textarea {
     display: block;
     width: 100%;
@@ -2059,103 +2063,212 @@
 
 
 /* FindBack Matching V36 — unified premium detail header. Scoped, no sidebar changes. */
+.match-wrap .fb-match-return-bar {
+    justify-content: flex-start;
+}
+
+.match-wrap .fb-match-return-bar .fb-detail-return {
+    padding-inline: 0;
+    border: 0;
+    background: transparent;
+}
+
 .match-wrap .match-detail-hero {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(235px, 280px);
-    align-items: center;
-    gap: clamp(20px, 3vw, 46px);
-    padding: clamp(22px, 3vw, 36px);
-    margin: 18px 0 25px;
-    background: linear-gradient(120deg, #ffffff 0%, #ffffff 58%, #fdf6f9 100%);
-    border: 1px solid #ecdce4;
-    border-radius: 22px;
-    box-shadow: 0 12px 35px rgba(70, 27, 48, 0.045);
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 350px);
+    align-items: start;
+    grid-template-rows: auto 1fr;
+    gap: 18px clamp(16px, 3vw, 40px);
+    margin: 4px 0 14px;
 }
-.match-wrap .match-detail-hero-main { min-width: 0; }
-.match-wrap .match-detail-hero-top {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 9px;
-    margin-bottom: 15px;
+
+.match-detail-hero-main {
+    min-width: 0;
+    padding-top: 4px;
 }
-.match-wrap .match-detail-id {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 7px 11px;
-    border-radius: 9px;
-    color: #8c1943;
-    background: #faeef3;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: .1px;
+
+.match-wrap .match-detail-hero-main .match-kicker {
+    margin: 0 0 5px;
 }
-.match-wrap .match-detail-id svg { height: 16px; width: 16px; flex: none; }
+
 .match-wrap .match-detail-hero h1 {
-    margin: 0 0 12px;
-    font-size: clamp(26px, 2.65vw, 37px);
-    line-height: 1.16;
-    letter-spacing: -1.1px;
+    margin: 0;
+    font-size: clamp(25px, 3vw, 40px);
+    line-height: 1.15;
+    letter-spacing: -.025em;
     color: #301b2b;
-    font-weight: 850;
     overflow-wrap: anywhere;
 }
-.match-wrap .match-detail-hero h1 span { color: #981c4d; }
-.match-wrap .match-detail-intro {
-    font-size: 14px;
-    line-height: 1.7;
-    max-width: 650px;
-    color: #806b78;
-    margin: 0;
+
+.match-wrap .match-detail-hero h1 span {
+    color: #981c4d;
 }
-.match-wrap .match-detail-hero-score {
-    padding: 18px 19px;
+
+.match-detail-score-group {
+    grid-area: 1 / 2 / span 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    min-width: 0;
+    gap: 14px;
+    padding: 6px 8px;
+}
+
+.match-wrap .match-detail-id,
+.match-wrap .match-detail-status {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    max-width: 100%;
+    padding: 8px 12px;
+    border-radius: 9px;
+    font-size: 13px;
+    line-height: 1.4;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    box-shadow: 0 6px 16px rgb(70 27 48 / 13%);
+    rotate: -5deg;
+}
+
+.match-wrap .match-detail-id {
+    justify-self: start;
+    rotate: -6deg;
+    transform-origin: left center;
     border: 1px solid #eddce5;
     background: #fff;
-    border-radius: 16px;
-    min-width: 0;
+    color: #850c2d;
+    font-weight: 750;
 }
-.match-wrap .match-detail-score-value {
+
+.match-wrap .match-detail-status {
+    justify-self: end;
+    transform-origin: right center;
+}
+
+.match-detail-score-group svg {
+    width: 15px;
+    height: 15px;
+    flex: none;
+}
+
+.match-wrap .match-detail-hero-score {
+    min-width: 0;
+    margin-inline: 12px;
+    padding: 16px 18px;
+    border: 1px solid #eddce5;
+    border-radius: 13px;
+    background: #fff;
+    box-shadow: 0 8px 22px rgb(70 27 48 / 9%);
+}
+
+.match-detail-score-value {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 12px;
-}
-.match-wrap .match-detail-score-value span {
+    gap: 8px;
+    margin-bottom: 6px;
+    color: #695460;
     font-size: 12px;
-    color: #806d79;
     font-weight: 650;
 }
-.match-wrap .match-detail-score-value strong {
+
+.match-detail-score-value strong {
     color: #8d1945;
-    font-size: clamp(27px, 2.8vw, 36px);
-    letter-spacing: -1px;
+    font-size: clamp(25px, 2.5vw, 32px);
     line-height: 1;
-    font-weight: 850;
     font-variant-numeric: tabular-nums;
 }
+
 .match-wrap .match-detail-hero-score .match-score-track {
-    height: 8px;
-    margin: 0 0 12px;
+    height: 6px;
+    margin: 0 0 5px;
 }
+
 .match-wrap .match-detail-hero-score > p {
-    font-size: 11.5px;
-    line-height: 1.65;
-    color: #8a7681;
     margin: 0;
+    color: #695460;
+    font-size: 11px;
+    line-height: 1.45;
 }
-.match-wrap .match-detail-hero + .match-flash { margin-top: 0; }
+
+.match-wrap .match-detail-hero > .match-section-heading {
+    margin: 0;
+    text-align: start;
+}
+
+@media (min-width: 851px) {
+    .match-wrap .match-detail-hero > .match-section-heading {
+        position: relative;
+        inset-block-start: 44px;
+    }
+}
+
+.match-wrap .match-detail-hero + .match-flash {
+    margin-top: 0;
+}
+
 @media (max-width: 850px) {
-    .match-wrap .match-detail-hero { grid-template-columns: minmax(0, 1fr); gap: 17px; }
-    .match-wrap .match-detail-hero-score { width: 100%; }
+    .match-wrap .match-detail-hero {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto;
+        row-gap: 12px;
+    }
+
+    .match-detail-score-group {
+        grid-area: auto;
+        box-sizing: border-box;
+        width: min(100%, 350px);
+        justify-self: center;
+    }
 }
-@media (max-width: 580px) {
-    .match-wrap .match-detail-hero { padding: 20px 17px; border-radius: 17px; margin-top: 14px; }
-    .match-wrap .match-detail-hero h1 { font-size: 26px; letter-spacing: -.6px; }
-    .match-wrap .match-detail-intro { font-size: 13px; }
-    .match-wrap .match-detail-hero-score { padding: 16px; }
+
+@media (max-width: 680px) {
+    .match-wrap .match-detail-hero-main {
+        padding-top: 4px;
+    }
+
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .match-wrap .match-detail-hero-score {
+        animation: match-score-float 6.4s ease-in-out infinite alternate;
+        transition: transform 250ms ease, box-shadow 250ms ease;
+    }
+
+    .match-wrap :is(.match-detail-id, .match-detail-status) {
+        animation: match-badge-float 4.8s ease-in-out infinite alternate;
+        transition: rotate 200ms ease, scale 200ms ease, box-shadow 200ms ease;
+    }
+
+    .match-wrap .match-detail-status {
+        animation-delay: -2.4s;
+    }
+}
+
+@keyframes match-badge-float {
+    from { translate: 0 -3px; }
+    to { translate: 0 3px; }
+}
+
+@keyframes match-score-float {
+    from { translate: 0 -2px; }
+    to { translate: 0 2px; }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .match-wrap .match-detail-hero-score:hover {
+        animation-play-state: paused;
+        transform: translateY(-3px) scale(1.015);
+        box-shadow: 0 12px 24px rgb(70 27 48 / 15%);
+    }
+
+    .match-wrap :is(.match-detail-id, .match-detail-status):hover {
+        animation-play-state: paused;
+        rotate: -2deg;
+        scale: 1.04;
+        box-shadow: 0 10px 20px rgb(70 27 48 / 19%);
+    }
 }
 
 /* Header alignment fix 2026-11-11 — matching index only; no impact on matching detail. */
@@ -2244,4 +2357,47 @@
     .match-wrap .match-review-actions {
         grid-template-columns: minmax(0, 1fr);
     }
+}
+
+.match-wrap .match-photo-field {
+    min-width: 0;
+}
+
+.match-wrap .match-photo-field .match-image-link {
+    box-sizing: border-box;
+    max-width: 100%;
+    min-height: 24px;
+    margin: 0;
+    padding: 0 !important;
+    gap: 6px;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    line-height: 1.35;
+    white-space: normal;
+}
+
+.match-wrap .match-photo-field .match-image-link:hover {
+    text-decoration: underline;
+}
+
+@media (pointer: coarse) {
+    .match-wrap .match-photo-field .match-image-link {
+        min-height: 44px;
+    }
+}
+
+.match-photo-field .match-image-link span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.match-photo-empty {
+    color: #765f6b;
+    font-weight: 500;
+}
+
+.match-wrap .match-details .match-description {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
 }

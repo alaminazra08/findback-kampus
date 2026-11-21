@@ -64,7 +64,7 @@
                                 </span>
                                 <span class="fs-report-download-option-copy">
                                     <strong>PDF Informasi TV Fakultas</strong>
-                                    <small>Format 9:16 · Tampilan layar informasi</small>
+                                    <small>Format 16:9 · Tampilan layar informasi</small>
                                 </span>
                                 <svg class="fs-report-download-option-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg>
                             </a>

@@ -4,18 +4,17 @@
 <head>
     <meta charset="utf-8">
     <title>Laporan Admin</title>
-    <link rel="stylesheet"
-        href="{{ 'file:///' . ltrim(str_replace('\\', '/', public_path('css/pages/admin/statistics/pdf.css')), '/') }}">
-    <link rel="stylesheet"
-        href="{{ 'file:///' . ltrim(str_replace('\\', '/', public_path('css/shared/view-utilities.css')), '/') }}">
+    <style>{!! file_get_contents(public_path('css/pages/admin/statistics/pdf.css')) !!}</style>
 </head>
 
 <body>
     <header class="header">
-        <div class="eyebrow">{{ $settings['site_name'] }} / ADMINISTRASI</div>
+        <table class="letterhead"><tr>
+            <td class="logo"><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/logo-findback.png'))) }}" alt="FindBack Kampus"></td>
+            <td><strong>{{ $settings['site_name'] }}</strong><br>{{ $settings['institution_name'] }}</td>
+        </tr></table>
         <h1>Laporan &amp; Statistik</h1>
-        <div>{{ $settings['institution_name'] }}</div>
-        <p class="muted">Periode: {{ $periodLabel }} &nbsp; | &nbsp; Dibuat {{ $generatedAt->format('d/m/Y H:i') }} WIB
+        <p class="muted">Periode: {{ $periodRange ?? $periodLabel }} &nbsp; | &nbsp; Dibuat {{ $generatedAt->format('d/m/Y H:i') }} WIB
             &nbsp; | &nbsp; {{ auth()->user()->name }}</p>
     </header>
     <table class="summary">
@@ -76,19 +75,19 @@
     <table class="data">
         <thead>
             <tr>
-                <th class="fb-refactor fb-width-5">ID</th>
-                <th class="fb-refactor fb-width-22">Nama Barang</th>
-                <th class="fb-refactor fb-width-11">Jenis</th>
-                <th class="fb-refactor fb-width-15">Kategori</th>
-                <th class="fb-refactor fb-width-22">Lokasi</th>
-                <th class="fb-refactor fb-width-13">Status</th>
-                <th class="fb-refactor fb-width-12">Dilaporkan</th>
+                <th style="width: 12%">Kode Laporan</th>
+                <th style="width: 20%">Nama Barang</th>
+                <th style="width: 11%">Jenis</th>
+                <th style="width: 10%">Kategori</th>
+                <th style="width: 17%">Lokasi</th>
+                <th style="width: 17%">Status</th>
+                <th style="width: 13%">Dilaporkan</th>
             </tr>
         </thead>
         <tbody>
             @forelse($reports as $item)
                 <tr>
-                    <td>{{ $item->id }}</td>
+                    <td>{{ \App\Support\WorkflowStatus::code((int) $item->id) }}</td>
                     <td>{{ $item->title }}</td>
                     <td>{{ $item->type === 'found' ? 'Ditemukan' : 'Hilang' }}</td>
                     <td>{{ $item->category ?: '-' }}</td>

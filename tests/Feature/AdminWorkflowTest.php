@@ -149,6 +149,26 @@ class AdminWorkflowTest extends TestCase
         $this->actingAs($b)->patch(route('admin.notifications.read', $n->id))->assertNotFound();
     }
 
+    public function test_returned_report_notification_opens_item_detail_in_all_entry_points(): void
+    {
+        $admin = $this->user('admin');
+        $item = $this->item(['status' => 'pending']);
+        $admin->notify(new AdminMessageNotification('Arsip laporan uji', 'Menunggu verifikasi.', 'reports', $item->id));
+        $notification = $admin->notifications()->where('data', 'like', '%Arsip laporan uji%')->firstOrFail();
+
+        $this->actingAs($admin)
+            ->patch(route('admin.notifications.read', $notification->id))
+            ->assertRedirect(route('admin.reports.verification.show', $item));
+
+        $item->update(['status' => 'returned']);
+        $destination = route('admin.items.show', $item);
+
+        $this->patchJson(route('admin.notifications.read', $notification->id))
+            ->assertOk()->assertJsonPath('destination', $destination);
+        $this->get(route('admin.notifications.feed'))->assertOk()->assertSee($destination);
+        $this->get(route('admin.notifications.index'))->assertOk()->assertSee($destination);
+    }
+
     public function test_report_chat_and_paginated_read_receipts_do_not_leak(): void
     {
         $admin = $this->user('admin');

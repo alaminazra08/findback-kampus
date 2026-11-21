@@ -50,8 +50,8 @@
                         class="fb-notif-item {{ $notification->read_at ? '' : 'is-unread' }}">
                         <span class="fb-notif-dot" aria-hidden="true"></span>
                         <div class="fb-notif-content">
-                            <strong>{{ $notification->data['title'] ?? 'Pemberitahuan FindBack' }}</strong>
-                            <p>{{ $notification->data['message'] ?? 'Ada pembaruan baru.' }}</p>
+                            <strong>{{ \App\Support\WorkflowStatus::notificationText($notification->data['title'] ?? 'Pemberitahuan FindBack') }}</strong>
+                            <p>{{ \App\Support\WorkflowStatus::notificationText($notification->data['message'] ?? 'Ada pembaruan baru.') }}</p>
                             <time
                                 datetime="{{ $notification->created_at->toIso8601String() }}">{{ $notification->created_at->diffForHumans() }}</time>
                         </div>
@@ -59,12 +59,12 @@
                             <form method="POST" action="{{ route('admin.notifications.read', $notification->id) }}">
                                 @csrf @method('PATCH')
                                 <button class="fb-notif-action" type="submit"
-                                    aria-label="Baca dan buka: {{ $notification->data['title'] ?? 'Notifikasi' }}">Buka</button>
+                                    aria-label="Baca dan buka: {{ \App\Support\WorkflowStatus::notificationText($notification->data['title'] ?? 'Notifikasi') }}">Buka</button>
                             </form>
                         @else
                             <a class="fb-notif-action"
                                 href="{{ $links[$notification->id] }}"
-                                aria-label="Buka kembali: {{ $notification->data['title'] ?? 'Notifikasi' }}">Buka</a>
+                                aria-label="Buka kembali: {{ \App\Support\WorkflowStatus::notificationText($notification->data['title'] ?? 'Notifikasi') }}">Buka</a>
                         @endif
                     </li>
                 @endforeach

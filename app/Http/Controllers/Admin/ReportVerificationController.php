@@ -101,7 +101,7 @@ class ReportVerificationController extends Controller
             'reviewer:id,name,email',
             'revisions' => fn ($q) => $q->latest('id'),
         ]);
-        $history = \App\Support\ReportAudit::history($item);
+        $history = \App\Support\ItemJourney::forItem($item);
         $decision = \App\Models\ReportAuditEvent::where('lost_found_item_id', $item->id)
             ->whereIn('event', ['verified', 'rejected'])
             ->latest('id')

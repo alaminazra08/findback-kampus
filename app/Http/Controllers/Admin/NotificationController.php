@@ -192,10 +192,10 @@ class NotificationController extends Controller
 
         $existing = [];
         foreach ($idsByCategory as $category => $ids) {
-            $existing[$category] = array_fill_keys(
-                self::destinationRecords($category)->whereKey(array_unique($ids))->pluck('id')->all(),
-                true,
-            );
+            $records = self::destinationRecords($category)->whereKey(array_unique($ids));
+            $existing[$category] = $category === 'reports'
+                ? $records->pluck('status', 'id')->all()
+                : array_fill_keys($records->pluck('id')->all(), true);
         }
 
         $links = [];
@@ -211,6 +211,18 @@ class NotificationController extends Controller
         $data = $notification->data ?? [];
         $category = $data['category'] ?? null;
         $id = (int) ($data['record_id'] ?? 0);
+        if ($category === 'reports') {
+            $status = $existing === null && $id
+                ? self::destinationRecords($category)->whereKey($id)->value('status')
+                : ($existing[$category][$id] ?? null);
+
+            return match ($status) {
+                null => route('admin.items.index'),
+                'claimed', 'returned' => route('admin.items.show', $id),
+                default => route('admin.reports.verification.show', $id),
+            };
+        }
+
         if (is_string($category) && isset(self::DESTINATIONS[$category])) {
             [$detail, $fallback] = self::DESTINATIONS[$category];
             $exists = $id && ($existing === null

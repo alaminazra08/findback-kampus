@@ -263,7 +263,7 @@ a.nf-pg:hover{border-color:var(--w);color:var(--w);background:var(--w-soft)}
                             <div class="nf-body">
                                 <div class="nf-line">
                                     <div class="nf-title">
-                                        <h3>{{ $notification->data['title'] ?? 'Pemberitahuan' }}</h3>
+                                        <h3>{{ \App\Support\WorkflowStatus::notificationText($notification->data['title'] ?? 'Pemberitahuan') }}</h3>
                                         <span class="nf-badge">{{ $badgeOf[$tone] }}</span>
                                         @if ($isUnread)<span class="nf-dot" title="Belum dibaca"></span>@endif
                                     </div>
@@ -272,7 +272,7 @@ a.nf-pg:hover{border-color:var(--w);color:var(--w);background:var(--w-soft)}
                                         {{ $notification->created_at->locale('id')->diffForHumans() }}
                                     </time>
                                 </div>
-                                <p>{{ $notification->data['message'] ?? '' }}</p>
+                                <p>{{ \App\Support\WorkflowStatus::notificationText($notification->data['message'] ?? '') }}</p>
                                 <div class="nf-act">
                                     <a class="nf-pill" href="{{ $href }}">Lihat aktivitas</a>
                                     @if ($isUnread)

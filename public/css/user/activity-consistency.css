@@ -1,0 +1,69 @@
+.fb-activity-page .fb-activity-tabs a {
+    min-width: 0;
+}
+
+.fb-activity-page .fb-activity-action-cell .fb-report-view {
+    margin: 3px 2px;
+}
+
+.fb-activity-page .fb-activity-track {
+    font-weight: 700;
+}
+
+#fb-report-timeline-title {
+    scroll-margin-top: 130px;
+}
+
+@media (max-width: 600px) {
+    .fb-activity-page .fb-activity-tabs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .fb-activity-page .fb-activity-tabs a {
+        justify-content: center;
+        padding-inline: 6px;
+        text-align: center;
+        white-space: normal;
+    }
+
+    .fb-activity-page .fb-activity-action-cell .fb-report-view {
+        min-height: 44px;
+        white-space: normal;
+    }
+
+    .fb-activity-page .ucx-card .ucx-progress {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.fb-claim-list-filter select {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid #ead6df;
+    border-radius: 14px;
+    background: #fff;
+    color: #35111f;
+    font: inherit;
+}
+
+.fb-claim-user-detail-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 20px;
+    overflow-wrap: anywhere;
+}
+
+.fb-claim-user-back {
+    display: inline-block;
+    margin-top: 20px;
+}
+
+@media (max-width: 760px) {
+    .fb-claim-user-detail-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

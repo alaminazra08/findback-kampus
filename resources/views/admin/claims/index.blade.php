@@ -51,29 +51,7 @@
             <span class="fb-claim-count">{{ $claims->total() }} hasil</span>
         </div>
 
-        <nav class="fb-claim-tabs" aria-label="Filter cepat pengajuan klaim">
-            @if (request('evidence') !== 'open')
-            <span class="fb-claim-tab is-active" aria-current="page">Semua Klaim</span>@else<a class="fb-claim-tab"
-                    href="{{ route('admin.claims.index') }}">Semua Klaim</a>
-            @endif
-            @if (request('evidence') === 'open')
-            <span class="fb-claim-tab is-active" aria-current="page">Menunggu Bukti Tambahan</span>@else<a
-                    class="fb-claim-tab" href="{{ route('admin.claims.index', ['evidence' => 'open']) }}">Menunggu Bukti
-                    Tambahan</a>
-            @endif
-        </nav>
-        <p class="fb-claim-filter-note">
-            @if (request('evidence') === 'open')
-                Hanya menampilkan klaim dengan permintaan bukti tambahan yang masih terbuka. Klaim lainnya tidak terhapus.
-            @else
-                Menampilkan seluruh pengajuan dan riwayat keputusan klaim. Gunakan tab Menunggu Bukti Tambahan untuk
-                memantau permintaan aktif.
-            @endif
-        </p>
         <form class="fb-claim-filters" method="GET" action="{{ route('admin.claims.index') }}">
-            @if (request('evidence') === 'open')
-                <input type="hidden" name="evidence" value="open">
-            @endif
             <input type="search" name="search" maxlength="100" value="{{ request('search') }}"
                 placeholder="Cari barang, pengaju, lokasi, atau ID klaim..." aria-label="Cari pengajuan klaim" spellcheck="false" autocorrect="off" autocapitalize="off">
             <select name="status" aria-label="Status klaim">
@@ -136,10 +114,7 @@
                                     @endif
                                     <div class="fb-claim-item-copy">
                                         <strong>{{ $claim->item?->title ?? 'Barang tidak tersedia' }}</strong>
-                                        <small>K{{ $claim->id }} @if ($claim->awaiting_evidence)
-                                                <span> · Menunggu Bukti Tambahan</span>
-                                            @endif
-                                        </small>
+                                        <small>K{{ $claim->id }}</small>
                                     </div>
                                 </div>
                             </td>
@@ -150,7 +125,7 @@
                                     class="fb-claim-status status-{{ $claim->status }}">{{ \App\Support\WorkflowStatus::claims()[$claim->status] ?? $claim->status }}</span>
                             </td>
                             <td><div class="fb-claim-actions">
-                                <a class="fb-claim-detail-link" href="{{ route('admin.claims.show', $claim) }}">Periksa</a>
+                                @include('admin.partials.detail-action', ['detailUrl' => route('admin.claims.show', $claim)])
                                 @if ($claim->status === 'approved')
                                     <a class="fb-claim-chat-count" href="{{ route('admin.claims.show', ['claim' => $claim->id, 'chat' => 1]) }}"
                                         data-fb-claim-chat-count="{{ $claim->id }}" hidden></a>
@@ -161,24 +136,16 @@
                     @empty
                         <tr>
                             <td colspan="6">
-                                @if (request('evidence') === 'open')
+                                @if (request()->filled('search') || request()->filled('status'))
                                     <div class="fb-claim-empty" role="status"><span
-                                            aria-hidden="true">â—‡</span><strong>Tidak ada permintaan bukti tambahan yang
-                                            aktif</strong>
-                                        <p>Saat ini tidak ada klaim yang sedang menunggu kelengkapan bukti. Klaim lain tetap
-                                            tersedia di daftar Semua Klaim.</p><a class="fb-claim-empty-action"
-                                            href="{{ route('admin.claims.index') }}">Lihat Semua Klaim</a>
-                                    </div>
-                                @elseif(request()->filled('search') || request()->filled('status'))
-                                    <div class="fb-claim-empty" role="status"><span
-                                            aria-hidden="true">â—‡</span><strong>Tidak ada klaim yang sesuai filter</strong>
+                                            aria-hidden="true">&#9671;</span><strong>Tidak ada klaim yang sesuai filter</strong>
                                         <p>Coba ubah kata pencarian atau pilihan status untuk melihat pengajuan lainnya.</p>
                                         <a class="fb-claim-empty-action" href="{{ route('admin.claims.index') }}">Hapus
                                             Filter</a>
                                     </div>
                                 @else
                                     <div class="fb-claim-empty" role="status"><span
-                                            aria-hidden="true">â—‡</span><strong>Belum ada pengajuan klaim</strong>
+                                            aria-hidden="true">&#9671;</span><strong>Belum ada pengajuan klaim</strong>
                                         <p>Pengajuan akan muncul setelah pengguna mengirimkan klaim melalui sistem.</p>
                                     </div>
                                 @endif

@@ -32,11 +32,6 @@ class ClaimHandoverService
                     ->lockForUpdate()
                     ->findOrFail($claim->lost_found_item_id);
                 $lockedClaim = ItemClaim::query()->lockForUpdate()->findOrFail($claim->id);
-                if ($lockedClaim->evidenceRequests()->whereNull('closed_at')->exists()) {
-                    throw ValidationException::withMessages([
-                        'return' => 'Klaim masih menunggu bukti tambahan.',
-                    ]);
-                }
                 if ($lockedClaim->status !== 'approved') {
                     throw ValidationException::withMessages([
                         'return' => 'Klaim sudah diproses. Serah terima tidak dapat diulang.',

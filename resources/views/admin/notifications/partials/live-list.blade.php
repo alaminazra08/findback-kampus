@@ -29,8 +29,8 @@
                         @php
                             $kind = $notification->display_category;
                             $isUnread = $notification->read_at === null;
-                            $title = $notification->data['title'] ?? 'Pemberitahuan FindBack';
-                            $message = $notification->data['message'] ?? 'Ada pembaruan baru.';
+                            $title = \App\Support\WorkflowStatus::notificationText($notification->data['title'] ?? 'Pemberitahuan FindBack');
+                            $message = \App\Support\WorkflowStatus::notificationText($notification->data['message'] ?? 'Ada pembaruan baru.');
                         @endphp
                         <article class="fb-notif-center-row {{ $isUnread ? 'is-unread' : '' }}"
                             data-fb-notification-id="{{ $notification->id }}"
@@ -61,26 +61,10 @@
                                     @if ($isUnread)
                                         <form method="POST" action="{{ route('admin.notifications.read', $notification->id) }}">
                                             @csrf @method('PATCH')
-                                            <button class="fb-notif-detail-link" type="submit">
-                                                <span class="fb-notif-detail-icon" aria-hidden="true">
-                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                                        <path d="M2.1 12a10.8 10.8 0 0 1 19.8 0 10.8 10.8 0 0 1-19.8 0Z"/>
-                                                        <circle cx="12" cy="12" r="3"/>
-                                                    </svg>
-                                                </span>
-                                                <span>Lihat Detail</span>
-                                            </button>
+                                            @include('admin.partials.detail-action', ['detailUrl' => null])
                                         </form>
                                     @else
-                                        <a class="fb-notif-detail-link" href="{{ $readLinks[$notification->id] ?? route('admin.dashboard') }}">
-                                            <span class="fb-notif-detail-icon" aria-hidden="true">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                                    <path d="M2.1 12a10.8 10.8 0 0 1 19.8 0 10.8 10.8 0 0 1-19.8 0Z"/>
-                                                    <circle cx="12" cy="12" r="3"/>
-                                                </svg>
-                                            </span>
-                                            <span>Lihat Detail</span>
-                                        </a>
+                                        @include('admin.partials.detail-action', ['detailUrl' => $readLinks[$notification->id] ?? route('admin.dashboard')])
                                     @endif
                                 </div>
                             </div>

@@ -1,0 +1,143 @@
+.fb-v-detail-grid.fb-v-single-card {
+    grid-template-columns: minmax(0, 1fr) !important;
+}
+
+.fb-v-card-body {
+    display: grid;
+    gap: clamp(16px, 2vw, 26px);
+    align-items: start;
+}
+
+.fb-v-card-body.has-photo {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+}
+
+.fb-v-main-photo {
+    display: grid;
+    justify-items: center;
+    align-content: start;
+    gap: 10px;
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid #eedee4;
+    border-radius: 14px;
+    background: #fbf7f9;
+    color: #850c2d;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.fb-v-main-photo img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: clamp(180px, 32vh, 250px);
+    border-radius: 10px;
+    object-fit: contain;
+}
+
+.fb-v-main-photo span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.fb-v-main-photo svg {
+    width: 16px;
+    height: 16px;
+}
+
+.fb-v-main-photo:focus-visible {
+    outline: 2px solid #850c2d;
+    outline-offset: 3px;
+}
+
+.fb-v-card-facts {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.fb-v-card-facts .fb-v-description {
+    margin-top: 16px;
+    text-align: left;
+}
+
+.fb-v-card-facts .fb-v-description h3 {
+    margin: 0 0 6px;
+    color: #35111f;
+    font-size: 16px;
+    font-weight: 650;
+}
+
+.fb-v-card-facts .fb-v-description p {
+    margin: 0;
+    color: #48333c;
+    font-size: 16px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.fb-v-detail-panel > .fb-v-card-decision {
+    position: static;
+    margin: clamp(14px, 2vw, 20px) 0 0;
+    padding: clamp(14px, 2vw, 18px) 0 0;
+    border: 0;
+    border-top: 1px solid #ecdce3;
+    border-radius: 0 !important;
+    background: transparent;
+    box-shadow: none !important;
+}
+
+@media (max-width: 760px) {
+    .fb-v-card-body.has-photo {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .fb-v-card-decision > .fb-review-actions {
+        flex-direction: column;
+    }
+
+    .fb-v-card-decision > .fb-review-actions > [data-review-tone="rejected"] {
+        order: 0;
+    }
+}
+
+.fb-item-single-card .fb-items-panel-head {
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.fb-item-card-facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 24px;
+    margin: 0;
+}
+
+.fb-item-card-facts dt {
+    color: #725d68;
+    font-size: .8125rem;
+}
+
+.fb-item-card-facts dd {
+    margin: 6px 0 0;
+    color: #35111f;
+    font-weight: 700;
+}
+
+.fb-item-single-card .fb-v-description {
+    border-top: 1px solid #ecdce3;
+    padding-top: 12px;
+}
+
+.fb-item-single-card > .fb-items-readonly {
+    margin: 18px 0 0;
+}
+
+@media (max-width: 480px) {
+    .fb-item-card-facts {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

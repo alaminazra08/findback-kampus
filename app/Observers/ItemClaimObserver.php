@@ -15,7 +15,7 @@ class ItemClaimObserver implements ShouldHandleEventsAfterCommit
             AdminAlerts::send(
                 'claims',
                 'Pengajuan klaim baru',
-                "Klaim #{$record->id} untuk barang " . WorkflowStatus::code((int) $record->lost_found_item_id) . " menunggu pemeriksaan.",
+                "Klaim K{$record->id} untuk barang " . WorkflowStatus::code((int) $record->lost_found_item_id) . " menunggu pemeriksaan.",
                 $record->id,
                 [
                     'status_key' => $record->status,
@@ -40,7 +40,7 @@ class ItemClaimObserver implements ShouldHandleEventsAfterCommit
         AdminAlerts::send(
             'claims',
             'Status klaim diperbarui',
-            "Klaim #{$record->id} untuk barang {$itemCode}: status terbaru {$newLabel}.",
+            "Klaim K{$record->id} untuk barang {$itemCode}: status terbaru {$newLabel}.",
             (int) $record->id,
             [
                 'status_key' => $newStatus,

@@ -443,21 +443,7 @@
 
                                 <div class="fb-v15-actions">
 
-                                    <a class="fb-items-view fb-v16-detail" href="{{ route('admin.items.show', $item) }}"
-
-                                        aria-label="Lihat detail barang {{ $item->title }}"><svg viewBox="0 0 24 24"
-
-                                            width="15" height="15" fill="none" stroke="currentColor"
-
-                                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
-
-                                            aria-hidden="true">
-
-                                            <path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12Z" />
-
-                                            <circle cx="12" cy="12" r="3" />
-
-                                        </svg><span>Lihat Detail</span></a>
+                                    @include('admin.partials.detail-action', ['detailUrl' => route('admin.items.show', $item)])
 
                                 </div>
 

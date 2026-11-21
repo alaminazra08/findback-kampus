@@ -108,7 +108,8 @@ class ClaimHandoverTest extends TestCase
         $this->get(route('admin.claims.show', $claim))
             ->assertOk()
             ->assertSee($claim->handover_code)
-            ->assertSee('Unduh Tanda Terima PDF');
+            ->assertSee('Ringkasan Serah Terima')
+            ->assertSee('Unduh PDF');
         $pdf = $this->get(route('admin.claims.handover.pdf', $claim))
             ->assertOk()
             ->assertDownload()

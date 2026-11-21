@@ -136,16 +136,26 @@ class StatisticsController extends Controller
             '365' => '365 hari',
             'all' => 'Semua data',
         ][$period];
-        return Pdf::loadView('admin.statistics.pdf', $data)
+        $since = $this->reports->since($period);
+        $data['periodRange'] = $since
+            ? $since->timezone('Asia/Jakarta')->format('d/m/Y') . ' – ' . $data['generatedAt']->format('d/m/Y')
+            : null;
+
+        $pdf = Pdf::loadView('admin.statistics.pdf', $data)
             ->setPaper('a4', 'landscape')
             ->setOptions([
                 'isRemoteEnabled' => false,
                 'defaultFont' => 'DejaVu Sans',
                 'chroot' => public_path(),
-            ])
-            ->download(
-                'findback-laporan-admin-' . $period . '-' . now()->format('Ymd-His') . '.pdf',
-            );
+            ]);
+        $pdf->render();
+        $document = $pdf->getDomPDF();
+        $document->getCanvas()->page_text(
+            715, 568, 'Halaman {PAGE_NUM} / {PAGE_COUNT}',
+            $document->getFontMetrics()->getFont('DejaVu Sans'), 8, [0.35, 0.27, 0.31],
+        );
+
+        return $pdf->download('findback-laporan-admin-' . $period . '-' . now()->format('Ymd-His') . '.pdf');
     }
 
     public function downloadBoard(Request $request)
@@ -173,15 +183,11 @@ class StatisticsController extends Controller
                 ->whereIn('found.status', ['claimed', 'returned']);
         });
         $items = $query
-            ->select(['id', 'title', 'type', 'location', 'category', 'event_date', 'photo_path'])
+            ->select(['id', 'title', 'type', 'location', 'event_date'])
             ->orderByDesc('created_at')
             ->orderByDesc('id')
             ->get();
-        $items->transform(function ($item) {
-            $item->photoData = $this->localPhoto($item->photo_path);
-            return $item;
-        });
-        $pages = $items->chunk(4)->values();
+        $pages = $items->chunk(3)->values();
         if ($pages->isEmpty()) {
             $pages = collect([collect()]);
         }
@@ -198,35 +204,13 @@ class StatisticsController extends Controller
                 'all' => 'Semua data',
             ][$period],
         ])
-            ->setPaper([0, 0, 607.5, 1080])
+            ->setPaper([0, 0, 1080, 607.5])
             ->setOptions([
                 'isRemoteEnabled' => false,
                 'defaultFont' => 'DejaVu Sans',
                 'chroot' => public_path(),
             ])
             ->download('findback-papan-informasi-tv-' . now()->format('Ymd-His') . '.pdf');
-    }
-
-    private function localPhoto(?string $path): ?string
-    {
-        if (!$path) {
-            return null;
-        }
-        $root = realpath(storage_path('app/public'));
-        $file = $root ? realpath($root . DIRECTORY_SEPARATOR . ltrim($path, '/\\')) : false;
-        if (
-            !$file ||
-            !str_starts_with($file, $root . DIRECTORY_SEPARATOR) ||
-            !is_file($file) ||
-            filesize($file) > 8 * 1024 * 1024
-        ) {
-            return null;
-        }
-        $mime = (new \finfo(FILEINFO_MIME_TYPE))->file($file);
-        if (!in_array($mime, ['image/jpeg', 'image/png', 'image/gif'], true)) {
-            return null;
-        }
-        return 'data:' . $mime . ';base64,' . base64_encode(file_get_contents($file));
     }
 
     private function period(Request $request): string

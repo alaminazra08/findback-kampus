@@ -1,59 +1,41 @@
-
-<section class="fb-cycle-history" aria-label="Riwayat verifikasi laporan">
-
-    {{-- Header riwayat --}}
-    <div class="fb-history-heading">
-        <div class="fb-history-icon">
-            <svg viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="1.8"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="m12 3 9 5-9 5-9-5 9-5z"/>
-                <path d="m3 12 9 5 9-5"/>
-                <path d="m3 16 9 5 9-5"/>
-            </svg>
-        </div>
-
-        <div>
-            <h2>Riwayat Verifikasi Laporan</h2>
-            <p>Perkembangan proses pemeriksaan laporanmu.</p>
-        </div>
-    </div>
-
-    {{-- Daftar riwayat --}}
-    <ol>
-        @forelse($history as $event)
-            <li>
-                <div class="fb-history-event">
-
-                    <div class="fb-history-event-icon">
-                        <svg viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="1.8"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                            <path d="M14 2v6h6M8 13h8M8 17h8"/>
-                        </svg>
-                    </div>
-
-                    <div class="fb-history-event-content">
-                        <strong>{{ $event['title'] }}</strong>
-
-                        <small>
-                            {{ $event['at']->timezone('Asia/Jakarta')->format('d M Y, H:i') }}
-                            WIB · {{ $event['actor'] }}
-                        </small>
-
-                        @if ($event['detail'])
-                            <p>{{ $event['detail'] }}</p>
-                        @endif
-                    </div>
-
+<section class="fb-report-timeline {{ $historyClass ?? '' }}" aria-labelledby="fb-report-timeline-title" data-live-report-history>
+    <header>
+        <h2 id="fb-report-timeline-title"> {{ $historyTitle ?? 'Riwayat Verifikasi Laporan' }}</h2>
+        <p>{{ $historyDescription ?? 'Aktivitas laporan yang tercatat.' }}</p>
+    </header>
+    <ol role="list">
+        @forelse ($history->reverse() as $event)
+            @php
+                $at = $event['at']->copy()->timezone('Asia/Jakarta')->locale('id');
+                $kind = $event['kind'] ?? '';
+                $resubmitted = $event['title'] === 'Perbaikan dikirim ulang oleh pelapor';
+                $detailLabel = match (true) {
+                    $kind === 'rejected' => 'Alasan penolakan',
+                    $resubmitted => 'Catatan pelapor',
+                    default => null,
+                };
+            @endphp
+            <li class="fb-report-timeline-entry" data-event="{{ $resubmitted ? 'resubmitted' : $kind }}">
+                <time datetime="{{ $at->toIso8601String() }}">
+                    <span>{{ $at->translatedFormat('d M Y') }}</span>
+                    <span>{{ $at->format('H:i') }} WIB</span>
+                </time>
+                <span class="fb-report-timeline-marker" aria-hidden="true"></span>
+                <div class="fb-report-timeline-copy">
+                    <strong>{{ $kind === 'verified' ? 'Laporan disetujui' : $event['title'] }}</strong>
+                    @if (filled($event['actor']) || !empty($event['context']))
+                        <small>{{ implode(' · ', array_filter([$event['actor'], $event['context'] ?? null])) }}</small>
+                    @endif
+                    @if ($event['detail'])
+                        <p>@if ($detailLabel)<b>{{ $detailLabel }}</b> @endif{{ $event['detail'] }}</p>
+                    @endif
                 </div>
             </li>
         @empty
-            <li class="fb-history-empty">
-                Belum ada peristiwa tercatat.
-            </li>
+            <li>Belum ada aktivitas yang tercatat.</li>
         @endforelse
     </ol>
-
+    @if (!empty($historyNotice))
+        <p class="fb-report-timeline-notice">{{ $historyNotice }}</p>
+    @endif
 </section>

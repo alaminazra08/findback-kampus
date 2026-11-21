@@ -49,6 +49,19 @@ final class WorkflowStatus
         return self::matches()[$status] ?? ($status ?: 'Status tidak tersedia');
     }
 
+    public static function notificationText(string $text): string
+    {
+        return preg_replace_callback(
+            '/\b(Klaim|Laporan|Barang|Kandidat|Pengguna|Pengajuan)\s*#\s*(\d+)\b/iu',
+            static fn (array $match): string => $match[1] . ' ' . match (strtolower($match[1])) {
+                'klaim' => 'K' . $match[2],
+                'laporan', 'barang' => self::code((int) $match[2]),
+                default => $match[2],
+            },
+            $text,
+        );
+    }
+
     public static function code(int $id): string
     {
         return 'BRG-' . str_pad((string) $id, 4, '0', STR_PAD_LEFT);

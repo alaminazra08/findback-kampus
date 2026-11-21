@@ -87,3 +87,16 @@ tr {
     color: #7a6874;
     margin-top: 12pt;
 }
+
+.letterhead { border-collapse: collapse; }
+.letterhead td { vertical-align: middle; }
+.letterhead .logo { width: 40pt; }
+.letterhead img { width: 32pt; height: 32pt; }
+.header { padding-bottom: 5pt; }
+.header .muted { margin: 4pt 0; }
+.summary { margin: 7pt 0; }
+.summary td { padding: 5pt 8pt; }
+.summary strong { font-size: 17pt; }
+h2 { margin: 10pt 0 4pt; }
+table.data th, table.data td { padding: 4pt 6pt; }
+table.data tbody tr:nth-child(even) td { background: #faf4f7; }

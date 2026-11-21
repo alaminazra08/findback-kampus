@@ -69,7 +69,12 @@ class MatchingController extends Controller
     public function show(ItemMatch $match): View
     {
         $match->load(['lostItem.reporter', 'foundItem.reporter', 'reviewer']);
-        return view('admin.matching.show', ['match' => $this->withCurrentScore($match)]);
+        $history = \App\Support\ItemJourney::forMatch($match);
+
+        return view('admin.matching.show', [
+            'match' => $this->withCurrentScore($match),
+            'history' => $history,
+        ]);
     }
 
     /**

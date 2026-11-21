@@ -23,6 +23,7 @@ class ClaimController extends Controller
         // even when the request comes from native GET, AJAX, or a copied URL.
         $query = $request->query();
         $canonicalQuery = $query;
+        unset($canonicalQuery['evidence']);
 
         foreach (['search', 'status'] as $key) {
             if (array_key_exists($key, $canonicalQuery) &&
@@ -38,7 +39,6 @@ class ClaimController extends Controller
         $filters = $request->validate([
             'search' => ['nullable', 'string', 'max:100'],
             'status' => ['nullable', 'in:pending,approved,rejected,returned'],
-            'evidence' => ['nullable', 'in:open'],
         ]);
 
         $query = ItemClaim::query()->with([
@@ -46,12 +46,6 @@ class ClaimController extends Controller
             'claimant:id,name,email',
         ]);
 
-        $query->withExists([
-            'evidenceRequests as awaiting_evidence' => fn ($q) => $q->whereNull('closed_at'),
-        ]);
-        if (($filters['evidence'] ?? null) === 'open') {
-            $query->whereHas('evidenceRequests', fn ($q) => $q->whereNull('closed_at'));
-        }
         $search = trim($filters['search'] ?? '');
         if ($search !== '') {
             $query->where(function ($q) use ($search): void {
@@ -101,7 +95,6 @@ class ClaimController extends Controller
             'claimant:id,name,email,role',
             'reviewer:id,name,email',
             'handoverOfficer:id,name',
-            'evidenceRequests' => fn ($q) => $q->latest('id'),
         ]);
 
         $claimMessages = collect();
@@ -117,7 +110,11 @@ class ClaimController extends Controller
                 ->values();
         }
 
-        return view('admin.claims.show', compact('claim', 'claimMessages'));
+        $history = $claim->item
+            ? \App\Support\ItemJourney::forItem($claim->item, $claim)
+            : \App\Support\ClaimHistory::forClaim($claim);
+
+        return view('admin.claims.show', compact('claim', 'claimMessages', 'history'));
     }
 
     public function review(Request $request, ItemClaim $claim): RedirectResponse
@@ -139,11 +136,6 @@ class ClaimController extends Controller
             $item = LostFoundItem::query()->lockForUpdate()->findOrFail($itemId);
             $lockedClaim = ItemClaim::query()->lockForUpdate()->findOrFail($claim->id);
 
-            if ($lockedClaim->evidenceRequests()->whereNull('closed_at')->exists()) {
-                throw ValidationException::withMessages([
-                    'decision' => 'Klaim masih menunggu bukti tambahan.',
-                ]);
-            }
             if ($lockedClaim->status !== 'pending') {
                 throw ValidationException::withMessages([
                     'decision' => 'Klaim ini sudah diproses sebelumnya.',
@@ -260,82 +252,6 @@ class ClaimController extends Controller
                 'X-Content-Type-Options' => 'nosniff',
                 'Cache-Control' => 'private, no-store',
             ],
-        );
-    }
-
-    public function requestEvidence(Request $request, ItemClaim $claim): RedirectResponse
-    {
-        $data = $request->validate(['note' => ['required', 'string', 'min:10', 'max:2000']]);
-        DB::transaction(function () use ($request, $claim, $data) {
-            $item = LostFoundItem::lockForUpdate()->findOrFail($claim->lost_found_item_id);
-            $locked = ItemClaim::lockForUpdate()->findOrFail($claim->id);
-            if (
-                $locked->status !== 'pending' ||
-                $item->type !== 'found' ||
-                $item->status !== 'verified' ||
-                !$locked->claimant ||
-                $locked->evidenceRequests()->whereNull('closed_at')->exists() ||
-                ItemClaim::where('lost_found_item_id', $item->id)
-                    ->whereIn('status', ['approved', 'returned'])
-                    ->exists()
-            ) {
-                throw ValidationException::withMessages([
-                    'note' =>
-                        'Permintaan hanya untuk klaim menunggu pada barang terverifikasi, tanpa permintaan terbuka atau klaim lain yang disetujui.',
-                ]);
-            }
-            $locked->evidenceRequests()->create([
-                'requested_by' => $request->user()->id,
-                'requester_name' => $request->user()->name,
-                'note' => $data['note'],
-            ]);
-            $locked->claimant->notify(
-                new \App\Notifications\ClaimEvidenceRequestNotification($locked->id, $data['note']),
-            );
-        }, 3);
-        return back()->with(
-            'success',
-            'Permintaan bukti tambahan dan notifikasi pengaju telah tersimpan.',
-        );
-    }
-
-    public function cancelEvidence(Request $request, ItemClaim $claim): RedirectResponse
-    {
-        $data = $request->validate([
-            'request_id' => ['required', 'integer'],
-            'closure_note' => ['required', 'string', 'min:10', 'max:2000'],
-        ]);
-        DB::transaction(function () use ($request, $claim, $data) {
-            LostFoundItem::lockForUpdate()->findOrFail($claim->lost_found_item_id);
-            $locked = ItemClaim::lockForUpdate()->findOrFail($claim->id);
-            $entry = $locked
-                ->evidenceRequests()
-                ->whereKey($data['request_id'])
-                ->whereNull('closed_at')
-                ->first();
-            if ($locked->status !== 'pending' || !$entry) {
-                throw ValidationException::withMessages([
-                    'closure_note' => 'Permintaan tidak aktif. Muat ulang halaman.',
-                ]);
-            }
-            $entry->update([
-                'closed_at' => now(),
-                'closed_by' => $request->user()->id,
-                'closer_name' => $request->user()->name,
-                'closure_type' => 'cancelled',
-                'closure_note' => $data['closure_note'],
-            ]);
-            $locked->claimant?->notify(
-                new \App\Notifications\ClaimEvidenceRequestNotification(
-                    $locked->id,
-                    $data['closure_note'],
-                    true,
-                ),
-            );
-        }, 3);
-        return back()->with(
-            'success',
-            'Permintaan dibatalkan dengan alasan tercatat. Klaim tetap menunggu pemeriksaan.',
         );
     }
 }

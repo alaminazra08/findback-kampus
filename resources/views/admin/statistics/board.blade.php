@@ -1,67 +1,45 @@
 <!doctype html>
 <html lang="id">
-
 <head>
     <meta charset="utf-8">
     <title>Papan Informasi FindBack</title>
-    <link rel="stylesheet"
-        href="{{ 'file:///' . ltrim(str_replace('\\', '/', public_path('css/pages/admin/statistics/board.css')), '/') }}">
-    <link rel="stylesheet"
-        href="{{ 'file:///' . ltrim(str_replace('\\', '/', public_path('css/shared/view-utilities.css')), '/') }}">
-<!-- FINDBACK_TYPOGRAPHY_V1 -->
-<link rel="stylesheet" href="{{ asset('css/shared/typography.css') }}">
+    <style>{!! file_get_contents(public_path('css/pages/admin/statistics/board.css')) !!}</style>
 </head>
-
 <body>
-    @foreach ($pages as $pageIndex => $items)
-        <section class="page {{ $loop->last ? 'last' : '' }}">
+    @php($logo = 'data:image/png;base64,' . base64_encode(file_get_contents(public_path('images/logo-findback.png'))))
+    @foreach ($pages as $items)
+        <section class="slide {{ $loop->last ? 'last' : '' }}">
             <header class="header">
-                <p class="brand">{{ mb_strtoupper(mb_strimwidth($settings['site_name'], 0, 35, '...')) }}</p>
-                <h1>BARANG HILANG<br>&amp; DITEMUKAN</h1>
-                <p class="institution">{{ mb_strimwidth($settings['institution_name'], 0, 70, '...') }}</p>
+                <table><tr>
+                    <td class="logo"><img src="{{ $logo }}" alt="FindBack Kampus"></td>
+                    <td><strong>FindBack Kampus</strong><br>{{ $settings['site_name'] }}</td>
+                </tr></table>
+                <h1>Barang Hilang &amp; Ditemukan</h1>
+                <p>Terakhir diperbarui {{ $generatedAt->format('d/m/Y H:i') }} WIB · {{ $periodLabel }} · {{ $total }} laporan aktif</p>
             </header>
-            <div class="strip">INFORMASI TERVERIFIKASI &nbsp; | &nbsp; {{ $periodLabel }} &nbsp; | &nbsp;
-                {{ $total }} laporan aktif</div>
-            <div class="content">
-                @forelse($items as $item)
-                    <article class="card">
-                        <table>
-                            <tr>
-                                <td class="picture">
-                                    <div class="photo-frame">
-                                        @if ($item->photoData)
-                                        <img src="{{ $item->photoData }}" alt="Foto barang">@else<div
-                                                class="no-photo">FOTO BARANG<br>BELUM TERSEDIA</div>
-                                        @endif
-                                    </div>
-                                </td>
-                                <td class="details"><span
-                                        class="badge {{ $item->type === 'found' ? 'found' : '' }}">{{ $item->type === 'found' ? 'DITEMUKAN' : 'HILANG' }}</span>
-                                    <h2 class="title">{{ mb_strimwidth($item->title, 0, 36, '...') }}</h2>
-                                    <p class="meta"><strong>Lokasi:</strong>
-                                        {{ mb_strimwidth($item->location ?: 'Belum dicantumkan', 0, 34, '...') }}<br><strong>Tanggal:</strong>
-                                        {{ $item->event_date ? \Illuminate\Support\Carbon::parse($item->event_date)->format('d/m/Y') : 'Belum dicantumkan' }}
-                                    </p>
-                                    <p class="report-id">REFERENSI LAPORAN #{{ $item->id }}</p>
-                                </td>
-                            </tr>
-                        </table>
-                    </article>
-                @empty<div class="empty">
-                        <h2>Belum ada pengumuman<br>pada periode ini.</h2>
-                        <p>Kehilangan atau menemukan barang?<br>Laporkan melalui FindBack Kampus.</p>
-                    </div>
-                @endforelse
-            </div>
+            @if ($items->isNotEmpty())
+                <table class="cards"><tr>
+                    @foreach ($items as $item)
+                        <td class="card">
+                            <span class="badge {{ $item->type === 'found' ? 'found' : '' }}">{{ $item->type === 'found' ? 'DITEMUKAN' : 'HILANG' }}</span>
+                            <h2>{{ mb_strimwidth($item->title, 0, 45, '…') }}</h2>
+                            <p class="code">{{ \App\Support\WorkflowStatus::code((int) $item->id) }}</p>
+                            <p class="meta"><strong>Lokasi</strong><br>{{ mb_strimwidth($item->location ?: 'Belum dicantumkan', 0, 52, '…') }}</p>
+                            <p class="meta"><strong>Tanggal kejadian</strong><br>{{ $item->event_date ? \Illuminate\Support\Carbon::parse($item->event_date)->format('d/m/Y') : 'Belum dicantumkan' }}</p>
+                        </td>
+                    @endforeach
+                    @for ($slot = $items->count(); $slot < 3; $slot++)
+                        <td class="space"></td>
+                    @endfor
+                </tr></table>
+            @else
+                <div class="empty">Belum ada laporan aktif pada periode ini.</div>
+            @endif
             <footer class="footer">
-                <h2>Kenali barangmu? Hubungi petugas.</h2>
-                <p>Sebutkan nomor laporan dan siapkan bukti kepemilikan.<br>Lihat informasi selengkapnya melalui
-                    FindBack Kampus.</p>
-                <div class="update">Diperbarui {{ $generatedAt->format('d/m/Y H:i') }} WIB &nbsp; | &nbsp; Halaman
-                    {{ $pageIndex + 1 }}/{{ $pages->count() }}</div>
+                <strong>Kenali barang ini? Hubungi petugas fakultas dan sebutkan kode BRG.</strong>
+                <span>{{ $loop->iteration }} / {{ $loop->count }}</span>
             </footer>
         </section>
     @endforeach
 </body>
-
 </html>

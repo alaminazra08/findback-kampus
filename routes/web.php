@@ -163,13 +163,10 @@ Route::get('/klaim-saya', [MyClaimController::class, 'index'])
     ->middleware(['auth', 'role:user'])
     ->name('user.claims.index');
 
-Route::post('/klaim-saya/{claim}/bukti-tambahan', [
-    \App\Http\Controllers\User\ClaimEvidenceResponseController::class,
-    'update',
-])
+Route::get('/klaim-saya/{claim}', [MyClaimController::class, 'show'])
     ->whereNumber('claim')
-    ->middleware(['auth', 'role:user', 'throttle:6,1'])
-    ->name('user.claims.evidence-response');
+    ->middleware(['auth', 'role:user'])
+    ->name('user.claims.show');
 
 // ============================================================
 // 05. ADMIN ROUTES
@@ -280,18 +277,6 @@ Route::middleware(['auth', 'role:admin', 'admin-tab'])
         Route::get('/claims', [AdminClaimController::class, 'index'])->name('claims.index');
 
         Route::get('/claims/{claim}', [AdminClaimController::class, 'show'])->name('claims.show');
-
-        // Permintaan bukti tambahan
-        Route::post('/claims/{claim}/evidence-request', [
-            AdminClaimController::class,
-            'requestEvidence',
-        ])->name('claims.evidence-request');
-
-        // Pembatalan permintaan bukti
-        Route::post('/claims/{claim}/evidence-request/cancel', [
-            AdminClaimController::class,
-            'cancelEvidence',
-        ])->name('claims.evidence-request.cancel');
 
         // Persetujuan atau penolakan klaim
         Route::post('/claims/{claim}/review', [AdminClaimController::class, 'review'])

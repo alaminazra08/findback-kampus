@@ -295,3 +295,36 @@
         --fb-heading-action-width: 100%;
     }
 }
+
+.fb-admin-detail-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    min-height: 42px;
+    padding: .5rem .85rem;
+    border: 1px solid #ebcbd8;
+    border-radius: .65rem;
+    background: #fff;
+    color: #840c36;
+    font: inherit;
+    font-size: .875rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.fb-admin-detail-action:hover {
+    background: #fbf0f5;
+    border-color: #b45b80;
+}
+
+.fb-admin-detail-action:focus-visible {
+    outline: 2px solid #840c36;
+    outline-offset: 2px;
+}
+
+.fb-admin-detail-action svg {
+    flex: none;
+}

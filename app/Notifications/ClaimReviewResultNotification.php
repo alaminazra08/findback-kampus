@@ -27,10 +27,10 @@ class ClaimReviewResultNotification extends Notification
             'title' => $this->status === 'approved' ? 'Klaim disetujui' : 'Klaim ditolak',
             'message' =>
                 $this->status === 'approved'
-                    ? 'Klaim #' .
+                    ? 'Klaim K' .
                         $this->claimId .
                         ' telah disetujui. Tunggu jadwal serah terima dari Admin.'
-                    : 'Klaim #' .
+                    : 'Klaim K' .
                         $this->claimId .
                         ' ditolak. ' .
                         ($this->reason ?: 'Periksa status klaim.'),

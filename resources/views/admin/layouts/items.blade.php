@@ -52,10 +52,14 @@
     <link rel="stylesheet"
         href="{{ asset('css/shared/view-utilities.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('css/shared/confirmation-modal-v14.css') }}?v=15">
-    <script src="{{ asset('js/shared/confirmation-modal-v14.js') }}?v=15" defer></script>
+    <link rel="stylesheet" href="{{ asset('css/shared/confirmation-modal-v14.css') }}?v=16">
+    <script src="{{ asset('js/shared/confirmation-modal-v14.js') }}?v=16" defer></script>
+    <script src="{{ asset('js/admin/claim-rejection-dialog.js') }}?v=1" defer></script>
     <script src="{{ asset('js/shared/view-interactions.js') }}" defer></script>
+    <script src="{{ asset('js/report-history-live.js') }}?v=1" defer></script>
     @yield('page-styles')
+    <link rel="stylesheet" href="{{ asset('css/admin/modal-scrollbar.css') }}?v=1">
+    <script src="{{ asset('js/admin/modal-scrollbar.js') }}?v=1" defer></script>
     <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
     <!-- FINDBACK_UI_TEXT_KONSISTEN_V1 -->
     <link rel="stylesheet" href="{{ asset('css/shared/ui-text-consistency.css') }}?v=1">
@@ -64,7 +68,7 @@
 <link rel="stylesheet" href="{{ asset('css/shared/typography.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/notification-toast.css') }}?v=6">
     <link rel="stylesheet" href="{{ asset('css/admin/work-page-heading.css') }}?v=1">
-    <link rel="stylesheet" href="{{ asset('css/admin/design-system.css') }}?v=8">
+    <link rel="stylesheet" href="{{ asset('css/admin/design-system.css') }}?v=9">
     {{-- FINDBACK: hide native search clear controls consistently on all admin pages --}}
     <link rel="stylesheet" href="{{ asset('css/admin/search-input-consistency.css') }}?v=20261120-3">
 </head>

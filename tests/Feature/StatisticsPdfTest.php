@@ -31,7 +31,7 @@ class StatisticsPdfTest extends TestCase
         }
     }
 
-    public function test_real_pdf_downloads_and_four_items_per_tv_page(): void
+    public function test_real_pdf_downloads_and_three_items_per_tv_page(): void
     {
         $this->actingAs($this->admin());
         foreach (
@@ -91,7 +91,7 @@ class StatisticsPdfTest extends TestCase
         }
     }
 
-    public function test_board_view_filters_nonpublic_and_reserved_items_and_local_paths(): void
+    public function test_board_view_filters_nonpublic_and_reserved_items(): void
     {
         $this->actingAs($this->admin());
         $visible = LostFoundItem::create([
@@ -130,10 +130,10 @@ class StatisticsPdfTest extends TestCase
         $this->get(route('admin.statistics.export.board'))->assertOk();
         $this->assertCount(1, $renderedItems);
         $this->assertEquals($visible->id, $renderedItems->first()->id);
-        $this->assertNull($renderedItems->first()->photoData);
+        $this->assertObjectNotHasProperty('photo_path', $renderedItems->first());
     }
 
-    public function test_local_jpeg_is_embedded_in_board_pdf(): void
+    public function test_board_pdf_embeds_logo_without_report_photo(): void
     {
         $dir = storage_path('app/public/pdf-test');
         if (!is_dir($dir)) {
@@ -150,6 +150,7 @@ class StatisticsPdfTest extends TestCase
             ]);
             $pdf = $this->actingAs($this->admin())->get(route('admin.statistics.export.board'));
             $pdf->assertOk()->assertDownload();
+            $this->assertStringNotContainsString('/DCTDecode', $pdf->getContent());
             $this->assertMatchesRegularExpression("/\/Subtype\s*\/Image/", $pdf->getContent());
         } finally {
             if (is_file($path)) {

@@ -1,111 +1,121 @@
 @page {
     size: A4 portrait;
-    margin: 36pt 44pt 36pt 44pt;
+    margin: 18mm 18mm 16mm;
 }
-* {
-    box-sizing: border-box;
-}
-html,
+
 body {
-    padding: 0;
     margin: 0;
-}
-body {
     font-family: "DejaVu Sans", sans-serif;
     font-size: 10pt;
+    line-height: 1.42;
     color: #34202e;
-    line-height: 1.48;
 }
-.brand {
+
+.letterhead {
+    width: 100%;
+    border-collapse: collapse;
+    border-bottom: 2pt solid #840c36;
+}
+
+.letterhead td {
+    vertical-align: middle;
+    padding-bottom: 7pt;
+}
+
+.letterhead-logo {
+    width: 19mm;
+}
+
+.letterhead-logo img {
+    display: block;
+    width: 15mm;
+    height: 15mm;
+}
+
+.institution {
     font-size: 9pt;
-    color: #8b2854;
-    letter-spacing: 0.7pt;
 }
-.header {
-    border-bottom: 2pt solid #7d1c47;
-    padding-bottom: 12pt;
-}
-h1 {
-    font-size: 21pt;
-    line-height: 1.2;
-    color: #651436;
-    margin: 5pt 0 6pt;
-}
-h2 {
+
+.institution strong {
     font-size: 11pt;
-    color: #7d1c47;
-    margin: 17pt 0 7pt;
+}
+
+h1 {
+    margin: 11pt 0 4pt;
+    color: #840c36;
+    text-align: center;
+    font-size: 18pt;
+    line-height: 1.2;
+}
+
+.code {
+    text-align: center;
+    font-size: 10pt;
+}
+
+.paragraph {
+    margin: 13pt 0 10pt;
+}
+
+h2 {
+    margin: 5mm 0 0;
+    padding: 4pt 9pt;
+    background: #840c36;
+    color: #fff;
+    font-size: 10pt;
     page-break-after: avoid;
 }
-.code {
-    background: #f8edf2;
-    padding: 11pt 13pt;
-    margin: 13pt 0;
-    font-size: 11pt;
-    font-weight: bold;
-}
-.facts {
+
+.facts,
+.signatures {
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
 }
-.facts tr {
-    page-break-inside: avoid;
-}
+
 .facts td {
-    padding: 7pt 0;
-    border-bottom: 0.6pt solid #eee2e8;
+    padding: 4pt 9pt;
+    border: .5pt solid #e5d7de;
     vertical-align: top;
     word-wrap: break-word;
-    overflow-wrap: break-word;
-    font-size: 9.5pt;
 }
+
 .facts td:first-child {
-    width: 39%;
-    color: #876c7c;
-    padding-right: 12pt;
+    width: 36%;
+    background: #f8f2f5;
 }
-.facts td:last-child {
-    width: 61%;
-    font-weight: bold;
-}
+
 .notes {
-    border: 0.7pt solid #e9dae2;
-    padding: 11pt 12pt;
+    border: .5pt solid #e5d7de;
+    padding: 8pt 9pt;
     white-space: pre-line;
-    font-size: 9.5pt;
     word-wrap: break-word;
-    line-height: 1.5;
 }
+
 .signatures {
-    width: 100%;
-    margin-top: 25pt;
+    margin-top: 15pt;
     text-align: center;
-    table-layout: fixed;
     page-break-inside: avoid;
-    word-wrap: break-word;
 }
+
 .signatures td {
     width: 50%;
     vertical-align: top;
-    font-size: 9pt;
-}
-.sign-name {
-    margin-top: 48pt;
     font-weight: bold;
-    text-decoration: underline;
+    word-wrap: break-word;
 }
+
+.sign-name {
+    margin: 23mm 16pt 0;
+    padding-top: 4pt;
+    border-top: .7pt solid #65525d;
+}
+
 .footer {
-    border-top: 0.7pt solid #e6d7df;
-    margin-top: 18pt;
-    padding-top: 9pt;
+    margin-top: 6mm;
+    padding-top: 7pt;
+    border-top: .7pt solid #840c36;
+    color: #65525d;
     font-size: 8pt;
-    line-height: 1.5;
-    color: #8b7482;
     page-break-inside: avoid;
-}
-.paragraph {
-    font-size: 9.5pt;
-    line-height: 1.55;
-    margin: 12pt 0 9pt;
 }

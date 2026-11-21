@@ -1,0 +1,17 @@
+html {
+    scrollbar-gutter: stable;
+}
+
+/* Release the browser gutter so the native backdrop can cover the viewport.
+   Keep its space in the document to preserve the underlying layout. */
+html:has(.fb-review-dialog:modal, .fb-proof-dialog:modal, #fb-claim-reject-dialog:modal, #fb-confirm-global-v14:modal) {
+    box-sizing: border-box;
+    overflow: hidden;
+    scrollbar-gutter: auto;
+    padding-right: var(--fb-admin-scrollbar-space, 0px);
+}
+
+#fb-confirm-global-v14[open],
+#fb-claim-reject-dialog[open] {
+    animation: none;
+}

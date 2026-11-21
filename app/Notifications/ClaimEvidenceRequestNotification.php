@@ -24,7 +24,7 @@ class ClaimEvidenceRequestNotification extends Notification
             'title' => $this->cancelled
                 ? 'Permintaan bukti dibatalkan'
                 : 'Bukti tambahan klaim diperlukan',
-            'message' => 'Klaim #' . $this->claimId . ': ' . $this->note,
+            'message' => 'Klaim K' . $this->claimId . ': ' . $this->note,
             'claim_id' => $this->claimId,
             'status' => $this->cancelled ? 'evidence_cancelled' : 'evidence_requested',
             'url' => '/dashboard',

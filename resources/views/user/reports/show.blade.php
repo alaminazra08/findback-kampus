@@ -5,6 +5,8 @@
 
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/report-cycle.css') }}?v=12">
+<script src="{{ asset('js/report-history-live.js') }}?v=1" defer></script>
+<link rel="stylesheet" href="{{ asset('css/report-history-timeline.css') }}?v=1">
 
 <div class="fb-detail-page">
 
@@ -14,7 +16,7 @@
         <span>›</span>
         <a href="{{ route('user.reports.index') }}">Riwayat Laporan</a>
         <span>›</span>
-        <strong>Laporan #{{ $report->id }}</strong>
+        <strong>Laporan {{ \App\Support\WorkflowStatus::code((int) $report->id) }}</strong>
     </nav>
 
     {{-- Header halaman --}}
@@ -42,7 +44,7 @@
 
             <div class="fb-detail-card-top">
                 <span class="fb-detail-number">
-                    Laporan #{{ $report->id }}
+                    Laporan {{ \App\Support\WorkflowStatus::code((int) $report->id) }}
                 </span>
 
                 @if ($report->status === 'pending' && $report->revisions->whereNull('closed_at')->isNotEmpty())
@@ -162,7 +164,10 @@
 
         {{-- Riwayat verifikasi --}}
         <div class="fb-detail-history">
-            @include('shared.report-history')
+            @include('shared.report-history', [
+                'historyTitle' => 'Lacak Laporan',
+                'historyDescription' => 'Riwayat aktivitas laporan Anda.',
+            ])
         </div>
 
     </div>

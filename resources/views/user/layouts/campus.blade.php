@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/user/campus.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/user/navbar-premium.css') }}?v=5">
-    @if (request()->routeIs('user.claims.index'))
+    @if (request()->routeIs('user.claims.show'))
     <link rel="stylesheet" href="{{ asset('css/user/user-claims.css') }}?v=4">
     @endif
     <link rel="stylesheet" href="{{ asset('css/shared/view-utilities.css') }}">
@@ -58,6 +58,9 @@
         <link rel="stylesheet" href="{{ asset('css/chat/findback-chat-compact.css') }}?v=7">
         <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
         @include('shared.chat-tools-style')
+    @endif
+    @if (request()->routeIs('user.reports.*', 'user.claims.*'))
+        <link rel="stylesheet" href="{{ asset('css/user/activity-consistency.css') }}?v=2">
     @endif
 </head>
 
@@ -167,7 +170,7 @@
                 {{-- AKTIVITAS SAYA --}}
 
                 <a
-                    class="{{ request()->routeIs('user.reports.index', 'user.claims.*') ? 'active' : '' }}"
+                    class="{{ request()->routeIs('user.reports.*', 'user.claims.*') ? 'active' : '' }}"
                     href="{{ route('user.reports.index') }}"
                 >
                     <svg class="fb-nav-icon" viewBox="0 0 24 24"

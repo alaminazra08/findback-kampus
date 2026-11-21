@@ -93,7 +93,7 @@
                 <div class="match-list-title">
                     <div>
                         <h2>Daftar Kandidat</h2>
-                        <p>Cari berdasarkan barang, lokasi, atau nomor pencocokan.</p>
+                        <p>Cari kandidat berdasarkan nama barang, lokasi, atau nomor pencocokan.</p>
                     </div>
                 </div>
                 <form class="match-filters" method="GET" action="{{ route('admin.matching.index') }}">
@@ -119,8 +119,6 @@
                     </a>
                 </form>
             </div>
-            <p class="match-guidance"> Persentase kemiripan merupakan skor sistem untuk membantu peninjauan, bukan keputusan
-                akhir kepemilikan. Konfirmasi kandidat tidak otomatis menyetujui klaim.</p>
             <div class="match-table-scroll">
                 <table class="match-table">
                     <thead>

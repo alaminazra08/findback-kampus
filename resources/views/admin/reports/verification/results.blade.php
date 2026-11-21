@@ -124,13 +124,7 @@
                             <td data-label="Status"><span
                                     class="fb-v-status {{ $revisionMode === 'history' ? 'status-revision' : 'status-pending' }}">{{ $revisionMode === 'history' ? 'Ditolak · Menunggu Perbaikan' : ($item->resubmitted ? 'Pemeriksaan Ulang' : 'Menunggu Verifikasi') }}</span>
                             </td>
-                            <td data-label="Aksi"><a class="fb-v-detail fb-v25-detail"
-                                    href="{{ route('admin.reports.verification.show', array_merge(request()->only(['search', 'type', 'page']), ['item' => $item, 'from' => $revisionMode === 'history' ? 'history' : 'queue'])) }}"><svg viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                                        stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z" />
-                                        <circle cx="12" cy="12" r="2.6" />
-                                    </svg><span>{{ $revisionMode === 'history' ? 'Lihat Penolakan' : 'Periksa Laporan' }}</span></a>
+                            <td data-label="Aksi">@include('admin.partials.detail-action', ['detailUrl' => route('admin.reports.verification.show', array_merge(request()->only(['search', 'type', 'page']), ['item' => $item, 'from' => $revisionMode === 'history' ? 'history' : 'queue']))])
                             </td>
                         </tr>
                     @empty<tr>

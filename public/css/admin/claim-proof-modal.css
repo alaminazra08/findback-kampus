@@ -1,4 +1,4 @@
-:is(#fb-proof-dialog, #fb-match-photo-dialog) {
+:is(#fb-proof-dialog, #fb-item-photo-dialog, #fb-match-photo-dialog) {
     --proof-viewport: var(--fb-viewport-height, 100dvh);
     --proof-gutter: clamp(8px, 2vw, 20px);
     box-sizing: border-box;
@@ -15,23 +15,23 @@
     box-shadow: 0 24px 70px rgb(33 6 20 / 26%);
 }
 
-html:has(:is(#fb-proof-dialog, #fb-match-photo-dialog)[open]) {
+html:has(:is(#fb-proof-dialog, #fb-item-photo-dialog, #fb-match-photo-dialog)[open]) {
     overflow: hidden;
 }
 
-:is(#fb-proof-dialog, #fb-match-photo-dialog)::backdrop {
+:is(#fb-proof-dialog, #fb-item-photo-dialog, #fb-match-photo-dialog)::backdrop {
     background: rgb(26 10 20 / 72%);
     backdrop-filter: blur(5px);
 }
 
-:is(#fb-proof-dialog, #fb-match-photo-dialog) .fb-proof-shell {
+:is(#fb-proof-dialog, #fb-item-photo-dialog, #fb-match-photo-dialog) .fb-proof-shell {
     display: grid;
     grid-template-rows: auto minmax(0, 1fr);
     height: min(720px, calc(var(--proof-viewport) - 2 * var(--proof-gutter)));
     max-height: none;
 }
 
-:is(#fb-proof-dialog, #fb-match-photo-dialog) .fb-proof-head {
+:is(#fb-proof-dialog, #fb-item-photo-dialog, #fb-match-photo-dialog) .fb-proof-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -40,7 +40,7 @@ html:has(:is(#fb-proof-dialog, #fb-match-photo-dialog)[open]) {
     border-bottom: 1px solid #f1e2e7;
 }
 
-:is(#fb-proof-title, #fb-match-photo-title) {
+:is(#fb-proof-dialog, #fb-item-photo-dialog, #fb-match-photo-dialog) .fb-proof-head h2 {
     min-width: 0;
     margin: 0;
     font-size: clamp(14px, 2vw, 18px);
@@ -54,7 +54,7 @@ html:has(:is(#fb-proof-dialog, #fb-match-photo-dialog)[open]) {
     gap: 6px;
 }
 
-:is(#fb-proof-dialog, #fb-match-photo-dialog) :is(.fb-proof-close, .fb-proof-download) {
+:is(#fb-proof-dialog, #fb-item-photo-dialog, #fb-match-photo-dialog) :is(.fb-proof-close, .fb-proof-download) {
     box-sizing: border-box;
     display: grid;
     place-items: center;
@@ -68,16 +68,16 @@ html:has(:is(#fb-proof-dialog, #fb-match-photo-dialog)[open]) {
     cursor: pointer;
 }
 
-:is(#fb-proof-dialog, #fb-match-photo-dialog) :is(.fb-proof-close, .fb-proof-download):hover {
+:is(#fb-proof-dialog, #fb-item-photo-dialog, #fb-match-photo-dialog) :is(.fb-proof-close, .fb-proof-download):hover {
     background: #fff0f5;
 }
 
-:is(#fb-proof-dialog, #fb-match-photo-dialog) .fb-proof-actions svg {
+:is(#fb-proof-dialog, #fb-item-photo-dialog, #fb-match-photo-dialog) .fb-proof-actions svg {
     width: 19px;
     height: 19px;
 }
 
-:is(#fb-proof-dialog, #fb-match-photo-dialog) .fb-proof-content {
+:is(#fb-proof-dialog, #fb-item-photo-dialog, #fb-match-photo-dialog) .fb-proof-content {
     display: grid;
     grid-template: minmax(0, 1fr) / minmax(0, 1fr);
     overflow: hidden;
@@ -85,7 +85,7 @@ html:has(:is(#fb-proof-dialog, #fb-match-photo-dialog)[open]) {
     background: #faf7f9;
 }
 
-:is(#fb-proof-dialog, #fb-match-photo-dialog) :is(.fb-proof-image, .fb-proof-document) {
+:is(#fb-proof-dialog, #fb-item-photo-dialog, #fb-match-photo-dialog) :is(.fb-proof-image, .fb-proof-document) {
     display: block;
     width: 100%;
     height: 100%;
@@ -95,18 +95,18 @@ html:has(:is(#fb-proof-dialog, #fb-match-photo-dialog)[open]) {
     object-fit: contain;
 }
 
-:is(#fb-proof-dialog, #fb-match-photo-dialog):has(.fb-proof-image) .fb-proof-shell {
+:is(#fb-proof-dialog, #fb-item-photo-dialog, #fb-match-photo-dialog):has(.fb-proof-image) .fb-proof-shell {
     height: auto;
 }
 
-:is(#fb-proof-dialog, #fb-match-photo-dialog):has(.fb-proof-image) .fb-proof-content {
+:is(#fb-proof-dialog, #fb-item-photo-dialog, #fb-match-photo-dialog):has(.fb-proof-image) .fb-proof-content {
     --proof-image-gap: clamp(6px, 1vw, 10px);
     display: flex;
     justify-content: center;
     padding: var(--proof-image-gap);
 }
 
-:is(#fb-proof-dialog, #fb-match-photo-dialog) .fb-proof-image {
+:is(#fb-proof-dialog, #fb-item-photo-dialog, #fb-match-photo-dialog) .fb-proof-image {
     flex: none;
     width: auto;
     height: auto;

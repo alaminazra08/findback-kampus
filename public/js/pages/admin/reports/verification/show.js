@@ -1,39 +1,28 @@
 (() => {
-    function mount() {
-        var wrap = document.getElementById("fb-v27-choice");
-        if (!wrap || wrap.dataset.fbReviewReady) return;
-        wrap.dataset.fbReviewReady = '1';
-        var radios = Array.prototype.slice.call(wrap.querySelectorAll('input[name="fb_v27_choice"]'));
-        var panels = Array.prototype.slice.call(wrap.querySelectorAll("[data-fb-v27-panel]"));
-        function activate(value) {
-            radios.forEach(function (r) {
-                r.checked = r.value === value;
-            });
-            panels.forEach(function (p) {
-                var on = p.getAttribute("data-fb-v27-panel") === value;
-                p.hidden = !on;
-                var fields = p.querySelectorAll("textarea");
-                fields.forEach(function (f) {
-                    f.required = on;
-                    f.disabled = !on;
-                });
-            });
+    function reopenAfterValidation() {
+        const dialog = document.querySelector('.fb-review-dialog[data-review-reopen]');
+        if (dialog) {
+            dialog.removeAttribute('data-review-reopen');
+            dialog.showModal();
         }
-        radios.forEach(function (r) {
-            r.addEventListener("change", function () {
-                activate(r.value);
-            });
-        });
-        var initial = wrap.getAttribute("data-default") || "verified";
-        if (
-            !radios.some(function (r) {
-                return r.value === initial;
-            })
-        )
-            initial = "verified";
-        activate(initial);
     }
 
-    document.addEventListener('fb:admin-page', mount);
-    mount();
+    document.addEventListener('click', (event) => {
+        const opener = event.target.closest('[data-review-open]');
+        if (opener) {
+            const dialog = document.getElementById(opener.dataset.reviewOpen);
+            if (dialog && !dialog.open) {
+                dialog.addEventListener('close', () => opener.focus({ preventScroll: true }), { once: true });
+                dialog.showModal();
+            }
+        }
+
+        const closer = event.target.closest('[data-review-close]');
+        if (closer) {
+            closer.closest('dialog').close();
+        }
+    });
+
+    document.addEventListener('fb:admin-page', reopenAfterValidation);
+    reopenAfterValidation();
 })();

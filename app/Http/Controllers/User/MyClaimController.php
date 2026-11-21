@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\ItemClaim;
+use App\Support\ClaimHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -46,6 +48,7 @@ class MyClaimController extends Controller
                 'claims.reviewed_at',
                 'claims.returned_at',
                 'items.title as item_title',
+                'items.type as item_type',
                 'items.category',
                 'items.location',
                 'items.photo_path as item_photo',
@@ -70,12 +73,6 @@ class MyClaimController extends Controller
 
         $claims = $query->orderByDesc('claims.created_at')->paginate(5)->withQueryString();
 
-        $openEvidenceRequests = \App\Models\ClaimEvidenceRequest::query()
-            ->whereIn('item_claim_id', $claims->pluck('id')->all())
-            ->whereNull('closed_at')
-            ->get()
-            ->keyBy('item_claim_id');
-
         return view(
             'user.claims.index',
             compact(
@@ -86,8 +83,16 @@ class MyClaimController extends Controller
                 'approvedClaims',
                 'rejectedClaims',
                 'returnedClaims',
-                'openEvidenceRequests',
             ),
         );
+    }
+    public function show(Request $request, ItemClaim $claim): View
+    {
+        abort_unless((int) $claim->user_id === (int) $request->user()->id, 404);
+
+        $claim->load(['item', 'claimant', 'reviewer', 'handoverOfficer']);
+        $history = ClaimHistory::forClaim($claim);
+
+        return view('user.claims.show', compact('claim', 'history'));
     }
 }

@@ -4,6 +4,7 @@
 @section('breadcrumb', 'Pencocokan Barang')
 
 @section('page-styles')
+    <link rel="stylesheet" href="{{ asset('css/admin/verification-actions-history.css') }}?v=4">
     <link rel="stylesheet" href="{{ asset('css/admin/admin-matching.css') }}?v=46">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/detail-back.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/claim-proof-modal.css') }}?v=16">
@@ -167,44 +168,53 @@
                     <path d="M12 11v5M12 8h.01" />
                 </svg><span>Kemiripan bukan bukti kepemilikan. Konfirmasi hanya menandai pasangan sebagai kandidat yang
                     dinilai cocok; tidak mengubah status barang dan tidak menyelesaikan proses klaim.</span></p>
-            @if ($match->status === 'rejected' && str_contains((string) $match->match_reason, '; Alasan penolakan admin:'))
-                <p class="match-meta">Alasan penolakan admin: {{ trim(explode('; Alasan penolakan admin:', $match->match_reason, 2)[1]) }}</p>
-            @endif
-            @if ($match->reviewed_at)
-                <p class="match-meta"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
-                        stroke-width="1.8" stroke-linecap="round">
-                        <circle cx="12" cy="12" r="9" />
-                        <path d="M12 7v5l3 2" />
-                    </svg><span>Diperiksa oleh {{ $match->reviewer?->name ?? 'Admin' }} pada
-                        {{ $match->reviewed_at->format('d/m/Y H:i') }}</span></p>
-            @endif
             @if ($match->status === 'pending')
-                <div class="match-review-actions">
-                    <form method="POST" action="{{ route('admin.matching.review', $match) }}"
-                        data-confirm="Konfirmasi pasangan pencocokan ini?" data-confirm-event="submit">
-                        @csrf <input type="hidden" name="action" value="confirm">
-                        <button type="submit" class="match-button">Konfirmasi Pencocokan</button>
-                    </form>
-                    <details class="match-rejection-details" @if ($errors->has('rejection_reason') || old('action') === 'reject') open @endif>
-                        <summary class="match-button danger">Tolak Kandidat</summary>
-                    <form method="POST" action="{{ route('admin.matching.review', $match) }}"
-                        data-confirm="Tolak kandidat pencocokan ini?" data-confirm-event="submit">
-                        @csrf <input type="hidden" name="action" value="reject">
-                        <label for="fb49-reject-reason" class="match-rejection-label">Alasan penolakan kandidat <span
-                                class="match-required-mark" aria-hidden="true">*</span></label>
-                        <textarea id="fb49-reject-reason" name="rejection_reason" required minlength="5" maxlength="1000" rows="3"
-                            class="match-rejection-textarea" placeholder="Jelaskan mengapa pasangan ini tidak cocok">{{ old('rejection_reason') }}</textarea>
-                        @error('rejection_reason')
-                            <p role="alert" class="fb-refactor fb-validation-error">{{ $message }}</p>
-                        @enderror
-
-                        <button type="submit" class="match-button danger">Kirim Penolakan</button>
-                    </form>
-                    </details>
+                <div class="fb-match-review">
+                    <div class="fb-review-actions">
+                        @foreach (['confirm' => 'Konfirmasi Pencocokan', 'reject' => 'Tolak Kandidat'] as $action => $label)
+                            @php($tone = $action === 'confirm' ? 'verified' : 'rejected')
+                            <button type="button" class="fb-review-button" data-review-tone="{{ $tone }}"
+                                data-review-open="fb-match-review-{{ $action }}" aria-haspopup="dialog"
+                                aria-controls="fb-match-review-{{ $action }}">
+                                @include('admin.reports.verification.event-icon', ['kind' => $tone])
+                                {{ $label }}
+                            </button>
+                            <dialog id="fb-match-review-{{ $action }}" class="fb-review-dialog"
+                                aria-labelledby="fb-match-review-title-{{ $action }}"
+                                @if (old('action') === $action || ($action === 'reject' && $errors->has('rejection_reason'))) data-review-reopen @endif>
+                                <form method="POST" action="{{ route('admin.matching.review', $match) }}">
+                                    @csrf
+                                    <input type="hidden" name="action" value="{{ $action }}">
+                                    <h2 id="fb-match-review-title-{{ $action }}">{{ $action === 'confirm' ? 'Konfirmasi pencocokan?' : 'Tolak kandidat?' }}</h2>
+                                    @if ($action === 'reject')
+                                        <p id="fb-match-reject-hint">Jelaskan mengapa pasangan ini tidak cocok (minimal 5 karakter).</p>
+                                        <label for="fb-match-reject-reason">Alasan penolakan kandidat <span class="fb-review-required" aria-hidden="true">*</span></label>
+                                        <textarea id="fb-match-reject-reason" name="rejection_reason" required minlength="5"
+                                            maxlength="1000" rows="4"
+                                            aria-describedby="fb-match-reject-hint @error('rejection_reason') fb-match-reject-error @enderror"
+                                            @error('rejection_reason') aria-invalid="true" @enderror>{{ old('rejection_reason') }}</textarea>
+                                        @error('rejection_reason')
+                                            <p id="fb-match-reject-error" role="alert">{{ $message }}</p>
+                                        @enderror
+                                    @else
+                                        <p>Pasangan laporan ini akan ditandai sebagai kandidat yang dinilai cocok.</p>
+                                    @endif
+                                    <div class="fb-review-actions">
+                                        <button type="button" class="fb-review-button" data-review-close autofocus>Batal</button>
+                                        <button type="submit" class="fb-review-button" data-review-tone="{{ $tone }}">
+                                            @include('admin.reports.verification.event-icon', ['kind' => $tone])
+                                            {{ $label }}
+                                        </button>
+                                    </div>
+                                </form>
+                            </dialog>
+                        @endforeach
+                    </div>
                 </div>
             @endif
         </section>
     </div>
+    <footer class="fb-footer">© {{ date('Y') }} FindBack Kampus · Fakultas Sains dan Teknologi</footer>
     <dialog id="fb-match-photo-dialog" class="fb-proof-dialog" aria-labelledby="fb-match-photo-title">
         <div class="fb-proof-shell">
             <header class="fb-proof-head">

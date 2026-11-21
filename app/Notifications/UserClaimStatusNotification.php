@@ -23,7 +23,7 @@ class UserClaimStatusNotification extends Notification
         return [
             'title' => $this->status === 'approved' ? 'Klaim disetujui' : 'Klaim ditolak',
             'message' =>
-                'Klaim #' .
+                'Klaim K' .
                 $this->claimId .
                 ($this->status === 'approved'
                     ? ' telah disetujui. Hubungi admin untuk mengatur serah terima.'

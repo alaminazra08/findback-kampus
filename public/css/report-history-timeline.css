@@ -1,0 +1,110 @@
+.fb-report-timeline {
+    box-sizing: border-box;
+    min-width: 0;
+    padding: clamp(14px, 2vw, 24px);
+    border: 1px solid #ecdce3;
+    border-radius: 18px;
+    background: #fff;
+}
+
+.fb-report-timeline h2 {
+    margin: 0;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+}
+
+.fb-report-timeline header p {
+    margin: 6px 0 0;
+    color: #725d68;
+}
+
+.fb-report-timeline ol {
+    margin: 18px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.fb-report-timeline .fb-report-timeline-entry {
+    display: grid;
+    grid-template-columns: clamp(62px, 15vw, 90px) 10px minmax(0, 1fr);
+    gap: 0 clamp(8px, 2vw, 14px);
+    padding: 0 0 18px;
+    border: 0;
+}
+
+.fb-report-timeline .fb-report-timeline-entry:last-child {
+    padding-bottom: 0;
+}
+
+.fb-report-timeline time {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    font-size: .75rem;
+    line-height: 1.45;
+    color: #725d68;
+}
+
+.fb-report-timeline-marker {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    align-self: stretch;
+}
+
+.fb-report-timeline-marker::before {
+    z-index: 1;
+    content: "";
+    width: 8px;
+    height: 8px;
+    margin-top: 6px;
+    border-radius: 50%;
+    background: var(--report-event-color, #8d7885);
+}
+
+.fb-report-timeline-entry:not(:last-child) .fb-report-timeline-marker::after {
+    content: "";
+    position: absolute;
+    inset-block: 10px -24px;
+    width: 1px;
+    background: #e1cfd7;
+}
+
+.fb-report-timeline-entry[data-event="verified"] { --report-event-color: #15803d; }
+.fb-report-timeline-entry[data-event="rejected"] { --report-event-color: #dc2626; }
+.fb-report-timeline-entry[data-event="resubmitted"] { --report-event-color: #2563a6; }
+
+.fb-report-timeline-copy {
+    overflow-wrap: anywhere;
+}
+
+.fb-report-timeline-copy small {
+    display: block;
+    margin-top: 3px;
+    color: #725d68;
+}
+
+.fb-report-timeline-copy p {
+    margin: 5px 0 0;
+    white-space: pre-wrap;
+}
+
+.fb-report-timeline-copy b {
+    display: block;
+    font-size: .85em;
+}
+
+.fb-report-timeline-entry:is([data-event="approved"], [data-event="confirmed"], [data-event="returned"]) {
+    --report-event-color: #15803d;
+}
+
+.fb-report-timeline-entry[data-event="claim"] {
+    --report-event-color: #2563a6;
+}
+
+.fb-report-timeline-summary {
+    margin-top: clamp(16px, 2vw, 24px);
+}
+
+.fb-report-timeline-entry[data-event="awaiting_handover"] {
+    --report-event-color: #2563a6;
+}

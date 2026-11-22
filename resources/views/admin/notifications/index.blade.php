@@ -100,5 +100,4 @@
             </div>
         </section>
     </div>
-    <script src="{{ asset('js/admin/notification-stats-live.js') }}?v=7" defer></script>
 @endsection

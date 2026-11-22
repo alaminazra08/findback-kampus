@@ -8,33 +8,6 @@
     const button = form?.querySelector('button[type="submit"]');
     if (!form || !toast || !button) return;
     root.dataset.smartSaveReady = '1';
-    const panels = [...root.querySelectorAll('details[name="fb-settings-sections"]')];
-    const panelKey = 'findback.admin.settings.open-panel';
-    const panelId = (panel) => panel?.getAttribute('aria-labelledby') || '';
-    let storedPanel = null;
-    try {
-      storedPanel = sessionStorage.getItem(panelKey);
-    } catch {
-      // Storage may be unavailable in a restricted browser.
-    }
-
-    if (storedPanel === '') {
-      panels.forEach((panel) => { panel.open = false; });
-    } else {
-      const previous = panels.find((panel) => panelId(panel) === storedPanel);
-      if (previous) previous.open = true;
-    }
-
-    panels.forEach((panel) => {
-      panel.addEventListener('toggle', () => {
-        if (!root.isConnected) return;
-        try {
-          sessionStorage.setItem(panelKey, panelId(panels.find((item) => item.open)));
-        } catch {
-          // The accordion remains usable when storage is unavailable.
-        }
-      });
-    });
     const title = toast.querySelector('#fb-settings-toast-title');
     const message = toast.querySelector('#fb-settings-toast-message');
     const close = toast.querySelector('#fb-settings-toast-close');
@@ -49,31 +22,6 @@
     };
     form.addEventListener('input', updateState);
     form.addEventListener('change', updateState);
-    const preview = form.querySelector('.fb-brand-preview');
-    if (preview) {
-      const logo = preview.querySelector('[data-brand-preview-logo]');
-      const name = preview.querySelector('[data-brand-preview-name]');
-      const savedLogo = logo.src;
-      const fields = form.elements;
-      let objectUrl;
-      function updatePreview() {
-        const file = fields.brand_logo_upload.files[0];
-        if (objectUrl) URL.revokeObjectURL(objectUrl);
-        objectUrl = file ? URL.createObjectURL(file) : null;
-        logo.src = objectUrl || (fields.brand_logo_reset.checked ? logo.dataset.defaultLogo : savedLogo);
-        preview.style.setProperty('--preview-color', fields.brand_color_reset.checked ? '#8b1038' : fields.brand_color.value);
-        name.textContent = fields.site_name.value;
-        preview.querySelector('[data-brand-preview-heading]').textContent =
-          fields.home_heading.value.trim() || 'Barang Hilang? Temukan Kembali Bersama FindBack.';
-        preview.querySelector('[data-brand-preview-description]').textContent =
-          fields.site_description.value.trim();
-      }
-      fields.brand_color.addEventListener('input', () => {
-        fields.brand_color_reset.checked = false;
-      });
-      form.addEventListener('input', updatePreview);
-      updatePreview();
-    }
     let timeout;
     function dismiss() {
       toast.classList.remove('is-visible');

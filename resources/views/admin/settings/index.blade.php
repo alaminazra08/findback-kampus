@@ -5,14 +5,14 @@
 @section('breadcrumb', 'Pengaturan')
 
 @section('page-styles')
-    <link rel="stylesheet" href="{{ asset('css/admin/settings-form-polish.css') }}?v=8">
-    <link rel="stylesheet" href="{{ asset('css/admin/header-consistency.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/admin/settings-form-polish.css') }}?v=12-settings-r1">
+    <link rel="stylesheet" href="{{ asset('css/admin/header-consistency.css') }}?v=2-settings-r1">
     <link rel="stylesheet"
-      href="{{ asset('css/admin/admin-settings.css') }}?v=41">
-    <link rel="stylesheet" href="{{ asset('css/admin/settings-clean-save.css') }}?v=9">
-    <link rel="stylesheet" href="{{ asset('css/admin/settings-notifications.css') }}?v=6">
-    <link rel="stylesheet" href="{{ asset('css/admin/settings-matching.css') }}?v=7">
-    <link rel="stylesheet" href="{{ asset('css/admin/settings-smart-save.css') }}?v=5">
+      href="{{ asset('css/admin/admin-settings.css') }}?v=41-settings-r1">
+    <link rel="stylesheet" href="{{ asset('css/admin/settings-clean-save.css') }}?v=9-settings-r1">
+    <link rel="stylesheet" href="{{ asset('css/admin/settings-notifications.css') }}?v=6-settings-r1">
+    <link rel="stylesheet" href="{{ asset('css/admin/settings-matching.css') }}?v=7-settings-r1">
+    <link rel="stylesheet" href="{{ asset('css/admin/settings-smart-save.css') }}?v=5-settings-r1">
 @endsection
 
 @section('content')
@@ -119,7 +119,7 @@
         <div>
             <p class="fb-settings-kicker">ADMINISTRASI · FINDBACK KAMPUS</p>
             <h1>Pengaturan <span>Sistem</span></h1>
-            <p>Kelola identitas aplikasi, tampilan situs, dan pencocokan barang.</p>
+            <p>Kelola identitas aplikasi dan pencocokan barang.</p>
         </div>
     </div>
 
@@ -155,95 +155,64 @@
         @csrf
         @method('PUT')
 
-        {{-- INFORMASI APLIKASI --}}
-        <details class="fb-settings-card fb-settings-section" name="fb-settings-sections" aria-labelledby="general-title" open>
-            <summary><h2 id="general-title">Informasi Aplikasi</h2></summary>
+        {{-- IDENTITAS APLIKASI --}}
+        <details class="fb-settings-card fb-settings-section" name="fb-settings-sections" aria-labelledby="general-title">
+            <summary><h2 id="general-title">Identitas Aplikasi</h2></summary>
             <div class="fb-settings-section-content">
                 <div class="fb-settings-section-help"><p>
                         Identitas yang digunakan pada halaman aplikasi dan dokumen laporan.
                     </p></div>
 
-            
+                <div class="fb-settings-fields fb-settings-identity-fields">
+                    <div class="fb-settings-identity-column">
+                        <label class="fb-settings-field">
+                            <span>Nama aplikasi <b></b></span>
+                            <input type="text"
+                                   name="site_name"
+                                   maxlength="100"
+                                   required
+                                   value="{{ old('site_name', $settings['site_name']) }}">
+                        </label>
 
-            <div class="fb-settings-fields">
+                        <label class="fb-settings-field">
+                            <span>Judul Beranda</span>
+                            <input type="text" name="home_heading" maxlength="120"
+                                   value="{{ old('home_heading', $settings['home_heading']) }}"
+                                   placeholder="Barang Hilang? Temukan Kembali Bersama FindBack.">
+                            <small class="fb-settings-help">Judul besar pada halaman publik. Kosongkan untuk memakai judul bawaan.</small>
+                        </label>
+                    </div>
 
-                <label class="fb-settings-field">
-                    <span>Nama aplikasi <b></b></span>
-                    <input type="text"
-                           name="site_name"
-                           maxlength="100"
-                           required
-                           value="{{ old('site_name', $settings['site_name']) }}">
-                </label>
+                    <div class="fb-settings-identity-column">
+                        <label class="fb-settings-field">
+                            <span>Nama institusi <b></b></span>
+                            <input type="text"
+                                   name="institution_name"
+                                   maxlength="150"
+                                   required
+                                   value="{{ old('institution_name', $settings['institution_name']) }}">
+                        </label>
 
-                <label class="fb-settings-field">
-                    <span>Nama institusi <b></b></span>
-                    <input type="text"
-                           name="institution_name"
-                           maxlength="150"
-                           required
-                           value="{{ old('institution_name', $settings['institution_name']) }}">
-                </label>
-
-                <label class="fb-settings-field full">
-                    <span>Judul Beranda</span>
-                    <input type="text" name="home_heading" maxlength="120"
-                           value="{{ old('home_heading', $settings['home_heading']) }}"
-                           placeholder="Barang Hilang? Temukan Kembali Bersama FindBack.">
-                    <small class="fb-settings-help">Judul besar pada halaman publik. Kosongkan untuk memakai judul bawaan.</small>
-                </label>
-
-                <label class="fb-settings-field full">
-                    <span>Deskripsi aplikasi</span>
-                    <small class="fb-settings-help">
-                        Ditampilkan pada halaman utama publik dan Dashboard Pengguna.
-                    </small>
-
-                    <textarea name="site_description"
-                              maxlength="500"
-                              rows="3">{{ old('site_description', $settings['site_description']) }}</textarea>
-                </label>
-
-
-            </div>
-            </div>
-        </details>
-
-        @php
-            $savedColor = \App\Support\AdminSettings::brandColor($settings);
-            $savedLogo = \App\Support\AdminSettings::logoUrl($settings);
-        @endphp
-        <details class="fb-settings-card fb-settings-section" name="fb-settings-sections" aria-labelledby="appearance-title">
-            <summary><h2 id="appearance-title">Tampilan Situs</h2></summary>
-            <div class="fb-settings-section-content">
-                <div class="fb-settings-section-help"><p>Atur logo dan warna utama untuk Beranda, halaman akun, dan panel FindBack.</p></div>
-            
-            <div class="fb-settings-fields">
-                <div class="fb-settings-field">
-                    <label for="brand-logo-upload">Logo situs</label>
-                    <input id="brand-logo-upload" type="file" name="brand_logo_upload"
-                           accept="image/png,image/jpeg,image/webp">
-                    <small>PNG, JPG, atau WebP. Maksimal 2 MB dan 1600 × 1600 piksel.</small>
-                    <label class="fb-brand-reset"><input type="checkbox" name="brand_logo_reset" value="1"> Gunakan logo bawaan</label>
-                </div>
-                <div class="fb-settings-field">
-                    <label for="brand-color">Warna utama</label>
-                    <input id="brand-color" type="color" name="brand_color" value="{{ old('brand_color', $savedColor ?: '#8b1038') }}">
-                    <label class="fb-brand-reset"><input type="checkbox" name="brand_color_reset" value="1" @checked(old('brand_color_reset', $savedColor === ''))> Gunakan warna bawaan</label>
-                </div>
-                <div class="fb-settings-field full">
-                    <strong>Pratinjau</strong>
-                    <div class="fb-brand-preview" style="--preview-color: {{ $savedColor ?: '#8b1038' }}">
-                        <img data-brand-preview-logo src="{{ $savedLogo }}" data-default-logo="{{ asset('images/logo-findback.png') }}" alt="Pratinjau logo">
-                        <span data-brand-preview-name>{{ $settings['site_name'] }}</span>
-                        <span class="fb-brand-preview-button">Tombol utama</span>
-                        <div class="fb-brand-preview-copy">
-                            <strong data-brand-preview-heading>{{ old('home_heading', $settings['home_heading']) ?: 'Barang Hilang? Temukan Kembali Bersama FindBack.' }}</strong>
-                            <p data-brand-preview-description>{{ old('site_description', $settings['site_description']) }}</p>
+                        <div class="fb-settings-field fb-settings-logo-field">
+                            <label for="brand-logo-upload" class="fb-settings-logo-label">Logo situs</label>
+                            <input id="brand-logo-upload" type="file" name="brand_logo_upload"
+                                   accept="image/png,image/jpeg,image/webp">
+                            <small>PNG, JPG, atau WebP. Maksimal 2 MB dan 1600 × 1600 piksel.</small>
+                            <label class="fb-brand-reset"><input type="checkbox" name="brand_logo_reset" value="1" @checked(old('brand_logo_reset'))> Gunakan logo bawaan</label>
                         </div>
                     </div>
+
+                    <label class="fb-settings-field full">
+                        <span>Deskripsi aplikasi</span>
+                        <small class="fb-settings-help">
+                            Ditampilkan pada halaman utama publik dan Dashboard Pengguna.
+                        </small>
+
+                        <textarea name="site_description"
+                                  maxlength="500"
+                                  rows="3">{{ old('site_description', $settings['site_description']) }}</textarea>
+                    </label>
                 </div>
-            </div>
             </div>
         </details>
 
@@ -334,6 +303,8 @@
             <div><dt>Versi PHP</dt><dd>{{ $system['php'] }}</dd></div>
         </dl>
     </details>
+    <script src="{{ asset('js/admin/settings-panels.js') }}?v=1"></script>
+
 
 </div>
 

@@ -1,19 +1,29 @@
 (() => {
     'use strict';
 
-    const { account, ...routes } = document.currentScript.dataset;
+    const { account, itemDetail, ...routes } = document.currentScript.dataset;
     const pages = new Map(Object.entries(routes).map(([page, href]) => [new URL(href).pathname, page]));
     const main = () => document.querySelector('main[data-fb-nav-page]');
     const menuLinks = '.fb-sidebar a.fb-nav-link[href]';
-    const handled = url => url.origin === location.origin && !url.hash && pages.has(url.pathname);
+    const entryLinks = menuLinks + ', .fb-topbar-right a[href]';
+    const itemDetailPrefix = new URL(itemDetail).pathname.slice(0, -'__item__'.length);
+    function pageFor(pathname) {
+        if (pages.has(pathname)) return pages.get(pathname);
+        if (pathname.startsWith(itemDetailPrefix) && /^\d+$/.test(pathname.slice(itemDetailPrefix.length))) {
+            return 'item-detail';
+        }
+        return null;
+    }
+    const handled = url => url.origin === location.origin && !url.hash && pageFor(url.pathname) !== null;
     const position = () => ({ top: window.scrollY, left: window.scrollX });
     const pagePositions = new Map();
     let displayed = location.href;
+    let lastItemsList;
     let pending;
     let prefetched;
 
     function filters(url, save = false) {
-        if (!handled(url) || pages.get(url.pathname) === 'dashboard') return url;
+        if (!handled(url) || !pages.has(url.pathname) || pageFor(url.pathname) === 'dashboard') return url;
         const key = 'findback:admin:filters:' + account + ':' + url.pathname;
         try {
             if (save) {
@@ -42,9 +52,9 @@
 
     function warm(event) {
         if (!main() || pending || navigator.connection?.saveData) return;
-        const link = event.target.closest?.(menuLinks);
+        const link = event.target.closest?.(entryLinks + ', main[data-fb-nav-page] a[href]');
         if (!link || link.target || link.hasAttribute('download')) return;
-        const url = filters(new URL(link.href));
+        const url = linkUrl(link);
         if (!handled(url) || url.href === displayed || prefetched?.url === url.href) return;
         prefetched?.controller.abort();
         const controller = new AbortController();
@@ -52,12 +62,13 @@
         prefetched = { url: url.href, task, controller, until: Date.now() + 3000 };
     }
 
-    function waitForStyles(doc, signal, staged) {
+    function waitForStyles(doc, destination, signal, staged) {
         const selector = 'link[rel="stylesheet"]';
         const unused = new Set(document.head.querySelectorAll(selector));
         const ready = [...doc.head.querySelectorAll(selector)].map(source => {
+            const href = new URL(source.getAttribute('href'), destination).href;
             const media = source.getAttribute('media');
-            const existing = [...unused].find(link => link.href === source.href && link.media === source.media &&
+            const existing = [...unused].find(link => link.href === href && link.media === source.media &&
                 link.integrity === source.integrity && link.crossOrigin === source.crossOrigin &&
                 link.referrerPolicy === source.referrerPolicy && link.sheet);
             if (existing) {
@@ -66,6 +77,7 @@
             }
 
             const link = document.importNode(source, true);
+            link.href = href;
             link.media = 'not all';
             staged.push(link);
             return new Promise((resolve, reject) => {
@@ -114,13 +126,14 @@
             const next = doc.querySelector('main[data-fb-nav-page]');
             const crumb = doc.querySelector('.fb-breadcrumb');
             const topbar = doc.querySelector('.fb-topbar-right');
-            if (doc.compatMode !== 'CSS1Compat' || next?.dataset.fbNavPage !== pages.get(destination.pathname) ||
+            if (doc.compatMode !== 'CSS1Compat' || next?.dataset.fbNavPage !== pageFor(destination.pathname) ||
                 !crumb || !topbar || !main()) throw new Error('Incomplete admin page');
 
-            const { unused, links } = await waitForStyles(doc, signal, staged);
+            const { unused, links } = await waitForStyles(doc, destination, signal, staged);
             signal.throwIfAborted();
             const currentPosition = position();
             const fromPath = new URL(displayed).pathname;
+            if (pageFor(fromPath) === 'items') lastItemsList = displayed;
             const samePage = fromPath === destination.pathname;
             const scrollTarget = back
                 ? historyScroll ?? (samePage ? currentPosition : pagePositions.get(destination.pathname))
@@ -134,6 +147,7 @@
                 history.replaceState(history.state, '', destination.href);
             }
             applyStyles(unused, links);
+            document.dispatchEvent(new Event('fb:admin-before-swap'));
             staged.length = 0;
             main().replaceWith(document.importNode(next, true));
             document.querySelector('.fb-breadcrumb').replaceWith(document.importNode(crumb, true));
@@ -141,7 +155,9 @@
             document.title = doc.title;
             displayed = destination.href;
             for (const link of document.querySelectorAll(menuLinks)) {
-                const active = new URL(link.href).pathname === destination.pathname;
+                const sidebarPage = pageFor(new URL(link.href).pathname);
+                const active = new URL(link.href).pathname === destination.pathname ||
+                    (sidebarPage === 'items' && pageFor(destination.pathname) === 'item-detail');
                 link.classList.toggle('is-active', active);
                 if (active) link.setAttribute('aria-current', 'page');
                 else link.removeAttribute('aria-current');
@@ -164,18 +180,27 @@
         }
     }
 
+    function linkUrl(link) {
+        const url = new URL(link.href);
+        if (pageFor(url.pathname) === 'items' && link.hasAttribute('data-fb-detail-back')) {
+            if (lastItemsList) return new URL(lastItemsList);
+            return filters(url);
+        }
+        return link.matches(entryLinks) ? filters(url) : url;
+    }
+
     if (main() && location.search) filters(new URL(location.href), true);
     document.addEventListener('pointerover', warm, { passive: true });
     document.addEventListener('focusin', warm);
+    document.addEventListener('pointerdown', warm, { passive: true });
 
     document.addEventListener('click', event => {
         if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || !main()) return;
-        const link = event.target.closest?.(menuLinks + ', main[data-fb-nav-page] a[href]');
+        const link = event.target.closest?.(entryLinks + ', main[data-fb-nav-page] a[href]');
         if (!link || link.target || link.hasAttribute('download')) return;
-        const url = new URL(link.href);
+        const url = linkUrl(link);
         if (!handled(url)) return;
         event.preventDefault();
-        if (link.matches(menuLinks)) filters(url);
         if (url.href !== displayed || location.href !== displayed) navigate(url);
         else pending?.abort();
     });
@@ -205,6 +230,10 @@
         }
     });
 
+    document.addEventListener('fb:notification-history', () => {
+        displayed = location.href;
+        filters(new URL(displayed), true);
+    });
     window.addEventListener('scrollend', () => {
         if (location.href === displayed && handled(new URL(displayed))) {
             history.replaceState({ ...history.state, adminScroll: position() }, '');

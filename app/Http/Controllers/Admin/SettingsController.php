@@ -38,10 +38,8 @@ class SettingsController extends Controller
             'home_heading' => ['nullable', 'string', 'max:120'],
             'site_description' => ['present', 'nullable', 'string', 'max:500'],
             'institution_name' => ['required', 'string', 'max:150'],
-            'brand_color' => ['nullable', 'regex:/^#[0-9a-f]{6}$/iD'],
             'brand_logo_upload' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp', 'max:2048', 'dimensions:max_width=1600,max_height=1600'],
             'brand_logo_reset' => ['nullable', 'boolean'],
-            'brand_color_reset' => ['nullable', 'boolean'],
             'matching_min_score' => ['required', 'integer', 'between:0,100'],
         ]);
 
@@ -59,11 +57,7 @@ class SettingsController extends Controller
             $data['brand_logo'] = '';
         }
 
-        if ($request->boolean('brand_color_reset')) {
-            $data['brand_color'] = '';
-        }
-
-        unset($data['brand_logo_upload'], $data['brand_logo_reset'], $data['brand_color_reset']);
+        unset($data['brand_logo_upload'], $data['brand_logo_reset']);
 
         $oldLogo = null;
         try {

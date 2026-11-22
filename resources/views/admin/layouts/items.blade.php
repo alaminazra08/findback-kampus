@@ -379,8 +379,12 @@
     <script src="{{ asset('js/admin/admin-items-upload.js') }}?v=2" defer></script>
     <script src="{{ asset('js/pages/admin/matching/filter-navigation.js') }}?v=6" defer></script>
     <script src="{{ asset('js/pages/admin/statistics/index.js') }}?v=2" defer></script>
+    @unless(request()->routeIs('admin.settings.index'))
+        <script src="{{ asset('js/admin/settings-panels.js') }}?v=1" defer></script>
+    @endunless
+    <script src="{{ asset('js/admin/notification-stats-live.js') }}?v=8" defer></script>
     <script src="{{ asset('js/admin/settings-score.js') }}?v=2" defer></script>
-    <script src="{{ asset('js/admin/settings-smart-save.js') }}?v=16" defer></script>
+    <script src="{{ asset('js/admin/settings-smart-save.js') }}?v=18" defer></script>
     <script src="{{ asset('js/admin/claims-toast-v1.js') }}?v=2" defer></script>
     <script defer src="{{ asset('js/admin/statistics-cards-consistency-v1.js') }}?v=1"></script>
     <script defer src="{{ asset('js/admin/statistics-download-menu-v4.js') }}?v=5"></script>
@@ -389,16 +393,18 @@
     @include('admin.partials.detail-interactions')
     <script src="{{ asset('js/admin/admin-toast-standard-v1.js') }}?v=3" defer></script>
     <script src="{{ asset('js/admin/admin-scroll-continuity-v1.js') }}?v=2" defer></script>
-    <script src="{{ asset('js/admin/admin-fast-navigation.js') }}?v=2" defer
+    <script src="{{ asset('js/admin/admin-fast-navigation.js') }}?v=4" defer
         data-account="{{ auth()->id() }}"
         data-dashboard="{{ route('admin.dashboard') }}"
         data-verification="{{ route('admin.reports.verification') }}"
         data-items="{{ route('admin.items.index') }}"
+        data-item-detail="{{ route('admin.items.show', ['item' => '__item__']) }}"
         data-matching="{{ route('admin.matching.index') }}"
         data-claims="{{ route('admin.claims.index') }}"
         data-statistics="{{ route('admin.statistics.index') }}"
         data-users="{{ route('admin.users.index') }}"
-        data-settings="{{ route('admin.settings.index') }}"></script>
+        data-settings="{{ route('admin.settings.index') }}"
+        data-notifications="{{ route('admin.notifications.index') }}"></script>
 </body>
 
 </html>

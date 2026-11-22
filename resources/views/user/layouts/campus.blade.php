@@ -19,7 +19,9 @@
 
     {{-- CSS USER --}}
 
-    <link rel="stylesheet" href="{{ asset('css/user/campus.css') }}?v=2">
+    
+<link rel="stylesheet" href="{{ asset('css/user/campus.css') }}?v=4">
+
     <link rel="stylesheet" href="{{ asset('css/user/navbar-premium.css') }}?v=5">
     @if (request()->routeIs('user.claims.show'))
     <link rel="stylesheet" href="{{ asset('css/user/user-claims.css') }}?v=4">

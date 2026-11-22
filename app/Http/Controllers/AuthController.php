@@ -157,7 +157,7 @@ class AuthController extends Controller
                 'created_at',
             ])
             ->latest('created_at')
-            ->limit(5)
+            ->limit(4)
             ->get();
 
         /*

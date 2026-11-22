@@ -53,24 +53,77 @@
             <div class="cu-alert success"><strong>{{ $approvedClaims }} klaim telah disetujui</strong>. <a
                     href="{{ route('user.chat.index') }}">Hubungi admin untuk mengatur serah terima →</a></div>
         @endif
-        <section class="cu-bottom">
-            <div class="cu-panel">
-                <div class="cu-section-title">
-                    <h2>Aktivitas terakhirmu</h2><a href="{{ route('user.reports.index') }}">Lihat riwayat →</a>
-                </div>
-                @forelse($recentReports as $report)
-                    <a class="cu-activity-row" href="{{ route('user.reports.show', $report->id) }}">
-                        <div><strong>{{ $report->title }}</strong><small>{{ $report->location }}</small></div>
-                        @include('user.components.status', ['status' => $report->status])
-                </a>@empty<p class="cu-muted">Belum ada laporan. Mulai dengan melaporkan barang hilang atau ditemukan.
-                    </p>
-                @endforelse
+        
+
+{{-- Aktivitas terbaru pengguna --}}
+<section class="cu-bottom fb-recent-section">
+    <div class="cu-panel fb-recent-panel">
+
+        <div class="fb-recent-header">
+            <div>
+                <h2>Aktivitas terakhirmu</h2>
+                <p>Pantau perkembangan laporan terbarumu.</p>
             </div>
-            <aside class="cu-tip"><span class="cu-kicker">SEBELUM MELAPOR</span>
-                <h2>Detail kecil.<br>Peluang lebih besar.</h2>
-                <p>Tambahkan foto yang jelas, ciri khas, dan lokasi kejadian agar barang lebih mudah dikenali.</p><a
-                    href="{{ route('user.reports.lost.create') }}">Buat laporan →</a>
-            </aside>
-        </section>
+
+            <a href="{{ route('user.reports.index') }}"
+               class="fb-recent-history">
+                Lihat riwayat
+                <span aria-hidden="true">→</span>
+            </a>
+        </div>
+
+        <div class="fb-recent-list">
+            @forelse ($recentReports as $report)
+                @php
+                    $isLost = $report->type === 'lost';
+                @endphp
+
+                <a href="{{ route('user.reports.show', $report->id) }}"
+                   class="fb-recent-item">
+
+                    <span class="fb-recent-icon {{ $isLost ? 'lost' : 'found' }}">
+                        @include('user.components.icon', [
+                            'icon' => $isLost ? 'search' : 'box'
+                        ])
+                    </span>
+
+                    <span class="fb-recent-info">
+                        <strong>{{ $report->title }}</strong>
+
+                        <span class="fb-recent-meta">
+                            <span class="fb-recent-type">
+                                {{ $isLost ? 'Barang hilang' : 'Barang ditemukan' }}
+                            </span>
+
+                            <span class="fb-recent-separator">•</span>
+
+                            <span>{{ $report->location ?: 'Lokasi tidak tersedia' }}</span>
+
+                            <span class="fb-recent-separator">•</span>
+
+                            <span>
+                                {{ \Carbon\Carbon::parse($report->created_at)->locale('id')->translatedFormat('d M Y') }}
+                            </span>
+                        </span>
+                    </span>
+
+                    <span class="fb-recent-status">
+                        @include('user.components.status', [
+                            'status' => $report->status
+                        ])
+                    </span>
+
+                    <span class="fb-recent-arrow" aria-hidden="true">›</span>
+                </a>
+            @empty
+                <div class="fb-recent-empty">
+                    <strong>Belum ada aktivitas</strong>
+                    <p>Laporan terbarumu akan tampil di sini.</p>
+                </div>
+            @endforelse
+        </div>
+    </div>
+</section>
+
     </div>
 @endsection

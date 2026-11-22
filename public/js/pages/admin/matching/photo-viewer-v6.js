@@ -57,9 +57,11 @@
             if (event.target === dialog) dialog.close();
         });
         dialog.addEventListener("close", () => opener?.focus({ preventScroll: true }));
+        const lifetime = new AbortController();
+        document.addEventListener("fb:admin-before-swap", () => lifetime.abort(), { once: true });
         window.addEventListener("resize", () => {
             if (dialog.open && dialog.hasAttribute("data-zoom")) resetZoom();
-        });
+        }, { signal: lifetime.signal });
     }
 
     document.addEventListener("fb:admin-page", mount);

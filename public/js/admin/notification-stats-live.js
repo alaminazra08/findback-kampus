@@ -22,12 +22,12 @@
         const cards = Object.fromEntries(
             [...root.querySelectorAll('[data-fb-stat]')].map(card => [card.dataset.fbStat, card])
         );
-        const pill = root.querySelector('[data-fb-unread-pill]');
         const markAll = root.querySelector('[data-fb-mark-all]');
         const form = root.querySelector('[data-fb-filter-form]');
         const listHost = root.querySelector('[data-fb-live-list]');
         const tabs = root.querySelector('[data-fb-notif-tabs]');
         let busy = false;
+        let queuedPage;
         let readVersion = 0;
         let pollTimer = null;
         let scrollSaveFrame = 0;
@@ -117,10 +117,6 @@
                 ? 'Ada notifikasi yang perlu diperiksa'
                 : 'Semua notifikasi telah dibaca';
 
-            if (pill) {
-                const count = pill.lastChild;
-                if (count?.nodeType === Node.TEXT_NODE) count.textContent = `${fmt.format(unread)} belum dibaca`;
-            }
             if (markAll) markAll.disabled = unread === 0;
 
         }
@@ -164,8 +160,12 @@
             return true;
         }
 
-        async function requestList(url, { historyMode = 'none', preserveScroll = true, restoreScroll = null, syncForm = true } = {}) {
-            if (busy || signal.aborted) return false;
+        async function requestList(url, { historyMode = 'none', preserveScroll = true, restoreScroll = null, syncForm = true, keepPagination = false } = {}) {
+            if (signal.aborted) return false;
+            if (busy) {
+                if (keepPagination) queuedPage = url;
+                return false;
+            }
             busy = true;
             const version = readVersion;
             const scrollAtRequest = window.scrollY;
@@ -188,6 +188,10 @@
                 const data = await response.json();
                 if (signal.aborted || version !== readVersion) return false;
                 const currentScroll = window.scrollY;
+                const paginationSelector = '.fb-notif-center-pagination';
+                const paginationTop = keepPagination
+                    ? listHost?.querySelector(paginationSelector)?.getBoundingClientRect().top
+                    : undefined;
                 updateList(data.list_html);
                 updateCounters(data);
                 if (syncForm) syncControls(target);
@@ -198,7 +202,11 @@
                 if (historyMode !== 'none') document.dispatchEvent(new Event('fb:notification-history'));
 
                 const canRestore = Number.isFinite(restoreScroll) && currentScroll === scrollAtRequest;
-                const y = canRestore ? restoreScroll : (preserveScroll || Number.isFinite(restoreScroll) ? currentScroll : 0);
+                let y = canRestore ? restoreScroll : (preserveScroll || Number.isFinite(restoreScroll) ? currentScroll : 0);
+                if (Number.isFinite(paginationTop)) {
+                    const nextTop = listHost.querySelector(paginationSelector)?.getBoundingClientRect().top;
+                    if (Number.isFinite(nextTop)) y = window.scrollY + nextTop - paginationTop;
+                }
                 // Apply any correction in the same turn so a later frame cannot undo new input.
                 if (window.scrollY !== y) window.scrollTo({ top: y, left: window.scrollX, behavior: 'instant' });
                 safeWriteState();
@@ -207,7 +215,13 @@
                 return false;
             } finally {
                 busy = false;
-                if (version !== readVersion) requestList(target, { historyMode, preserveScroll, restoreScroll, syncForm });
+                if (queuedPage) {
+                    const page = queuedPage;
+                    queuedPage = undefined;
+                    requestList(page, { historyMode: 'push', keepPagination: true });
+                } else if (version !== readVersion) {
+                    requestList(target, { historyMode, preserveScroll, restoreScroll, syncForm, keepPagination });
+                }
             }
         }
 
@@ -238,9 +252,14 @@
             }
 
             const pageLink = event.target.closest('[data-fb-live-list] .fb-notif-center-pagination a');
-            if (pageLink && pageLink.href && !pageLink.classList.contains('is-disabled')) {
+            if (pageLink && pageLink.href && !pageLink.classList.contains('is-disabled') &&
+                !event.defaultPrevented && event.button === 0 && !event.ctrlKey &&
+                !event.metaKey && !event.shiftKey && !event.altKey) {
                 event.preventDefault();
-                requestList(new URL(pageLink.href), { historyMode: 'push', preserveScroll: true });
+                const target = new URL(pageLink.href);
+                if (target.href !== currentUrl().href || busy) {
+                    requestList(target, { historyMode: 'push', keepPagination: true });
+                }
             }
         });
 

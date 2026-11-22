@@ -28,7 +28,7 @@
             </div>
             <form class="fb-admin-header-action-group" method="POST" action="{{ route('admin.matching.generate') }}"
                 data-confirm="Jalankan pencocokan laporan terverifikasi? Kandidat yang sudah diperiksa tidak akan diubah."
-                data-fb-match-generate>
+                data-fb-match-generate data-fb-async-decision>
                 @csrf
                 <button class="match-button fb-admin-header-action" type="submit"><svg class="match-action-svg" viewBox="0 0 24 24"
                         aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9"

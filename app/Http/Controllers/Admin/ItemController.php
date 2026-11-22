@@ -7,6 +7,7 @@ use App\Models\ItemClaim;
 use App\Models\LostFoundItem;
 use App\Support\ReportAudit;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -132,7 +133,7 @@ class ItemController extends Controller
     | Laporan langsung disetujui tanpa verifikasi manual.
     */
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): RedirectResponse|JsonResponse
     {
         /*
         | Validasi data
@@ -282,14 +283,13 @@ class ItemController extends Controller
 
             report($exception);
 
-            return back()
-                ->withInput()
-                ->withErrors([
-                    'save' =>
-                        'Laporan gagal disimpan. '
-                        . 'Silakan periksa kembali data '
-                        . 'atau hubungi administrator sistem.',
-                ]);
+            $message = 'Laporan gagal disimpan. Silakan periksa kembali data atau hubungi administrator sistem.';
+
+            if ($request->expectsJson()) {
+                return response()->json(['message' => $message], 500);
+            }
+
+            return back()->withInput()->withErrors(['save' => $message]);
         }
 
         /*
@@ -305,16 +305,16 @@ class ItemController extends Controller
         /*
         | Kembali ke daftar barang
         */
-        return redirect()
-            ->route('admin.items.index', [
-                'group' => 'semua',
-            ])
-            ->with(
-                'success',
-                'Laporan ' . $reportCode
-                . ' berhasil ditambahkan dan '
-                . 'langsung dipublikasikan.'
-            );
+        $destination = route('admin.items.index', ['group' => 'semua']);
+        $message = 'Laporan ' . $reportCode . ' berhasil ditambahkan dan langsung dipublikasikan.';
+
+        if ($request->expectsJson()) {
+            $request->session()->flash('success', $message);
+
+            return response()->json(['destination' => $destination], 201);
+        }
+
+        return redirect()->to($destination)->with('success', $message);
     }
 
     /*

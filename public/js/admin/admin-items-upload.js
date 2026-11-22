@@ -34,6 +34,62 @@
             }, { signal });
         }
 
+        const form = dialog.querySelector('form');
+        const submit = form.querySelector('button[type="submit"]');
+        const feedback = form.querySelector('[data-fb-publish-feedback]');
+        let publishing = false;
+
+        form.addEventListener('submit', async event => {
+            if (event.defaultPrevented) return;
+            event.preventDefault();
+            if (publishing) return;
+
+            publishing = true;
+            submit.disabled = true;
+            submit.setAttribute('aria-busy', 'true');
+            feedback.hidden = false;
+            feedback.textContent = 'Sedang memublikasikan laporan…';
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: { Accept: 'application/json' },
+                    signal,
+                });
+                const data = await response.json();
+                if (!response.ok || response.redirected) {
+                    throw new Error(Object.values(data.errors || {}).flat().join(' ') || data.message || 'Publikasi gagal.');
+                }
+                const destination = new URL(data.destination);
+                if (destination.origin !== location.origin) throw new Error('Tujuan publikasi tidak valid.');
+                feedback.textContent = 'Laporan dipublikasikan. Membuka daftar barang…';
+                const follow = document.dispatchEvent(new CustomEvent('fb:item-published', {
+                    detail: destination.href,
+                    cancelable: true,
+                }));
+                if (follow) location.assign(destination.href);
+            } catch (error) {
+                if (signal.aborted) return;
+                feedback.textContent = error instanceof SyntaxError || error instanceof TypeError
+                    ? 'Hasil publikasi belum bisa dikonfirmasi. Periksa daftar barang sebelum mencoba lagi.'
+                    : error.message;
+                publishing = false;
+                submit.disabled = false;
+                submit.removeAttribute('aria-busy');
+            }
+        }, { signal });
+
+        dialog.addEventListener('cancel', event => {
+            if (publishing) event.preventDefault();
+        }, { signal });
+        dialog.addEventListener('click', event => {
+            if (publishing && (event.target === dialog || event.target.closest('[data-dialog-close]'))) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+            }
+        }, { capture: true, signal });
+
         if (dialog) {
             if (dialog.dataset.hasErrors === 'true' && !dialog.open) dialog.showModal();
             dialog.addEventListener('close', function () {

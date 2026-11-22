@@ -41,50 +41,39 @@ class MatchingScoreService
         $left = $tokens($lost->description);
         $right = $tokens($found->description);
         $union = array_unique(array_merge($left, $right));
-        if (count($union)) {
-            $points = (int) round((25 * count(array_intersect($left, $right))) / count($union));
-            $score += $points;
-            $reasons[] = "Kesamaan ciri/deskripsi (+{$points})";
-        }
+        $points = $union ? (int) round(50 * count(array_intersect($left, $right)) / count($union)) : 0;
+        $score += $points;
+        $reasons[] = "Kesamaan ciri/deskripsi (+{$points})";
 
         $titleLost = $this->normalize((string) $lost->title);
         $titleFound = $this->normalize((string) $found->title);
+        $titleScore = 0;
         if ($titleLost !== '' && $titleFound !== '') {
             similar_text($titleLost, $titleFound, $similarity);
             $titleScore = (int) round((40 * $similarity) / 100);
-            $score += $titleScore;
-            $reasons[] = "Nama barang mirip (+{$titleScore})";
         }
+        $score += $titleScore;
+        $reasons[] = "Nama barang mirip (+{$titleScore})";
 
         $locationLost = $this->normalize((string) $lost->location);
         $locationFound = $this->normalize((string) $found->location);
         if ($locationLost !== '' && $locationFound !== '') {
             if ($locationLost === $locationFound) {
-                $score += 25;
-                $reasons[] = 'Lokasi sama (+25)';
+                $score += 10;
+                $reasons[] = 'Lokasi sama (+10)';
             } elseif (
                 Str::contains($locationLost, $locationFound) ||
                 Str::contains($locationFound, $locationLost)
             ) {
-                $score += 12;
-                $reasons[] = 'Lokasi berkaitan (+12)';
+                $score += 5;
+                $reasons[] = 'Lokasi berkaitan (+5)';
             } else {
                 $reasons[] = 'Lokasi berbeda (+0)';
             }
+        } else {
+            $reasons[] = 'Lokasi belum tersedia (+0)';
         }
 
-        if ($lost->event_date && $found->event_date) {
-            $days = abs($lost->event_date->diffInDays($found->event_date));
-            if ($days <= 1) {
-                $score += 10;
-                $reasons[] = 'Tanggal berdekatan (+10)';
-            } elseif ($days <= 7) {
-                $score += 5;
-                $reasons[] = 'Tanggal dalam 7 hari (+5)';
-            } else {
-                $reasons[] = 'Tanggal berjauhan (+0)';
-            }
-        }
         return [min(100, $score), $reasons];
     }
 

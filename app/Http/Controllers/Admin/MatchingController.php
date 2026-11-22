@@ -199,9 +199,14 @@ class MatchingController extends Controller
                             ->where('lost_item_id', $locked->lost_item_id)
                             ->orWhere('found_item_id', $locked->found_item_id);
                     })
-                    ->exists();
+                    ->orderBy('id')
+                    ->first(['id', 'lost_item_id', 'found_item_id']);
                 if ($conflict) {
-                    return 'Salah satu laporan telah dikonfirmasi pada pasangan lainnya.';
+                    $sharedReport = $conflict->lost_item_id == $locked->lost_item_id
+                        ? $locked->lost_item_id
+                        : $locked->found_item_id;
+
+                    return "Kandidat ini tidak bisa dikonfirmasi. Laporan {$sharedReport} sudah dipasangkan pada kandidat {$conflict->id} yang telah dikonfirmasi.";
                 }
             }
 
@@ -229,6 +234,7 @@ class MatchingController extends Controller
 
         return redirect()
             ->route('admin.matching.show', $match)
+            ->with('decision_rejected', $validated['action'] === 'reject')
             ->with(
                 'success',
                 $validated['action'] === 'confirm'

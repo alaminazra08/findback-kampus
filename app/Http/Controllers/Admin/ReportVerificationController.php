@@ -184,6 +184,7 @@ class ReportVerificationController extends Controller
 
         return redirect()
             ->route('admin.reports.verification')
+            ->with('decision_rejected', $validated['decision'] === 'rejected')
             ->with(
                 'success',
                 $validated['decision'] === 'verified'

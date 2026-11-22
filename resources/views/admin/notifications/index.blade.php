@@ -38,7 +38,6 @@
                 <p class="fb-notif-center-eyebrow">ADMINISTRASI · FINDBACK KAMPUS</p>
                 <div class="fb-notif-center-title-row">
                     <h1>Pusat <span>Notifikasi</span></h1>
-                    <span class="fb-notif-unread-pill" data-fb-unread-pill><span></span>{{ number_format($unreadCount, 0, ',', '.') }} belum dibaca</span>
                 </div>
                 <p class="fb-notif-center-subtitle">Kelola seluruh aktivitas dan pemberitahuan FindBack Kampus.</p>
             </div>

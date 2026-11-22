@@ -22,19 +22,7 @@
             <p class="fb-heading-text">Kelola laporan yang membutuhkan pemeriksaan dan tindak lanjut administrator.</p>
         </div>
     </div>
-    @if (session('success') || session('warning'))
-        @php $verificationToastWarning = (bool) session('warning'); @endphp
-        <div class="fb-verification-toast{{ $verificationToastWarning ? ' is-warning' : '' }}"
-             id="fb-verification-toast" role="{{ $verificationToastWarning ? 'alert' : 'status' }}"
-             aria-live="{{ $verificationToastWarning ? 'assertive' : 'polite' }}" aria-atomic="true">
-            <span class="fb-verification-toast-icon" aria-hidden="true">{{ $verificationToastWarning ? '!' : '✓' }}</span>
-            <span class="fb-verification-toast-copy">
-                <strong>{{ $verificationToastWarning ? 'Perlu perhatian' : 'Verifikasi berhasil' }}</strong>
-                <small>{{ $verificationToastWarning ? session('warning') : session('success') }}</small>
-            </span>
-            <button type="button" class="fb-verification-toast-close" aria-label="Tutup notifikasi">&times;</button>
-        </div>
-    @endif
+    @include('admin.partials.decision-toast')
     @include('admin.reports.verification.results')
 
 @endsection

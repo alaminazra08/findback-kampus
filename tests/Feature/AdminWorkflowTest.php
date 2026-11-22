@@ -105,19 +105,25 @@ class AdminWorkflowTest extends TestCase
             ->assertSee(route('admin.items.show', $item), false);
     }
 
-    public function test_matching_v2_ignores_category_and_keeps_historical_scores(): void
+    public function test_matching_ignores_category_and_date_and_keeps_historical_scores(): void
     {
         $admin = $this->user('admin');
         $lost = $this->item(['type' => 'lost', 'status' => 'verified']);
         $found = $this->item(['status' => 'verified']);
         $controller = app(\App\Http\Controllers\Admin\MatchingController::class);
         $method = new \ReflectionMethod($controller, 'calculateScore');
-        [$one] = $method->invoke($controller, $lost, $found);
+        [$one, $factors] = $method->invoke($controller, $lost, $found);
         $lost->category = 'Elektronik';
         $found->category = 'Dompet';
+        $found->event_date = $lost->event_date->copy()->addDays(30);
         [$two] = $method->invoke($controller, $lost, $found);
         $this->assertSame($one, $two);
         $this->assertSame(100, $one);
+        $this->assertSame([
+            'Kesamaan ciri/deskripsi (+50)',
+            'Nama barang mirip (+40)',
+            'Lokasi sama (+10)',
+        ], $factors);
         $old = ItemMatch::create([
             'lost_item_id' => $lost->id,
             'found_item_id' => $found->id,

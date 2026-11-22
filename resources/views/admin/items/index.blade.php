@@ -196,6 +196,7 @@
             </div>
 
             {{-- 05. TOMBOL AKSI --}}
+            <p role="status" class="fb-admin-add-alert" data-fb-publish-feedback hidden></p>
             <footer class="fb-admin-add-actions">
                 {{-- 04. INFORMASI PUBLIKASI --}}
                 <div class="fb-admin-add-note" role="note">

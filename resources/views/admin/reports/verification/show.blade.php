@@ -123,7 +123,7 @@
                                 </button>
                                 <dialog id="fb-review-{{ $value }}" class="fb-review-dialog" aria-labelledby="fb-review-title-{{ $value }}"
                                     @if (old('decision') === $value || ($value === 'rejected' && $errors->has('reason'))) data-review-reopen @endif>
-                                    <form method="POST" action="{{ route('admin.reports.verification.review', $item) }}">
+                                    <form method="POST" data-fb-async-decision action="{{ route('admin.reports.verification.review', $item) }}">
                                         @csrf
                                         <input type="hidden" name="decision" value="{{ $value }}">
                                         <h2 id="fb-review-title-{{ $value }}">{{ $label }}?</h2>

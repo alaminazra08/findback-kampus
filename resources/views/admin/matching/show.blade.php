@@ -4,14 +4,14 @@
 @section('breadcrumb', 'Pencocokan Barang')
 
 @section('page-styles')
+    <link rel="stylesheet" href="{{ asset('css/admin/verification-toast-v1.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/verification-actions-history.css') }}?v=4">
-    <link rel="stylesheet" href="{{ asset('css/admin/admin-matching.css') }}?v=46">
+    <link rel="stylesheet" href="{{ asset('css/admin/admin-matching.css') }}?v=47">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/detail-back.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/claim-proof-modal.css') }}?v=16">
 @endsection
 
 @section('content')
-    <script defer src="{{ asset('js/pages/admin/matching/photo-viewer-v6.js') }}?v=7"></script>
 <div class="match-wrap">
         <div class="fb-match-return-bar">
             <a class="fb-detail-return" data-fb-detail-back href="{{ route('admin.matching.index') }}"><span aria-hidden="true">←</span> Kembali ke daftar</a>
@@ -55,12 +55,7 @@
                 </div>
             </div>
         </header>
-        @if (session('success'))
-            <div class="match-flash success" role="status">{{ session('success') }}</div>
-        @endif
-        @if (session('error'))
-            <div class="match-flash error" role="alert">{{ session('error') }}</div>
-        @endif
+        @include('admin.partials.decision-toast', ['decisionSuccessTitle' => 'Pencocokan dikonfirmasi', 'decisionError' => session('error')])
         @if ($errors->any())
             <div class="match-flash error" role="alert">{{ $errors->first() }}</div>
         @endif
@@ -134,13 +129,15 @@
                 </div>
             </div>
             @php
-                // Alasan lama tetap dapat dibaca tanpa menampilkan istilah versi atau kategori.
+                // Skor historis disimpan, sedangkan tanggal tidak lagi ditampilkan sebagai faktor.
                 $scoringReason = explode('; Alasan penolakan admin:', (string) $match->match_reason, 2)[0];
+                $hasHistoricalDateFactor = preg_match('/(?:^|;)\s*Tanggal\s/iu', $scoringReason) === 1;
                 $reasonParts = array_values(array_filter(
                     array_map('trim', explode(';', $scoringReason)),
                     fn ($part) => $part !== ''
                         && !str_contains(mb_strtolower($part), 'metode v2')
                         && !str_contains(mb_strtolower($part), 'kategori')
+                        && !str_starts_with(mb_strtolower($part), 'tanggal ')
                 ));
             @endphp
             <div class="match-reason-box">
@@ -162,6 +159,9 @@
                     <p>Rincian faktor pencocokan belum tersedia untuk kandidat ini.</p>
                 @endif
             </div>
+            @if ($hasHistoricalDateFactor)
+                <p>Skor tersimpan menggunakan bobot saat keputusan dibuat.</p>
+            @endif
             <p class="match-notice" role="note"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none"
                     stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
                     <circle cx="12" cy="12" r="9" />
@@ -182,7 +182,7 @@
                             <dialog id="fb-match-review-{{ $action }}" class="fb-review-dialog"
                                 aria-labelledby="fb-match-review-title-{{ $action }}"
                                 @if (old('action') === $action || ($action === 'reject' && $errors->has('rejection_reason'))) data-review-reopen @endif>
-                                <form method="POST" action="{{ route('admin.matching.review', $match) }}">
+                                <form method="POST" data-fb-async-decision action="{{ route('admin.matching.review', $match) }}">
                                     @csrf
                                     <input type="hidden" name="action" value="{{ $action }}">
                                     <h2 id="fb-match-review-title-{{ $action }}">{{ $action === 'confirm' ? 'Konfirmasi pencocokan?' : 'Tolak kandidat?' }}</h2>

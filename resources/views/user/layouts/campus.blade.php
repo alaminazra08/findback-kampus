@@ -8,6 +8,15 @@
     <title>FindBack Kampus</title>
     <link rel="icon" href="{{ \App\Support\AdminSettings::logoUrl($fbBrand) }}">
 
+{{-- Memuat logo utama lebih awal --}}
+<link
+    rel="preload"
+    as="image"
+    href="{{ \App\Support\AdminSettings::logoUrl($fbBrand) }}"
+    fetchpriority="high"
+>
+
+
     {{-- CSS USER --}}
 
     <link rel="stylesheet" href="{{ asset('css/user/campus.css') }}?v=2">
@@ -16,6 +25,12 @@
     <link rel="stylesheet" href="{{ asset('css/user/user-claims.css') }}?v=4">
     @endif
     <link rel="stylesheet" href="{{ asset('css/shared/view-utilities.css') }}">
+
+{{-- Tampilan responsif dimuat sebelum halaman ditampilkan --}}
+@unless (request()->routeIs('user.chat.index'))
+    <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
+@endunless
+
 
     {{-- JAVASCRIPT --}}
 
@@ -27,12 +42,19 @@
 
     <!-- FINDBACK_TYPOGRAPHY_V1 -->
     <link rel="stylesheet" href="{{ asset('css/shared/typography.css') }}">
-        <style>
-        @view-transition { navigation: auto; }
-        ::view-transition-old(root),
-        ::view-transition-new(root) { animation: none; }
-        .cu-main, .cu-main *, .cu-main *::before, .cu-main *::after { animation: none !important; }
-    </style>
+    
+<style>
+    /* Navigasi halaman tanpa animasi tambahan */
+    @view-transition {
+        navigation: auto;
+    }
+
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation: none !important;
+    }
+</style>
+
 
     @if (request()->routeIs('user.profile.index'))
         <script>
@@ -59,11 +81,141 @@
         <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
         @include('shared.chat-tools-style')
     @endif
-    @if (request()->routeIs('user.reports.*', 'user.claims.*'))
-        <link rel="stylesheet" href="{{ asset('css/user/activity-consistency.css') }}?v=2">
-    @endif
+   
+{{-- CSS konsisten untuk empat halaman utama --}}
+@if (request()->routeIs(
+    'dashboard',
+    'user.reports.index',
+    'user.reports.lost.create',
+    'user.reports.found.create',
+    'user.claims.*'
+))
+    <link rel="stylesheet" href="{{ asset('css/report-cycle.css') }}?v=13">
+    <link rel="stylesheet" href="{{ asset('css/user/activity-consistency.css') }}?v=3">
+@endif
+
     @include('partials.findback-brand-theme')
+
+
+
+
+{{-- Navigasi cepat menggunakan Turbo Drive --}}
+
+
+
+
+<style>
+    /* Posisi scrollbar tetap konsisten */
+    html {
+        scrollbar-gutter: stable;
+    }
+
+    /* Navbar tetap stabil pada halaman desktop */
+    @media (min-width: 1400px) {
+
+        .cu-body .cu-header {
+            width: 100% !important;
+            box-sizing: border-box !important;
+            transform: none !important;
+            animation: none !important;
+            transition: none !important;
+        }
+
+        .cu-body .cu-header .cu-nav-wrap {
+            display: grid !important;
+            grid-template-columns:
+                minmax(0, 1fr)
+                557px
+                minmax(0, 1fr) !important;
+            align-items: center !important;
+            width: 100% !important;
+            height: 82px !important;
+            min-height: 82px !important;
+            gap: 0 !important;
+        }
+
+        /* Logo tetap pada posisi kiri */
+        .cu-body .cu-header .cu-brand {
+            grid-column: 1 !important;
+            justify-self: start !important;
+            min-width: 0 !important;
+            flex-shrink: 0 !important;
+        }
+
+        /* Menu utama selalu berada di tengah */
+        .cu-body .cu-header .cu-nav {
+            grid-column: 2 !important;
+            display: grid !important;
+            grid-template-columns:
+                150px 245px 150px !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 6px !important;
+            width: 557px !important;
+            min-width: 557px !important;
+            margin: 0 !important;
+        }
+
+        /* Ukuran tombol Beranda dan Aktivitas Saya tetap */
+        .cu-body .cu-header .cu-nav > a {
+            width: 150px !important;
+            min-width: 150px !important;
+            height: 48px !important;
+            box-sizing: border-box !important;
+        }
+
+        /* Ukuran tombol Lapor Barang tetap */
+        .cu-body .cu-header .cu-report-dropdown {
+            width: 245px !important;
+            min-width: 245px !important;
+        }
+
+        .cu-body .cu-header
+        .cu-report-dropdown > summary {
+            width: 245px !important;
+            height: 48px !important;
+            box-sizing: border-box !important;
+        }
+
+        /* Notifikasi dan profil tetap di kanan */
+        .cu-body .cu-header .cu-account {
+            grid-column: 3 !important;
+            justify-self: end !important;
+            margin: 0 !important;
+        }
+    }
+
+    /* Hindari perubahan ukuran saat tombol aktif */
+    .cu-body .cu-header .cu-nav > a,
+    .cu-body .cu-header .cu-nav > a.active,
+    .cu-body .cu-header .cu-report-dropdown > summary,
+    .cu-body .cu-header .cu-report-dropdown > summary.active {
+        font-weight: 700 !important;
+        transform: none !important;
+        transition: none !important;
+        animation: none !important;
+    }
+
+    /* Logo tidak bergeser */
+    .cu-body .cu-header .cu-brand,
+    .cu-body .cu-header .cu-brand img {
+        transform: none !important;
+        transition: none !important;
+        animation: none !important;
+    }
+
+    /* Hilangkan gerakan saat hover */
+    .cu-body .cu-header .cu-nav > a:hover,
+    .cu-body .cu-header
+    .cu-report-dropdown > summary:hover {
+        transform: none !important;
+    }
+</style>
+
+
+
 </head>
+
 
 <body class="fb-responsive cu-body {{ request()->routeIs('user.reports.index', 'user.claims.index') ? 'fb-activity-page' : '' }}">
 
@@ -77,18 +229,31 @@
 
     {{-- HEADER / NAVBAR --}}
 
-    <header class="cu-header">
+    
+
+<header class="cu-header" id="fb-permanent-header">
+
+
         <div class="cu-nav-wrap">
 
             {{-- IDENTITAS APLIKASI DINAMIS --}}
 
             <a class="cu-brand"
-               href="{{ route('dashboard') }}"
+               
+href="{{ route('dashboard') }}" 
+
                aria-label="{{ $siteName }} - Beranda">
-                <img
-                    src="{{ \App\Support\AdminSettings::logoUrl($fbBrand) }}"
-                    alt=""
-                >
+               
+<img
+    src="{{ \App\Support\AdminSettings::logoUrl($fbBrand) }}"
+    alt=""
+    width="46"
+    height="46"
+    loading="eager"
+    fetchpriority="high"
+    decoding="async"
+>
+
                 <span>
                     {{ $siteName }}
                     <small>{{ $institutionName }}</small>
@@ -158,11 +323,15 @@
     </summary>
 
     <div>
-        <a href="{{ route('user.reports.lost.create') }}">
+        
+<a href="{{ route('user.reports.lost.create') }}" >
+
             Barang hilang
         </a>
 
-        <a href="{{ route('user.reports.found.create') }}">
+        
+<a href="{{ route('user.reports.found.create') }}" >
+
             Barang ditemukan
         </a>
     </div>
@@ -171,8 +340,12 @@
                 {{-- AKTIVITAS SAYA --}}
 
                 <a
-                    class="{{ request()->routeIs('user.reports.*', 'user.claims.*') ? 'active' : '' }}"
-                    href="{{ route('user.reports.index') }}"
+                   
+class="{{ request()->routeIs('user.reports.index', 'user.claims.*') ? 'active' : '' }}"
+  
+                    
+href="{{ route('user.reports.index') }}" 
+
                 >
                     <svg class="fb-nav-icon" viewBox="0 0 24 24"
                          fill="none" stroke="currentColor"
@@ -328,9 +501,29 @@
         <span>{{ $institutionName }}</span>
         <small>© {{ date('Y') }}</small>
     </footer>
-    @unless (request()->routeIs('user.chat.index'))
-        <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
-    @endunless
+   
     <script src="{{ asset('js/shared/responsive-viewport.js') }}?v=20261111" defer></script>
+
+
+{{-- Navigasi cepat untuk empat halaman utama --}}
+@php
+    $fbFastRoutes = [
+        route('dashboard'),
+        route('user.reports.index'),
+        route('user.reports.lost.create'),
+        route('user.reports.found.create'),
+    ];
+@endphp
+
+<script type="application/json" id="fb-fast-navigation">
+{!! json_encode($fbFastRoutes, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!}
+</script>
+
+
+<script
+    src="{{ asset('js/user/fb-fast-navigation.js') }}?v=2"
+    defer>
+</script>
+
 </body>
 </html>

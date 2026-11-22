@@ -2,7 +2,7 @@
 
 @section('title', 'Aktivitas Saya')
 @section('content')
-    <link rel="stylesheet" href="{{ asset('css/report-cycle.css') }}?v=7">
+    
 
     @include('user.components.activity-heading', ['activityTab' => 'claims'])
 

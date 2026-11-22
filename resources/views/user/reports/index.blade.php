@@ -1,7 +1,8 @@
 @extends('user.layouts.campus')
+
 @section('title', 'Aktivitas Saya')
+
 @section('content')
-    <link rel="stylesheet" href="{{ asset('css/report-cycle.css') }}?v=7">
     
 
 @include('user.components.activity-heading', ['activityTab' => 'reports'])
@@ -178,19 +179,37 @@
 @include('user.components.pages', ['paginator' => $reports])
     </section>
 
+
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const dropdowns = document.querySelectorAll('[data-custom-select]');
+window.fbInitActivityFilters = function () {
+    window.fbActivityFilterController?.abort();
+
+    const controller = new AbortController();
+    window.fbActivityFilterController = controller;
+
+    const dropdowns = document.querySelectorAll(
+        '[data-custom-select]'
+    );
 
     dropdowns.forEach(function (dropdown) {
-        const trigger = dropdown.querySelector('.fb-custom-trigger');
-        const input = dropdown.querySelector('input[type="hidden"]');
-        const label = dropdown.querySelector('.fb-custom-label');
-        const options = dropdown.querySelectorAll('.fb-custom-options button');
+        const trigger = dropdown.querySelector(
+            '.fb-custom-trigger'
+        );
+
+        const input = dropdown.querySelector(
+            'input[type="hidden"]'
+        );
+
+        const label = dropdown.querySelector(
+            '.fb-custom-label'
+        );
+
+        const options = dropdown.querySelectorAll(
+            '.fb-custom-options button'
+        );
 
         if (!trigger || !input || !label) return;
 
-        // Membuka dan menutup dropdown
         trigger.addEventListener('click', function (event) {
             event.preventDefault();
             event.stopPropagation();
@@ -200,8 +219,11 @@ document.addEventListener('DOMContentLoaded', function () {
             dropdowns.forEach(function (item) {
                 item.classList.remove('open');
 
-                const button = item.querySelector('.fb-custom-trigger');
-                if (button) button.setAttribute('aria-expanded', 'false');
+                const button = item.querySelector(
+                    '.fb-custom-trigger'
+                );
+
+                button?.setAttribute('aria-expanded', 'false');
             });
 
             if (!isOpen) {
@@ -210,7 +232,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Memilih pilihan dropdown
         options.forEach(function (option) {
             option.addEventListener('click', function (event) {
                 event.preventDefault();
@@ -224,14 +245,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
 
                 option.classList.add('selected');
-
                 dropdown.classList.remove('open');
+
                 trigger.setAttribute('aria-expanded', 'false');
             });
-        });
 
-        // Menandai pilihan yang sedang aktif
-        options.forEach(function (option) {
             if (option.dataset.value === input.value) {
                 option.classList.add('selected');
                 label.textContent = option.textContent.trim();
@@ -239,30 +257,47 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Menutup dropdown ketika klik di luar
     document.addEventListener('click', function (event) {
         dropdowns.forEach(function (dropdown) {
             if (!dropdown.contains(event.target)) {
                 dropdown.classList.remove('open');
 
-                const trigger = dropdown.querySelector('.fb-custom-trigger');
-                if (trigger) trigger.setAttribute('aria-expanded', 'false');
+                dropdown.querySelector(
+                    '.fb-custom-trigger'
+                )?.setAttribute('aria-expanded', 'false');
             }
         });
-    });
+    }, { signal: controller.signal });
 
-    // Menutup dropdown dengan tombol Escape
     document.addEventListener('keydown', function (event) {
-        if (event.key === 'Escape') {
-            dropdowns.forEach(function (dropdown) {
-                dropdown.classList.remove('open');
+        if (event.key !== 'Escape') return;
 
-                const trigger = dropdown.querySelector('.fb-custom-trigger');
-                if (trigger) trigger.setAttribute('aria-expanded', 'false');
-            });
+        dropdowns.forEach(function (dropdown) {
+            dropdown.classList.remove('open');
+
+            dropdown.querySelector(
+                '.fb-custom-trigger'
+            )?.setAttribute('aria-expanded', 'false');
+        });
+    }, { signal: controller.signal });
+};
+
+if (!window.fbActivityTurboListenerInstalled) {
+    window.fbActivityTurboListenerInstalled = true;
+
+    document.addEventListener('turbo:load', function () {
+        if (document.querySelector('[data-custom-select]')) {
+            window.fbInitActivityFilters();
         }
     });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    if (!window.Turbo && document.querySelector('[data-custom-select]')) {
+        window.fbInitActivityFilters();
+    }
 });
 </script>
+
 
 @endsection

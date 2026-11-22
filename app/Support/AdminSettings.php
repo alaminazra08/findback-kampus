@@ -12,6 +12,9 @@ final class AdminSettings
         'site_description' => 'Sistem informasi barang hilang dan ditemukan di kampus',
         'institution_name' => 'Fakultas Sains dan Teknologi',
         'contact_email' => '',
+        'home_heading' => '',
+        'brand_logo' => '',
+        'brand_color' => '',
         'matching_min_score' => '50',
         'notification_reports' => '1',
         'notification_claims' => '1',
@@ -30,6 +33,23 @@ final class AdminSettings
                 ->pluck('setting_value', 'setting_key')
                 ->all(),
         );
+    }
+
+    public static function logoUrl(array $settings, string $fallback = 'images/logo-findback.png'): string
+    {
+        $path = (string) ($settings['brand_logo'] ?? '');
+        if (!preg_match('~\Abranding/[A-Za-z0-9]+\.(png|jpg|jpeg|webp)\z~i', $path)) {
+            return asset($fallback);
+        }
+
+        return \Illuminate\Support\Facades\Storage::disk('public')->url($path);
+    }
+
+    public static function brandColor(array $settings): string
+    {
+        $color = (string) ($settings['brand_color'] ?? '');
+
+        return preg_match('/^#[0-9a-f]{6}$/iD', $color) ? $color : '';
     }
 
     public static function minimumScore(): int

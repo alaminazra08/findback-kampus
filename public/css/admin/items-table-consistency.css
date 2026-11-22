@@ -80,3 +80,24 @@
     object-fit: cover;
   }
 }
+
+/* Keep each kind of label and action consistent across report rows. */
+.fb-items-panel .fb-items-table td[data-fb-v34="jenis"] > .fb-items-badge {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 6rem !important;
+    max-width: 100%;
+    min-height: 2rem;
+    text-align: center;
+}
+
+.fb-items-panel .fb-items-table td[data-fb-v34="aksi"] .fb-admin-detail-action {
+    box-sizing: border-box;
+    width: 8.5rem !important;
+    max-width: 100%;
+    min-height: 44px !important;
+    justify-content: center;
+    white-space: nowrap;
+}

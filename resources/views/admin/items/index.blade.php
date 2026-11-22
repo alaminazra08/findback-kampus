@@ -7,8 +7,9 @@
 @endsection
 
 @section('page-styles')
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/summary-emblems.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/header-consistency.css') }}?v=2">
-    <link rel="stylesheet" href="{{ asset('css/admin/items-table-consistency.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/admin/items-table-consistency.css') }}?v=3">
     <link rel="stylesheet" href="{{ asset('css/admin/report-filters.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/report-list-polish.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/hover-consistency-v6.css') }}?v=20261115-6">
@@ -222,21 +223,26 @@
 
     <section class="fb-items-summary" aria-label="Ringkasan data barang">
 
-        <article><span>Total Barang</span><strong>{{ number_format($total, 0, ',', '.') }}</strong><small>Seluruh laporan
-
-                tersimpan</small></article>
-
-        <article><span>Barang Hilang</span><strong>{{ number_format($lost, 0, ',', '.') }}</strong><small>Laporan
-
-                kehilangan</small></article>
-
-        <article><span>Barang Ditemukan</span><strong>{{ number_format($found, 0, ',', '.') }}</strong><small>Laporan
-
-                penemuan</small></article>
-
-        <article><span>Barang Dikembalikan</span><strong>{{ number_format($returned, 0, ',', '.') }}</strong><small>Laporan
-
-                selesai serah terima</small></article>
+        @foreach ([
+            ['total', 'Total Barang', $total, 'Seluruh laporan tersimpan', 'M4 7h16v13H4z M3 4h18v3H3z M10 11h4'],
+            ['lost', 'Barang Hilang', $lost, 'Laporan kehilangan', 'M21 21l-5-5 M18 11a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z'],
+            ['found', 'Barang Ditemukan', $found, 'Laporan penemuan', 'M12 3 3 8v8l9 5 9-5V8z M3 8l9 5 9-5 M12 13v8'],
+            ['returned', 'Barang Dikembalikan', $returned, 'Laporan selesai serah terima', 'M20 6 9 17l-5-5 M4 21h16'],
+        ] as [$tone, $label, $count, $description, $iconPath])
+            <article class="fb-summary-emblem-card is-{{ $tone }}">
+                <div class="fb-summary-emblem-head">
+                    <span class="fb-report-card-label">{{ $label }}</span>
+                    <span class="fb-summary-emblem">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="{{ $iconPath }}" />
+                        </svg>
+                    </span>
+                </div>
+                <strong>{{ number_format($count, 0, ',', '.') }}</strong>
+                <small>{{ $description }}</small>
+            </article>
+        @endforeach
 
     </section>
 
@@ -246,9 +252,9 @@
 
             <div>
 
-                <h2 id="fb-list-title">Daftar Barang</h2>
+                <h2 id="fb-list-title">Daftar Laporan Barang</h2>
 
-                <p>Cari dan saring laporan barang FindBack Kampus.</p>
+                <p>Cari atau saring seluruh laporan barang yang sudah lolos verifikasi.</p>
 
             </div>
 

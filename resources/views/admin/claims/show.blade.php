@@ -457,5 +457,4 @@
         </dialog>
     @endforeach
 
-    <footer class="fb-footer">© {{ date('Y') }} FindBack Kampus · Fakultas Sains dan Teknologi</footer>
 @endsection

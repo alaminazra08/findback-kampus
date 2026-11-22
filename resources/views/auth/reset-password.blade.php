@@ -1,22 +1,23 @@
 <!DOCTYPE html>
-<html lang="id">
+<html @if (\App\Support\AdminSettings::brandColor($fbBrand) !== '') data-custom-brand @endif lang="id">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#850c2d">
     <title>FindBack Kampus</title>
-    <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
+    <link rel="icon" href="{{ \App\Support\AdminSettings::logoUrl($fbBrand, 'favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('css/auth/password-recovery.css') }}">
     <link rel="stylesheet" href="{{ asset('css/shared/view-utilities.css') }}">
     <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
 <!-- FINDBACK_TYPOGRAPHY_V1 -->
 <link rel="stylesheet" href="{{ asset('css/shared/typography.css') }}">
+    @include('partials.findback-brand-theme')
 </head>
 
 <body class="fb-responsive fb-recovery-page">
     <main class="fb-recovery-card">
-        <a class="fb-recovery-brand" href="{{ route('home') }}"><img src="{{ asset('images/logo-findback.png') }}"
+        <a class="fb-recovery-brand" href="{{ route('home') }}"><img src="{{ \App\Support\AdminSettings::logoUrl($fbBrand) }}"
                 alt="" width="42" height="42"><span>FindBack <b>Kampus</b></span></a>
         <p class="fb-recovery-kicker">KEAMANAN AKUN</p>
         <h1>Atur ulang kata sandi</h1>

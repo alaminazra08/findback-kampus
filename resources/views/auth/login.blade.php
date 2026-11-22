@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html @if (\App\Support\AdminSettings::brandColor($fbBrand) !== '') data-custom-brand @endif lang="id">
 
 <head>
     <meta charset="UTF-8">
@@ -8,7 +8,7 @@
     <meta name="description"
         content="Masuk ke FindBack Kampus untuk melaporkan dan menemukan kembali barang di lingkungan Fakultas Sains dan Teknologi.">
     <title>FindBack Kampus</title>
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="icon" href="{{ \App\Support\AdminSettings::logoUrl($fbBrand, 'favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('css/auth/auth.css') }}">
     <link rel="stylesheet" href="{{ asset('css/auth/login.css') }}">
     <link rel="stylesheet" href="{{ asset('css/auth/login-recovery-modal.css') }}">
@@ -17,6 +17,7 @@
 <!-- FINDBACK_TYPOGRAPHY_V1 -->
 <link rel="stylesheet" href="{{ asset('css/shared/typography.css') }}">
     <script src="{{ asset('js/pages/auth/admin-tab-login.js') }}"></script>
+    @include('partials.findback-brand-theme')
 </head>
 
 <body class="fb-responsive fb-auth-page fb-login-page">
@@ -29,7 +30,7 @@
             <div class="fb-login-visual__veil" aria-hidden="true"></div>
             <div class="fb-login-visual__top">
                 <span class="fb-login-visual__emblem">
-                    <img src="{{ asset('images/logo-findback.png') }}" alt="" width="72" height="72"
+                    <img src="{{ \App\Support\AdminSettings::logoUrl($fbBrand) }}" alt="" width="72" height="72"
                         loading="eager" decoding="async">
                 </span>
                 <span class="fb-login-visual__identity">
@@ -58,7 +59,7 @@
                     <span class="fb-auth-back__label">Kembali ke beranda</span>
                 </a>
                 <div class="fb-login-mobile-brand" aria-label="FindBack Kampus">
-                    <img src="{{ asset('images/logo-findback.png') }}" alt="" width="30" height="30"
+                    <img src="{{ \App\Support\AdminSettings::logoUrl($fbBrand) }}" alt="" width="30" height="30"
                         loading="lazy" decoding="async">
                     <span>FINDBACK KAMPUS</span>
                 </div>

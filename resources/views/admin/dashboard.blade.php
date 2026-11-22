@@ -3,6 +3,8 @@
 @section('breadcrumb', 'Dashboard')
 
 @section('page-styles')
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-charts.css') }}?v=3">
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/summary-emblems.css') }}?v=4">
     <link rel="stylesheet" href="{{ asset('css/admin/quick-actions-base.css') }}?v=17">
     <link rel="stylesheet" href="{{ asset('css/admin/quick-actions-compact.css') }}?v=18">
     <link rel="stylesheet" href="{{ asset('css/admin/quick-actions-layout.css') }}?v=19">
@@ -10,29 +12,29 @@
     <link rel="stylesheet" href="{{ asset('css/admin/findback-pm-detail-date.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/header-consistency.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-report-cards.css') }}?v=20261111">
-    <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-recent-consistency.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-recent-consistency.css') }}?v=6">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-date.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-greeting.css') }}?v=4">
 @endsection
 
 @section('content')
-                <div class="fb-page-heading">
-                    <div>
-                        <p class="fb-eyebrow">ADMINISTRASI · FINDBACK KAMPUS</p>
+                <div class="fb-page-heading fb-dashboard-heading">
+                    <p class="fb-eyebrow">ADMINISTRASI · FINDBACK KAMPUS</p>
+                    <div class="fb-dashboard-title-row">
                         <h1>Dashboard <span>Admin</span></h1>
-                        {{-- Deskripsi dinamis dari Admin > Pengaturan Sistem --}}
-                        <p class="fb-heading-text fb-wrap-anywhere">{{ trim((string) ($adminSettings['site_description'] ?? '')) ?: 'Pusat pengelolaan laporan dan aktivitas barang kampus.' }}</p>
+                        <span class="fb-date-label fb-date-premium fb-pm-date" id="fb-live-date"
+                            aria-label="Tanggal hari ini">
+                            <svg class="fb-date-premium-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <rect x="3" y="5" width="18" height="16" rx="2" />
+                                <path d="M7 3v4M17 3v4M3 10h18" />
+                            </svg>
+                            <span
+                                class="fb-date-text">{{ now()->timezone('Asia/Jakarta')->locale('id')->translatedFormat('d F Y') }}</span>
+                            <span class="fb-date-text-short">{{ now()->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y') }}</span>
+                        </span>
                     </div>
-                    <span class="fb-date-label fb-date-premium fb-pm-date" id="fb-live-date"
-                        aria-label="Tanggal hari ini">
-                        <svg class="fb-date-premium-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <rect x="3" y="5" width="18" height="16" rx="2" />
-                            <path d="M7 3v4M17 3v4M3 10h18" />
-                        </svg>
-                        <span
-                            class="fb-date-text">{{ now()->timezone('Asia/Jakarta')->locale('id')->translatedFormat('d F Y') }}</span>
-                        <span class="fb-date-text-short">{{ now()->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y') }}</span>
-                    </span>
+                    <p class="fb-dashboard-description">FindBack • Sistem Informasi Kehilangan dan Penemuan Barang</p>
                 </div>
 
                 @php
@@ -53,26 +55,16 @@
                     ];
                     $analyticsReady = (bool) ($analytics['available'] ?? false);
                 @endphp
-                {{-- FINDBACK_DASHBOARD_V40 --}}
-                <section class="fb-analytics-intro" aria-label="Ringkasan dashboard">
-                    <div><span class="fb-analytics-kicker">✦ PUSAT KENDALI FINDBACK</span>
-                        <h2>Selamat datang kembali!</h2>
-                        <p>Kelola pekerjaan hari ini dengan lebih mudah dan terarah.</p>
-                    </div>
-
-                </section>
-
                 <section class="fb-analytics-section" aria-labelledby="fb-report-title">
                     <div class="fb-section-title fb-analytics-title">
-                        <div>
-                            <h2 id="fb-report-title">Ringkasan Laporan Barang</h2>
-                            <p>Statistik operasional berdasarkan data tersimpan</p>
-                        </div><span
-                            class="fb-data-status {{ $analyticsReady ? 'is-ready' : '' }}"><i></i>{{ $analyticsReady ? 'Data database' : 'Menunggu modul laporan' }}</span>
+                        <h2 id="fb-report-title">Ringkasan Laporan Barang</h2>
+                        @unless ($analyticsReady)
+                            <span class="fb-data-status">Menunggu modul laporan</span>
+                        @endunless
                     </div>
                     <div class="fb-report-cards">
-                        <article class="fb-report-card is-lost">
-                            <div class="fb-report-card-top"><span class="fb-report-icon"><svg viewBox="0 0 24 24"
+                        <article class="fb-report-card fb-summary-emblem-card is-lost">
+                            <div class="fb-report-card-top"><span class="fb-summary-emblem"><svg viewBox="0 0 24 24"
                                         width="21" height="21" fill="none" stroke="currentColor"
                                         stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
                                         aria-hidden="true">
@@ -82,8 +74,8 @@
                             <strong>{{ $analyticsReady ? number_format($analytics['lost'], 0, ',', '.') : '—' }}</strong><small>Laporan
                                 barang hilang</small>
                         </article>
-                        <article class="fb-report-card is-found">
-                            <div class="fb-report-card-top"><span class="fb-report-icon"><svg viewBox="0 0 24 24"
+                        <article class="fb-report-card fb-summary-emblem-card is-found">
+                            <div class="fb-report-card-top"><span class="fb-summary-emblem"><svg viewBox="0 0 24 24"
                                         width="21" height="21" fill="none" stroke="currentColor"
                                         stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
                                         aria-hidden="true">
@@ -92,8 +84,8 @@
                             <strong>{{ $analyticsReady ? number_format($analytics['found'], 0, ',', '.') : '—' }}</strong><small>Laporan
                                 barang ditemukan</small>
                         </article>
-                        <article class="fb-report-card is-claim">
-                            <div class="fb-report-card-top"><span class="fb-report-icon"><svg viewBox="0 0 24 24"
+                        <article class="fb-report-card fb-summary-emblem-card is-claim">
+                            <div class="fb-report-card-top"><span class="fb-summary-emblem"><svg viewBox="0 0 24 24"
                                         width="21" height="21" fill="none" stroke="currentColor"
                                         stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
                                         aria-hidden="true">
@@ -103,8 +95,8 @@
                             <strong>{{ $analyticsReady ? number_format($analytics['claim'], 0, ',', '.') : '—' }}</strong><small>Menunggu
                                 penyelesaian klaim</small>
                         </article>
-                        <article class="fb-report-card is-returned">
-                            <div class="fb-report-card-top"><span class="fb-report-icon"><svg viewBox="0 0 24 24"
+                        <article class="fb-report-card fb-summary-emblem-card is-returned">
+                            <div class="fb-report-card-top"><span class="fb-summary-emblem"><svg viewBox="0 0 24 24"
                                         width="21" height="21" fill="none" stroke="currentColor"
                                         stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
                                         aria-hidden="true">
@@ -206,7 +198,7 @@
                         <p>Perkembangan laporan selama 7 hari terakhir</p>
                     </div><span class="fb-period-tag">7 hari terakhir</span>
                 </div>
-                <div class="fb-trend-chart" id="fb-trend-chart" role="img"
+                <div class="fb-trend-chart" id="fb-trend-chart" role="group"
                     aria-label="Grafik tren laporan hilang dan ditemukan"></div>
                 <div class="fb-chart-legend"><span><i class="fb-legend-lost"></i>Barang hilang</span><span><i
                             class="fb-legend-found"></i>Barang ditemukan</span></div>
@@ -215,8 +207,8 @@
                 <div class="fb-panel-head">
                     <div>
                         <h2 id="fb-dist-title">Distribusi Laporan</h2>
-                        <p>Komposisi seluruh laporan barang</p>
-                    </div>
+                        <p>Komposisi laporan barang</p>
+                    </div><span class="fb-period-tag">Seluruh data</span>
                 </div>
                 <div class="fb-distribution-body">
                     <div class="fb-donut" id="fb-report-donut">
@@ -227,115 +219,27 @@
                     </div>
                     <div class="fb-dist-legend">
                         <div><i class="fb-legend-lost"></i><span>Barang
-                                Hilang</span><b>{{ $analyticsReady ? $analytics['lost'] : '—' }}</b></div>
+                                Hilang</span><b>{{ $analyticsReady ? $analytics['lost'] : '—' }} @if ($analyticsReady && ($analytics['lost'] + $analytics['found']) > 0)
+                                    <small>({{ number_format(100 * $analytics['lost'] / ($analytics['lost'] + $analytics['found']), 0, ',', '.') }}%)</small>
+                                @endif</b></div>
                         <div><i class="fb-legend-found"></i><span>Barang
-                                Ditemukan</span><b>{{ $analyticsReady ? $analytics['found'] : '—' }}</b></div>
+                                Ditemukan</span><b>{{ $analyticsReady ? $analytics['found'] : '—' }} @if ($analyticsReady && ($analytics['lost'] + $analytics['found']) > 0)
+                                    <small>({{ number_format(100 * $analytics['found'] / ($analytics['lost'] + $analytics['found']), 0, ',', '.') }}%)</small>
+                                @endif</b></div>
                     </div>
                 </div>
             </section>
         </div>
 
-        <section class="fb-panel fb-recent-reports" aria-labelledby="fb-recent-reports-title">
-            <div class="fb-panel-head">
-                <div>
-                    <h2 id="fb-recent-reports-title">Laporan Terbaru</h2>
-                    <p>Aktivitas pelaporan barang terkini</p>
-                </div><span class="fb-panel-pill">{{ count($analytics['recent'] ?? []) }} laporan</span>
-            </div>
-            {{-- Mobile card layout follows the Statistics page; desktop table stays intact. --}}
-            <div class="fb-dashboard-mobile-reports" aria-label="Daftar laporan terbaru">
-                @forelse(($analytics['recent'] ?? []) as $report)
-                    <article class="fb-dashboard-mobile-card">
-                        <div class="fb-dashboard-mobile-top">
-                            <span class="fb-dashboard-mobile-photo">
-                                @if (!empty($report['photo']))
-                                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($report['photo']) }}"
-                                        alt="Foto barang {{ $report['name'] ?? '' }}" loading="lazy" decoding="async"
-                                        data-image-fallback="hidden">
-                                @endif
-                                <span class="fb-dashboard-mobile-placeholder" @if (!empty($report['photo'])) hidden @endif aria-hidden="true">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 6-6 4 4 3-3 5 5"/></svg>
-                                </span>
-                            </span>
-                            <div class="fb-dashboard-mobile-title">
-                                <a href="{{ route('admin.items.show', $report['id']) }}"><strong>{{ $report['name'] ?? '—' }}</strong></a>
-                                <span class="fb-report-type {{ ($report['type'] ?? '') === 'found' ? 'is-found' : 'is-lost' }}">{{ ($report['type'] ?? '') === 'found' ? 'Ditemukan' : 'Hilang' }}</span>
-                            </div>
-                        </div>
-                        <div class="fb-dashboard-mobile-details">
-                            <span>Lokasi: <strong>{{ $report['location'] ?? '—' }}</strong></span>
-                            <span>{{ $report['date'] ?? '—' }}</span>
-                        </div>
-                        <div class="fb-dashboard-mobile-footer">
-                            <span class="fb-report-status status-{{ $report['status'] ?? '' }}">{{ \App\Support\WorkflowStatus::reports()[$report['status'] ?? ''] ?? ($report['status'] ?? '—') }}</span>
-                        </div>
-                    </article>
-                @empty
-                    <p class="fb-dashboard-mobile-empty">Belum ada laporan untuk ditampilkan.</p>
-                @endforelse
-            </div>
-            <div class="fb-table-scroll">
-                <table class="fb-user-table fb-report-table">
-                    <thead>
-                        <tr>
-                            <th>Nama Barang</th>
-                            <th>Jenis</th>
-                            <th>Lokasi</th>
-                            <th>Tanggal</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse(($analytics['recent'] ?? []) as $report)
-                            <tr class="fb-v35-report-row">
-                                <td data-label="Nama Barang">
-                                    <div class="fb-v37-item"><span class="fb-v37-photo">
-                                            @if (!empty($report['photo']))
-                                                <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($report['photo']) }}"
-                                                    alt="Foto barang {{ $report['name'] ?? '' }}" loading="lazy"
-                                                    decoding="async" data-image-fallback="hidden">
-                                            @endif
-                                            <span class="fb-v37-photo-fallback"
-                                                @if (!empty($report['photo'])) hidden @endif
-                                                aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="1.6">
-                                                    <rect x="3" y="3" width="18" height="18" rx="3" />
-                                                    <circle cx="8" cy="8" r="1.5" />
-                                                    <path d="m3 17 6-6 4 4 3-3 5 5" />
-                                                </svg></span>
-                                        </span><a
-                                            href="{{ route('admin.items.show', $report['id']) }}"><strong>{{ $report['name'] ?? '—' }}</strong></a>
-                                    </div>
-                                </td>
-                                <td data-label="Jenis"><span
-                                        class="fb-report-type {{ ($report['type'] ?? '') === 'found' ? 'is-found' : 'is-lost' }}">{{ ($report['type'] ?? '') === 'found' ? 'Ditemukan' : 'Hilang' }}</span>
-                                </td>
-                                <td data-label="Lokasi">{{ $report['location'] ?? '—' }}</td>
-                                <td data-label="Tanggal">{{ $report['date'] ?? '—' }}</td>
-                                <td data-label="Status"><span
-                                        class="fb-report-status status-{{ $report['status'] ?? '' }}">{{ \App\Support\WorkflowStatus::reports()[$report['status'] ?? ''] ?? ($report['status'] ?? '—') }}</span>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" class="fb-empty">
-                                    <div class="fb-empty-state"><span>▤</span><strong>Belum ada laporan untuk
-                                            ditampilkan</strong>
-                                        <p>{{ $analyticsReady ? 'Laporan baru akan muncul secara otomatis setelah tercatat.' : 'Hubungkan modul laporan barang untuk mengaktifkan statistik dan grafik.' }}
-                                        </p>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-            <div class="fb-dashboard-more-wrap">
-                <a href="{{ route('admin.statistics.index') }}" class="fb-dashboard-more-link" aria-label="Lihat seluruh laporan di halaman Laporan dan Statistik">
-                    Lihat Statistik Laporan <svg class="fb-dashboard-more-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-                </a>
-            </div>
-        </section>
+        @include('admin.partials.recent-reports', [
+            'showAllReportsLink' => true,
+            'recentRows' => $analytics['recent'] ?? [],
+            'recentTitle' => 'Laporan Terbaru',
+            'recentCaption' => 'Sekilas hingga 5 laporan barang terbaru yang sudah lolos verifikasi.',
+            'recentEmpty' => $analyticsReady
+                ? 'Laporan akan muncul setelah lolos verifikasi.'
+                : 'Hubungkan modul laporan barang untuk mengaktifkan statistik dan grafik.',
+        ])
 
         <section class="fb-compact-users" aria-labelledby="fb-users-title">
             <div class="fb-section-title fb-users-heading">
@@ -346,10 +250,10 @@
                 <span class="fb-users-tag"><span aria-hidden="true"></span> Data akun</span>
             </div>
             <div class="fb-user-summary">
-                <article class="fb-user-metric">
+                <article class="fb-user-metric fb-summary-emblem-card is-account-total">
                     <div class="fb-user-metric-head">
                         <span>Total Akun</span>
-                        <span class="fb-user-metric-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"
+                        <span class="fb-summary-emblem" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <circle cx="9" cy="8" r="3" />
@@ -359,10 +263,10 @@
                     <strong>{{ number_format($totalUsers, 0, ',', '.') }}</strong>
                     <small>Seluruh akun terdaftar</small>
                 </article>
-                <article class="fb-user-metric">
+                <article class="fb-user-metric fb-summary-emblem-card is-account-user">
                     <div class="fb-user-metric-head">
                         <span>Pengguna Biasa</span>
-                        <span class="fb-user-metric-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"
+                        <span class="fb-summary-emblem" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <circle cx="12" cy="8" r="3.5" />
@@ -372,10 +276,10 @@
                     <strong>{{ number_format($totalRegularUsers, 0, ',', '.') }}</strong>
                     <small>Akun dengan role user</small>
                 </article>
-                <article class="fb-user-metric">
+                <article class="fb-user-metric fb-summary-emblem-card is-account-admin">
                     <div class="fb-user-metric-head">
                         <span>Administrator</span>
-                        <span class="fb-user-metric-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"
+                        <span class="fb-summary-emblem" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <path d="m12 2 8 4v6c0 5-3.4 8.3-8 10-4.6-1.7-8-5-8-10V6z" />
@@ -399,16 +303,4 @@
             ];
         @endphp
         <script type="application/json" id="fb-analytics-json">@json($analyticsPayload)</script>
-        <footer class="fb-footer">
-            © {{ date('Y') }} {{ $adminSettings['site_name'] }}
-            <span>·</span>
-            {{ $adminSettings['institution_name'] }}
-
-            @if (!empty($adminSettings['contact_email']))
-                <span>·</span>
-                <a href="mailto:{{ $adminSettings['contact_email'] }}">
-                    {{ $adminSettings['contact_email'] }}
-                </a>
-            @endif
-        </footer>
 @endsection

@@ -264,5 +264,4 @@
         </div>
     </div>
     @include('admin.partials.report-photo-dialog')
-    <footer class="fb-footer">© {{ date('Y') }} FindBack Kampus · Fakultas Sains dan Teknologi</footer>
 @endsection

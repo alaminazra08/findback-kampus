@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="id">
+<html @if (\App\Support\AdminSettings::brandColor($fbBrand) !== '') data-custom-brand @endif lang="id">
 
 <head>
 
@@ -12,7 +12,7 @@
 
     <title>FindBack Kampus</title>
 
-    <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
+    <link rel="icon" href="{{ \App\Support\AdminSettings::logoUrl($fbBrand, 'favicon.png') }}">
 
     <link rel="stylesheet" href="{{ asset('css/auth/auth.css') }}">
 
@@ -22,6 +22,7 @@
     <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
 <!-- FINDBACK_TYPOGRAPHY_V1 -->
 <link rel="stylesheet" href="{{ asset('css/shared/typography.css') }}">
+    @include('partials.findback-brand-theme')
 </head>
 
 <body class="fb-responsive fb-auth-page fb-register-page">
@@ -41,7 +42,7 @@
 
             <div class="fb-register-desktop-brand">
 
-                <span class="fb-register-desktop-logo"><img src="{{ asset('images/logo-findback.png') }}" alt=""
+                <span class="fb-register-desktop-logo"><img src="{{ \App\Support\AdminSettings::logoUrl($fbBrand) }}" alt=""
                         width="62" height="62"></span>
 
                 <span class="fb-register-desktop-identity"><strong>FindBack <em>Kampus</em></strong><small>LOST &amp;
@@ -72,7 +73,7 @@
 
             <div class="fb-register-mobile-brand" aria-label="FindBack Kampus">
 
-                <img src="{{ asset('images/logo-findback.png') }}" alt="" width="36" height="36">
+                <img src="{{ \App\Support\AdminSettings::logoUrl($fbBrand) }}" alt="" width="36" height="36">
 
                 <span><strong>{{ $fbBrand['site_name'] }}</strong><small>LOST &amp; FOUND · FST UIN IB</small></span>
 

@@ -64,7 +64,7 @@
     >
 
         <img
-            src="{{ asset('images/logo-findback.png') }}"
+            src="{{ \App\Support\AdminSettings::logoUrl($fbBrand) }}"
             alt=""
         >
 

@@ -1,0 +1,8 @@
+.fb-admin-body .fb-main > .fb-admin-page-footer {
+    margin: 0;
+    padding-block: clamp(1.25rem, 2.1vw, 1.75rem) 0.5rem;
+    padding-inline: 0.5rem;
+    line-height: 1.55;
+    text-align: center;
+    overflow-wrap: anywhere;
+}

@@ -159,7 +159,6 @@
             <div class="fb-claim-pages">{{ $claims->links() }}</div>
         @endif
     </section>
-    <footer class="fb-footer">© {{ date('Y') }} FindBack Kampus · Fakultas Sains dan Teknologi</footer>
 @endsection
 
 

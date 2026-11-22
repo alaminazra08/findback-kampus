@@ -244,12 +244,5 @@
 
     </section>
 
-    {{-- FOOTER --}}
-
-    <footer class="fb-footer">
-        © {{ now()->year }} FindBack Kampus
-        <span>·</span>
-        Fakultas Sains dan Teknologi
-    </footer>
 
 @endsection

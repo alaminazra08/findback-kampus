@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="id">
+<html @if (\App\Support\AdminSettings::brandColor($fbBrand) !== '') data-custom-brand @endif lang="id">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#7d0d2b">
     <meta name="description" content="{{ $fbBrand['site_description'] }}">
     <title>FindBack Kampus</title>
-    <link rel="icon" href="{{ asset('images/logo-findback.png') }}">
+    <link rel="icon" href="{{ \App\Support\AdminSettings::logoUrl($fbBrand) }}">
 
     {{-- CSS USER --}}
 
@@ -62,6 +62,7 @@
     @if (request()->routeIs('user.reports.*', 'user.claims.*'))
         <link rel="stylesheet" href="{{ asset('css/user/activity-consistency.css') }}?v=2">
     @endif
+    @include('partials.findback-brand-theme')
 </head>
 
 <body class="fb-responsive cu-body {{ request()->routeIs('user.reports.index', 'user.claims.index') ? 'fb-activity-page' : '' }}">
@@ -85,7 +86,7 @@
                href="{{ route('dashboard') }}"
                aria-label="{{ $siteName }} - Beranda">
                 <img
-                    src="{{ asset('images/logo-findback.png') }}"
+                    src="{{ \App\Support\AdminSettings::logoUrl($fbBrand) }}"
                     alt=""
                 >
                 <span>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html @if (\App\Support\AdminSettings::brandColor($fbBrand) !== '') data-custom-brand @endif lang="id">
 
 <head>
     <meta charset="UTF-8">
@@ -11,13 +11,14 @@
 
     <title>FindBack Kampus</title>
 
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="icon" href="{{ \App\Support\AdminSettings::logoUrl($fbBrand, 'favicon.png') }}">
 
     <link rel="stylesheet" href="{{ asset('css/public/landing.css') }}">
     <link rel="stylesheet" href="{{ asset('css/shared/view-utilities.css') }}">
     <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
 <!-- FINDBACK_TYPOGRAPHY_V1 -->
 <link rel="stylesheet" href="{{ asset('css/shared/typography.css') }}">
+    @include('partials.findback-brand-theme')
 </head>
 
 <body class="fb-responsive loading">
@@ -31,7 +32,7 @@
         <div class="splash-content">
 
             <div class="splash-logo">
-                <img src="{{ asset('images/logo-findback.png') }}" alt="Logo FindBack Kampus" width="112"
+                <img src="{{ \App\Support\AdminSettings::logoUrl($fbBrand) }}" alt="Logo FindBack Kampus" width="112"
                     height="112">
             </div>
 
@@ -67,10 +68,10 @@
 
             <!-- BRAND -->
             <a href="{{ url('/') }}" class="brand" aria-label="FindBack Kampus - Beranda">
-                <img class="brand-icon" src="{{ asset('images/logo-findback.png') }}" alt="Logo FindBack Kampus">
+                <img class="brand-icon" src="{{ \App\Support\AdminSettings::logoUrl($fbBrand) }}" alt="Logo FindBack Kampus">
 
                 <span class="brand-text">
-                    <span class="brand-name">FindBack Kampus</span>
+                    <span class="brand-name">{{ $fbBrand['site_name'] }}</span>
                     <span class="brand-caption">Lost &amp; Found Kampus</span>
                 </span>
             </a>
@@ -135,11 +136,15 @@
                         Layanan Barang Hilang dan Ditemukan
                     </div>
 
-                    <h1>
-                        Barang Hilang?<br>
-                        Temukan Kembali<br>
-                        Bersama <span>FindBack.</span>
-                    </h1>
+                    @if (filled($fbBrand['home_heading'] ?? null))
+                        <h1 class="fb-wrap-anywhere">{{ $fbBrand['home_heading'] }}</h1>
+                    @else
+                        <h1>
+                            Barang Hilang?<br>
+                            Temukan Kembali<br>
+                            Bersama <span>FindBack.</span>
+                        </h1>
+                    @endif
 
                     {{-- Deskripsi publik mengikuti Admin > Pengaturan Sistem --}}
                     <p class="hero-description fb-wrap-anywhere">
@@ -632,7 +637,7 @@
                     <div class="footer-info">
 
                         <a href="{{ url('/') }}" class="footer-brand">
-                            <img src="{{ asset('images/logo-findback.png') }}" alt="Logo FindBack Kampus"
+                            <img src="{{ \App\Support\AdminSettings::logoUrl($fbBrand) }}" alt="Logo FindBack Kampus"
                                 class="footer-logo" width="42" height="42">
                             FindBack Kampus
                         </a>
@@ -696,7 +701,7 @@
 
                 <!-- COPYRIGHT -->
                 <div class="footer-bottom">
-                    © {{ date('Y') }} FindBack Kampus —
+                    © {{ date('Y') }} {{ $fbBrand['site_name'] }} —
                     Layanan Barang Hilang dan Ditemukan.
                 </div>
 

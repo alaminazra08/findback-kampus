@@ -214,7 +214,6 @@
             @endif
         </section>
     </div>
-    <footer class="fb-footer">© {{ date('Y') }} FindBack Kampus · Fakultas Sains dan Teknologi</footer>
     <dialog id="fb-match-photo-dialog" class="fb-proof-dialog" aria-labelledby="fb-match-photo-title">
         <div class="fb-proof-shell">
             <header class="fb-proof-head">

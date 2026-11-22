@@ -1,0 +1,264 @@
+/* Admin settings form */
+.fb-settings .fb-settings-heading { margin-bottom: 24px; }
+.fb-settings .fb-settings-heading .fb-settings-kicker {
+    color: #931449;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+.fb-settings .fb-setting-switch {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    min-height: 44px;
+    position: relative;
+}
+.fb-settings .fb-setting-switch input[type="checkbox"] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+.fb-setting-switch-track {
+    box-sizing: border-box;
+    width: 48px;
+    height: 26px;
+    padding: 3px;
+    border-radius: 14px;
+    background: #806b76;
+    pointer-events: none;
+}
+.fb-setting-switch-track::before {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+}
+.fb-setting-switch input:checked + .fb-setting-switch-track { background: #8e1747; }
+.fb-setting-switch input:checked + .fb-setting-switch-track::before { transform: translateX(22px); }
+.fb-setting-switch input:focus-visible + .fb-setting-switch-track { outline: 2px solid #8e1747; outline-offset: 3px; }
+.fb-settings-technical summary { cursor: pointer; font-weight: 700; }
+.fb-settings-technical dl { display: flex; flex-wrap: wrap; gap: 16px 40px; }
+.fb-settings-technical dd { margin: 4px 0 0; }
+.fb-settings [data-settings-state] { color: #795365; }
+@media (max-width: 640px) {
+    .fb-settings .fb-settings-footer-actions { flex-wrap: wrap; }
+    .fb-settings .fb-settings-footer-actions .fb-settings-button { width: 100%; justify-content: center; }
+}
+
+/* Keep appearance controls separate from full-width form inputs. */
+.fb-settings .fb-settings-field .fb-brand-reset {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-self: flex-start;
+    gap: 9px;
+    min-height: 34px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+.fb-settings .fb-settings-field .fb-brand-reset input[type="checkbox"] {
+    appearance: auto !important;
+    width: 1rem !important;
+    height: 1rem !important;
+    min-height: 0 !important;
+    flex: 0 0 1rem;
+    padding: 0 !important;
+    margin: 0 !important;
+    accent-color: #8b1038;
+}
+.fb-settings .fb-settings-field input#brand-color {
+    width: 72px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    padding: 5px !important;
+    cursor: pointer;
+}
+.fb-settings .fb-settings-field #brand-logo-upload {
+    box-sizing: border-box;
+    max-width: 100%;
+    padding: 8px 10px;
+}
+.fb-settings #brand-logo-upload::file-selector-button {
+    padding: 6px 10px;
+    margin-inline-end: 8px;
+    border: 1px solid #ead6e0;
+    border-radius: 7px;
+    background: #f9eef3;
+    color: #76163e;
+    cursor: pointer;
+}
+.fb-brand-preview-copy {
+    flex: 1 1 100%;
+    border-top: 1px solid #eadce3;
+    padding-top: 10px;
+    min-width: 0;
+}
+.fb-brand-preview-copy p { margin: 5px 0 0; color: #725767; }
+@media (max-width: 640px) {
+    .fb-settings .fb-settings-fields { grid-template-columns: minmax(0, 1fr); }
+    .fb-settings .fb-settings-field { min-width: 0; }
+}
+
+/* Settings shares the visual hierarchy of the admin list headings. */
+.fb-main .fb-settings .fb-settings-heading .fb-settings-kicker {
+    margin: 0 0 9px;
+    color: #a31f50;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.6px;
+}
+
+.fb-main .fb-settings .fb-settings-heading h1 {
+    color: #281924;
+    letter-spacing: -1px;
+    font-weight: 850;
+}
+
+.fb-main .fb-settings .fb-settings-heading h1 span { color: #a52254; }
+.fb-main .fb-settings .fb-settings-heading p:last-child { color: #766b75; font-size: 14px; }
+
+.fb-settings .fb-settings-form.fb-settings-sheet {
+    display: block;
+    padding: 0 clamp(14px, 2.2vw, 30px);
+    border: 1px solid #ead6e0;
+    border-radius: 20px;
+    background: #fff;
+}
+
+.fb-settings .fb-settings-sheet > details.fb-settings-section {
+    padding: clamp(18px, 2vw, 28px) 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.fb-settings .fb-settings-sheet > details.fb-settings-section + section.fb-settings-section,
+.fb-settings .fb-settings-sheet > .fb-settings-footer-actions {
+    border-top: 1px solid #efe1e8 !important;
+}
+
+.fb-settings .fb-settings-sheet > details.fb-settings-section header {
+    margin-bottom: 16px;
+}
+.fb-settings .fb-settings-sheet > details.fb-settings-section .fb-settings-section-icon {
+    display: none;
+}
+.fb-settings .fb-settings-sheet > .fb-settings-footer-actions {
+    position: static !important;
+    margin: 0 !important;
+    padding: 16px 0 !important;
+}
+.fb-settings .fb-settings-technical-inline {
+    margin-top: 16px;
+    padding: 0 2px;
+    color: #766b75;
+    font-size: 14px;
+}
+@media (max-width: 767px) {
+    .fb-settings .fb-settings-sheet .fb-settings-fields {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .fb-settings .fb-settings-sheet > .fb-settings-footer-actions button {
+        width: 100%;
+    }
+}
+
+.fb-settings .fb-settings-sheet > details.fb-settings-section {
+    padding: 0 !important;
+}
+.fb-settings .fb-settings-section > summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-block: 16px;
+    cursor: pointer;
+}
+.fb-settings .fb-settings-section > summary::-webkit-details-marker { display: none; }
+.fb-settings .fb-settings-section > summary h2 { margin: 0; }
+.fb-settings .fb-settings-section > summary::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    margin-right: 4px;
+    flex: 0 0 8px;
+    border-right: 2px solid #8b1038;
+    border-bottom: 2px solid #8b1038;
+    transform: rotate(45deg);
+}
+.fb-settings .fb-settings-section[open] > summary::after { transform: rotate(225deg); }
+.fb-settings .fb-settings-section > summary:focus-visible { outline: 2px solid #8b1038; outline-offset: 2px; }
+.fb-settings .fb-settings-section-content { padding-bottom: 18px; }
+.fb-settings .fb-settings-section-help p { margin: 0 0 14px; color: #766b75; font-size: 13px; }
+.fb-settings .fb-settings-sheet textarea[name="site_description"] { min-height: 88px !important; }
+
+.fb-settings .fb-settings-form.fb-settings-sheet.fb-settings-separated {
+    display: grid;
+    gap: 10px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+.fb-settings .fb-settings-sheet.fb-settings-separated > details.fb-settings-section {
+    padding-inline: clamp(14px, 2vw, 24px) !important;
+    border: 1px solid #ead6e0 !important;
+    border-radius: 14px !important;
+    background: #fff !important;
+}
+
+.fb-settings .fb-settings-sheet.fb-settings-separated > details.fb-settings-section[open] {
+    border-color: #d8afc2 !important;
+}
+
+.fb-settings .fb-settings-separated .fb-settings-section > summary {
+    padding-block: 14px;
+}
+
+.fb-settings .fb-settings-sheet.fb-settings-separated > .fb-settings-footer-actions {
+    border-top: 0 !important;
+    padding-block: 4px 0 !important;
+}
+
+
+/* Fill short viewports while letting the footer scroll with longer content. */
+.fb-admin-body .fb-workspace:has(> .fb-main > .fb-settings) {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+}
+
+.fb-admin-body .fb-workspace:has(> .fb-main > .fb-settings) > .fb-topbar {
+    flex-shrink: 0;
+}
+
+.fb-admin-body .fb-main:has(> .fb-settings) {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Auto side margins on this flex item otherwise shrink it to its content. */
+.fb-admin-body .fb-main > .fb-settings {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin-inline: 0;
+    box-sizing: border-box;
+}
+
+.fb-admin-body .fb-main:has(> .fb-settings) > .fb-admin-page-footer {
+    margin-block-start: auto;
+}

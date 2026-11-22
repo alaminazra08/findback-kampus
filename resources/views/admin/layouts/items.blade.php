@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html @if (\App\Support\AdminSettings::brandColor($fbBrand) !== '') data-custom-brand @endif lang="id">
 
 <head>
     <meta charset="UTF-8">
@@ -16,8 +16,7 @@
     <script src="{{ asset('js/admin/sidebar-prepaint.js') }}"></script>
 
     <link rel="icon"
-        href="{{ asset('favicon.png') }}"
-        type="image/png">
+        href="{{ \App\Support\AdminSettings::logoUrl($fbBrand, 'favicon.png') }}">
 
     {{-- CSS UTAMA --}}
     <link rel="stylesheet"
@@ -58,6 +57,7 @@
     <script src="{{ asset('js/shared/view-interactions.js') }}" defer></script>
     <script src="{{ asset('js/report-history-live.js') }}?v=1" defer></script>
     @yield('page-styles')
+    <link rel="stylesheet" href="{{ asset('css/admin/admin-footer.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/modal-scrollbar.css') }}?v=1">
     <script src="{{ asset('js/admin/modal-scrollbar.js') }}?v=1" defer></script>
     <link rel="stylesheet" href="{{ asset('css/shared/responsive-all-devices.css') }}?v=20261111">
@@ -71,6 +71,8 @@
     <link rel="stylesheet" href="{{ asset('css/admin/design-system.css') }}?v=9">
     {{-- FINDBACK: hide native search clear controls consistently on all admin pages --}}
     <link rel="stylesheet" href="{{ asset('css/admin/search-input-consistency.css') }}?v=20261120-3">
+    <link rel="stylesheet" href="{{ asset('css/admin/report-type-size.css') }}?v=2">
+    @include('partials.findback-brand-theme')
 </head>
 
 <body class="fb-responsive fb-admin-body">
@@ -345,6 +347,11 @@
 
                 @yield('content')
 
+                <footer class="fb-footer fb-admin-page-footer">
+                    © {{ now()->year }} Fakultas Sains dan Teknologi
+                    <span>·</span> Universitas Islam Negeri Imam Bonjol Padang
+                </footer>
+
             </main>
 
         </div>
@@ -367,13 +374,13 @@
     </script>
 
     <script src="{{ asset('js/shared/responsive-viewport.js') }}?v=20261111" defer></script>
-    <script src="{{ asset('js/admin/admin-analytics.js') }}?v=2" defer></script>
+    <script src="{{ asset('js/admin/admin-analytics.js') }}?v=4" defer></script>
     <script src="{{ asset('js/admin/dashboard-date.js') }}?v=3" defer></script>
     <script src="{{ asset('js/admin/admin-items-upload.js') }}?v=2" defer></script>
     <script src="{{ asset('js/pages/admin/matching/filter-navigation.js') }}?v=6" defer></script>
     <script src="{{ asset('js/pages/admin/statistics/index.js') }}?v=2" defer></script>
     <script src="{{ asset('js/admin/settings-score.js') }}?v=2" defer></script>
-    <script src="{{ asset('js/admin/settings-smart-save.js') }}?v=11" defer></script>
+    <script src="{{ asset('js/admin/settings-smart-save.js') }}?v=16" defer></script>
     <script src="{{ asset('js/admin/claims-toast-v1.js') }}?v=2" defer></script>
     <script defer src="{{ asset('js/admin/statistics-cards-consistency-v1.js') }}?v=1"></script>
     <script defer src="{{ asset('js/admin/statistics-download-menu-v4.js') }}?v=5"></script>

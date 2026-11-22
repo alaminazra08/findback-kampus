@@ -1,0 +1,33 @@
+.fb-main .fb-page-heading.fb-dashboard-heading {
+    display: block;
+    margin-bottom: 1.25rem;
+}
+
+.fb-dashboard-title-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem 1rem;
+}
+
+.fb-dashboard-title-row h1 {
+    margin: 0;
+}
+
+.fb-dashboard-title-row #fb-live-date {
+    flex-shrink: 0;
+}
+
+.fb-dashboard-heading .fb-dashboard-description {
+    margin: .625rem 0 0;
+    color: #674353;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+@media (max-width: 767px) {
+    .fb-dashboard-title-row #fb-live-date {
+        margin-inline-start: auto;
+    }
+}

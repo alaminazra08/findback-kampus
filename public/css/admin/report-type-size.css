@@ -1,0 +1,35 @@
+/* Match the Dashboard type badge, capped by the width of its cell. */
+.fb-recent-reports .fb-report-type.is-lost,
+.fb-recent-reports .fb-report-type.is-found,
+.fb-items-panel .fb-items-table td[data-fb-v34="jenis"] > .fb-items-badge,
+table td[data-label="Jenis"] > .fb-v25-type.is-lost,
+table td[data-label="Jenis"] > .fb-v25-type.is-found {
+    box-sizing: border-box;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 8.5rem !important;
+    min-width: 0 !important;
+    max-width: 100%;
+    height: 2rem !important;
+    min-height: 2rem !important;
+    padding-block: 0 !important;
+    text-align: center;
+}
+
+/* Match the contrast of status badges while keeping each type identifiable. */
+.fb-recent-reports .fb-report-type.is-lost,
+.fb-items-panel .fb-items-table td[data-fb-v34="jenis"] > .fb-items-badge.is-lost,
+table td[data-label="Jenis"] > .fb-v25-type.is-lost {
+    border: 1px solid #b42b50 !important;
+    background: #fbeaf0 !important;
+    color: #a21842 !important;
+}
+
+.fb-recent-reports .fb-report-type.is-found,
+.fb-items-panel .fb-items-table td[data-fb-v34="jenis"] > .fb-items-badge.is-found,
+table td[data-label="Jenis"] > .fb-v25-type.is-found {
+    border: 1px solid #16825d !important;
+    background: #e8f5ef !important;
+    color: #096447 !important;
+}

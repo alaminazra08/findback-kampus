@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="{{ asset('css/admin/statistics-dropdown-layer-v6.css') }}?v=6">
     <link rel="stylesheet" href="{{ asset('css/admin/statistics-cards-consistency-v1.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/statistics-illustration-icons-v1.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/report-cycle.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-report-cards.css') }}?v=20261111">
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-recent-consistency.css') }}?v=6">
 @endsection
 
 @section('content')
@@ -195,96 +198,21 @@
             </section>
         </div>
 
-        <section class="fs-panel">
-            <div class="fs-panel-head fs-recent-head">
-                <div>
-                    <h2>Laporan Terbaru</h2>
-                    <p>Menampilkan hingga 8 laporan terbaru pada periode yang dipilih</p>
-                </div><span class="fs-recent-counter"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M7 3h8l4 4v14H7z" />
-                        <path d="M15 3v5h4M10 12h6M10 16h6" />
-                    </svg> {{ $recent->count() }} laporan</span>
-            </div>
-            {{-- Mobile-only presentation of the same report records; desktop table is unchanged. --}}
-            <div class="fs-mobile-reports" aria-label="Daftar laporan terbaru">
-                @forelse($recent as $report)
-                    <article class="fs-mobile-report-card">
-                        <div class="fs-mobile-report-top">
-                            <span class="fs-mobile-report-photo">
-                                @if (!empty($report->photo_path))
-                                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($report->photo_path) }}"
-                                        alt="Foto barang {{ $report->title }}" loading="lazy" decoding="async"
-                                        data-image-fallback="hidden">
-                                @endif
-                                <span class="fs-mobile-report-photo-fallback" @if (!empty($report->photo_path)) hidden @endif aria-hidden="true">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 6-6 4 4 3-3 5 5"/></svg>
-                                </span>
-                            </span>
-                            <div class="fs-mobile-report-title">
-                                <strong>{{ $report->title }}</strong>
-                                <span class="fs-type-pill {{ $report->type === 'lost' ? 'is-lost' : 'is-found' }}">{{ $report->type === 'lost' ? 'Hilang' : 'Ditemukan' }}</span>
-                            </div>
-                        </div>
-                        <div class="fs-mobile-report-details">
-                            <span>Lokasi: <strong>{{ $report->location ?: '—' }}</strong></span>
-                            <span>{{ \Illuminate\Support\Carbon::parse($report->created_at)->format('d M Y') }}</span>
-                        </div>
-                        <div class="fs-mobile-report-footer">
-                            <span class="fs-pill {{ in_array($report->status, ['verified', 'approved', 'returned']) ? 'is-approved' : (in_array($report->status, ['rejected']) ? 'is-rejected' : 'is-pending') }}">{{ \App\Support\WorkflowStatus::report($report->status) }}</span>
-                            <a class="fs-detail-link" href="{{ route('admin.items.show', $report->id) }}" aria-label="Lihat detail {{ $report->title }}">
-                                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-                                <span>Lihat Detail</span>
-                            </a>
-                        </div>
-                    </article>
-                @empty
-                    <p class="fs-mobile-reports-empty">Belum ada laporan pada periode ini.</p>
-                @endforelse
-            </div>
-            <div class="fs-table-scroll">
-                <table class="fs-table">
-                    <thead>
-                        <tr>
-                            <th>Nama Barang</th>
-                            <th>Jenis</th>
-                            <th>Lokasi</th>
-                            <th>Status</th>
-                            <th class="fs-col-created">Dibuat</th>
-                            <th class="fs-action-col">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($recent as $report)
-                            <tr>
-                                <td><strong>{{ $report->title }}</strong></td>
-                                <td><span
-                                        class="fs-type-pill {{ $report->type === 'lost' ? 'is-lost' : 'is-found' }}">{{ $report->type === 'lost' ? 'Hilang' : 'Ditemukan' }}</span>
-                                </td>
-                                <td>{{ $report->location ?: '—' }}</td>
-                                <td><span
-                                        class="fs-pill {{ in_array($report->status, ['verified', 'approved', 'returned']) ? 'is-approved' : (in_array($report->status, ['rejected']) ? 'is-rejected' : 'is-pending') }}">{{ \App\Support\WorkflowStatus::report($report->status) }}</span>
-                                </td>
-                                <td class="fs-col-created">
-                                    {{ \Illuminate\Support\Carbon::parse($report->created_at)->format('d/m/Y') }}</td>
-                                <td class="fs-action-col"><a class="fs-detail-link"
-                                        href="{{ route('admin.items.show', $report->id) }}"
-                                        aria-label="Lihat detail {{ $report->title }}"><svg aria-hidden="true"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z" />
-                                            <circle cx="12" cy="12" r="3" />
-                                        </svg><span>Lihat Detail</span></a></td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="fs-empty">Belum ada laporan pada periode ini.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </section>
+        @include('admin.partials.recent-reports', [
+            'recentRows' => $recent->map(fn ($report) => [
+                'id' => $report->id,
+                'name' => $report->title,
+                'photo' => $report->photo_path,
+                'type' => $report->type,
+                'location' => $report->location ?: '—',
+                'status' => $report->status,
+                'date' => \Illuminate\Support\Carbon::parse($report->created_at)->format('d M Y'),
+            ]),
+            'recentTitle' => 'Laporan Terbaru pada Periode Ini',
+            'recentCaption' => 'Periode: ' . $activePeriodLabel . '. Rekap mencakup seluruh laporan pada periode ini.',
+            'recentCountLabel' => $recent->count() . ' dari ' . number_format($total, 0, ',', '.') . ' laporan',
+            'recentEmpty' => 'Belum ada laporan pada periode ini.',
+        ])
         <p class="fs-note">Catatan: jumlah pada tabel klaim dan pencocokan dihitung berdasarkan tanggal pembuatan
             masing-masing record. Tren periode “Semua data” menampilkan 30 hari terakhir, sedangkan rekap total tetap
             seluruh data.</p>

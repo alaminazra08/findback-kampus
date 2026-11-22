@@ -5,6 +5,7 @@
 @section('breadcrumb', 'Pengaturan')
 
 @section('page-styles')
+    <link rel="stylesheet" href="{{ asset('css/admin/settings-form-polish.css') }}?v=8">
     <link rel="stylesheet" href="{{ asset('css/admin/header-consistency.css') }}?v=2">
     <link rel="stylesheet"
       href="{{ asset('css/admin/admin-settings.css') }}?v=41">
@@ -114,26 +115,12 @@
 
     </svg>
 
-    {{-- HERO --}}
-    <div class="fb-settings-hero fb-work-settings-hero">
+    <div class="fb-work-heading fb-settings-heading">
         <div>
-            <span class="fb-settings-eyebrow">
-                ADMINISTRASI · FINDBACK KAMPUS
-            </span>
-
+            <p class="fb-settings-kicker">ADMINISTRASI · FINDBACK KAMPUS</p>
             <h1>Pengaturan <span>Sistem</span></h1>
-
-            <p>
-                Kelola informasi aplikasi dan preferensi sistem
-                melalui satu tempat.
-            </p>
+            <p>Kelola identitas aplikasi, tampilan situs, dan pencocokan barang.</p>
         </div>
-
-        <span class="fb-settings-hero-icon" aria-hidden="true">
-            <svg class="fb-settings-svg">
-                <use href="#fb-i-settings"/>
-            </svg>
-        </span>
     </div>
 
     <div id="fb-settings-toast" class="fb-settings-toast" data-flash-success="{{ session('success') ? '1' : '0' }}" role="status" aria-live="polite" aria-atomic="true" hidden>
@@ -161,32 +148,22 @@
     @endif
 
     {{-- FORM --}}
-    <form method="POST"
+    <form method="POST" enctype="multipart/form-data"
           action="{{ route('admin.settings.update') }}"
-          class="fb-settings-form">
+          class="fb-settings-form fb-settings-sheet fb-settings-separated">
 
         @csrf
         @method('PUT')
 
         {{-- INFORMASI APLIKASI --}}
-        <section class="fb-settings-card"
-                 aria-labelledby="general-title">
+        <details class="fb-settings-card fb-settings-section" name="fb-settings-sections" aria-labelledby="general-title" open>
+            <summary><h2 id="general-title">Informasi Aplikasi</h2></summary>
+            <div class="fb-settings-section-content">
+                <div class="fb-settings-section-help"><p>
+                        Identitas yang digunakan pada halaman aplikasi dan dokumen laporan.
+                    </p></div>
 
-            <header>
-                <span class="fb-settings-section-icon" aria-hidden="true">
-                    <svg class="fb-settings-svg">
-                        <use href="#fb-i-app"/>
-                    </svg>
-                </span>
-
-                <div>
-                    <h2 id="general-title">Informasi Aplikasi</h2>
-                    <p>
-                        Identitas yang disimpan dalam database
-                        {{ $settings['site_name'] }}.
-                    </p>
-                </div>
-            </header>
+            
 
             <div class="fb-settings-fields">
 
@@ -209,11 +186,17 @@
                 </label>
 
                 <label class="fb-settings-field full">
+                    <span>Judul Beranda</span>
+                    <input type="text" name="home_heading" maxlength="120"
+                           value="{{ old('home_heading', $settings['home_heading']) }}"
+                           placeholder="Barang Hilang? Temukan Kembali Bersama FindBack.">
+                    <small class="fb-settings-help">Judul besar pada halaman publik. Kosongkan untuk memakai judul bawaan.</small>
+                </label>
+
+                <label class="fb-settings-field full">
                     <span>Deskripsi aplikasi</span>
                     <small class="fb-settings-help">
-                        Ditampilkan pada halaman utama publik,
-                        dashboard pengguna, dan dashboard admin
-                        setelah disimpan.
+                        Ditampilkan pada halaman utama publik dan Dashboard Pengguna.
                     </small>
 
                     <textarea name="site_description"
@@ -221,37 +204,59 @@
                               rows="3">{{ old('site_description', $settings['site_description']) }}</textarea>
                 </label>
 
-                <label class="fb-settings-field full">
-                    <span>Email kontak (opsional)</span>
-                    <input type="email"
-                           name="contact_email"
-                           maxlength="255"
-                           value="{{ old('contact_email', $settings['contact_email']) }}"
-                           placeholder="admin@kampus.ac.id">
-                </label>
 
             </div>
-        </section>
+            </div>
+        </details>
+
+        @php
+            $savedColor = \App\Support\AdminSettings::brandColor($settings);
+            $savedLogo = \App\Support\AdminSettings::logoUrl($settings);
+        @endphp
+        <details class="fb-settings-card fb-settings-section" name="fb-settings-sections" aria-labelledby="appearance-title">
+            <summary><h2 id="appearance-title">Tampilan Situs</h2></summary>
+            <div class="fb-settings-section-content">
+                <div class="fb-settings-section-help"><p>Atur logo dan warna utama untuk Beranda, halaman akun, dan panel FindBack.</p></div>
+            
+            <div class="fb-settings-fields">
+                <div class="fb-settings-field">
+                    <label for="brand-logo-upload">Logo situs</label>
+                    <input id="brand-logo-upload" type="file" name="brand_logo_upload"
+                           accept="image/png,image/jpeg,image/webp">
+                    <small>PNG, JPG, atau WebP. Maksimal 2 MB dan 1600 × 1600 piksel.</small>
+                    <label class="fb-brand-reset"><input type="checkbox" name="brand_logo_reset" value="1"> Gunakan logo bawaan</label>
+                </div>
+                <div class="fb-settings-field">
+                    <label for="brand-color">Warna utama</label>
+                    <input id="brand-color" type="color" name="brand_color" value="{{ old('brand_color', $savedColor ?: '#8b1038') }}">
+                    <label class="fb-brand-reset"><input type="checkbox" name="brand_color_reset" value="1" @checked(old('brand_color_reset', $savedColor === ''))> Gunakan warna bawaan</label>
+                </div>
+                <div class="fb-settings-field full">
+                    <strong>Pratinjau</strong>
+                    <div class="fb-brand-preview" style="--preview-color: {{ $savedColor ?: '#8b1038' }}">
+                        <img data-brand-preview-logo src="{{ $savedLogo }}" data-default-logo="{{ asset('images/logo-findback.png') }}" alt="Pratinjau logo">
+                        <span data-brand-preview-name>{{ $settings['site_name'] }}</span>
+                        <span class="fb-brand-preview-button">Tombol utama</span>
+                        <div class="fb-brand-preview-copy">
+                            <strong data-brand-preview-heading>{{ old('home_heading', $settings['home_heading']) ?: 'Barang Hilang? Temukan Kembali Bersama FindBack.' }}</strong>
+                            <p data-brand-preview-description>{{ old('site_description', $settings['site_description']) }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </details>
 
         {{-- PREFERENSI PENCOCOKAN --}}
-        <section class="fb-settings-card"
-                 aria-labelledby="matching-title">
-
-            <header>
-                <span class="fb-settings-section-icon" aria-hidden="true">
-                    <svg class="fb-settings-svg">
-                        <use href="#fb-i-search"/>
-                    </svg>
-                </span>
-
-                <div>
-                    <h2 id="matching-title">Preferensi Pencocokan</h2>
-                    <p>
+        <details class="fb-settings-card fb-settings-section" name="fb-settings-sections" aria-labelledby="matching-title">
+            <summary><h2 id="matching-title">Preferensi Pencocokan</h2></summary>
+            <div class="fb-settings-section-content">
+                <div class="fb-settings-section-help"><p>
                         Atur batas skor kandidat pencocokan
                         barang hilang dan ditemukan.
-                    </p>
-                </div>
-            </header>
+                    </p></div>
+
+            
 
             <div class="fb-settings-matching-layout">
 
@@ -304,97 +309,12 @@
                 </strong>
                 <p>Nilai ini digunakan oleh modul pencocokan pada proses berikutnya. Hasil pencocokan lama tidak dihitung ulang otomatis.</p>
             </div>
-
-        </section>
-
-        {{-- PREFERENSI NOTIFIKASI --}}
-        <section class="fb-settings-card"
-                 aria-labelledby="notifications-title">
-
-            <header>
-                <span class="fb-settings-section-icon" aria-hidden="true">
-                    <svg class="fb-settings-svg">
-                        <use href="#fb-i-bell"/>
-                    </svg>
-                </span>
-
-                <div>
-                    <h2 id="notifications-title">Preferensi Notifikasi</h2>
-                    <p>
-                        Atur pemberitahuan admin untuk laporan,
-                        klaim, dan kandidat hasil pencocokan.
-                    </p>
-                </div>
-            </header>
-
-            @foreach ([
-                'notification_reports' => [
-                    'Laporan Barang',
-                    'Pemberitahuan laporan hilang dan ditemukan',
-                    'fb-i-report'
-                ],
-                'notification_claims' => [
-                    'Klaim Barang',
-                    'Pemberitahuan terkait pengajuan klaim',
-                    'fb-i-claim'
-                ],
-                'notification_matching' => [
-                    'Pencocokan Barang',
-                    'Pemberitahuan kandidat hasil pencocokan',
-                    'fb-i-match'
-                ],
-            ] as $key => $info)
-
-                @php
-                    $enabled = (string) old($key, $settings[$key]) === '1';
-                @endphp
-
-                <div class="fb-settings-toggle-row">
-
-                    <div class="fb-settings-notification-info">
-
-                        <span class="fb-settings-row-icon" aria-hidden="true">
-                            <svg class="fb-settings-svg">
-                                <use href="#{{ $info[2] }}"/>
-                            </svg>
-                        </span>
-
-                        <div>
-                            <strong>{{ $info[0] }}</strong>
-                            <small>{{ $info[1] }}</small>
-                        </div>
-
-                    </div>
-
-                    <select name="{{ $key }}"
-                            aria-label="{{ $info[0] }}">
-
-                        <option value="1" @selected($enabled)>
-                            Aktif
-                        </option>
-
-                        <option value="0" @selected(!$enabled)>
-                            Nonaktif
-                        </option>
-
-                    </select>
-
-                </div>
-
-            @endforeach
-
-            <div class="fb-settings-note fb-settings-notification-note" role="note" aria-label="Informasi Notifikasi">
-                <strong class="fb-settings-notification-note-title">
-                    <svg class="fb-settings-svg" aria-hidden="true"><use href="#fb-i-info"/></svg>
-                    Informasi Notifikasi
-                </strong>
-                <p>Pengaturan ini mengatur pemberitahuan yang diterima administrator terkait laporan, klaim, dan pencocokan barang. Menonaktifkan pemberitahuan tidak menghentikan proses layanan maupun pengiriman pesan keputusan kepada pengguna.</p>
             </div>
-
-        </section>
+        </details>
 
         {{-- TOMBOL SIMPAN --}}
         <div class="fb-settings-footer-actions">
+            <span data-settings-state role="status"></span>
 
             <button type="submit" class="fb-settings-button">
                 <svg class="fb-settings-inline-icon" aria-hidden="true">
@@ -407,62 +327,13 @@
 
     </form>
 
-
-    {{-- INFORMASI SISTEM --}}
-    <section class="fb-settings-card fb-settings-system"
-             aria-labelledby="system-title">
-
-        <header>
-            <span class="fb-settings-section-icon" aria-hidden="true">
-                <svg class="fb-settings-svg">
-                    <use href="#fb-i-info"/>
-                </svg>
-            </span>
-
-            <div>
-                <h2 id="system-title">Informasi Sistem</h2>
-                <p>
-                    Informasi dasar lingkungan aplikasi
-                    tanpa menampilkan data rahasia.
-                </p>
-            </div>
-        </header>
-
-        <div class="fb-settings-system-grid">
-
-            <div>
-                <span class="fb-settings-system-icon" aria-hidden="true">
-                    <svg class="fb-settings-svg">
-                        <use href="#fb-i-layers"/>
-                    </svg>
-                </span>
-                <small>Framework</small>
-                <strong>Laravel {{ $system['laravel'] }}</strong>
-            </div>
-
-            <div>
-                <span class="fb-settings-system-icon" aria-hidden="true">
-                    <svg class="fb-settings-svg">
-                        <use href="#fb-i-code"/>
-                    </svg>
-                </span>
-                <small>Versi PHP</small>
-                <strong>{{ $system['php'] }}</strong>
-            </div>
-
-            <div>
-                <span class="fb-settings-system-icon" aria-hidden="true">
-                    <svg class="fb-settings-svg">
-                        <use href="#fb-i-database"/>
-                    </svg>
-                </span>
-                <small>Penyimpanan pengaturan</small>
-                <strong>Tabel app_settings</strong>
-            </div>
-
-        </div>
-
-    </section>
+    <details class="fb-settings-technical fb-settings-technical-inline" name="fb-settings-sections" aria-labelledby="system-title">
+        <summary id="system-title">Informasi Sistem</summary>
+        <dl>
+            <div><dt>Framework</dt><dd>Laravel {{ $system['laravel'] }}</dd></div>
+            <div><dt>Versi PHP</dt><dd>{{ $system['php'] }}</dd></div>
+        </dl>
+    </details>
 
 </div>
 

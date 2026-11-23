@@ -72,6 +72,7 @@
     {{-- FINDBACK: hide native search clear controls consistently on all admin pages --}}
     <link rel="stylesheet" href="{{ asset('css/admin/search-input-consistency.css') }}?v=20261120-3">
     <link rel="stylesheet" href="{{ asset('css/admin/report-type-size.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/admin/admin-profile-page.css') }}?v=4">
     @include('partials.findback-brand-theme')
 </head>
 
@@ -340,6 +341,7 @@
                     'admin.matching.show' => 'match-detail',
                     'admin.claims.show' => 'claim-detail',
                     'admin.users.show' => 'user-detail',
+                    'admin.profile.index' => 'profile',
                     'admin.settings.index' => 'settings',
                 ][request()->route()?->getName()] ?? null;
             @endphp
@@ -394,7 +396,8 @@
     @include('admin.partials.detail-interactions')
     <script src="{{ asset('js/admin/admin-toast-standard-v1.js') }}?v=3" defer></script>
     <script src="{{ asset('js/admin/admin-scroll-continuity-v1.js') }}?v=2" defer></script>
-    <script src="{{ asset('js/admin/admin-fast-navigation.js') }}?v=12" defer
+    <script src="{{ asset('js/admin/account-photo-live.js') }}?v=3" defer></script>
+    <script src="{{ asset('js/admin/admin-fast-navigation.js') }}?v=14" defer
         data-account="{{ auth()->id() }}"
         data-dashboard="{{ route('admin.dashboard') }}"
         data-verification="{{ route('admin.reports.verification') }}"
@@ -406,6 +409,7 @@
         data-claims="{{ route('admin.claims.index') }}"
         data-claim-detail="{{ route('admin.claims.show', ['claim' => '__item__']) }}"
         data-statistics="{{ route('admin.statistics.index') }}"
+        data-profile="{{ route('admin.profile.index') }}"
         data-users="{{ route('admin.users.index') }}"
         data-user-detail="{{ route('admin.users.show', ['user' => '__item__']) }}"
         data-settings="{{ route('admin.settings.index') }}"

@@ -83,7 +83,7 @@
                                 </div>
                             </td>
                             <td>{{ $item->location ?: '—' }}</td>
-                            <td>{{ ($item->event_date ?? $item->created_at)?->locale('id')->translatedFormat('d M Y') ?? '—' }}
+                            <td>{{ ($item->event_date ?? $item->created_at)?->locale('id')->translatedFormat('j M Y') ?? '—' }}
                             </td>
                             <td><span
                                     class="fb-items-badge fb-found-status status-{{ $item->status }}">{{ \App\Support\WorkflowStatus::reports()[$item->status] ?? $item->status }}</span>

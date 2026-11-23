@@ -58,7 +58,7 @@
                                     —
                                 @endif
                             </td>
-                            <td data-label="Tanggal">{{ \Carbon\Carbon::parse($claim->created_at)->timezone('Asia/Jakarta')->format('d M Y') }}</td>
+                            <td data-label="Tanggal">{{ \Carbon\Carbon::parse($claim->created_at)->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y') }}</td>
                             <td data-label="Status">@include('user.components.status', ['status' => $claim->status])</td>
                             <td data-label="Aksi" class="fb-activity-action-cell">
                                 @include('user.components.activity-detail-link', ['url' => route('user.claims.show', $claim->id)])

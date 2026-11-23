@@ -1,0 +1,42 @@
+.fb-users-avatar,
+.fb40-avatar {
+    position: relative;
+    overflow: hidden;
+}
+
+.fb-users-avatar img,
+.fb40-avatar img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.fb-account-photo-form {
+    display: grid;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.fb-account-photo-form input {
+    width: 100%;
+    min-width: 0;
+}
+
+.fb-account-photo-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.fb-detail40 .fb-account-photo-actions button {
+    width: auto;
+    flex: 1 1 135px;
+}
+
+.fb-detail40 .fb-account-photo-actions .fb-account-remove-photo {
+    background: #fff;
+    color: #850c2d;
+    border: 1px solid #ead3df;
+}

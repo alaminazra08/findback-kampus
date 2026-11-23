@@ -294,7 +294,8 @@
         if (event.defaultPrevented || !form.matches?.('form[data-fb-async-decision]') ||
             !main()?.contains(form) || form.method.toLowerCase() !== 'post' || new URL(form.action).origin !== location.origin) return;
         event.preventDefault();
-        if (form.hasAttribute('aria-busy')) return;
+        const profilePanel = form.closest('.fb-admin-profile-body');
+        if (form.hasAttribute('aria-busy') || profilePanel?.hasAttribute('aria-busy')) return;
 
         const data = new FormData(form, event.submitter);
         const button = event.submitter || form.querySelector('button[type="submit"]');
@@ -303,9 +304,14 @@
         feedback.dataset.fbDecisionFeedback = '';
         feedback.setAttribute('role', 'status');
         feedback.textContent = 'Memproses…';
-        form.append(feedback);
+        if (!profilePanel) form.append(feedback);
+        button?.classList.toggle('fb-admin-profile-processing', Boolean(profilePanel));
         form.setAttribute('aria-busy', 'true');
-        if (button) button.disabled = true;
+        const buttons = profilePanel
+            ? [...profilePanel.querySelectorAll('.fb-admin-profile-actions button:not(:disabled)')]
+            : button ? [button] : [];
+        profilePanel?.setAttribute('aria-busy', 'true');
+        for (const control of buttons) control.disabled = true;
 
         try {
             const response = await fetch(form.action, {
@@ -324,11 +330,14 @@
             const stay = destination.href === displayed;
             await navigate(destination, stay, stay ? position() : undefined, { html, destination });
         } catch {
+            if (profilePanel) profilePanel.querySelector('.fb-admin-profile-actions')?.after(feedback);
             feedback.setAttribute('role', 'alert');
             feedback.textContent = 'Hasil tindakan belum bisa dikonfirmasi. Periksa status sebelum mencoba lagi.';
         } finally {
             form.removeAttribute('aria-busy');
-            if (button) button.disabled = false;
+            profilePanel?.removeAttribute('aria-busy');
+            button?.classList.remove('fb-admin-profile-processing');
+            for (const control of buttons) control.disabled = false;
         }
     }
 

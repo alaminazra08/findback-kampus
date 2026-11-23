@@ -73,7 +73,7 @@ final class FindBackReportAnalytics
                         'name' => $r->name,
                         'type' => $r->type,
                         'location' => $r->location,
-                        'date' => Carbon::parse($r->created_at)->translatedFormat('d M Y'),
+                        'date' => Carbon::parse($r->created_at)->locale('id')->translatedFormat('j M Y'),
                         'status' => $r->status,
                     ],
                 )

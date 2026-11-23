@@ -160,7 +160,7 @@ class DashboardController extends Controller
                                 ? Carbon::parse($report->created_at)
                                     ->timezone('Asia/Jakarta')
                                     ->locale('id')
-                                    ->translatedFormat('d M Y')
+                                    ->locale('id')->translatedFormat('j M Y')
                                 : '—',
                             'status' => $report->status,
                         ];

@@ -32,6 +32,7 @@ class UserManagementController extends Controller
             'role',
             'google_id',
             'email_verified_at',
+            'profile_photo_path',
             'created_at',
         ]);
 
@@ -77,6 +78,18 @@ class UserManagementController extends Controller
         ];
 
         return view('admin.users.index', compact('users', 'stats', 'q', 'role', 'provider'));
+    }
+
+    public function photo(User $user)
+    {
+        $path = $user->profile_photo_path;
+        $disk = \Illuminate\Support\Facades\Storage::disk('public');
+        abort_unless($path && $disk->exists($path), 404);
+
+        return $disk->response($path, null, [
+            'Cache-Control' => 'private, no-store',
+            'X-Content-Type-Options' => 'nosniff',
+        ], 'inline');
     }
 
     public function show(User $user): View

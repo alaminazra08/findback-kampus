@@ -30,7 +30,7 @@
                                 <path d="M7 3v4M17 3v4M3 10h18" />
                             </svg>
                             <span
-                                class="fb-date-text">{{ now()->timezone('Asia/Jakarta')->locale('id')->translatedFormat('d F Y') }}</span>
+                                class="fb-date-text">{{ now()->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y') }}</span>
                             <span class="fb-date-text-short">{{ now()->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y') }}</span>
                         </span>
                     </div>

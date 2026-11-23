@@ -120,7 +120,7 @@
                             </td>
                             <td>{{ $claim->claimant?->name ?? '—' }}</td>
                             <td>{{ $claim->item?->location ?? '—' }}</td>
-                            <td>{{ $claim->created_at?->timezone('Asia/Jakarta')->format('d/m/Y') ?? '—' }}</td>
+                            <td>{{ $claim->created_at?->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y') ?? '—' }}</td>
                             <td><span
                                     class="fb-claim-status status-{{ $claim->status }}">{{ \App\Support\WorkflowStatus::claims()[$claim->status] ?? $claim->status }}</span>
                             </td>

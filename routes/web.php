@@ -355,8 +355,16 @@ Route::middleware(['auth', 'role:admin', 'admin-tab'])
         // 10. MANAJEMEN AKUN
         // ----------------------------------------------------
 
+        Route::view('/profil', 'admin.users.profile')->name('profile.index');
+
         // Daftar pengguna
         Route::get('/users', [AdminUserManagementController::class, 'index'])->name('users.index');
+
+        Route::get('/users/{user}/foto-profil', [AdminUserManagementController::class, 'photo'])
+            ->name('users.photo');
+        Route::post('/users/foto-profil', [\App\Http\Controllers\User\CampusController::class, 'updateAdminPhoto'])
+            ->middleware('throttle:10,1')
+            ->name('users.profile-photo.update');
 
         // Detail pengguna
         Route::get('/users/{user}', [AdminUserManagementController::class, 'show'])->name(

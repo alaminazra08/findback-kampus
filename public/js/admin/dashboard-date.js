@@ -9,7 +9,7 @@ function mount(signal) {
     };
     const fullDate = dateLabel.querySelector(".fb-date-text");
     const shortDate = dateLabel.querySelector(".fb-date-text-short");
-    const fullFormat = new Intl.DateTimeFormat("id-ID", { ...options, month: "long" });
+    const fullFormat = new Intl.DateTimeFormat("id-ID", { ...options, month: "short" });
     const shortFormat = new Intl.DateTimeFormat("id-ID", { ...options, month: "short" });
     const update = () => {
         const now = new Date();

@@ -180,7 +180,7 @@
                             <button type="button" class="fb-chat-options" aria-label="Opsi pesan" data-user-chat-options>⌄</button>
                             <footer>
                                 <time datetime="{{ $message->created_at->toIso8601String() }}"
-                                      title="{{ $message->created_at->timezone('Asia/Jakarta')->format('d M Y, H:i') }} WIB"
+                                      title="{{ $message->created_at->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') }} WIB"
                                       data-compact-time="true">{{ $message->created_at->timezone('Asia/Jakarta')->format('H.i') }}</time>
 
                                @if ($message->edited_at && !$message->recalled_at)

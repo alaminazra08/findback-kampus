@@ -15,7 +15,7 @@
                     <td><strong>FindBack Kampus</strong><br>{{ $settings['site_name'] }}</td>
                 </tr></table>
                 <h1>Barang Hilang &amp; Ditemukan</h1>
-                <p>Terakhir diperbarui {{ $generatedAt->format('d/m/Y H:i') }} WIB · {{ $periodLabel }} · {{ $total }} laporan aktif</p>
+                <p>Terakhir diperbarui {{ $generatedAt->locale('id')->translatedFormat('j M Y, H:i') }} WIB · {{ $periodLabel }} · {{ $total }} laporan aktif</p>
             </header>
             @if ($items->isNotEmpty())
                 <table class="cards"><tr>
@@ -25,7 +25,7 @@
                             <h2>{{ mb_strimwidth($item->title, 0, 45, '…') }}</h2>
                             <p class="code">{{ \App\Support\WorkflowStatus::code((int) $item->id) }}</p>
                             <p class="meta"><strong>Lokasi</strong><br>{{ mb_strimwidth($item->location ?: 'Belum dicantumkan', 0, 52, '…') }}</p>
-                            <p class="meta"><strong>Tanggal kejadian</strong><br>{{ $item->event_date ? \Illuminate\Support\Carbon::parse($item->event_date)->format('d/m/Y') : 'Belum dicantumkan' }}</p>
+                            <p class="meta"><strong>Tanggal kejadian</strong><br>{{ $item->event_date ? \Illuminate\Support\Carbon::parse($item->event_date)->locale('id')->translatedFormat('j M Y') : 'Belum dicantumkan' }}</p>
                         </td>
                     @endforeach
                     @for ($slot = $items->count(); $slot < 3; $slot++)

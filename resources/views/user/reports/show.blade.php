@@ -136,7 +136,7 @@
                             </dt>
 
                             <dd>
-                                {{ $report->event_date?->format('d M Y') ?? '-' }}
+                                {{ $report->event_date?->locale('id')->translatedFormat('j M Y') ?? '-' }}
                             </dd>
                         </div>
 
@@ -207,7 +207,7 @@
                     {{ ($canFixRejected
                         ? $report->reviewed_at
                         : $openRevision->created_at
-                    )?->timezone('Asia/Jakarta')->format('d/m/Y H:i') }}
+                    )?->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') }}
                     WIB
                 </small>
             </p>

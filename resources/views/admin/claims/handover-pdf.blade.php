@@ -19,7 +19,7 @@
     </table>
     <h1>BUKTI SERAH TERIMA BARANG</h1>
     <div class="code">Nomor serah terima <strong>{{ $claim->handover_code }}</strong></div>
-    <p class="paragraph">Pada {{ $claim->returned_at->timezone('Asia/Jakarta')->format('d/m/Y') }} pukul
+    <p class="paragraph">Pada {{ $claim->returned_at->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y') }} pukul
         {{ $claim->returned_at->timezone('Asia/Jakarta')->format('H:i') }} WIB, barang temuan di bawah ini diserahkan
         kepada penerima yang telah diperiksa identitas dan bukti kepemilikannya oleh petugas.</p>
     <h2>Identitas Barang</h2>
@@ -59,7 +59,7 @@
         </tr>
         <tr>
             <td>Tanggal dan waktu</td>
-            <td>{{ $claim->returned_at->timezone('Asia/Jakarta')->format('d/m/Y H:i') }} WIB</td>
+            <td>{{ $claim->returned_at->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') }} WIB</td>
         </tr>
         <tr>
             <td>Lampiran bukti</td>

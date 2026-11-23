@@ -17,7 +17,7 @@
             @endphp
             <li class="fb-report-timeline-entry" data-event="{{ $resubmitted ? 'resubmitted' : $kind }}">
                 <time datetime="{{ $at->toIso8601String() }}">
-                    <span>{{ $at->translatedFormat('d M Y') }}</span>
+                    <span>{{ $at->locale('id')->translatedFormat('j M Y') }}</span>
                     <span>{{ $at->format('H:i') }} WIB</span>
                 </time>
                 <span class="fb-report-timeline-marker" aria-hidden="true"></span>

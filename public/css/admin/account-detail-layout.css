@@ -1,0 +1,123 @@
+.fb-detail40 .fb-account-back {
+    margin-bottom: 12px;
+}
+
+.fb-main .fb-account-back .fb-detail-return {
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+.fb-detail40 .fb-account-heading {
+    padding: 0;
+    margin-bottom: 24px;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.fb-detail40 .fb-account-grid {
+    align-items: start;
+    gap: clamp(14px, 2vw, 24px);
+}
+
+.fb-detail40 .fb-account-grid .fb40-identity {
+    padding: clamp(16px, 2vw, 24px);
+}
+
+.fb-detail40 .fb40-identity > h2 {
+    margin: 0 0 12px;
+    font-size: 18px;
+}
+
+.fb-detail40 .fb40-identity .fb40-profile {
+    padding: 0 0 12px;
+    background: transparent;
+}
+
+.fb-detail40 .fb40-profile-text .fb-account-name {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 750;
+}
+
+.fb-detail40 .fb40-name-row .fb-users-pill {
+    display: inline-block;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: #f8e8f0;
+    color: #850c2d;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.fb-detail40 .fb40-facts dd {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.fb-detail40 .fb40-save {
+    width: 100%;
+}
+
+.fb-detail40 .fb40-save:active {
+    background: #630922;
+}
+
+.fb-detail40 .fb-account-grid {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+}
+
+.fb-detail40 .fb40-identity {
+    container-type: inline-size;
+}
+
+.fb-detail40 .fb-account-side {
+    display: grid;
+    gap: clamp(14px, 2vw, 24px);
+    min-width: 0;
+}
+
+.fb-detail40 .fb-account-summary {
+    display: grid;
+    gap: 12px;
+    align-items: start;
+}
+
+.fb-detail40 .fb-account-summary .fb40-profile {
+    min-width: 0;
+    padding: 0;
+}
+
+.fb-detail40 .fb-account-login-facts {
+    margin: 0;
+}
+
+.fb-detail40 .fb-account-login-facts > div {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    padding-block: 8px;
+}
+
+.fb-detail40 .fb-account-login-facts dd {
+    text-align: end;
+}
+
+.fb-detail40 .fb-account-activity {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid #f0e7eb;
+}
+
+@container (min-width: 520px) {
+    .fb-detail40 .fb-account-summary {
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+        gap: 24px;
+    }
+}
+
+@media (max-width: 1050px) {
+    .fb-detail40 .fb-account-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

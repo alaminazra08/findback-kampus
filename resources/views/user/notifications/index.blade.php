@@ -34,7 +34,7 @@
             return match (true) {
                 $d->equalTo($today) => 'Hari ini',
                 $d->equalTo($today->copy()->subDay()) => 'Kemarin',
-                default => $d->locale('id')->translatedFormat('d F Y'),
+                default => $d->locale('id')->translatedFormat('j M Y'),
             };
         };
         $groups = $notifications->getCollection()->groupBy(fn($n) => $dayLabel($n->created_at));
@@ -256,6 +256,14 @@ a.nf-pg:hover{border-color:var(--w);color:var(--w);background:var(--w-soft)}
                                 : (!empty($notification->data['item_id'])
                                     ? route('user.reports.show', (int) $notification->data['item_id'])
                                     : route('user.reports.index'));
+                            $actionLabel = 'Lihat aktivitas';
+                            $matchAction = $notification->data['match_action'] ?? null;
+                            if ($matchAction === 'claim' && !empty($notification->data['item_id'])) {
+                                $href = route('user.items.show', (int) $notification->data['item_id']);
+                                $actionLabel = 'Lihat Barang Temuan';
+                            } elseif ($matchAction === 'view-report') {
+                                $actionLabel = 'Lihat Laporan Saya';
+                            }
                         @endphp
                         <article class="nf-item tone-{{ $tone }} {{ $isUnread ? 'is-unread' : '' }}"
                             data-state="{{ $isUnread ? 'unread' : 'read' }}">
@@ -268,13 +276,13 @@ a.nf-pg:hover{border-color:var(--w);color:var(--w);background:var(--w-soft)}
                                         @if ($isUnread)<span class="nf-dot" title="Belum dibaca"></span>@endif
                                     </div>
                                     <time datetime="{{ $notification->created_at->toIso8601String() }}"
-                                        title="{{ $notification->created_at->timezone('Asia/Jakarta')->format('d M Y, H:i') }}">
+                                        title="{{ $notification->created_at->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') }}">
                                         {{ $notification->created_at->locale('id')->diffForHumans() }}
                                     </time>
                                 </div>
                                 <p>{{ \App\Support\WorkflowStatus::notificationText($notification->data['message'] ?? '') }}</p>
                                 <div class="nf-act">
-                                    <a class="nf-pill" href="{{ $href }}">Lihat aktivitas</a>
+                                    <a class="nf-pill" href="{{ $href }}">{{ $actionLabel }}</a>
                                     @if ($isUnread)
                                         <form method="POST" data-nf-form="one" action="{{ route('user.notifications.read', $notification->id) }}">
                                             @csrf

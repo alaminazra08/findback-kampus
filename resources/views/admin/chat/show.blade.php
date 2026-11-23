@@ -102,7 +102,7 @@
 
                                 @include('admin.chat.message-actions')
                                 <small>
-                                    {{ $msg->created_at->timezone('Asia/Jakarta')->format('d/m/Y H:i') }}
+                                    {{ $msg->created_at->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') }}
                                 </small>
 
                             </div>

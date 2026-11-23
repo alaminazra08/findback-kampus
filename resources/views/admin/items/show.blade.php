@@ -44,7 +44,7 @@
                     </div>
                     <div>
                         <dt>Laporan dibuat</dt>
-                        <dd>{{ $item->created_at ? $item->created_at->copy()->timezone('Asia/Jakarta')->format('d/m/Y H:i') . ' WIB' : '—' }}</dd>
+                        <dd>{{ $item->created_at ? $item->created_at->copy()->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') . ' WIB' : '—' }}</dd>
                     </div>
                 </dl>
                 <div class="fb-v-description">

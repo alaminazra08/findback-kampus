@@ -70,7 +70,7 @@
                             </div>
                             <div>
                                 <dt>Laporan dibuat</dt>
-                                <dd>{{ $item->created_at ? $item->created_at->copy()->timezone('Asia/Jakarta')->format('d/m/Y H:i') . ' WIB' : '—' }}</dd>
+                                <dd>{{ $item->created_at ? $item->created_at->copy()->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') . ' WIB' : '—' }}</dd>
                             </div>
                         </dl>
                         @if ($item->reviewed_at)
@@ -81,7 +81,7 @@
                                 </div>
                                 <div>
                                     <dt>Waktu pemeriksaan</dt>
-                                    <dd>{{ $item->reviewed_at->timezone('Asia/Jakarta')->format('d/m/Y H:i') }} WIB</dd>
+                                    <dd>{{ $item->reviewed_at->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') }} WIB</dd>
                                 </div>
                             </dl>
                         @elseif($item->status !== 'pending')
@@ -103,7 +103,7 @@
                         <h2>Menunggu Perbaikan dari Pelapor</h2>
                         <p>Permintaan perbaikan masih aktif. Keputusan verifikasi sementara diblokir.</p>
                         <div class="fb-v-revision-summary"><strong>Diminta oleh
-                                {{ $openRevision->requester_name }}</strong><small>{{ $openRevision->created_at?->timezone('Asia/Jakarta')->format('d/m/Y H:i') }}
+                                {{ $openRevision->requester_name }}</strong><small>{{ $openRevision->created_at?->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') }}
                                 WIB</small>
                             <p>{{ $openRevision->note }}</p>
                         </div>
@@ -168,7 +168,7 @@
                                 </div>
                                 <div>
                                     <dt>Waktu keputusan</dt>
-                                    <dd>{{ $item->reviewed_at?->timezone('Asia/Jakarta')->format('d/m/Y H:i') ?? 'Belum tercatat' }}{{ $item->reviewed_at ? ' WIB' : '' }}
+                                    <dd>{{ $item->reviewed_at?->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') ?? 'Belum tercatat' }}{{ $item->reviewed_at ? ' WIB' : '' }}
                                     </dd>
                                 </div>
                                 @if ($item->rejection_reason)
@@ -209,7 +209,7 @@
                         </div>
                         <div class="fb-repair-meta"><span><strong>Pelapor</strong>
                                 {{ $response->closer_name ?? '—' }}</span><span class="fb-repair-sent-at"><strong>Waktu pengiriman</strong>
-                                {{ $response->closed_at?->timezone('Asia/Jakarta')->format('d/m/Y H:i') }} WIB</span></div>
+                                {{ $response->closed_at?->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') }} WIB</span></div>
                         @if ($response->response_note)
                             <div class="fb-repair-note"><strong>Catatan perbaikan</strong>
                                 <p>{{ $response->response_note }}</p>

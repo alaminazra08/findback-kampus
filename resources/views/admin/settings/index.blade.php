@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin/settings-notifications.css') }}?v=6-settings-r1">
     <link rel="stylesheet" href="{{ asset('css/admin/settings-matching.css') }}?v=7-settings-r1">
     <link rel="stylesheet" href="{{ asset('css/admin/settings-smart-save.css') }}?v=5-settings-r1">
+    <link rel="stylesheet" href="{{ asset('css/admin/settings-text-selection.css') }}?v=1">
 @endsection
 
 @section('content')

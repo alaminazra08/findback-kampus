@@ -1,0 +1,139 @@
+.fb-admin-profile-actions button:disabled {
+    cursor: wait;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .fb-admin-profile-actions .fb-admin-profile-processing {
+        position: relative;
+    }
+
+    .fb-admin-profile-actions .fb-admin-profile-processing svg {
+        visibility: hidden;
+    }
+
+    .fb-admin-profile-actions .fb-admin-profile-processing::before {
+        content: "";
+        position: absolute;
+        width: 17px;
+        height: 17px;
+        box-sizing: border-box;
+        border: 2px solid currentColor;
+        border-inline-end-color: transparent;
+        border-radius: 50%;
+        animation: fb-profile-spin .75s linear infinite;
+    }
+
+    .fb-admin-profile-actions .fb-admin-profile-processing span {
+        opacity: 0;
+    }
+}
+
+@keyframes fb-profile-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Scope static text selection to the current profile page, including its shell. */
+body:has(.fb-admin-profile),
+body:has(.fb-admin-profile) * {
+    -webkit-user-select: none;
+    user-select: none;
+    caret-color: transparent;
+}
+
+body:has(.fb-admin-profile) :is(input:not([type="file"]), textarea, [contenteditable="true"]) {
+    -webkit-user-select: text;
+    user-select: text;
+    caret-color: auto;
+}
+
+.fb-admin-profile .fb-admin-profile-body :is(.fb-admin-profile-success, .fb-admin-profile-error, [data-fb-decision-feedback]) {
+    margin: 12px 0 0;
+    overflow-wrap: anywhere;
+}
+
+.fb-main .fb-admin-profile {
+    max-width: 56rem;
+    margin-inline: 0;
+    padding-bottom: 0;
+}
+
+.fb-main .fb-admin-profile .fb-admin-profile-body {
+    grid-template-columns: minmax(0, 13rem) minmax(0, 1fr);
+    gap: clamp(12px, 2vw, 20px);
+    padding: clamp(14px, 2vw, 20px);
+}
+
+.fb-admin-profile .fb-profile-photo-status {
+    margin-top: 8px;
+    color: #624e59;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+@media (max-width: 620px) {
+    .fb-main .fb-admin-profile .fb-admin-profile-body {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .fb-main .fb-admin-profile .fb-admin-profile-identity {
+        justify-items: center;
+        min-width: 0;
+        text-align: center;
+        overflow-wrap: anywhere;
+    }
+
+    .fb-main .fb-admin-profile .fb-admin-profile-avatar {
+        width: min(100%, clamp(76px, 18vw, 104px));
+        height: auto;
+        aspect-ratio: 1;
+    }
+
+    .fb-admin-profile-body .fb-admin-profile-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .fb-admin-profile-body .fb-admin-profile-actions button {
+        min-width: 0;
+        min-height: 44px;
+        padding-inline: 6px;
+        gap: 4px;
+        text-align: center;
+    }
+
+    .fb-admin-profile-actions button:only-child {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (min-width: 360px) and (max-width: 420px) {
+    .fb-admin-profile-body .fb-admin-profile-actions:has(> button + button) svg {
+        display: none;
+    }
+}
+ 
+@media (min-width: 360px) and (max-width: 620px) {
+    .fb-main .fb-admin-profile .fb-admin-profile-body {
+        grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+        gap: 12px;
+        align-items: start;
+    }
+
+    .fb-admin-profile-body input[type="file"] {
+        box-sizing: border-box;
+        max-width: 100%;
+        padding: 6px;
+        font-size: 13px;
+    }
+
+    .fb-admin-profile-body input[type="file"]::file-selector-button {
+        min-height: 32px;
+        padding-inline: 8px;
+    }
+}
+
+.fb-admin-profile .fb-admin-profile-body .fb-profile-photo-status p {
+    margin: 0;
+    overflow-wrap: anywhere;
+}

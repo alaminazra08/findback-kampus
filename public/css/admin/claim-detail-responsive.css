@@ -434,8 +434,28 @@
     cursor: pointer;
 }
 
-.fb-claim-review-layout button.fb-claim-chat-inline:hover {
-    background: #690823;
+.fb-claim-review-layout button.fb-claim-chat-inline {
+    transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+@media (hover: hover) {
+    .fb-claim-review-layout button.fb-claim-chat-inline:hover {
+        background-color: #a01749;
+        border-color: #a01749;
+        box-shadow: 0 4px 12px rgb(133 12 45 / 18%);
+    }
+}
+
+.fb-claim-review-layout button.fb-claim-chat-inline:active {
+    background-color: #630922;
+    border-color: #630922;
+    box-shadow: inset 0 2px 4px rgb(0 0 0 / 18%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fb-claim-review-layout button.fb-claim-chat-inline {
+        transition: none;
+    }
 }
 
 .fb-claim-review-layout button.fb-claim-chat-inline:focus-visible {

@@ -1,0 +1,18 @@
+/* Static text and panel controls on the settings page. */
+.fb-settings .fb-settings-heading,
+.fb-settings .fb-settings-section > summary,
+.fb-settings .fb-settings-technical > summary,
+.fb-settings .fb-settings-button {
+    -webkit-user-select: none;
+    user-select: none;
+    caret-color: transparent;
+}
+
+.fb-settings .fb-settings-heading {
+    cursor: default;
+}
+
+.fb-settings .fb-settings-section > summary,
+.fb-settings .fb-settings-technical > summary {
+    cursor: pointer;
+}

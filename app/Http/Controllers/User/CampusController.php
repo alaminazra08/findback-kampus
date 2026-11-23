@@ -217,10 +217,22 @@ class CampusController extends Controller
     /**
      * Memperbarui nama dan foto pengguna.
      */
+    public function updateAdminPhoto(Request $request)
+    {
+        abort_unless($request->user()->role === 'admin', 403);
+
+        return $this->saveProfile($request, true);
+    }
+
     public function updateProfile(Request $request)
     {
+        return $this->saveProfile($request);
+    }
+
+    private function saveProfile(Request $request, bool $photoOnly = false)
+    {
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => $photoOnly ? ['exclude'] : ['required', 'string', 'max:255'],
             'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'remove_photo' => ['nullable', 'boolean'],
         ], [
@@ -235,7 +247,7 @@ class CampusController extends Controller
         $newPath = null;
 
         // Simpan foto baru jika pengguna memilih file.
-        if ($request->hasFile('photo')) {
+        if ($request->hasFile('photo') && !($photoOnly && $request->boolean('remove_photo'))) {
             $newPath = $disk->putFile(
                 "profile-photos/{$userId}",
                 $request->file('photo')
@@ -251,14 +263,16 @@ class CampusController extends Controller
         }
 
         try {
-            $oldPath = DB::transaction(function () use ($request, $userId, $data, $newPath) {
+            $oldPath = DB::transaction(function () use ($request, $userId, $data, $newPath, $photoOnly) {
                 $user = $request->user()
                     ->newQuery()
                     ->lockForUpdate()
                     ->findOrFail($userId);
 
                 $previousPath = $user->profile_photo_path;
-                $user->name = $data['name'];
+                if (!$photoOnly) {
+                    $user->name = $data['name'];
+                }
 
                 if ($newPath !== null) {
                     $user->profile_photo_path = $newPath;
@@ -287,15 +301,15 @@ class CampusController extends Controller
 
         $message = 'Profil berhasil diperbarui.';
 
-        if ($request->hasFile('photo')) {
+        if ($newPath !== null) {
             $message = 'Foto profil berhasil diperbarui.';
         } elseif ($request->boolean('remove_photo')) {
             $message = 'Foto profil berhasil dihapus.';
         }
 
         return redirect()
-            ->route('user.profile.index')
-            ->with('profile_toast', $message);
+            ->route($photoOnly ? 'admin.profile.index' : 'user.profile.index')
+            ->with($photoOnly ? 'success' : 'profile_toast', $message);
     }
 
     /**

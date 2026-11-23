@@ -71,7 +71,7 @@
                                     <p>{{ $msg->message }}</p>
                                 @endif
                                 @include('admin.chat.message-actions')
-                                <small>{{ $msg->created_at->timezone('Asia/Jakarta')->format('d/m/Y H:i') }}</small>
+                                <small>{{ $msg->created_at->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') }}</small>
                             </div>
                         @empty<div class="fb-inbox-empty"><strong>Belum Ada Pesan</strong><span>Belum ada riwayat pesan
                                     dengan pengguna ini.</span></div>

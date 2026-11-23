@@ -34,7 +34,7 @@
         </div>
 
         <span class="fb-date-label">
-            {{ now()->timezone('Asia/Jakarta')->locale('id')->translatedFormat('d F Y') }}
+            {{ now()->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y') }}
         </span>
     </div>
 
@@ -187,8 +187,8 @@
 
                             <td>
                                 {{ $item->event_date
-                                    ? \Carbon\Carbon::parse($item->event_date)->format('d/m/Y')
-                                    : $item->created_at?->format('d/m/Y') ?? '—' }}
+                                    ? \Carbon\Carbon::parse($item->event_date)->locale('id')->translatedFormat('j M Y')
+                                    : $item->created_at?->locale('id')->translatedFormat('j M Y') ?? '—' }}
                             </td>
 
                             <td>

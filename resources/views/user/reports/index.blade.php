@@ -144,7 +144,7 @@
                         </span>
                     </td>
                     <td data-label="Tanggal">
-                        {{ $report->event_date?->format('d M Y') }}
+                        {{ $report->event_date?->locale('id')->translatedFormat('j M Y') }}
                     </td>
                     <td data-label="Status">
                         @if ($report->status === 'rejected')

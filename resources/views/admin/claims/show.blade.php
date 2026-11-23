@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin/claim-detail-spacing.css') }}?v=9">
     <link rel="stylesheet" href="{{ asset('css/admin/claim-evidence-actions.css') }}?v=11">
     <link rel="stylesheet" href="{{ asset('css/admin/claim-evidence-icons.css') }}?v=12">
-    <link rel="stylesheet" href="{{ asset('css/admin/claim-detail-responsive.css') }}?v=32">
+    <link rel="stylesheet" href="{{ asset('css/admin/claim-detail-responsive.css') }}?v=33">
     <link rel="stylesheet" href="{{ asset('css/chat/claim-chat-premium.css') }}?v=20261120-chat2">
     @include('shared.chat-tools-style')
     <link rel="stylesheet" href="{{ asset('css/pages/admin/detail-back.css') }}?v=1">
@@ -78,7 +78,7 @@
                 </div>
                 <div>
                     <dt>Tanggal kejadian</dt>
-                    <dd>{{ $claim->item?->event_date?->timezone('Asia/Jakarta')->format('d/m/Y') ?? '—' }}</dd>
+                    <dd>{{ $claim->item?->event_date?->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y') ?? '—' }}</dd>
                 </div>
                 <div>
                     <dt>Status barang</dt>
@@ -120,7 +120,7 @@
                 </div>
                 <div>
                     <dt>Diajukan</dt>
-                    <dd>{{ $claim->created_at?->timezone('Asia/Jakarta')->format('d/m/Y H:i') ?? '—' }} WIB</dd>
+                    <dd>{{ $claim->created_at?->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') ?? '—' }} WIB</dd>
                 </div>
                 <div class="fb-claim-chat-row">
                     <dt>Chat Serah Terima</dt>
@@ -280,12 +280,12 @@
                     <p>Klaim lain yang masih menunggu untuk barang ini akan ditutup otomatis dengan alasan yang tercatat.</p>
                     @if ($claim->reviewed_at)
                         <p>Diperiksa oleh {{ $claim->reviewer?->name ?? 'Administrator' }} pada
-                            {{ $claim->reviewed_at->timezone('Asia/Jakarta')->format('d/m/Y H:i') }} WIB.</p>
+                            {{ $claim->reviewed_at->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') }} WIB.</p>
                     @endif
                 </div>
             @elseif ($claim->status !== 'returned' && $claim->reviewed_at)
                 <p class="fb-claim-muted">Diperiksa oleh {{ $claim->reviewer?->name ?? 'Administrator' }} pada
-                    {{ $claim->reviewed_at->timezone('Asia/Jakarta')->format('d/m/Y H:i') }} WIB.</p>
+                    {{ $claim->reviewed_at->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') }} WIB.</p>
             @endif
             @if ($claim->status === 'returned')
                 @if ($claim->hasHandoverReceipt())
@@ -305,7 +305,7 @@
                         </div>
                         <div>
                             <dt>Waktu penyerahan</dt>
-                            <dd>{{ $claim->returned_at->timezone('Asia/Jakarta')->format('d/m/Y H:i') }} WIB</dd>
+                            <dd>{{ $claim->returned_at->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') }} WIB</dd>
                         </div>
                         @if ($claim->recipient_identifier)
                             <div>
@@ -344,7 +344,7 @@
                     </div>
                 @else
                     <div class="fh-legacy"><strong>Pengembalian lama</strong>
-                        <p>{{ $claim->returned_at ? 'Dikembalikan pada ' . $claim->returned_at->timezone('Asia/Jakarta')->format('d/m/Y H:i') . ' WIB.' : 'Status sudah dikembalikan.' }}
+                        <p>{{ $claim->returned_at ? 'Dikembalikan pada ' . $claim->returned_at->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') . ' WIB.' : 'Status sudah dikembalikan.' }}
                             Rincian serah terima belum dicatat pada versi sebelumnya, sehingga PDF tanda terima lengkap
                             belum tersedia.</p>
                     </div>
@@ -386,7 +386,7 @@
                                         @include('shared.chat-attachment', ['path' => $msg->attachment_path, 'label' => 'Lampiran percakapan'])
                                     @endif
                                     @include('admin.chat.message-actions')
-                                    <small>{{ $msg->created_at->timezone('Asia/Jakarta')->format('d/m/Y H:i') }}
+                                    <small>{{ $msg->created_at->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') }}
                                         WIB</small>
                                 </div>
                             </article>

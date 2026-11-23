@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin/users-mobile-compact.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/users-stat-cards-verification-size-v1.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/users-stat-cards-signature-rail-v3.css') }}?v=3">
+    <link rel="stylesheet" href="{{ asset('css/admin/account-profile-photo.css') }}?v=1">
 @endsection
 
 @section('content')
@@ -120,7 +121,7 @@
                             <tr>
                                 <td>
                                     <div class="fb-users-person"><span
-                                            class="fb-users-avatar">{{ strtoupper(mb_substr($account->name ?? '?', 0, 1)) }}</span>
+                                            class="fb-users-avatar" data-account-photo="{{ $account->id }}">@include('admin.users.profile-photo', ['account' => $account])</span>
                                         <div><strong>{{ $account->name }}</strong><small>{{ $account->email }}</small>
                                         </div>
                                     </div>
@@ -132,7 +133,7 @@
                                 <td><span
                                         class="fb-users-verified {{ $account->email_verified_at ? 'yes' : '' }}">{{ $account->email_verified_at ? 'Terverifikasi' : 'Belum verifikasi' }}</span>
                                 </td>
-                                <td>{{ $account->created_at?->timezone('Asia/Jakarta')->format('d/m/Y') ?? '—' }}</td>
+                                <td>{{ $account->created_at?->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y') ?? '—' }}</td>
                                 <td><a class="fb-users-detail-link" href="{{ route('admin.users.show', $account) }}"><span
                                             class="fb-users-detail-icon"><svg xmlns="http://www.w3.org/2000/svg"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"

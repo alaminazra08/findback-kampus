@@ -23,10 +23,10 @@
             <p>{{ $settings['institution_name'] }}</p>
             <p>Periode: <strong>{{ $periodLabel }}</strong>
                 @if ($since)
-                    · Sejak {{ $since->format('d/m/Y') }} (zona waktu aplikasi)
+                    · Sejak {{ $since->locale('id')->translatedFormat('j M Y') }} (zona waktu aplikasi)
                 @endif
             </p>
-            <p class="muted">Dicetak oleh {{ auth()->user()->name }} · {{ $generatedAt->format('d/m/Y H:i') }} WIB</p>
+            <p class="muted">Dicetak oleh {{ auth()->user()->name }} · {{ $generatedAt->locale('id')->translatedFormat('j M Y, H:i') }} WIB</p>
         </header>
         <div class="summary">
             @foreach (['Total Laporan' => $total, 'Barang Hilang' => $lost, 'Barang Ditemukan' => $found, 'Pengajuan Klaim' => $claimTotal, 'Kandidat Pencocokan' => $matchTotal, 'Barang Dikembalikan' => $statuses['returned'] ?? 0] as $label => $value)
@@ -148,10 +148,10 @@
                             <td>{{ ['lost' => 'Hilang', 'found' => 'Ditemukan'][$report->type] ?? $report->type }}</td>
                             <td>{{ $report->category ?: '—' }}</td>
                             <td>{{ $report->location ?: '—' }}</td>
-                            <td>{{ $report->event_date ? \Illuminate\Support\Carbon::parse($report->event_date)->format('d/m/Y') : '—' }}
+                            <td>{{ $report->event_date ? \Illuminate\Support\Carbon::parse($report->event_date)->locale('id')->translatedFormat('j M Y') : '—' }}
                             </td>
                             <td>{{ \App\Support\WorkflowStatus::reports()[$report->status] ?? $report->status }}</td>
-                            <td>{{ $report->created_at ? \Illuminate\Support\Carbon::parse($report->created_at)->format('d/m/Y') : '—' }}
+                            <td>{{ $report->created_at ? \Illuminate\Support\Carbon::parse($report->created_at)->locale('id')->translatedFormat('j M Y') : '—' }}
                             </td>
                     </tr>@empty<tr>
                             <td colspan="8" class="empty">Belum ada laporan pada periode ini.</td>

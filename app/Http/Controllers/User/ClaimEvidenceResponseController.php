@@ -75,7 +75,7 @@ class ClaimEvidenceResponseController extends Controller
                 $locked->proof_description =
                     trim((string) $locked->proof_description) .
                     "\n\n[Bukti tambahan " .
-                    now()->timezone('Asia/Jakarta')->format('d/m/Y H:i') .
+                    now()->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') .
                     " WIB]\n" .
                     $response;
                 if ($uploadedPath) {

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ItemClaim;
 use App\Models\ItemMatch;
 use App\Models\LostFoundItem;
+use App\Notifications\MatchConfirmedNotification;
 use App\Support\AdminAlerts;
 use App\Support\AdminSettings;
 use Illuminate\Http\RedirectResponse;
@@ -70,10 +72,21 @@ class MatchingController extends Controller
     {
         $match->load(['lostItem.reporter', 'foundItem.reporter', 'reviewer']);
         $history = \App\Support\ItemJourney::forMatch($match);
+        $relatedClaim = null;
+        if ($match->status === 'confirmed' && $match->lostItem?->user_id && $match->foundItem) {
+            $relatedClaim = ItemClaim::query()
+                ->where('lost_found_item_id', $match->found_item_id)
+                ->where('user_id', $match->lostItem->user_id)
+                ->orderByRaw("CASE status WHEN 'returned' THEN 0 WHEN 'approved' THEN 1 WHEN 'pending' THEN 2 ELSE 3 END")
+                ->latest('id')
+                ->first();
+        }
+
 
         return view('admin.matching.show', [
             'match' => $this->withCurrentScore($match),
             'history' => $history,
+            'relatedClaim' => $relatedClaim,
         ]);
     }
 
@@ -225,6 +238,18 @@ class MatchingController extends Controller
                             trim($validated['rejection_reason'])
                         : $reason,
             ]);
+
+            if ($validated['action'] === 'confirm') {
+                $finder = $foundItem->reporter;
+                $owner = $lostItem->reporter;
+                if ($owner?->role === 'user' && $owner->id !== $finder?->id) {
+                    $owner->notify(new MatchConfirmedNotification($foundItem->id, $lostItem->title, true));
+                }
+                if ($finder?->role === 'user') {
+                    $finder->notify(new MatchConfirmedNotification($foundItem->id, $foundItem->title, false));
+                }
+            }
+
             return null;
         }, 3);
 

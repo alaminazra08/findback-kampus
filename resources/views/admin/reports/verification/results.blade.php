@@ -109,7 +109,7 @@
                                     @endif
                                     <div class="fb-v25-item-copy">
                                         <strong>{{ $item->title }}</strong><small>{{ \App\Support\WorkflowStatus::code($item->id) }}</small><span
-                                            class="fb-v25-date">{{ $item->created_at?->timezone('Asia/Jakarta')->format('d M Y, H:i') }}
+                                            class="fb-v25-date">{{ $item->created_at?->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') }}
                                             WIB</span>
                                     </div>
                                 </div>

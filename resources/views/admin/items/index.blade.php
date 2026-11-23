@@ -42,7 +42,7 @@
                     stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" /><path d="M12 8v8M8 12h8" /></svg>
                 <span>Tambah Barang</span>
             </button>
-            <p class="fb-admin-header-action-hint" id="fb-add-item-hint">Buat laporan barang hilang atau ditemukan.</p>
+            <p class="fb-admin-header-action-hint" id="fb-add-item-hint">Buat laporan barang ditemukan.</p>
         </div>
 
     </div>
@@ -75,7 +75,7 @@
                     </span>
                     <div class="fb-add-title-copy">
                         <h2 id="fb-admin-add-title">Tambah Laporan Barang</h2>
-                        <p id="fb-admin-add-description">Laporkan barang hilang atau ditemukan. Semua kolom wajib diisi.</p>
+                        <p id="fb-admin-add-description">Laporkan barang ditemukan. Semua kolom wajib diisi.</p>
                     </div>
                 </div>
                 <button type="button" class="fb-add-close" aria-label="Tutup formulir"
@@ -109,10 +109,8 @@
                         </svg>
                         Jenis Laporan
                     </span>
-                    <select name="type" required>
-                        <option value="lost" @selected(old('type', 'lost') === 'lost')>Barang Hilang</option>
-                        <option value="found" @selected(old('type') === 'found')>Barang Ditemukan</option>
-                    </select>
+                    <input type="text" value="Barang Ditemukan" readonly>
+                    <input type="hidden" name="type" value="found">
                 </label>
 
                 <label class="fb-add-field">
@@ -436,7 +434,7 @@
 
                                     class="fb-v16-date"
 
-                                    title="Waktu laporan dicatat">{{ $item->created_at?->timezone('Asia/Jakarta')->locale('id')->translatedFormat('d M Y, H:i') ?? '-' }}
+                                    title="Waktu laporan dicatat">{{ $item->created_at?->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') ?? '-' }}
 
                                     WIB</span></td>
 

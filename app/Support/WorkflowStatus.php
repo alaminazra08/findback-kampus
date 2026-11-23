@@ -29,7 +29,7 @@ final class WorkflowStatus
     {
         return [
             'pending' => 'Perlu Pemeriksaan',
-            'confirmed' => 'Cocok',
+            'confirmed' => 'Dikonfirmasi Cocok',
             'rejected' => 'Tidak Cocok',
         ];
     }

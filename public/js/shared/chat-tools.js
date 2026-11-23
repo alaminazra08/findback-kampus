@@ -429,7 +429,7 @@
 
     const displayedStreams = new WeakSet();
     const chatDateFormat = new Intl.DateTimeFormat("id-ID", {
-        day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Jakarta",
+        day: "numeric", month: "short", year: "numeric", timeZone: "Asia/Jakarta",
     });
     const chatClockFormat = new Intl.DateTimeFormat("id-ID", {
         hour: "2-digit", minute: "2-digit", hourCycle: "h23", timeZone: "Asia/Jakarta",

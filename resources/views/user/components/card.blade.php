@@ -10,7 +10,7 @@
     <div class="cu-item-copy">
         <h3><a href="{{ route('user.items.show', $item) }}">{{ $item->title }}</a></h3>
         <p>@include('user.components.icon', ['icon' => 'pin']) {{ $item->location ?: 'Lokasi tidak dicantumkan' }}</p>
-        <p>@include('user.components.icon', ['icon' => 'clock']) {{ $item->event_date?->format('d M Y') ?? 'Tanggal tidak tersedia' }}</p><a
+        <p>@include('user.components.icon', ['icon' => 'clock']) {{ $item->event_date?->locale('id')->translatedFormat('j M Y') ?? 'Tanggal tidak tersedia' }}</p><a
             class="cu-card-link" href="{{ route('user.items.show', $item) }}">Lihat detail <span>↗</span></a>
     </div>
 </article>

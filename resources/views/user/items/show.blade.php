@@ -20,7 +20,7 @@
             <h1>{{ $item->title }}</h1>
             <dl class="cu-facts">
                 <div><dt>Lokasi</dt><dd>{{ $item->location }}</dd></div>
-                <div><dt>Tanggal kejadian</dt><dd>{{ $item->event_date?->format('d M Y') }}</dd></div>
+                <div><dt>Tanggal kejadian</dt><dd>{{ $item->event_date?->locale('id')->translatedFormat('j M Y') }}</dd></div>
                 <div><dt>Nomor laporan</dt><dd>{{ \App\Support\WorkflowStatus::code((int) $item->id) }}</dd></div>
                 <div><dt>Status</dt><dd>Terverifikasi admin</dd></div>
             </dl>

@@ -242,7 +242,7 @@ class ChatController extends Controller
                     'sent_at' => $message->created_at->toIso8601String(),
                     'created_at' => $message->created_at
                         ->timezone('Asia/Jakarta')
-                        ->format('d/m/Y H:i'),
+                        ->locale('id')->translatedFormat('j M Y, H:i'),
                 ];
             });
 

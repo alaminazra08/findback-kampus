@@ -14,7 +14,7 @@
             <td><strong>{{ $settings['site_name'] }}</strong><br>{{ $settings['institution_name'] }}</td>
         </tr></table>
         <h1>Laporan &amp; Statistik</h1>
-        <p class="muted">Periode: {{ $periodRange ?? $periodLabel }} &nbsp; | &nbsp; Dibuat {{ $generatedAt->format('d/m/Y H:i') }} WIB
+        <p class="muted">Periode: {{ $periodRange ?? $periodLabel }} &nbsp; | &nbsp; Dibuat {{ $generatedAt->locale('id')->translatedFormat('j M Y, H:i') }} WIB
             &nbsp; | &nbsp; {{ auth()->user()->name }}</p>
     </header>
     <table class="summary">
@@ -93,7 +93,7 @@
                     <td>{{ $item->category ?: '-' }}</td>
                     <td>{{ $item->location ?: '-' }}</td>
                     <td>{{ \App\Support\WorkflowStatus::reports()[$item->status] ?? $item->status }}</td>
-                    <td>{{ \Illuminate\Support\Carbon::parse($item->created_at)->format('d/m/Y') }}</td>
+                    <td>{{ \Illuminate\Support\Carbon::parse($item->created_at)->locale('id')->translatedFormat('j M Y') }}</td>
             </tr>@empty<tr>
                     <td colspan="7">Belum ada laporan pada periode ini.</td>
                 </tr>

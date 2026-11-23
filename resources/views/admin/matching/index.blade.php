@@ -102,7 +102,7 @@
                     <select name="status" aria-label="Filter status">
                         <option value="all" @selected($status === 'all')>Semua status</option>
                         <option value="pending" @selected($status === 'pending')>Perlu Pemeriksaan</option>
-                        <option value="confirmed" @selected($status === 'confirmed')>Cocok</option>
+                        <option value="confirmed" @selected($status === 'confirmed')>Dikonfirmasi Cocok</option>
                         <option value="rejected" @selected($status === 'rejected')>Tidak Cocok</option>
                     </select>
                     <button class="match-button secondary match-apply-premium" type="submit"><svg class="match-action-icon"

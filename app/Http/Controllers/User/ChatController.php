@@ -111,7 +111,7 @@ private function chatPayload(ChatMessage $message): array
         'created_at' =>
             $message->created_at
                 ->timezone('Asia/Jakarta')
-                ->format('d M Y · H:i'),
+                ->locale('id')->translatedFormat('j M Y, H:i'),
     ];
 }
 
@@ -256,7 +256,7 @@ public function messages(Request $request)
                 'created_at' =>
                     $message->created_at
                         ->timezone('Asia/Jakarta')
-                        ->format('d/m/Y H:i'),
+                        ->locale('id')->translatedFormat('j M Y, H:i'),
             ];
         });
 

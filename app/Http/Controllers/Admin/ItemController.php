@@ -141,7 +141,7 @@ class ItemController extends Controller
         $validated = $request->validate([
             'type' => [
                 'required',
-                'in:lost,found',
+                'in:found',
             ],
 
             'title' => [

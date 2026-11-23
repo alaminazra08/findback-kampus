@@ -206,7 +206,7 @@
                 'type' => $report->type,
                 'location' => $report->location ?: '—',
                 'status' => $report->status,
-                'date' => \Illuminate\Support\Carbon::parse($report->created_at)->format('d M Y'),
+                'date' => \Illuminate\Support\Carbon::parse($report->created_at)->locale('id')->translatedFormat('j M Y'),
             ]),
             'recentTitle' => 'Laporan Terbaru pada Periode Ini',
             'recentCaption' => 'Periode: ' . $activePeriodLabel . '. Rekap mencakup seluruh laporan pada periode ini.',

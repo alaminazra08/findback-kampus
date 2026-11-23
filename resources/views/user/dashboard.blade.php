@@ -102,7 +102,7 @@
                             <span class="fb-recent-separator">•</span>
 
                             <span>
-                                {{ \Carbon\Carbon::parse($report->created_at)->locale('id')->translatedFormat('d M Y') }}
+                                {{ \Carbon\Carbon::parse($report->created_at)->locale('id')->translatedFormat('j M Y') }}
                             </span>
                         </span>
                     </span>

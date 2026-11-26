@@ -189,7 +189,19 @@
             staged.length = 0;
             main().replaceWith(document.importNode(next, true));
             document.querySelector('.fb-breadcrumb').replaceWith(document.importNode(crumb, true));
-            document.querySelector('.fb-topbar-right').replaceWith(document.importNode(topbar, true));
+            const currentTopbar = document.querySelector('.fb-topbar-right');
+            const nextTopbar = document.importNode(topbar, true);
+            const currentAvatar = currentTopbar.querySelector('.fb-account-profile-link [data-account-photo]');
+            const nextAvatar = nextTopbar.querySelector('.fb-account-profile-link [data-account-photo]');
+
+            // Keep the decoded image when the server returns the same avatar.
+            if (currentAvatar && nextAvatar &&
+                currentAvatar.dataset.accountPhoto === nextAvatar.dataset.accountPhoto &&
+                currentAvatar.textContent.trim() === nextAvatar.textContent.trim() &&
+                currentAvatar.querySelector('img')?.getAttribute('src') === nextAvatar.querySelector('img')?.getAttribute('src')) {
+                nextAvatar.replaceWith(currentAvatar);
+            }
+            currentTopbar.replaceWith(nextTopbar);
             document.title = doc.title;
             displayed = destination.href;
             for (const link of document.querySelectorAll(menuLinks)) {

@@ -1,33 +1,68 @@
 (() => {
-    const trigger = document.getElementById("cu-menu"),
-        nav = document.getElementById("cu-nav");
-    const closeMenu = () => {
-        nav?.classList.remove("open");
-        trigger?.setAttribute("aria-expanded", "false");
-        if (trigger) trigger.textContent = "☰";
-    };
-    trigger?.addEventListener("click", () => {
-        const open = nav.classList.toggle("open");
-        trigger.setAttribute("aria-expanded", String(open));
-        trigger.textContent = open ? "×" : "☰";
-        trigger.setAttribute("aria-label", open ? "Tutup menu" : "Buka menu");
+    const mobileNav = document.querySelector(".cu-mobile-nav");
+    const mobileScreen = window.matchMedia("(max-width: 800px)");
+    let scrollAnchor = Math.max(0, window.scrollY);
+
+    function revealNavigation() {
+        scrollAnchor = Math.max(0, window.scrollY);
+        mobileNav.classList.remove("is-scrolled-away");
+    }
+
+    window.addEventListener("scroll", () => {
+        if (!mobileScreen.matches) return;
+        const y = Math.max(0, window.scrollY);
+        if (y <= 24 || mobileNav.matches(":focus-within") &&
+            mobileNav.querySelector(":focus-visible")) {
+            revealNavigation();
+        } else if (y - scrollAnchor >= 24) {
+            mobileNav.classList.add("is-scrolled-away");
+        } else if (scrollAnchor - y >= 12) {
+            revealNavigation();
+        }
+
+        if (mobileNav.classList.contains("is-scrolled-away")) {
+            scrollAnchor = Math.max(scrollAnchor, y);
+        } else {
+            scrollAnchor = Math.min(scrollAnchor, y);
+        }
+    }, { passive: true });
+
+    mobileNav.addEventListener("focusin", revealNavigation);
+    document.addEventListener("fb:pagechange", revealNavigation);
+    window.addEventListener("pageshow", revealNavigation);
+    mobileScreen.addEventListener("change", revealNavigation);
+
+    const reportSheet = document.getElementById("cu-mobile-report");
+    const reportTrigger = document.getElementById("cu-mobile-report-open");
+
+    reportTrigger?.addEventListener("click", () => {
+        reportSheet.showModal();
+        reportTrigger.setAttribute("aria-expanded", "true");
     });
-    document.addEventListener("click", (e) => {
-        document.querySelectorAll(".cu-dropdown[open]").forEach((d) => {
-            if (!d.contains(e.target)) d.open = false;
-        });
-        if (nav && !nav.contains(e.target) && !trigger?.contains(e.target)) closeMenu();
+    reportSheet?.addEventListener("close", () => {
+        reportTrigger.setAttribute("aria-expanded", "false");
     });
-    document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") {
-            closeMenu();
-            document.querySelectorAll(".cu-dropdown[open]").forEach((d) => {
-                d.open = false;
-                d.querySelector("summary").focus();
-            });
+    reportSheet?.addEventListener("click", (event) => {
+        if (event.target.closest("a") || event.target === reportSheet) {
+            reportSheet.close();
         }
     });
-    window.matchMedia("(min-width:801px)").addEventListener("change", closeMenu);
+    window.matchMedia("(max-width: 800px)").addEventListener("change", (event) => {
+        if (!event.matches && reportSheet?.open) reportSheet.close();
+    });
+
+    document.addEventListener("click", (event) => {
+        document.querySelectorAll(".cu-dropdown[open]").forEach((dropdown) => {
+            if (!dropdown.contains(event.target)) dropdown.open = false;
+        });
+    });
+    document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape" || reportSheet?.open) return;
+        document.querySelectorAll(".cu-dropdown[open]").forEach((dropdown) => {
+            dropdown.open = false;
+            dropdown.querySelector("summary").focus();
+        });
+    });
     document.querySelectorAll("[data-preview]").forEach((input) => {
         let oldUrl;
         input.addEventListener("change", () => {

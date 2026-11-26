@@ -4394,3 +4394,35 @@ a {
         overscroll-behavior: contain;
     }
 }
+
+/* FINDBACK_ADMIN_BELL_MOTION_V2: visual parity with the user notification bell. */
+.fb-notif-trigger.fb-notification-bell {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.fb-notif-trigger.fb-notification-bell svg {
+    transform-origin: 50% 24%;
+    will-change: transform;
+}
+
+.fb-notif-trigger.fb-notification-bell .fb-notif-count {
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.fb-notif-trigger.fb-notification-bell:hover .fb-notif-count,
+.fb-notif-trigger.fb-notification-bell:focus-visible .fb-notif-count {
+    transform: translateY(-1px) scale(1.06);
+    box-shadow: 0 2px 8px rgb(123 22 60 / 20%);
+}
+
+.fb-notif-trigger.fb-notification-bell:active {
+    transform: scale(.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fb-notif-trigger.fb-notification-bell,
+    .fb-notif-trigger.fb-notification-bell .fb-notif-count {
+        transition: none;
+    }
+}

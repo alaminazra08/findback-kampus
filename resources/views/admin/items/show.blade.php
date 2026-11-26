@@ -53,8 +53,6 @@
                 </div>
             </div>
         </div>
-        <p class="fb-items-readonly">Keputusan laporan dilakukan melalui Verifikasi Laporan. Penyerahan fisik
-            dicatat melalui Klaim &amp; Pengembalian.</p>
     </section>
     @if ($item->photo_path)
         @include('admin.partials.report-photo-dialog')

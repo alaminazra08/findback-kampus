@@ -518,6 +518,12 @@ Route::middleware(['auth', 'role:user'])->group(function () {
         \App\Http\Controllers\User\CampusController::class,
         'notifications',
     ])->name('user.notifications.index');
+    Route::get('/notifikasi/{id}/buka', [
+        \App\Http\Controllers\User\CampusController::class,
+        'openNotification',
+    ])
+        ->whereUuid('id')
+        ->name('user.notifications.open');
     Route::post('/notifikasi/read-all', [
         \App\Http\Controllers\User\CampusController::class,
         'readAll',
@@ -528,21 +534,44 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     ])
         ->whereUuid('id')
         ->name('user.notifications.read');
-    Route::get('/profil/foto', [
-    \App\Http\Controllers\User\CampusController::class,
-    'profilePhoto',
-])->name('user.profile.photo');
-    Route::get('/profil', [\App\Http\Controllers\User\CampusController::class, 'profile'])->name(
-        'user.profile.index',
-    );
-   Route::redirect('/profil/edit', '/profil')->name('user.profile.edit');
-    Route::post('/profil', [\App\Http\Controllers\User\CampusController::class, 'updateProfile'])
-        ->middleware('throttle:10,1')
-        ->name('user.profile.update');
-    Route::post('/profil/password', [
+    // Halaman utama tab Profil berisi pusat menu akun.
+    // Detail profil dan keamanan akun memiliki URL tersendiri.
+    Route::get('/kelola-profil/foto', [
+        \App\Http\Controllers\User\CampusController::class,
+        'profilePhoto',
+    ])->name('user.profile.photo');
+
+    // Navbar bawah "Akun" menuju pusat menu akun.
+    Route::get('/akun', function () {
+        return view('user.account.index');
+    })->name('user.account.index');
+
+    // Alihkan URL lama agar bookmark/link lama tetap menuju halaman Akun.
+    Route::redirect('/profil', '/akun', 302);
+
+    // Menu "Kelola Profil" membuka detail profil pengguna.
+    Route::get('/kelola-profil', [
+        \App\Http\Controllers\User\CampusController::class,
+        'profile',
+    ])->name('user.profile.index');
+
+    Route::get('/kelola-profil/edit', [
+        \App\Http\Controllers\User\CampusController::class,
+        'editProfile',
+    ])->name('user.profile.edit');
+
+    Route::post('/kelola-profil', [
+        \App\Http\Controllers\User\CampusController::class,
+        'updateProfile',
+    ])->middleware('throttle:10,1')->name('user.profile.update');
+
+    // Menu "Kelola Akun" membuka pengaturan keamanan/kata sandi.
+    Route::get('/kelola-akun', function () {
+        return view('user.account.security');
+    })->name('user.account.security');
+
+    Route::post('/kelola-akun/password', [
         \App\Http\Controllers\User\CampusController::class,
         'password',
-    ])
-        ->middleware('throttle:6,1')
-        ->name('user.profile.password');
+    ])->middleware('throttle:6,1')->name('user.profile.password');
 });

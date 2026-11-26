@@ -1,0 +1,226 @@
+:is(#fb-notif-panel, .cu-body .cu-header .cu-notice-panel).fb-notice-preview {
+    box-sizing: border-box;
+    padding: 0;
+    border: 1px solid #ecdce3;
+    border-radius: 18px;
+    background: #fff;
+    color: #391b2b;
+    box-shadow: 0 16px 44px rgb(64 16 37 / 16%);
+}
+
+.fb-notice-preview .fb-notice-preview-head,
+#fb-notif-panel .fb-notice-preview-head,
+.cu-body .cu-header .cu-notice-panel .fb-notice-preview-head {
+    display: block;
+    margin: 0;
+    padding: 13px 15px;
+    border-bottom: 1px solid #f1e6eb;
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+:is(#fb-notif-panel, .cu-body .cu-header .cu-notice-panel) .fb-notice-preview-list {
+    display: block;
+    margin: 0;
+    padding: 0;
+    max-height: none;
+    overflow: visible;
+    list-style: none;
+}
+
+:is(#fb-notif-panel, .cu-body .cu-header .cu-notice-panel) .fb-notice-preview-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 15px;
+    border-bottom: 1px solid #f1e6eb;
+    background: #fff;
+}
+
+:is(#fb-notif-panel, .cu-body .cu-header .cu-notice-panel) .fb-notice-preview-row.is-unread {
+    background: #fff8fa;
+}
+
+#fb-notif-panel .fb-notif-dot {
+    display: none;
+}
+
+.fb-notice-preview-copy {
+    flex: 1;
+    min-width: 0;
+}
+
+:is(#fb-notif-panel, .cu-body .cu-header .cu-notice-panel) .fb-notice-preview-copy :is(strong, p) {
+    display: block;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 13px;
+    line-height: 1.35;
+}
+
+:is(#fb-notif-panel, .cu-body .cu-header .cu-notice-panel) .fb-notice-preview-copy p {
+    margin-top: 2px;
+    color: #654c59;
+}
+
+:is(#fb-notif-panel, .cu-body .cu-header .cu-notice-panel) .fb-notice-preview-copy time {
+    color: #705866;
+    font-size: 11px;
+    line-height: 1.3;
+}
+
+.cu-body .cu-header .cu-notice-panel .fb-notice-preview-action,
+#fb-notif-panel .fb-notif-item .fb-notif-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-height: 44px;
+    padding: 0 10px;
+    border: 1px solid #edd4e0;
+    border-radius: 9px;
+    background: #fcf3f7;
+    color: #82143c;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+:is(#fb-notif-panel, .cu-body .cu-header .cu-notice-panel) .fb-notice-preview-all {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    min-height: 44px;
+    margin: 9px 12px 12px;
+    padding: 0 12px;
+    border-radius: 10px;
+    background: #f9edf2;
+    color: #82143c;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.fb-notice-preview a:focus-visible {
+    outline: 2px solid #a21950;
+    outline-offset: 2px;
+}
+
+@media (max-height: 550px) {
+    :is(#fb-notif-panel, .cu-body .cu-header .cu-notice-panel) .fb-notice-preview-copy p {
+        display: none;
+    }
+}
+
+.cu-body .cu-header .cu-brand {
+    color: #fff8fb;
+}
+
+.cu-body .cu-header .cu-brand small {
+    color: #f2c9d7;
+}
+
+.cu-body .cu-header .cu-notice-preview > summary {
+    border-color: rgb(255 232 240 / 36%);
+    border-radius: 14px;
+    background: rgb(255 240 246 / 12%);
+    color: #fff5f9;
+}
+
+.cu-body .cu-header .cu-notice-preview > summary:hover,
+.cu-body .cu-header .cu-notice-preview[open] > summary {
+    background: #fff2f7;
+    color: #801236;
+}
+
+.cu-body .cu-header .cu-notice-preview > summary .cu-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.cu-body .cu-header .cu-notice-preview .cu-bell b {
+    background: #ffe0a3;
+    color: #54240e;
+}
+
+:is(.cu-notice-preview > summary, #fb-notif-trigger) {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+:is(.cu-notice-preview > summary, #fb-notif-trigger):focus-visible {
+    outline: 2px solid #b95c83;
+    outline-offset: 3px;
+}
+
+
+/* FINDBACK_NOTIFICATION_PREVIEW_ROW_CLICK_V2: seluruh baris menjadi target klik. */
+:is(#fb-notif-panel, .cu-body .cu-header .cu-notice-panel) .fb-notice-preview-row {
+    display: block;
+    padding: 0;
+    transition: background-color 160ms ease;
+}
+:is(#fb-notif-panel, .cu-body .cu-header .cu-notice-panel) .fb-notice-preview-row-link,
+:is(#fb-notif-panel, .cu-body .cu-header .cu-notice-panel) .fb-notice-preview-row-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 66px;
+    box-sizing: border-box;
+    padding: 10px 15px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+:is(#fb-notif-panel, .cu-body .cu-header .cu-notice-panel) .fb-notice-preview-row-link:hover,
+:is(#fb-notif-panel, .cu-body .cu-header .cu-notice-panel) .fb-notice-preview-row-button:hover {
+    background: #fffafd;
+}
+:is(#fb-notif-panel, .cu-body .cu-header .cu-notice-panel) .fb-notice-preview-row-link:active,
+:is(#fb-notif-panel, .cu-body .cu-header .cu-notice-panel) .fb-notice-preview-row-button:active {
+    background: #fbedf2;
+}
+.fb-notice-preview-row-form { display:block; margin:0; }
+.fb-notice-preview-message {
+    display:block;
+    margin-top:2px;
+    overflow:hidden;
+    color:#654c59;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    font-size:13px;
+    line-height:1.35;
+}
+#fb-notif-panel .fb-notice-preview-row-button .fb-notif-content,
+#fb-notif-panel .fb-notice-preview-row-link .fb-notif-content { min-width:0; }
+#fb-notif-panel .fb-notice-preview-row-button .fb-notif-dot,
+#fb-notif-panel .fb-notice-preview-row-link .fb-notif-dot { flex:0 0 8px; }
+:is(#fb-notif-panel, .cu-body .cu-header .cu-notice-panel) .fb-notice-preview-row-link:focus-visible,
+:is(#fb-notif-panel, .cu-body .cu-header .cu-notice-panel) .fb-notice-preview-row-button:focus-visible {
+    outline:2px solid #a21950;
+    outline-offset:-3px;
+}
+/* The preview has one clear click target; legacy action-button styling is intentionally disabled. */
+:is(#fb-notif-panel, .cu-body .cu-header .cu-notice-panel) .fb-notice-preview-action,
+#fb-notif-panel .fb-notif-action { display:none !important; }
+
+/* Compact, consistent bell motion on touch and pointer devices. */
+:is(.cu-body .cu-header .cu-bell, #fb-notif-trigger) { touch-action:manipulation; }
+:is(.cu-body .cu-header .cu-bell, #fb-notif-trigger) svg {
+    transform-origin:50% 20%;
+    will-change:transform;
+}
+@media (prefers-reduced-motion: reduce) {
+    :is(.cu-body .cu-header .cu-bell, #fb-notif-trigger) svg { will-change:auto; }
+}

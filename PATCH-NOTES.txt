@@ -1,0 +1,16 @@
+PATCH FIND BACK KAMPUS - EDITOR FOTO PROFIL
+
+File yang diperbarui:
+resources/views/user/profile/edit.blade.php
+
+Fitur:
+- Editor foto profil sebelum disimpan.
+- Geser foto untuk mengatur posisi wajah.
+- Zoom foto.
+- Luruskan foto dengan slider -45 hingga +45 derajat.
+- Putar foto 90 derajat ke kiri/kanan.
+- Pratinjau avatar berbentuk lingkaran.
+- Hasil diproses menjadi JPG persegi 512x512 dan tetap mengikuti batas upload 2 MB.
+- Tampilan editor responsif untuk desktop dan mobile.
+
+Patch ini hanya mengganti tampilan/skrip halaman edit profil. Controller, database, autentikasi, dan fitur lain tidak diubah.

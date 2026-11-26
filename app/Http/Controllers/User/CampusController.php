@@ -146,12 +146,57 @@ class CampusController extends Controller
     {
         $user = $request->user();
 
-        $notifications = $user->notifications()
+        // Filter notifikasi dilakukan di database agar jumlah dan pagination
+        // selalu mengikuti tab yang sedang dipilih (bukan hanya 10 item halaman aktif).
+        $filter = $request->query('filter', 'all');
+        if (! in_array($filter, ['all', 'unread'], true)) {
+            $filter = 'all';
+        }
+
+        $notificationQuery = $user->notifications();
+        if ($filter === 'unread') {
+            $notificationQuery->whereNull('read_at');
+        }
+
+        $notifications = $notificationQuery
             ->latest('created_at')
             ->paginate(10)
             ->withQueryString();
 
-        return view('user.notifications.index', compact('notifications'));
+        return view('user.notifications.index', compact('notifications', 'filter'));
+    }
+
+    /**
+     * Membuka notifikasi, otomatis menandainya sudah dibaca,
+     * lalu mengarahkan pengguna ke halaman aktivitas terkait.
+     */
+    public function openNotification(Request $request, string $id)
+    {
+        $notification = $request->user()
+            ->notifications()
+            ->whereKey($id)
+            ->firstOrFail();
+
+        if (is_null($notification->read_at)) {
+            $notification->markAsRead();
+        }
+
+        $data = $notification->data ?? [];
+        $matchAction = $data['match_action'] ?? null;
+
+        if ($matchAction === 'claim' && !empty($data['item_id'])) {
+            return redirect()->route('user.items.show', (int) $data['item_id']);
+        }
+
+        if (!empty($data['claim_id'])) {
+            return redirect()->route('user.claims.index');
+        }
+
+        if (!empty($data['item_id'])) {
+            return redirect()->route('user.reports.show', (int) $data['item_id']);
+        }
+
+        return redirect()->route('user.reports.index');
     }
 
     /**
@@ -199,6 +244,14 @@ class CampusController extends Controller
     }
 
     /**
+     * Menampilkan halaman edit profil pengguna secara terpisah.
+     */
+    public function editProfile()
+    {
+        return view('user.profile.edit');
+    }
+
+    /**
      * Menampilkan foto profil pengguna.
      */
     public function profilePhoto(Request $request)
@@ -235,12 +288,37 @@ class CampusController extends Controller
             'name' => $photoOnly ? ['exclude'] : ['required', 'string', 'max:255'],
             'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'remove_photo' => ['nullable', 'boolean'],
+            'gender' => $photoOnly ? ['exclude'] : ['nullable', 'in:male,female'],
+            'phone_country_code' => $photoOnly ? ['exclude'] : ['nullable', 'regex:/^\+[1-9][0-9]{0,3}$/'],
+            'phone_number' => $photoOnly ? ['exclude'] : ['nullable', 'string', 'max:20', 'regex:/^[0-9\s().-]*$/'],
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',
             'photo.image' => 'File harus berupa gambar.',
             'photo.mimes' => 'Gunakan foto JPG, PNG, atau WebP.',
             'photo.max' => 'Ukuran foto maksimal 2 MB.',
+            'phone_country_code.regex' => 'Kode negara tidak valid.',
+            'phone_number.regex' => 'Nomor handphone hanya boleh berisi angka.',
         ]);
+
+        // Nomor disimpan dalam format internasional E.164 agar konsisten untuk Indonesia
+        // maupun nomor luar negeri. Prefix 0 lokal Indonesia otomatis dihilangkan.
+        $normalizedPhone = null;
+        if (!$photoOnly) {
+            $rawPhone = preg_replace('/\D+/', '', (string) ($data['phone_number'] ?? ''));
+            if ($rawPhone !== '') {
+                $countryCode = (string) ($data['phone_country_code'] ?? '+62');
+                if ($countryCode === '+62' && str_starts_with($rawPhone, '0')) {
+                    $rawPhone = substr($rawPhone, 1);
+                }
+                $totalDigits = strlen(ltrim($countryCode, '+') . $rawPhone);
+                if ($totalDigits < 8 || $totalDigits > 15 || $rawPhone === '') {
+                    throw ValidationException::withMessages([
+                        'phone_number' => 'Nomor tidak valid. Periksa kode negara dan nomor handphone aktif (8–15 digit).',
+                    ]);
+                }
+                $normalizedPhone = $countryCode . $rawPhone;
+            }
+        }
 
         $userId = $request->user()->getKey();
         $disk = Storage::disk('public');
@@ -263,7 +341,7 @@ class CampusController extends Controller
         }
 
         try {
-            $oldPath = DB::transaction(function () use ($request, $userId, $data, $newPath, $photoOnly) {
+            $oldPath = DB::transaction(function () use ($request, $userId, $data, $newPath, $photoOnly, $normalizedPhone) {
                 $user = $request->user()
                     ->newQuery()
                     ->lockForUpdate()
@@ -272,6 +350,8 @@ class CampusController extends Controller
                 $previousPath = $user->profile_photo_path;
                 if (!$photoOnly) {
                     $user->name = $data['name'];
+                    $user->gender = $data['gender'] ?? null;
+                    $user->phone = $normalizedPhone;
                 }
 
                 if ($newPath !== null) {

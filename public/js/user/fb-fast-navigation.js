@@ -162,6 +162,18 @@
 
         if (!currentNav || !nextNav) return;
 
+        const mobileNav = document.querySelector(".cu-mobile-nav");
+        const nextMobileNav = doc.querySelector(".cu-mobile-nav");
+
+        if (mobileNav && nextMobileNav) {
+            for (const tab of mobileNav.querySelectorAll("[data-cu-tab]")) {
+                const nextTab = nextMobileNav.querySelector(`[data-cu-tab="${tab.dataset.cuTab}"]`);
+                const current = nextTab?.getAttribute("aria-current");
+                if (current) tab.setAttribute("aria-current", current);
+                else tab.removeAttribute("aria-current");
+            }
+        }
+
         const oldAnchors = [
             ...currentNav.querySelectorAll("a[href]")
         ];

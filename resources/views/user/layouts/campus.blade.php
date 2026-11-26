@@ -22,7 +22,7 @@
     
 <link rel="stylesheet" href="{{ asset('css/user/campus.css') }}?v=4">
 
-    <link rel="stylesheet" href="{{ asset('css/user/navbar-premium.css') }}?v=5">
+    <link rel="stylesheet" href="{{ asset('css/user/navbar-premium.css') }}?v=16">
     @if (request()->routeIs('user.claims.show'))
     <link rel="stylesheet" href="{{ asset('css/user/user-claims.css') }}?v=4">
     @endif
@@ -36,7 +36,7 @@
 
     {{-- JAVASCRIPT --}}
 
-    <script src="{{ asset('js/user/campus.js') }}?v=1" defer></script>
+    <script src="{{ asset('js/user/campus.js') }}?v=3" defer></script>
     <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
 
     <!-- FINDBACK_UI_TEXT_KONSISTEN_V1 -->
@@ -112,114 +112,39 @@
         scrollbar-gutter: stable;
     }
 
-    /* Navbar tetap stabil pada halaman desktop */
-    @media (min-width: 1400px) {
-
-        .cu-body .cu-header {
-            width: 100% !important;
-            box-sizing: border-box !important;
-            transform: none !important;
-            animation: none !important;
-            transition: none !important;
-        }
-
-        .cu-body .cu-header .cu-nav-wrap {
-            display: grid !important;
-            grid-template-columns:
-                minmax(0, 1fr)
-                557px
-                minmax(0, 1fr) !important;
-            align-items: center !important;
-            width: 100% !important;
-            height: 82px !important;
-            min-height: 82px !important;
-            gap: 0 !important;
-        }
-
-        /* Logo tetap pada posisi kiri */
-        .cu-body .cu-header .cu-brand {
-            grid-column: 1 !important;
-            justify-self: start !important;
-            min-width: 0 !important;
-            flex-shrink: 0 !important;
-        }
-
-        /* Menu utama selalu berada di tengah */
-        .cu-body .cu-header .cu-nav {
-            grid-column: 2 !important;
-            display: grid !important;
-            grid-template-columns:
-                150px 245px 150px !important;
-            align-items: center !important;
-            justify-content: center !important;
-            gap: 6px !important;
-            width: 557px !important;
-            min-width: 557px !important;
-            margin: 0 !important;
-        }
-
-        /* Ukuran tombol Beranda dan Aktivitas Saya tetap */
-        .cu-body .cu-header .cu-nav > a {
-            width: 150px !important;
-            min-width: 150px !important;
-            height: 48px !important;
-            box-sizing: border-box !important;
-        }
-
-        /* Ukuran tombol Lapor Barang tetap */
-        .cu-body .cu-header .cu-report-dropdown {
-            width: 245px !important;
-            min-width: 245px !important;
-        }
-
-        .cu-body .cu-header
-        .cu-report-dropdown > summary {
-            width: 245px !important;
-            height: 48px !important;
-            box-sizing: border-box !important;
-        }
-
-        /* Notifikasi dan profil tetap di kanan */
-        .cu-body .cu-header .cu-account {
-            grid-column: 3 !important;
-            justify-self: end !important;
-            margin: 0 !important;
-        }
-    }
-
-    /* Hindari perubahan ukuran saat tombol aktif */
-    .cu-body .cu-header .cu-nav > a,
-    .cu-body .cu-header .cu-nav > a.active,
-    .cu-body .cu-header .cu-report-dropdown > summary,
-    .cu-body .cu-header .cu-report-dropdown > summary.active {
-        font-weight: 700 !important;
-        transform: none !important;
-        transition: none !important;
-        animation: none !important;
-    }
-
-    /* Logo tidak bergeser */
-    .cu-body .cu-header .cu-brand,
-    .cu-body .cu-header .cu-brand img {
-        transform: none !important;
-        transition: none !important;
-        animation: none !important;
-    }
-
-    /* Hilangkan gerakan saat hover */
-    .cu-body .cu-header .cu-nav > a:hover,
-    .cu-body .cu-header
-    .cu-report-dropdown > summary:hover {
-        transform: none !important;
-    }
 </style>
 
 
 
+    <link rel="stylesheet" href="{{ asset('css/shared/notification-preview.css') }}?v=5">
+    <script src="{{ asset('js/shared/notification-bell-motion.js') }}?v=3" defer></script>
+
+    @if (request()->routeIs('user.profile.index', 'user.profile.edit'))
+    <style>
+        /* Halaman profil fokus hanya pada layar mobile. */
+        @media(max-width:800px) {
+        html:has(body.fbp-standalone-page) { background:#fff; scrollbar-gutter:stable; }
+        body.fbp-standalone-page { background:#fff; min-height:100vh; }
+        body.fbp-standalone-page .cu-header,
+        body.fbp-standalone-page .cu-mobile-nav,
+        body.fbp-standalone-page .cu-footer { display:none !important; }
+        body.fbp-standalone-page .cu-main {
+            width:100%; max-width:760px; min-height:100vh;
+            margin:0 auto; padding:0 0 48px; background:#fff;
+        }
+        body.fbp-standalone-page .cu-toast-stack { padding:0 22px; }
+        body.fbp-standalone-page .cu-toast-stack:empty { display:none; }
+        }
+        @media(max-width:600px) {
+            body.fbp-standalone-page .cu-main { min-height:100dvh; padding-bottom:28px; }
+        }
+    </style>
+    @endif
+
 </head>
 
 
-<body class="fb-responsive cu-body {{ request()->routeIs('user.reports.index', 'user.claims.index') ? 'fb-activity-page' : '' }}">
+<body class="fb-responsive cu-body {{ request()->routeIs('user.reports.index', 'user.claims.index') ? 'fb-activity-page' : '' }} {{ request()->routeIs('user.account.index') ? 'cu-account-hub-page' : '' }} {{ request()->routeIs('user.profile.index', 'user.profile.edit') ? 'fbp-standalone-page' : '' }}">
 
     @php
         $noticeCount = auth()->user()->unreadNotifications()->count();
@@ -262,19 +187,6 @@ href="{{ route('dashboard') }}"
                 </span>
             </a>
 
-            {{-- MENU MOBILE --}}
-
-            <button
-                id="cu-menu"
-                class="cu-menu"
-                type="button"
-                aria-expanded="false"
-                aria-controls="cu-nav"
-                aria-label="Buka menu"
-            >
-                ☰
-            </button>
-
             {{-- NAVIGASI UTAMA --}}
 
             <nav class="cu-nav" id="cu-nav" aria-label="Navigasi utama">
@@ -284,6 +196,7 @@ href="{{ route('dashboard') }}"
                 <a
                     class="{{ request()->routeIs('dashboard') ? 'active' : '' }}"
                     href="{{ route('dashboard') }}"
+                    @if (request()->routeIs('dashboard')) aria-current="page" @endif
                 >
                     <svg class="fb-nav-icon" viewBox="0 0 24 24"
                          fill="none" stroke="currentColor"
@@ -366,30 +279,55 @@ href="{{ route('user.reports.index') }}"
 
                 {{-- NOTIFIKASI --}}
 
-                <a
-                    class="cu-bell"
-                    href="{{ route('user.notifications.index') }}"
-                    aria-label="Notifikasi, {{ $noticeCount }} belum dibaca"
-                >
-                    @include('user.components.icon', ['icon' => 'bell'])
-
-                    @if ($noticeCount)
-                        <b>{{ min($noticeCount, 99) }}</b>
-                    @endif
-
-                </a>
+                <details class="cu-dropdown cu-notice-preview">
+                    <summary class="cu-bell" aria-label="Notifikasi, {{ $noticeCount }} belum dibaca">
+                        @include('user.components.icon', ['icon' => 'bell'])
+                        @if ($noticeCount)
+                            <b aria-hidden="true">{{ min($noticeCount, 99) }}</b>
+                        @endif
+                    </summary>
+                    <section class="cu-notice-panel fb-notice-preview" aria-labelledby="cu-notice-heading">
+                        <h2 id="cu-notice-heading" class="fb-notice-preview-head">Notifikasi</h2>
+                        <ul class="fb-notice-preview-list">
+                            @forelse ($navUser->notifications()->latest()->limit(4)->get() as $notice)
+                                @php
+                                    $noticeData = $notice->data;
+                                    $noticeTitle = \App\Support\WorkflowStatus::notificationText($noticeData['title'] ?? 'Pemberitahuan');
+                                @endphp
+                                <li data-notice-id="{{ $notice->id }}" class="fb-notice-preview-row {{ $notice->read_at === null ? 'is-unread' : '' }}">
+                                    <a class="fb-notice-preview-row-link" href="{{ route('user.notifications.open', $notice->id) }}" aria-label="Buka notifikasi: {{ $noticeTitle }}">
+                                        <div class="fb-notice-preview-copy">
+                                            <strong>{{ $noticeTitle }}</strong>
+                                            @if (!empty($notice->data['message']))
+                                                <p>{{ \App\Support\WorkflowStatus::notificationText($notice->data['message']) }}</p>
+                                            @endif
+                                            <div class="cu-notice-meta">
+                                                <time datetime="{{ $notice->created_at->toIso8601String() }}">{{ $notice->created_at->locale('id')->diffForHumans() }}</time>
+                                                @if ($notice->read_at === null)
+                                                    <span class="cu-notice-unread">Belum dibaca</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            @empty
+                                <li>Belum ada notifikasi.</li>
+                            @endforelse
+                        </ul>
+                        <a class="cu-notice-all fb-notice-preview-all" href="{{ route('user.notifications.index') }}">Lihat semua notifikasi <span aria-hidden="true">→</span></a>
+                    </section>
+                </details>
 
                 {{-- PROFIL USER --}}
 
                 <details class="cu-dropdown cu-profile">
-                    <summary>
+                    <summary aria-label="Menu akun {{ $navUser->name }}">
                         <span class="cu-avatar" aria-hidden="true">
 
                             @if ($navPhoto && \Illuminate\Support\Facades\Storage::disk('public')->exists($navPhoto))
                                 <img
                                     src="{{ route('user.profile.photo', ['v' => basename($navPhoto)]) }}"
                                     alt=""
-                                    style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
                                 >
                             @else
                                 {{ mb_strtoupper(mb_substr(trim($navUser->name), 0, 1)) }}
@@ -400,11 +338,15 @@ href="{{ route('user.reports.index') }}"
                             {{ $navUser->name }}
                             <small>Civitas Akademika</small>
                         </span>
-                        <span>⌄</span>
+                        <svg class="cu-profile-chevron" width="14" height="14" viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                             stroke-linejoin="round" aria-hidden="true">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg>
                     </summary>
                     <div>
-                        <a href="{{ route('user.profile.index') }}">
-                            Profil saya
+                        <a href="{{ route('user.account.index') }}">
+                            Akun
                         </a>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -420,6 +362,8 @@ href="{{ route('user.reports.index') }}"
         </div>
 
     </header>
+
+    @include('user.layouts.mobile-navigation')
 
     {{-- KONTEN UTAMA --}}
 
@@ -491,8 +435,7 @@ href="{{ route('user.reports.index') }}"
 
         </div>
 
-        @yield('content')
-    </main>
+        @yield('content')    </main>
 
     {{-- FOOTER DINAMIS --}}
 
@@ -523,7 +466,7 @@ href="{{ route('user.reports.index') }}"
 
 
 <script
-    src="{{ asset('js/user/fb-fast-navigation.js') }}?v=2"
+    src="{{ asset('js/user/fb-fast-navigation.js') }}?v=3"
     defer>
 </script>
 

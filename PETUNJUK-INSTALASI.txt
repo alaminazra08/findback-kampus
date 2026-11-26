@@ -1,29 +1,24 @@
-FINDBACK KAMPUS - NOTIFICATION TOOLBAR TWO-ROW RESPONSIVE V3
+FINDBACK KAMPUS - PATCH ANIMASI LONCENG ADMIN
 
-Perubahan:
-- Desktop: filter kategori menjadi baris pertama, tidak memakai horizontal scrollbar.
-- Desktop: pencarian, urutan, Terapkan, dan Atur Ulang menjadi baris kedua.
-- Tablet: kontrol membungkus rapi tanpa overflow horizontal.
-- Mobile: kategori tampil sebagai grid (3 kolom, 2 kolom untuk layar <= 420px); pencarian dan urutan full-width; tombol Terapkan dan Atur Ulang berdampingan dengan tinggi sama.
-- Ukuran tombol Terapkan dan Atur Ulang disamakan dengan pola tombol halaman Klaim (49px desktop).
-- Fungsi GET filter, pencarian, sort, reset, pagination, dan real-time tidak diubah.
-- Versi asset CSS dinaikkan ke v=6 untuk memaksa refresh cache.
+Tujuan:
+- Menyamakan animasi lonceng admin dengan user.
+- Getar singkat ketika kursor diarahkan dan ketika tombol diklik.
+- Getar dua kali ketika notifikasi baru terdeteksi.
+- Mempertahankan badge jumlah notifikasi belum dibaca.
+- Menghormati pengaturan Reduce Motion perangkat.
 
-CARA PASANG (Windows CMD):
-1. Pastikan ZIP ini berada di folder Downloads.
-2. Buka CMD, jalankan satu per satu:
+File patch:
+- public/css/admin/admin-dashboard.css
+- public/js/shared/notification-bell-motion.js
+- resources/views/admin/partials/notification-bell.blade.php
+- resources/views/admin/layouts/items.blade.php
 
-cd /d C:\xampp\htdocs\findback-kampus
+Pemasangan:
+1. Cadangkan folder proyek terlebih dahulu.
+2. Ekstrak ZIP ke root proyek FindBack Kampus (folder yang berisi file artisan), gabungkan folder yang ada.
+3. Jalankan perintah:
+   php artisan view:clear
+   php artisan optimize:clear
+4. Buka dashboard admin, tekan Ctrl + F5, lalu uji hover, klik, dan notifikasi baru.
 
-tar -xf "%USERPROFILE%\Downloads\findback-notification-toolbar-two-row-v3.zip" -C "C:\xampp\htdocs\findback-kampus"
-
-php artisan view:clear
-
-3. Buka http://127.0.0.1:8000/admin/notifications
-4. Tekan Ctrl+F5.
-
-CATATAN:
-- Tidak ada perubahan database.
-- Tidak ada perintah git, commit, atau push.
-- File backup asli tersedia di folder backup/notification-toolbar-two-row-before-20261120/ pada ZIP.
-- Ekstraksi ZIP menimpa dua file target dengan versi upgrade.
+Patch ini tidak menyertakan .env, database, vendor, node_modules, atau .git.

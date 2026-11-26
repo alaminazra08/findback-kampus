@@ -20,7 +20,7 @@
 
     {{-- CSS UTAMA --}}
     <link rel="stylesheet"
-        href="{{ asset('css/admin/admin-dashboard.css') }}?v=41">
+        href="{{ asset('css/admin/admin-dashboard.css') }}?v=42">
 
     <link rel="stylesheet"
         href="{{ asset('css/admin/admin-items.css') }}?v=34">
@@ -72,8 +72,10 @@
     {{-- FINDBACK: hide native search clear controls consistently on all admin pages --}}
     <link rel="stylesheet" href="{{ asset('css/admin/search-input-consistency.css') }}?v=20261120-3">
     <link rel="stylesheet" href="{{ asset('css/admin/report-type-size.css') }}?v=2">
-    <link rel="stylesheet" href="{{ asset('css/admin/admin-profile-page.css') }}?v=4">
+    <link rel="stylesheet" href="{{ asset('css/admin/admin-profile-page.css') }}?v=5">
     @include('partials.findback-brand-theme')
+    <link rel="stylesheet" href="{{ asset('css/shared/notification-preview.css') }}?v=5">
+    <script src="{{ asset('js/shared/notification-bell-motion.js') }}?v=3" defer></script>
 </head>
 
 <body class="fb-responsive fb-admin-body">
@@ -362,7 +364,7 @@
 
     {{-- NOTIFIKASI --}}
     <script
-        src="{{ asset('js/admin/admin-notifications.js') }}?v=6"
+        src="{{ asset('js/admin/admin-notifications.js') }}?v=7"
         defer>
     </script>
 
@@ -397,7 +399,7 @@
     <script src="{{ asset('js/admin/admin-toast-standard-v1.js') }}?v=3" defer></script>
     <script src="{{ asset('js/admin/admin-scroll-continuity-v1.js') }}?v=2" defer></script>
     <script src="{{ asset('js/admin/account-photo-live.js') }}?v=3" defer></script>
-    <script src="{{ asset('js/admin/admin-fast-navigation.js') }}?v=14" defer
+    <script src="{{ asset('js/admin/admin-fast-navigation.js') }}?v=15" defer
         data-account="{{ auth()->id() }}"
         data-dashboard="{{ route('admin.dashboard') }}"
         data-verification="{{ route('admin.reports.verification') }}"

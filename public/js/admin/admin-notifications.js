@@ -207,8 +207,10 @@
                 if (!next) return;
                 updateClaimBadges(next);
                 const nextRows = rows(next);
-                const arrivals = nextRows.filter(row => !known.has(row.dataset.notificationId) &&
-                    row.classList.contains('is-unread') && ['reports', 'claims', 'users'].includes(row.dataset.category));
+                const unreadArrivals = nextRows.filter(row => !known.has(row.dataset.notificationId) &&
+                    row.classList.contains('is-unread'));
+                const arrivals = unreadArrivals.filter(row => ['reports', 'claims', 'users'].includes(row.dataset.category));
+                if (unreadArrivals.length) button.dispatchEvent(new Event('fb:notification-arrived', { bubbles: true }));
                 // Keep a bounded list of recent IDs per document.
                 known = new Set(nextRows.map(row => row.dataset.notificationId));
                 const nextButton = next.querySelector('#fb-notif-trigger');

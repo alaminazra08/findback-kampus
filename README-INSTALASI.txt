@@ -1,17 +1,10 @@
-FINDBACK KAMPUS - PUSAT NOTIFIKASI STATE PERSISTENCE V9
+FINDBACK KAMPUS - PATCH NOTIFIKASI RESPONSIF
 
-Isi patch:
-- public/js/admin/notification-stats-live.js
-- resources/views/admin/notifications/index.blade.php
+Perubahan:
+1. Tab Semua / Belum dibaca memakai indikator garis bawah yang halus, tanpa kotak bayangan besar.
+2. Animasi lonceng berjalan saat disentuh/diklik di mobile dan saat hover/klik di desktop.
+3. Tombol teks "Buka" pada setiap notifikasi di dropdown dihapus.
+4. Seluruh baris notifikasi menjadi area klik. Notifikasi user otomatis ditandai dibaca dan diarahkan sesuai tujuan. Notifikasi admin otomatis ditandai dibaca lalu diarahkan sesuai tujuan.
+5. Tautan "Lihat semua notifikasi" tetap tersedia.
 
-Perbaikan:
-- Menyimpan kategori, pencarian, sort, pagination dan posisi scroll per tab browser.
-- Memulihkan kondisi saat kembali dari Dashboard/menu lain.
-- Memulihkan scroll setelah daftar hasil dipasang.
-- Menangani browser back/forward dan BFCache.
-- Mempertahankan polling 2 detik untuk sinkronisasi latar belakang.
-- Terapkan dan Atur Ulang tetap menggunakan AJAX tanpa reload seluruh halaman.
-
-Instalasi:
-Ekstrak isi ZIP ke root project Laravel (C:\xampp\htdocs\findback-kampus),
-lalu jalankan php artisan view:clear dan php artisan optimize:clear.
+Patch ini tidak mengubah database atau migration.

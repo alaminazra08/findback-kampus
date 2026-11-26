@@ -230,11 +230,14 @@
 
 .fb-account-photo-image {
     opacity: 0;
-    transition: opacity 120ms ease;
 }
 
 .fb-account-photo-image.is-loaded {
     opacity: 1;
+}
+
+[data-account-photo]:has(> .fb-account-photo-image.is-loaded) > span {
+    visibility: hidden;
 }
 
 .fb-main .fb-admin-profile-avatar {
@@ -249,8 +252,3 @@
     flex-shrink: 0;
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .fb-account-photo-image {
-        transition: none;
-    }
-}

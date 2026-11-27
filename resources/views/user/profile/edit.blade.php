@@ -224,6 +224,126 @@
         .fbp-edit-phone-row > #fbp-phone { font-size:15px !important; padding-left:12px !important; }
     }
 
+
+    /* Responsive refinement: Edit Profil */
+    .fbp-edit-screen {
+        width: min(100%, 920px);
+        max-width: 920px;
+        margin: 0 auto 40px;
+        overflow: hidden;
+        border: 1px solid #eee3e8;
+        border-radius: 20px;
+        background: #fff;
+        box-shadow: 0 12px 34px rgba(48,20,31,.055);
+    }
+    .fbp-edit-topbar {
+        min-height: 76px;
+        padding: 14px 28px;
+        gap: 16px;
+        background: #fff;
+    }
+    .fbp-edit-back { width: 44px; height: 44px; flex-basis: 44px; }
+    .fbp-edit-topbar h1 { font-size: 23px; }
+    .fbp-edit-body { padding: 28px 30px 32px; }
+    .fbp-edit-form {
+        display: grid;
+        grid-template-columns: minmax(210px, .72fr) minmax(0, 1fr);
+        align-items: start;
+        column-gap: 30px;
+        row-gap: 20px;
+    }
+    .fbp-edit-form > div:first-of-type {
+        grid-column: 1;
+        grid-row: 1 / span 5;
+        min-width: 0;
+        align-self: stretch;
+        padding: 24px 18px;
+        border: 1px solid #f0e3e9;
+        border-radius: 16px;
+        background: linear-gradient(155deg,#fffafd 0%,#fbf3f6 100%);
+    }
+    .fbp-edit-photo-area { margin: 4px auto 30px; }
+    .fbp-edit-photo-control { width: 142px; height: 142px; }
+    .fbp-edit-camera { width: 46px; height: 46px; }
+    .fbp-edit-photo-tools { margin-top: -17px; margin-bottom: 18px; }
+    .fbp-edit-hint { font-size: 12px; }
+    .fbp-edit-field { grid-column: 2; }
+    .fbp-edit-field label { margin-bottom: 8px; font-size: 14px; }
+    .fbp-edit-field input,
+    .fbp-edit-field select { min-height: 50px; padding-inline: 15px; font-size: 15px; border-radius: 11px; }
+    .fbp-edit-email input { padding-left: 46px !important; padding-inline-start: 46px !important; }
+    .fbp-edit-email .fbp-email-icon { left: 14px; width: 19px; height: 19px; }
+    .fbp-edit-phone-row { min-height: 50px; }
+    .fbp-edit-phone-row input { min-height: 48px; font-size: 15px; }
+    .fbp-country-trigger { min-height: 48px; font-size: 14px; }
+    .fbp-edit-actions {
+        grid-column: 2;
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 2px;
+        gap: 12px;
+    }
+    .fbp-edit-actions a,
+    .fbp-edit-actions button {
+        flex: 0 1 180px;
+        min-height: 48px;
+        font-size: 14px;
+    }
+    @media (max-width: 800px) {
+        .fbp-edit-screen {
+            width: min(100%, 620px);
+            margin: 0 auto 28px;
+            border-radius: 0;
+            border-left: 0;
+            border-right: 0;
+            box-shadow: none;
+        }
+        .fbp-edit-topbar { min-height: 68px; padding: 12px 20px; gap: 14px; }
+        .fbp-edit-back { width: 42px; height: 42px; flex-basis: 42px; }
+        .fbp-edit-topbar h1 { font-size: 21px; }
+        .fbp-edit-body { padding: 24px 22px 34px; }
+        .fbp-edit-form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .fbp-edit-form > div:first-of-type {
+            width: 100%;
+            align-self: auto;
+            padding: 20px 16px 18px;
+            border: 1px solid #f0e3e9;
+            border-radius: 16px;
+            background: linear-gradient(155deg,#fffafd 0%,#fbf3f6 100%);
+        }
+        .fbp-edit-photo-area { margin: 2px auto 27px; }
+        .fbp-edit-photo-control { width: 128px; height: 128px; }
+        .fbp-edit-camera { width: 44px; height: 44px; }
+        .fbp-edit-photo-tools { margin-top: -16px; margin-bottom: 15px; }
+        .fbp-edit-field { width: 100%; }
+        .fbp-edit-field label { font-size: 15px; }
+        .fbp-edit-field input,
+        .fbp-edit-field select { min-height: 54px; font-size: 16px; }
+        .fbp-edit-phone-row { min-height: 54px; }
+        .fbp-edit-phone-row input { min-height: 52px; font-size: 16px; }
+        .fbp-country-trigger { min-height: 52px; font-size: 15px; }
+        .fbp-edit-actions { width: 100%; margin-top: 4px; gap: 10px; }
+        .fbp-edit-actions a,
+        .fbp-edit-actions button { flex: 1 1 0; min-height: 52px; font-size: 15px; }
+    }
+    @media (max-width: 380px) {
+        .fbp-edit-body { padding: 20px 16px 28px; }
+        .fbp-edit-form { gap: 16px; }
+        .fbp-edit-form > div:first-of-type { padding-inline: 12px; }
+        .fbp-edit-actions { flex-direction: column-reverse; }
+        .fbp-edit-actions a,
+        .fbp-edit-actions button { width: 100%; flex: 0 0 auto; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .fbp-edit-screen *,
+        .fbp-edit-screen *::before,
+        .fbp-edit-screen *::after { transition: none !important; animation: none !important; }
+    }
+
 </style>
 
 <div class="fbp-edit-screen">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\LostFoundItem;
+use App\Models\ItemClaim;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
@@ -20,6 +21,11 @@ class MyReportController extends Controller
         // Data hanya milik pengguna yang sedang login.
         $baseQuery = LostFoundItem::query()
             ->where('user_id', auth()->id())
+            ->where(function ($q) {
+                $q->where('status', '!=', 'rejected')
+                    ->orWhereNull('revision_expires_at')
+                    ->orWhere('revision_expires_at', '>', now());
+            })
             ->withExists([
                 'revisions as awaiting_revision' => fn ($q) => $q->whereNull('closed_at'),
             ]);
@@ -34,6 +40,8 @@ class MyReportController extends Controller
         $pendingReports = (clone $baseQuery)->where('status', 'pending')->count();
 
         $verifiedReports = (clone $baseQuery)->where('status', 'verified')->count();
+
+        $totalClaims = ItemClaim::query()->where('user_id', auth()->id())->count();
 
         $rejectedReports = (clone $baseQuery)->where('status', 'rejected')->count();
 
@@ -74,6 +82,7 @@ class MyReportController extends Controller
                 'foundReports',
                 'pendingReports',
                 'verifiedReports',
+                'totalClaims',
                 'rejectedReports',
             ),
         );

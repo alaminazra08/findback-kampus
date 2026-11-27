@@ -1,10 +1,18 @@
 <section class="fb-report-timeline {{ $historyClass ?? '' }}" aria-labelledby="fb-report-timeline-title" data-live-report-history>
     <header>
-        <h2 id="fb-report-timeline-title"> {{ $historyTitle ?? 'Riwayat Verifikasi Laporan' }}</h2>
+        <h2 id="fb-report-timeline-title">{{ $historyTitle ?? 'Riwayat Verifikasi Laporan' }}</h2>
         <p>{{ $historyDescription ?? 'Aktivitas laporan yang tercatat.' }}</p>
     </header>
     <ol role="list">
-        @forelse ($history->reverse() as $event)
+        @php
+            // ItemJourney sudah mengurutkan aktivitas dari waktu terlama ke terbaru.
+            // Halaman admin Detail Barang memakai urutan kronologis kiri-ke-kanan.
+            // Halaman user tetap mempertahankan urutan tampilan sebelumnya.
+            $orderedHistory = ($historyClass ?? '') === 'fb-admin-item-timeline'
+                ? $history
+                : $history->reverse();
+        @endphp
+        @forelse ($orderedHistory as $event)
             @php
                 $at = $event['at']->copy()->timezone('Asia/Jakarta')->locale('id');
                 $kind = $event['kind'] ?? '';
@@ -22,7 +30,7 @@
                 </time>
                 <span class="fb-report-timeline-marker" aria-hidden="true"></span>
                 <div class="fb-report-timeline-copy">
-                    <strong>{{ $kind === 'verified' ? 'Laporan disetujui' : $event['title'] }}</strong>
+                    <strong>{{ $kind === 'verified' ? 'Laporan diverifikasi & dipublikasikan' : $event['title'] }}</strong>
                     @if (filled($event['actor']) || !empty($event['context']))
                         <small>{{ implode(' · ', array_filter([$event['actor'], $event['context'] ?? null])) }}</small>
                     @endif

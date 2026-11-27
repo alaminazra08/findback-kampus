@@ -1,0 +1,8 @@
+/* FindBack - deadline metadata for the verification queue */
+.fb-revision-deadline { display:inline-block; color:#6f5361; font-size:.82rem; line-height:1.45; font-weight:600; white-space:normal; }
+.fb-revision-countdown { display:inline-flex; align-items:center; justify-content:center; padding:.42rem .7rem; border-radius:999px; background:#fff3df; color:#96570a; border:1px solid #f3d6a5; font-size:.78rem; font-weight:750; white-space:nowrap; }
+.fb-revision-countdown.is-urgent { background:#fff0f1; color:#a51d43; border-color:#f4c5d0; }
+@media (max-width: 760px) {
+  .fb-revision-deadline { font-size:.78rem; }
+  .fb-revision-countdown { font-size:.74rem; }
+}

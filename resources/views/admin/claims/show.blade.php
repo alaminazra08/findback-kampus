@@ -2,7 +2,7 @@
 @section('title', 'Detail Klaim Barang')
 @section('breadcrumb', 'Klaim Barang')
 @section('page-styles')
-    <link rel="stylesheet" href="{{ asset('css/admin/claims-toast-v1.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/claims-toast.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/admin-claims.css') }}?v=20261118-claims-v1">
     <link rel="stylesheet" href="{{ asset('css/admin/claim-detail-compact.css') }}?v=6">
     <link rel="stylesheet" href="{{ asset('css/admin/claim-detail-premium.css') }}?v=7">

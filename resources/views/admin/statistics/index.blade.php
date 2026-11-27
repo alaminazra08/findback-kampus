@@ -8,14 +8,11 @@
     <link rel="stylesheet" href="{{ asset('css/admin/admin-statistics.css') }}?v=33">
     <link rel="stylesheet" href="{{ asset('css/admin/findback-statistics-premium.css') }}?v=4">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/statistics/index.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/admin/statistics-download-menu-v1.css') }}?v=1">
-    <link rel="stylesheet" href="{{ asset('css/admin/statistics-download-menu-v2.css') }}?v=2">
-    <link rel="stylesheet" href="{{ asset('css/admin/statistics-download-menu-v3.css') }}?v=3">
-    <link rel="stylesheet" href="{{ asset('css/admin/statistics-download-menu-v4.css') }}?v=4">
-    <link rel="stylesheet" href="{{ asset('css/admin/statistics-period-dropdown-v5.css') }}?v=5">
-    <link rel="stylesheet" href="{{ asset('css/admin/statistics-dropdown-layer-v6.css') }}?v=6">
-    <link rel="stylesheet" href="{{ asset('css/admin/statistics-cards-consistency-v1.css') }}?v=1">
-    <link rel="stylesheet" href="{{ asset('css/admin/statistics-illustration-icons-v1.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/statistics-download-menu.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/statistics-period-dropdown.css') }}?v=5">
+    <link rel="stylesheet" href="{{ asset('css/admin/statistics-dropdown-layer.css') }}?v=6">
+    <link rel="stylesheet" href="{{ asset('css/admin/statistics-cards-consistency.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/statistics-illustration-icons.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/report-cycle.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-report-cards.css') }}?v=20261111">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/dashboard-recent-consistency.css') }}?v=6">

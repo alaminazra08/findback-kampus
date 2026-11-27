@@ -4,7 +4,7 @@
 @section('breadcrumb', 'Pencocokan Barang')
 
 @section('page-styles')
-    <link rel="stylesheet" href="{{ asset('css/admin/verification-toast-v1.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/verification-toast.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/verification-actions-history.css') }}?v=4">
     <link rel="stylesheet" href="{{ asset('css/admin/admin-matching.css') }}?v=47">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/detail-back.css') }}?v=2">

@@ -1,37 +1,4 @@
 (() => {
-    const mobileNav = document.querySelector(".cu-mobile-nav");
-    const mobileScreen = window.matchMedia("(max-width: 800px)");
-    let scrollAnchor = Math.max(0, window.scrollY);
-
-    function revealNavigation() {
-        scrollAnchor = Math.max(0, window.scrollY);
-        mobileNav.classList.remove("is-scrolled-away");
-    }
-
-    window.addEventListener("scroll", () => {
-        if (!mobileScreen.matches) return;
-        const y = Math.max(0, window.scrollY);
-        if (y <= 24 || mobileNav.matches(":focus-within") &&
-            mobileNav.querySelector(":focus-visible")) {
-            revealNavigation();
-        } else if (y - scrollAnchor >= 24) {
-            mobileNav.classList.add("is-scrolled-away");
-        } else if (scrollAnchor - y >= 12) {
-            revealNavigation();
-        }
-
-        if (mobileNav.classList.contains("is-scrolled-away")) {
-            scrollAnchor = Math.max(scrollAnchor, y);
-        } else {
-            scrollAnchor = Math.min(scrollAnchor, y);
-        }
-    }, { passive: true });
-
-    mobileNav.addEventListener("focusin", revealNavigation);
-    document.addEventListener("fb:pagechange", revealNavigation);
-    window.addEventListener("pageshow", revealNavigation);
-    mobileScreen.addEventListener("change", revealNavigation);
-
     const reportSheet = document.getElementById("cu-mobile-report");
     const reportTrigger = document.getElementById("cu-mobile-report-open");
 

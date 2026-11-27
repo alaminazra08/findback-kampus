@@ -43,3 +43,26 @@ Thumbs.db
 /public/images/uploads/
 /storage/framework/*.lock
 /backup-patch-*/
+
+# Android Studio files - excluded from Laravel repository
+/.gradle/
+/.idea/
+/gradle/
+/app/src/
+/app/build.gradle.kts
+/app/.gitignore
+/build.gradle.kts
+/gradle.properties
+/settings.gradle.kts
+/gradlew
+/gradlew.bat
+/local.properties
+
+
+# Backup lokal laporan
+/backup-laporan-v3/
+/backup-laporan-v4/
+/backup-laporan-v5/
+
+# Source sementara hasil ekstraksi
+/findback-kampus/

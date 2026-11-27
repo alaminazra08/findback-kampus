@@ -1,0 +1,528 @@
+/* FINDBACK MATCHING PAGE PREMIUM RESPONSIVE V4
+ * Visual-only layer. Business logic, forms, routes, filters and table data remain unchanged.
+ * Statistic-card geometry follows admin-verification.css / .fb-v-stats-v18.
+ */
+.match-wrap:has(> .match-index-heading) {
+    width: 100%;
+    max-width: 1380px;
+    min-width: 0;
+    margin-inline: auto;
+    padding: 4px 0 38px;
+    box-sizing: border-box;
+}
+
+/* Page heading and primary action */
+.match-wrap:has(> .match-index-heading) .match-index-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin: 14px 0 25px;
+}
+.match-wrap:has(> .match-index-heading) .match-index-heading > div,
+.match-wrap:has(> .match-index-heading) .match-index-heading form {
+    min-width: 0;
+}
+.match-wrap:has(> .match-index-heading) .match-index-heading h1 {
+    margin: 14px 0 12px;
+    font-size: clamp(32px, 3vw, 44px);
+    line-height: 1.16;
+    letter-spacing: -1.2px;
+    font-weight: 800;
+}
+.match-wrap:has(> .match-index-heading) .match-index-heading > div > p:last-child {
+    max-width: 780px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: #8b7480;
+}
+.match-wrap:has(> .match-index-heading) .match-index-heading form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 9px;
+    margin: 0;
+}
+.match-wrap:has(> .match-index-heading) .match-index-heading form .match-button {
+    min-height: 54px;
+    padding: 0 23px;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #981542, #790d35);
+    border-color: #8e123d;
+    box-shadow: 0 11px 25px rgba(121, 13, 53, .16);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.match-wrap:has(> .match-index-heading) .match-index-heading form .match-button svg {
+    width: 19px;
+    height: 19px;
+    flex: 0 0 19px;
+}
+.match-wrap:has(> .match-index-heading) .match-generation-hint {
+    margin: 0;
+    color: #967985;
+    font-size: 11px;
+    line-height: 1.5;
+    text-align: right;
+}
+
+/* Statistic cards: exact Verification V18 geometry */
+.match-wrap:has(> .match-index-heading) > .match-stats {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    align-items: stretch !important;
+    grid-auto-rows: 1fr !important;
+    gap: 14px !important;
+    margin: 0 0 22px !important;
+}
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat {
+    position: relative;
+    box-sizing: border-box !important;
+    min-width: 0;
+    min-height: 166px !important;
+    height: auto !important;
+    padding: 23px 21px 20px !important;
+    gap: 0 !important;
+    border: 1px solid #ecdce4 !important;
+    border-radius: 19px !important;
+    background: linear-gradient(135deg, #fff 58%, #fffbfd) !important;
+    box-shadow: 0 9px 25px rgba(67, 20, 41, .045) !important;
+    overflow: hidden;
+    justify-content: flex-start !important;
+    transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+}
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat::before {
+    left: 22px !important;
+    width: 48px !important;
+    height: 3px !important;
+}
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat::after {
+    top: 19px !important;
+    right: 19px !important;
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 12px !important;
+    background-size: 21px 21px !important;
+}
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat > small {
+    display: block;
+    min-height: 0 !important;
+    max-width: calc(100% - 50px) !important;
+    padding-right: 0 !important;
+    color: #755366 !important;
+    font-size: 12px !important;
+    font-weight: 750 !important;
+    line-height: 1.4 !important;
+}
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat > strong {
+    display: block;
+    margin-top: 21px !important;
+    font-size: 38px !important;
+    line-height: 1.05 !important;
+    letter-spacing: -.045em !important;
+    font-variant-numeric: tabular-nums;
+}
+.match-wrap:has(> .match-index-heading) > .match-stats > .match-stat > span {
+    display: block;
+    margin-top: 8px !important;
+    font-size: 11.5px !important;
+    line-height: 1.5 !important;
+}
+@media (hover: hover) and (pointer: fine) {
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat:hover {
+        transform: translateY(-2px);
+        border-color: #dfb5c5 !important;
+        box-shadow: 0 14px 28px rgba(67, 20, 41, .085) !important;
+    }
+}
+
+/* Candidate panel */
+.match-wrap:has(> .match-index-heading) .match-panel {
+    min-width: 0;
+    border: 1px solid #ecdce4;
+    border-radius: 21px;
+    background: #fff;
+    box-shadow: 0 10px 28px rgba(50, 16, 33, .04);
+    overflow: hidden;
+}
+.match-wrap:has(> .match-index-heading) .match-panel-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+    gap: 20px;
+    padding: 25px 27px 22px;
+    border-bottom: 1px solid #f1e6eb;
+}
+.match-wrap:has(> .match-index-heading) .match-list-title,
+.match-wrap:has(> .match-index-heading) .match-list-title > div {
+    min-width: 0;
+}
+.match-wrap:has(> .match-index-heading) .match-panel-top h2 {
+    margin: 0 0 6px;
+    color: #351d2d;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -.4px;
+}
+.match-wrap:has(> .match-index-heading) .match-panel-top p {
+    margin: 0;
+    color: #907b86;
+    font-size: 12px;
+    line-height: 1.6;
+}
+.match-wrap:has(> .match-index-heading) .match-filters {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(180px, 1fr) auto auto;
+    align-items: stretch;
+    gap: 11px;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+}
+.match-wrap:has(> .match-index-heading) .match-filters > input,
+.match-wrap:has(> .match-index-heading) .match-filters > select,
+.match-wrap:has(> .match-index-heading) .match-filters > button,
+.match-wrap:has(> .match-index-heading) .match-filters > .match-reset-curved {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    min-height: 52px;
+    margin: 0;
+    border-radius: 12px;
+}
+.match-wrap:has(> .match-index-heading) .match-filters > input,
+.match-wrap:has(> .match-index-heading) .match-filters > select {
+    border-color: #ead8e1;
+    background-color: #fff;
+    color: #493342;
+    font-size: 12px;
+}
+.match-wrap:has(> .match-index-heading) .match-filters > input:focus,
+.match-wrap:has(> .match-index-heading) .match-filters > select:focus {
+    border-color: #b96b8a;
+    outline: 3px solid rgba(185, 107, 138, .13);
+}
+.match-wrap:has(> .match-index-heading) .match-filters > button {
+    min-width: 132px;
+    box-shadow: 0 8px 17px rgba(121, 13, 53, .12);
+}
+.match-wrap:has(> .match-index-heading) .match-filters > .match-reset-curved {
+    min-width: 132px;
+    padding-inline: 15px;
+    border-radius: 12px;
+}
+.match-wrap:has(> .match-index-heading) .match-guidance {
+    margin: 0;
+    padding: 13px 27px;
+    border-bottom: 1px solid #f1e6eb;
+    background: #fcf8fa;
+    color: #816d78;
+    font-size: 11.5px;
+    line-height: 1.7;
+}
+
+/* Desktop table refinement */
+.match-wrap:has(> .match-index-heading) .match-table-scroll {
+    width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+}
+.match-wrap:has(> .match-index-heading) .match-table {
+    width: 100%;
+    min-width: 730px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+.match-wrap:has(> .match-index-heading) .match-table thead th {
+    padding: 15px 16px;
+    background: #fcf8fa;
+    color: #927b87;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .8px;
+}
+.match-wrap:has(> .match-index-heading) .match-table tbody td {
+    padding: 17px 16px;
+    border-top: 1px solid #f2eaf0;
+    color: #584553;
+    font-size: 12px;
+    line-height: 1.55;
+}
+.match-wrap:has(> .match-index-heading) .match-table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 12px;
+}
+.match-wrap:has(> .match-index-heading) .match-table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 12px;
+}
+.match-wrap:has(> .match-index-heading) .match-table .match-pill {
+    padding: 7px 11px;
+    border: 1px solid transparent;
+    font-size: 10.5px;
+}
+.match-wrap:has(> .match-index-heading) .match-table .match-detail-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 0 12px;
+    border: 1px solid #ead2dd;
+    border-radius: 10px;
+    background: #fff;
+    color: #8c1742;
+    text-decoration: none;
+}
+.match-wrap:has(> .match-index-heading) .match-table .match-detail-link:hover {
+    background: #fff6f9;
+    border-color: #d9aabd;
+}
+.match-wrap:has(> .match-index-heading) .match-pagination {
+    padding: 16px 22px;
+    border-top: 1px solid #f1e6eb;
+}
+
+/* Tablet */
+@media (max-width: 1050px) {
+    .match-wrap:has(> .match-index-heading) > .match-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+    .match-wrap:has(> .match-index-heading) .match-filters {
+        grid-template-columns: minmax(0, 1fr) minmax(160px, .65fr);
+    }
+    .match-wrap:has(> .match-index-heading) .match-filters > button,
+    .match-wrap:has(> .match-index-heading) .match-filters > .match-reset-curved {
+        min-width: 0;
+    }
+}
+
+/* Mobile: same two-column statistic rhythm as Verification V18. */
+@media (max-width: 700px) {
+    .match-wrap:has(> .match-index-heading) {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 0 28px;
+    }
+    .match-wrap:has(> .match-index-heading) .match-index-heading {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+        margin: 8px 0 21px;
+    }
+    .match-wrap:has(> .match-index-heading) .match-index-heading h1 {
+        margin: 12px 0 10px;
+        font-size: clamp(28px, 7.5vw, 35px);
+        letter-spacing: -.8px;
+    }
+    .match-wrap:has(> .match-index-heading) .match-index-heading > div > p:last-child {
+        font-size: 13px;
+    }
+    .match-wrap:has(> .match-index-heading) .match-index-heading form {
+        width: 100%;
+        align-items: stretch;
+        gap: 7px;
+    }
+    .match-wrap:has(> .match-index-heading) .match-index-heading form .match-button {
+        width: 100%;
+        min-height: 50px;
+    }
+    .match-wrap:has(> .match-index-heading) .match-generation-hint {
+        text-align: left;
+    }
+    .match-wrap:has(> .match-index-heading) > .match-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 11px !important;
+        margin-bottom: 20px !important;
+    }
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat {
+        min-height: 146px !important;
+        padding: 17px 13px 15px !important;
+        border-radius: 19px !important;
+    }
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat::before {
+        left: 13px !important;
+        width: 33px !important;
+    }
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat::after {
+        top: 12px !important;
+        right: 11px !important;
+        width: 31px !important;
+        height: 31px !important;
+        background-size: 18px 18px !important;
+    }
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat > small {
+        max-width: calc(100% - 32px) !important;
+        font-size: 11px !important;
+    }
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat > strong {
+        margin-top: 18px !important;
+        font-size: 31px !important;
+    }
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat > span {
+        margin-top: 8px !important;
+        font-size: 10.5px !important;
+    }
+    .match-wrap:has(> .match-index-heading) .match-panel {
+        border-radius: 18px;
+    }
+    .match-wrap:has(> .match-index-heading) .match-panel-top {
+        padding: 20px 16px;
+        gap: 15px;
+    }
+    .match-wrap:has(> .match-index-heading) .match-panel-top h2 {
+        font-size: 20px;
+    }
+    .match-wrap:has(> .match-index-heading) .match-filters {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+    }
+    .match-wrap:has(> .match-index-heading) .match-filters > input,
+    .match-wrap:has(> .match-index-heading) .match-filters > select {
+        grid-column: 1 / -1;
+    }
+    .match-wrap:has(> .match-index-heading) .match-filters > button,
+    .match-wrap:has(> .match-index-heading) .match-filters > .match-reset-curved {
+        min-height: 48px;
+        padding-inline: 7px;
+        font-size: 11px;
+    }
+    .match-wrap:has(> .match-index-heading) .match-guidance {
+        padding: 12px 16px;
+        font-size: 10.5px;
+    }
+
+    /* Stack each candidate row into a readable mobile record card. */
+    .match-wrap:has(> .match-index-heading) .match-table-scroll {
+        padding: 10px 12px 14px;
+        overflow: visible;
+    }
+    .match-wrap:has(> .match-index-heading) .match-table {
+        display: block;
+        min-width: 0;
+        width: 100%;
+    }
+    .match-wrap:has(> .match-index-heading) .match-table thead {
+        display: none;
+    }
+    .match-wrap:has(> .match-index-heading) .match-table tbody {
+        display: grid;
+        gap: 10px;
+    }
+    .match-wrap:has(> .match-index-heading) .match-table tbody tr {
+        display: block;
+        min-width: 0;
+        padding: 7px 12px;
+        border: 1px solid #efe1e8;
+        border-radius: 13px;
+        background: #fff;
+        box-shadow: 0 4px 12px rgba(67, 20, 41, .035);
+    }
+    .match-wrap:has(> .match-index-heading) .match-table tbody td {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        padding: 9px 0;
+        border: 0;
+        border-bottom: 1px solid #f4edf1;
+        text-align: right;
+        overflow-wrap: anywhere;
+    }
+    .match-wrap:has(> .match-index-heading) .match-table tbody td:last-child {
+        border-bottom: 0;
+    }
+    .match-wrap:has(> .match-index-heading) .match-table tbody td::before {
+        content: attr(data-label);
+        flex: 0 0 39%;
+        color: #927b87;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: .25px;
+        text-align: left;
+        text-transform: uppercase;
+    }
+    .match-wrap:has(> .match-index-heading) .match-table .match-item-cell,
+    .match-wrap:has(> .match-index-heading) .match-table .match-item-cell > div {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        align-items: flex-end;
+        min-width: 0;
+        text-align: right;
+    }
+    .match-wrap:has(> .match-index-heading) .match-table .match-item-cell strong,
+    .match-wrap:has(> .match-index-heading) .match-table .match-item-cell small {
+        max-width: 100%;
+        text-align: right;
+        overflow-wrap: anywhere;
+    }
+    .match-wrap:has(> .match-index-heading) .match-table .match-empty {
+        display: block;
+        padding: 25px 12px !important;
+        text-align: center !important;
+    }
+    .match-wrap:has(> .match-index-heading) .match-table .match-empty::before {
+        content: none;
+    }
+    .match-wrap:has(> .match-index-heading) .match-pagination {
+        padding: 13px 15px;
+    }
+}
+
+@media (max-width: 390px) {
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat {
+        padding-inline: 11px !important;
+    }
+    .match-wrap:has(> .match-index-heading) .match-filters {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .match-wrap:has(> .match-index-heading) .match-filters > input,
+    .match-wrap:has(> .match-index-heading) .match-filters > select {
+        grid-column: 1;
+    }
+}
+@media (max-width: 340px) {
+    .match-wrap:has(> .match-index-heading) > .match-stats {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat,
+    .match-wrap:has(> .match-index-heading) .match-button,
+    .match-wrap:has(> .match-index-heading) .match-reset-curved,
+    .match-wrap:has(> .match-index-heading) .match-table tbody tr {
+        animation: none !important;
+        transition: none !important;
+    }
+    .match-wrap:has(> .match-index-heading) > .match-stats > .match-stat:hover {
+        transform: none !important;
+    }
+}
+
+[data-fb-matching-toast] .fb-settings-toast-copy {
+    overflow-wrap: anywhere;
+}
+
+.fb-matching-toast-close {
+    flex: 0 0 44px;
+    min-height: 44px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+[data-fb-matching-toast].is-info {
+    border-color: #cbd5e1;
+    color: #334155;
+}
+
+[data-fb-matching-toast].is-info .fb-settings-toast-icon {
+    background: #e2e8f0;
+}

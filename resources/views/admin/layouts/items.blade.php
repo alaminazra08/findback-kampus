@@ -51,8 +51,8 @@
     <link rel="stylesheet"
         href="{{ asset('css/shared/view-utilities.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('css/shared/confirmation-modal-v14.css') }}?v=16">
-    <script src="{{ asset('js/shared/confirmation-modal-v14.js') }}?v=16" defer></script>
+    <link rel="stylesheet" href="{{ asset('css/shared/confirmation-modal.css') }}?v=16">
+    <script src="{{ asset('js/shared/confirmation-modal.js') }}?v=16" defer></script>
     <script src="{{ asset('js/admin/claim-rejection-dialog.js') }}?v=1" defer></script>
     <script src="{{ asset('js/shared/view-interactions.js') }}" defer></script>
     <script src="{{ asset('js/report-history-live.js') }}?v=1" defer></script>
@@ -389,15 +389,15 @@
     <script src="{{ asset('js/admin/notification-stats-live.js') }}?v=10" defer></script>
     <script src="{{ asset('js/admin/settings-score.js') }}?v=2" defer></script>
     <script src="{{ asset('js/admin/settings-smart-save.js') }}?v=18" defer></script>
-    <script src="{{ asset('js/admin/claims-toast-v1.js') }}?v=2" defer></script>
-    <script defer src="{{ asset('js/admin/statistics-cards-consistency-v1.js') }}?v=1"></script>
-    <script defer src="{{ asset('js/admin/statistics-download-menu-v4.js') }}?v=5"></script>
-    <script defer src="{{ asset('js/admin/statistics-period-dropdown-v5.js') }}?v=6"></script>
-    <script defer src="{{ asset('js/admin/statistics-dropdown-layer-v6.js') }}?v=7"></script>
-    <script defer src="{{ asset('js/pages/admin/matching/photo-viewer-v6.js') }}?v=8"></script>
+    <script src="{{ asset('js/admin/claims-toast.js') }}?v=2" defer></script>
+    <script defer src="{{ asset('js/admin/statistics-cards-consistency.js') }}?v=1"></script>
+    <script defer src="{{ asset('js/admin/statistics-download-menu.js') }}?v=5"></script>
+    <script defer src="{{ asset('js/admin/statistics-period-dropdown.js') }}?v=6"></script>
+    <script defer src="{{ asset('js/admin/statistics-dropdown-layer.js') }}?v=7"></script>
+    <script defer src="{{ asset('js/pages/admin/matching/photo-viewer.js') }}?v=8"></script>
     @include('admin.partials.detail-interactions')
-    <script src="{{ asset('js/admin/admin-toast-standard-v1.js') }}?v=3" defer></script>
-    <script src="{{ asset('js/admin/admin-scroll-continuity-v1.js') }}?v=2" defer></script>
+    <script src="{{ asset('js/admin/admin-toast-standard.js') }}?v=3" defer></script>
+    <script src="{{ asset('js/admin/admin-scroll-continuity.js') }}?v=2" defer></script>
     <script src="{{ asset('js/admin/account-photo-live.js') }}?v=3" defer></script>
     <script src="{{ asset('js/admin/admin-fast-navigation.js') }}?v=15" defer
         data-account="{{ auth()->id() }}"

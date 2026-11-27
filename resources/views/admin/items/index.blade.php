@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="{{ asset('css/admin/items-table-consistency.css') }}?v=3">
     <link rel="stylesheet" href="{{ asset('css/admin/report-filters.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/report-list-polish.css') }}?v=2">
-    <link rel="stylesheet" href="{{ asset('css/admin/hover-consistency-v6.css') }}?v=20261115-6">
-    <link rel="stylesheet" href="{{ asset('css/admin/hover-line-v7.css') }}?v=20261115-7">
+    <link rel="stylesheet" href="{{ asset('css/admin/hover-consistency.css') }}?v=20261115-6">
+    <link rel="stylesheet" href="{{ asset('css/admin/hover-line.css') }}?v=20261115-7">
 @endsection
 
 @section('content')

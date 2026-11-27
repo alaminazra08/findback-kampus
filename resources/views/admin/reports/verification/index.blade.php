@@ -1,16 +1,20 @@
 @extends('admin.layouts.items')
 @section('title', 'Verifikasi Laporan')
 @section('page-styles')
+    <link rel="stylesheet" href="{{ asset('css/admin/revision-deadline.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/verification-revision-responsive-v11.css') }}?v=11">
     <link rel="stylesheet" href="{{ asset('css/admin/header-consistency.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/admin-verification.css') }}?v=31">
-    <link rel="stylesheet" href="{{ asset('css/admin/verification-toast-v1.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/verification-toast.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/verification-table-columns.css') }}?v=3">
     <link rel="stylesheet" href="{{ asset('css/admin/verification-photo-responsive.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/findback-pm-detail-date.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/report-filters.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/report-list-polish.css') }}?v=1">
-    <link rel="stylesheet" href="{{ asset('css/admin/hover-consistency-v6.css') }}?v=20261115-6">
-    <link rel="stylesheet" href="{{ asset('css/admin/hover-line-v7.css') }}?v=20261115-7">
+    <link rel="stylesheet" href="{{ asset('css/admin/verification-revision-responsive-v12.css') }}?v=12">
+    <link rel="stylesheet" href="{{ asset('css/admin/hover-consistency.css') }}?v=20261115-6">
+    <link rel="stylesheet" href="{{ asset('css/admin/hover-line.css') }}?v=20261115-7">
+    <link rel="stylesheet" href="{{ asset('css/admin/verification-stats-grid-v40.css') }}?v=40">
 @endsection
 
 @section('content')

@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="{{ asset('css/admin/users-filter-final.css') }}?v=4">
     {{-- FINDBACK_USERS_MOBILE_COMPACT_V1 --}}
     <link rel="stylesheet" href="{{ asset('css/admin/users-mobile-compact.css') }}?v=1">
-    <link rel="stylesheet" href="{{ asset('css/admin/users-stat-cards-verification-size-v1.css') }}?v=2">
-    <link rel="stylesheet" href="{{ asset('css/admin/users-stat-cards-signature-rail-v3.css') }}?v=3">
+    <link rel="stylesheet" href="{{ asset('css/admin/users-stat-cards-verification-size.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/admin/users-stat-cards-signature-rail.css') }}?v=3">
     <link rel="stylesheet" href="{{ asset('css/admin/account-profile-photo.css') }}?v=1">
 @endsection
 

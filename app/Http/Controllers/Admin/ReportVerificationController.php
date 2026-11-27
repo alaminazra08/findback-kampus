@@ -42,6 +42,9 @@ class ReportVerificationController extends Controller
         $revisionMode = ($filters['revision'] ?? null) === 'history' ? 'history' : 'ready';
         $query = LostFoundItem::query()
             ->where('status', $revisionMode === 'history' ? 'rejected' : 'pending')
+            ->when($revisionMode === 'history', fn ($q) => $q->where(function ($active) {
+                $active->whereNull('revision_expires_at')->orWhere('revision_expires_at', '>', now());
+            }))
             ->with('reporter:id,name,email,role')
             ->withExists([
                 'revisions as awaiting_revision' => fn ($q) => $q->whereNull('closed_at'),
@@ -69,7 +72,9 @@ class ReportVerificationController extends Controller
             ->groupBy('status')
             ->pluck('total', 'status');
 
-        $openRevisionCount = (int) $counts->get('rejected', 0);
+        $openRevisionCount = (int) LostFoundItem::query()->where('status', 'rejected')
+            ->where(function ($q) { $q->whereNull('revision_expires_at')->orWhere('revision_expires_at', '>', now()); })
+            ->count();
         $pendingReadyCount = (int) $counts->get('pending', 0);
 
         $data = [
@@ -82,7 +87,7 @@ class ReportVerificationController extends Controller
             'additionalCounts' => $counts->except(['pending', 'verified', 'rejected']),
             'pending' => $counts->get('pending', 0),
             'verified' => $counts->get('verified', 0),
-            'rejected' => $counts->get('rejected', 0),
+            'rejected' => $openRevisionCount,
         ];
 
         if ($request->header('X-FindBack-Verification') === 'results') {
@@ -146,6 +151,12 @@ class ReportVerificationController extends Controller
                 $locked->reviewed_at = now();
                 $locked->rejection_reason =
                     $validated['decision'] === 'rejected' ? trim($validated['reason']) : null;
+                // Tenggat tepat 7 x 24 jam sejak admin meminta perbaikan.
+                $locked->revision_expires_at = $validated['decision'] === 'rejected'
+                    ? now()->addDays(7)
+                    : null;
+                $locked->revision_reminder_sent_at = null;
+                $locked->revision_final_warning_sent_at = null;
                 $locked->save();
                 \App\Support\ReportAudit::record(
                     $locked,

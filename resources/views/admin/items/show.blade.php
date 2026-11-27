@@ -4,6 +4,8 @@
     <link rel="stylesheet" href="{{ asset('css/admin/claim-proof-modal.css') }}?v=17">
     <link rel="stylesheet" href="{{ asset('css/admin/verification-detail-card.css') }}?v=3">
     <link rel="stylesheet" href="{{ asset('css/pages/admin/detail-back.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/report-history-timeline.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/pages/admin/item-detail-history.css') }}?v=9">
 @endsection
 
 @section('content')
@@ -15,7 +17,8 @@
             <p>Informasi lengkap laporan barang yang tersimpan dalam sistem.</p>
         </div>
     </div>
-    <section class="fb-items-panel fb-items-detail fb-item-single-card" aria-labelledby="fb-detail-title">
+    <div class="fb-admin-item-journey-grid">
+        <section class="fb-items-panel fb-items-detail fb-item-single-card fb-admin-item-information" aria-labelledby="fb-detail-title">
         <div class="fb-items-panel-head">
             <div>
                 <h2 id="fb-detail-title">{{ $item->title }}</h2>
@@ -53,7 +56,16 @@
                 </div>
             </div>
         </div>
-    </section>
+        </section>
+
+        <section class="fb-admin-item-history" aria-label="Riwayat aktivitas barang">
+            @include('shared.report-history', [
+                'historyTitle' => 'Riwayat Aktivitas',
+                'historyDescription' => 'Perjalanan laporan, pencocokan, klaim, hingga serah terima barang.',
+                'historyClass' => 'fb-admin-item-timeline',
+            ])
+        </section>
+    </div>
     @if ($item->photo_path)
         @include('admin.partials.report-photo-dialog')
     @endif

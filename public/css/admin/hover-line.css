@@ -1,0 +1,96 @@
+/* FindBack V7 — top indicator line hover grow for Items & Verification */
+@media (hover: hover) and (pointer: fine) {
+  /* Laporan Barang */
+  .fb-items-summary > article,
+  .fb-items-summary .fb-items-stat,
+  .fb-items-summary .stat-card,
+  .fb-items-summary .summary-card {
+    overflow: hidden;
+  }
+
+  .fb-items-summary > article::before,
+  .fb-items-summary .fb-items-stat::before,
+  .fb-items-summary .stat-card::before,
+  .fb-items-summary .summary-card::before {
+    transition: width 220ms ease, box-shadow 220ms ease, opacity 220ms ease !important;
+    width: 52px !important;
+    opacity: 1;
+  }
+
+  .fb-items-summary > article:hover::before,
+  .fb-items-summary .fb-items-stat:hover::before,
+  .fb-items-summary .stat-card:hover::before,
+  .fb-items-summary .summary-card:hover::before {
+    width: 78px !important;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.02);
+  }
+
+  /* fallback bila garis dibuat dengan elemen khusus, bukan ::before */
+  .fb-items-summary > article [class*="accent"],
+  .fb-items-summary > article [class*="indicator"],
+  .fb-items-summary > article [class*="top-line"],
+  .fb-items-summary .fb-items-stat [class*="accent"],
+  .fb-items-summary .fb-items-stat [class*="indicator"],
+  .fb-items-summary .fb-items-stat [class*="top-line"] {
+    transition: width 220ms ease, transform 220ms ease !important;
+    transform-origin: left center;
+  }
+
+  .fb-items-summary > article:hover [class*="accent"],
+  .fb-items-summary > article:hover [class*="indicator"],
+  .fb-items-summary > article:hover [class*="top-line"],
+  .fb-items-summary .fb-items-stat:hover [class*="accent"],
+  .fb-items-summary .fb-items-stat:hover [class*="indicator"],
+  .fb-items-summary .fb-items-stat:hover [class*="top-line"] {
+    transform: scaleX(1.18);
+  }
+
+  /* Verifikasi Laporan */
+  .fb-v-stats > .fb-v-stat {
+    overflow: hidden;
+  }
+
+  .fb-v-stats > .fb-v-stat::before {
+    transition: width 220ms ease, box-shadow 220ms ease, opacity 220ms ease !important;
+    width: 52px !important;
+    opacity: 1;
+  }
+
+  .fb-v-stats > .fb-v-stat:hover::before {
+    width: 78px !important;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.02);
+  }
+
+  .fb-v-stats > .fb-v-stat [class*="accent"],
+  .fb-v-stats > .fb-v-stat [class*="indicator"],
+  .fb-v-stats > .fb-v-stat [class*="top-line"] {
+    transition: width 220ms ease, transform 220ms ease !important;
+    transform-origin: left center;
+  }
+
+  .fb-v-stats > .fb-v-stat:hover [class*="accent"],
+  .fb-v-stats > .fb-v-stat:hover [class*="indicator"],
+  .fb-v-stats > .fb-v-stat:hover [class*="top-line"] {
+    transform: scaleX(1.18);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fb-items-summary > article::before,
+  .fb-items-summary .fb-items-stat::before,
+  .fb-items-summary .stat-card::before,
+  .fb-items-summary .summary-card::before,
+  .fb-items-summary > article [class*="accent"],
+  .fb-items-summary > article [class*="indicator"],
+  .fb-items-summary > article [class*="top-line"],
+  .fb-items-summary .fb-items-stat [class*="accent"],
+  .fb-items-summary .fb-items-stat [class*="indicator"],
+  .fb-items-summary .fb-items-stat [class*="top-line"],
+  .fb-v-stats > .fb-v-stat::before,
+  .fb-v-stats > .fb-v-stat [class*="accent"],
+  .fb-v-stats > .fb-v-stat [class*="indicator"],
+  .fb-v-stats > .fb-v-stat [class*="top-line"] {
+    transition: none !important;
+    animation: none !important;
+  }
+}

@@ -17,11 +17,20 @@ class LostFoundItem extends Model
         'description',
         'photo_path',
         'status',
+        'revision_expires_at',
+        'revision_reminder_sent_at',
+        'revision_final_warning_sent_at',
     ];
 
     protected function casts(): array
     {
-        return ['event_date' => 'date', 'reviewed_at' => 'datetime'];
+        return [
+            'event_date' => 'date',
+            'reviewed_at' => 'datetime',
+            'revision_expires_at' => 'datetime',
+            'revision_reminder_sent_at' => 'datetime',
+            'revision_final_warning_sent_at' => 'datetime',
+        ];
     }
 
     public function revisions(): \Illuminate\Database\Eloquent\Relations\HasMany

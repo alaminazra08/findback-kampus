@@ -1,15 +1,15 @@
     <div class="fb-v-stats fb-v-stats-v18">
-        @foreach ([['label' => 'Antrean Verifikasi', 'value' => $pendingReadyCount, 'class' => 'pending', 'description' => 'Perlu diperiksa admin'], ['label' => 'Menunggu Perbaikan', 'value' => $openRevisionCount, 'class' => 'revision', 'description' => 'Ditolak dan menunggu perbaikan'], ['label' => 'Laporan Terverifikasi', 'value' => $verified, 'class' => 'approved', 'description' => 'Berstatus disetujui'], ['label' => 'Laporan Ditolak', 'value' => $rejected, 'class' => 'rejected', 'description' => 'Tidak memenuhi ketentuan']] as $stat)
+        @foreach ([['label' => 'Antrean Verifikasi', 'value' => $pendingReadyCount, 'class' => 'pending', 'description' => 'Perlu diperiksa admin'], ['label' => 'Menunggu Perbaikan', 'value' => $openRevisionCount, 'class' => 'revision', 'description' => 'Batas 7 × 24 jam sejak diminta revisi'], ['label' => 'Laporan Terverifikasi', 'value' => $verified, 'class' => 'approved', 'description' => 'Berstatus disetujui']] as $stat)
             <div class="fb-v-stat {{ $stat['class'] }}">
                 <span>{{ $stat['label'] }}</span><strong>{{ number_format($stat['value'], 0, ',', '.') }}</strong><small>{{ $stat['description'] }}</small>
             </div>
         @endforeach
     </div>
-    <section class="fb-panel fb-v-panel">
+    <section class="fb-panel fb-v-panel {{ $revisionMode === 'history' ? 'fb-v-panel--revision' : '' }}">
         <div class="fb-panel-head">
             <div>
                 <h2>{{ $revisionMode === 'history' ? 'Menunggu Perbaikan' : 'Antrean Verifikasi' }}</h2>
-                <p>{{ $revisionMode === 'history' ? 'Laporan ditolak yang menunggu perbaikan dari User.' : 'Laporan yang perlu diperiksa, diurutkan dari yang paling lama.' }}
+                <p>{{ $revisionMode === 'history' ? 'Laporan yang menunggu perbaikan. Tenggat tepat 7 × 24 jam sejak admin meminta revisi.' : 'Laporan yang perlu diperiksa, diurutkan dari yang paling lama.' }}
                 </p>
             </div><span class="fb-panel-pill">{{ $items->total() }} hasil</span>
         </div>
@@ -78,6 +78,10 @@
                         <th>Pelapor</th>
                         <th>Lokasi</th>
                         <th>Status</th>
+                        @if ($revisionMode === 'history')
+                            <th>Batas Perbaikan</th>
+                            <th>Sisa Waktu</th>
+                        @endif
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -124,11 +128,18 @@
                             <td data-label="Status"><span
                                     class="fb-v-status {{ $revisionMode === 'history' ? 'status-revision' : 'status-pending' }}">{{ $revisionMode === 'history' ? 'Ditolak · Menunggu Perbaikan' : ($item->resubmitted ? 'Pemeriksaan Ulang' : 'Menunggu Verifikasi') }}</span>
                             </td>
+                            @if ($revisionMode === 'history')
+                                <td data-label="Batas Perbaikan"><span class="fb-revision-deadline">{{ $item->revision_expires_at?->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y, H:i') ?? 'Belum ditentukan' }} WIB</span></td>
+                                <td data-label="Sisa Waktu">
+                                    @php($remainingSeconds = $item->revision_expires_at ? max(0, now()->diffInSeconds($item->revision_expires_at, false)) : 0)
+                                    <span class="fb-revision-countdown {{ $remainingSeconds <= 86400 ? 'is-urgent' : '' }}">{{ $item->revision_expires_at ? ($remainingSeconds > 0 ? max(1, (int) ceil($remainingSeconds / 86400)).' hari lagi' : 'Kedaluwarsa') : '—' }}</span>
+                                </td>
+                            @endif
                             <td data-label="Aksi">@include('admin.partials.detail-action', ['detailUrl' => route('admin.reports.verification.show', array_merge(request()->only(['search', 'type', 'page']), ['item' => $item, 'from' => $revisionMode === 'history' ? 'history' : 'queue']))])
                             </td>
                         </tr>
                     @empty<tr>
-                            <td colspan="6" class="fb-empty">
+                            <td colspan="{{ $revisionMode === 'history' ? 8 : 6 }}" class="fb-empty">
                                 <div class="fb-empty-state fb-report-empty">
                                     @if ($items->total() > 0)
                                         <strong>Halaman ini tidak berisi laporan</strong>
@@ -140,6 +151,7 @@
                                         <a class="fb-v-reset" href="{{ route('admin.reports.verification', $revisionMode === 'history' ? ['revision' => 'history'] : []) }}">Atur Ulang Filter</a>
                                     @else
                                         <strong>{{ $revisionMode === 'history' ? 'Tidak ada laporan yang menunggu perbaikan' : 'Tidak ada laporan yang menunggu verifikasi.' }}</strong>
+                                        @if ($revisionMode === 'history')<p>Laporan yang tidak diperbaiki dalam 7 × 24 jam akan dihapus permanen dari sistem.</p>@endif
                                     @endif
                                 </div>
                             </td>

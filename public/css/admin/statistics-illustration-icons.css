@@ -1,6 +1,6 @@
 /* FindBack Statistics — Illustration Icon Alignment Fix V2
    Only corrects the six icon tiles. Card geometry and content layout remain owned
-   by statistics-cards-consistency-v1.css. */
+   by statistics-cards-consistency.css. */
 .fs-page .fs-cards > article.fs-card.fs-card-v4 .fs-card-icon.fs-card-icon-illustrated {
     position: absolute !important;
     z-index: 3 !important;

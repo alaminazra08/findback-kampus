@@ -34,6 +34,11 @@ class ReportRevisionController extends Controller
                 $item = LostFoundItem::lockForUpdate()->findOrFail($report->id);
                 abort_unless((int) $item->user_id === (int) $request->user()->id, 404);
                 $rejected = $item->status === 'rejected';
+                if ($rejected && $item->revision_expires_at && now()->greaterThan($item->revision_expires_at)) {
+                    throw ValidationException::withMessages([
+                        'revision_id' => 'Batas waktu perbaikan telah berakhir. Laporan ini akan dihapus permanen sesuai ketentuan sistem.',
+                    ]);
+                }
                 $revision = $rejected
                     ? null
                     : $item
@@ -92,6 +97,9 @@ class ReportRevisionController extends Controller
                     $item->rejection_reason = null;
                     $item->reviewed_by = null;
                     $item->reviewed_at = null;
+                    $item->revision_expires_at = null;
+                    $item->revision_reminder_sent_at = null;
+                    $item->revision_final_warning_sent_at = null;
                 }
                 $item->save();
                 $revision->update([

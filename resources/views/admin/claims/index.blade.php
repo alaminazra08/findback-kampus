@@ -2,12 +2,12 @@
 @section('title', 'Klaim Barang')
 @section('breadcrumb', 'Klaim Barang')
 @section('page-styles')
-    <link rel='stylesheet' href='{{ asset('css/shared/findback-claims-navigation-v1.css') }}' >
-    <link rel="stylesheet" href="{{ asset('css/admin/claims-panel-stay-v1.css') }}?v=1">
-    <link rel="stylesheet" href="{{ asset('css/admin/claims-toast-v1.css') }}?v=1">
+    <link rel='stylesheet' href='{{ asset('css/shared/findback-claims-navigation.css') }}' >
+    <link rel="stylesheet" href="{{ asset('css/admin/claims-panel-stay.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/admin/claims-toast.css') }}?v=1">
     <link rel="stylesheet" href="{{ asset('css/admin/header-consistency.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/admin/admin-claims.css') }}?v=20261118-claims-v1">
-    <link rel="stylesheet" href="{{ asset('css/admin/claims-premium-responsive-v2.css') }}?v=20261118-claims-v3">
+    <link rel="stylesheet" href="{{ asset('css/admin/claims-premium-responsive.css') }}?v=20261118-claims-v3">
 @endsection
 
 @section('content')

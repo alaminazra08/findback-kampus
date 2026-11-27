@@ -1,0 +1,751 @@
+
+/* ===== Original layer 1: statistics-download-menu-v1.css ===== */
+/* FindBack - unified PDF report download menu */
+.fs-report-download-wrap {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    position: relative;
+    z-index: 12;
+}
+
+.fs-report-download {
+    position: relative;
+    width: min(100%, 340px);
+}
+
+.fs-report-download-trigger {
+    min-height: 56px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 0 20px;
+    border: 1px solid #e8cbd7;
+    border-radius: 16px;
+    background: #8d103c;
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(105, 13, 51, .12);
+    cursor: pointer;
+    list-style: none;
+    font: inherit;
+    font-weight: 700;
+    transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+.fs-report-download-trigger::-webkit-details-marker { display: none; }
+.fs-report-download-trigger::marker { content: ""; }
+.fs-report-download-trigger:hover {
+    background: #741033;
+    box-shadow: 0 11px 24px rgba(105, 13, 51, .18);
+    transform: translateY(-1px);
+}
+.fs-report-download-trigger:focus-visible {
+    outline: 3px solid rgba(177, 35, 91, .25);
+    outline-offset: 3px;
+}
+.fs-report-download-trigger-main {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+}
+.fs-report-download-trigger svg,
+.fs-report-download-option svg {
+    width: 21px;
+    height: 21px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex: 0 0 auto;
+}
+.fs-report-download-chevron {
+    width: 18px !important;
+    height: 18px !important;
+    transition: transform .2s ease;
+}
+.fs-report-download[open] .fs-report-download-chevron { transform: rotate(180deg); }
+
+.fs-report-download-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: min(370px, calc(100vw - 36px));
+    padding: 8px;
+    border: 1px solid #efdce4;
+    border-radius: 17px;
+    background: #fff;
+    box-shadow: 0 18px 48px rgba(54, 19, 36, .16);
+    animation: fs-report-menu-in .16s ease-out;
+}
+@keyframes fs-report-menu-in {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.fs-report-download-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 72px;
+    padding: 12px;
+    border-radius: 12px;
+    color: #351a29;
+    text-decoration: none;
+    transition: background .18s ease, transform .18s ease;
+}
+.fs-report-download-option + .fs-report-download-option { border-top: 1px solid #f4e9ee; }
+.fs-report-download-option:hover {
+    background: #fff5f8;
+    transform: translateX(2px);
+}
+.fs-report-download-option:focus-visible {
+    outline: 2px solid #a71950;
+    outline-offset: -2px;
+}
+.fs-report-download-option-icon {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 42px;
+    border-radius: 12px;
+    color: #941542;
+    background: #fbeaf0;
+}
+.fs-report-download-option-icon.is-tv { background: #f5edf2; color: #512238; }
+.fs-report-download-option-icon svg { width: 22px; height: 22px; }
+.fs-report-download-option-copy {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+    gap: 4px;
+}
+.fs-report-download-option-copy strong { font-size: 13px; line-height: 1.35; }
+.fs-report-download-option-copy small { color: #8b7581; font-size: 11px; line-height: 1.4; }
+.fs-report-download-option-arrow { width: 17px !important; height: 17px !important; color: #a17f8e; }
+
+@media (max-width: 760px) {
+    .fs-report-download-wrap { justify-content: stretch; }
+    .fs-report-download { width: 100%; }
+    .fs-report-download-trigger { min-height: 52px; }
+    .fs-report-download-menu { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .fs-report-download-trigger,
+    .fs-report-download-chevron,
+    .fs-report-download-option { transition: none; }
+    .fs-report-download-menu { animation: none; }
+}
+
+
+/* ===== Original layer 2: statistics-download-menu-v2.css ===== */
+/*
+ * FindBack Kampus - Statistics PDF Download Menu V2
+ * Layout refinement: inline menu flow, consistent desktop sizing,
+ * and responsive mobile stacking. Existing export routes are unchanged.
+ */
+
+/* Header alignment: keep the heading stable when the menu expands. */
+.fs-header {
+    align-items: flex-start;
+}
+
+.fs-header > div:first-child {
+    padding-top: 34px;
+    min-width: 0;
+}
+
+.fs-header-actions {
+    width: min(100%, 390px);
+    max-width: 390px;
+    flex: 0 1 390px;
+    align-items: stretch;
+    gap: 10px;
+    min-width: 0;
+}
+
+.fs-toolbar-label {
+    align-self: flex-end;
+    margin: 0 2px 0 0;
+}
+
+.fs-filter {
+    width: 100%;
+    min-height: 56px;
+    box-sizing: border-box;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.fs-filter label {
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+.fs-filter select {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 64%;
+    box-sizing: border-box;
+}
+
+.fs-report-download-wrap {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    position: relative;
+    z-index: 5;
+}
+
+.fs-report-download {
+    display: block;
+    width: 100%;
+    min-width: 0;
+}
+
+.fs-report-download-trigger {
+    width: 100%;
+    min-height: 56px;
+    box-sizing: border-box;
+}
+
+.fs-report-download-menu {
+    /* Keep the menu in document flow so cards never sit underneath it. */
+    position: static;
+    inset: auto;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-top: 10px;
+    padding: 8px;
+    border-radius: 16px;
+    box-shadow: 0 10px 28px rgba(54, 19, 36, .10);
+    animation: fs-report-menu-in-v2 .18s ease-out;
+}
+
+@keyframes fs-report-menu-in-v2 {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fs-report-download-option {
+    min-width: 0;
+    min-height: 70px;
+    box-sizing: border-box;
+    padding: 12px;
+    gap: 12px;
+}
+
+.fs-report-download-option-copy {
+    min-width: 0;
+}
+
+.fs-report-download-option-copy strong,
+.fs-report-download-option-copy small {
+    overflow-wrap: anywhere;
+}
+
+.fs-report-download-option:hover {
+    transform: translateX(1px);
+}
+
+.fs-export-hint {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    text-align: right;
+}
+
+/* Medium screens: allow the header columns to wrap cleanly. */
+@media (max-width: 980px) and (min-width: 761px) {
+    .fs-header {
+        gap: 20px;
+    }
+
+    .fs-header > div:first-child {
+        flex: 1 1 420px;
+        padding-top: 24px;
+    }
+
+    .fs-header-actions {
+        flex: 0 1 360px;
+        width: min(100%, 360px);
+    }
+}
+
+/* Mobile: stack the title and report controls, with full-width controls. */
+@media (max-width: 760px) {
+    .fs-header {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+    }
+
+    .fs-header > div:first-child {
+        width: 100%;
+        padding-top: 0;
+    }
+
+    .fs-header-actions {
+        width: 100%;
+        max-width: none;
+        flex: 1 1 auto;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .fs-toolbar-label {
+        align-self: flex-end;
+    }
+
+    .fs-filter {
+        width: 100%;
+        min-height: 54px;
+        padding: 8px 10px 8px 13px;
+    }
+
+    .fs-filter select {
+        max-width: 68%;
+        padding: 10px 9px;
+        font-size: 13px;
+    }
+
+    .fs-report-download-wrap,
+    .fs-report-download,
+    .fs-report-download-trigger {
+        width: 100%;
+    }
+
+    .fs-report-download-trigger {
+        min-height: 54px;
+        padding: 0 16px;
+        gap: 10px;
+    }
+
+    .fs-report-download-trigger-main {
+        min-width: 0;
+        gap: 9px;
+    }
+
+    .fs-report-download-trigger-main span {
+        overflow-wrap: anywhere;
+        text-align: left;
+    }
+
+    .fs-report-download-menu {
+        width: 100%;
+        margin-top: 8px;
+        padding: 6px;
+    }
+
+    .fs-report-download-option {
+        min-height: 68px;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .fs-report-download-option-icon {
+        width: 40px;
+        height: 40px;
+        flex-basis: 40px;
+    }
+
+    .fs-report-download-option-copy strong {
+        font-size: 12px;
+    }
+
+    .fs-report-download-option-copy small {
+        font-size: 10px;
+    }
+
+    .fs-export-hint {
+        text-align: left;
+        line-height: 1.55;
+    }
+}
+
+@media (max-width: 380px) {
+    .fs-filter {
+        gap: 7px;
+    }
+
+    .fs-filter label {
+        font-size: 11px;
+    }
+
+    .fs-filter select {
+        max-width: 65%;
+        font-size: 12px;
+    }
+
+    .fs-report-download-option-arrow {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fs-report-download-menu {
+        animation: none;
+    }
+
+    .fs-report-download-option {
+        transition: none;
+    }
+}
+
+
+/* ===== Original layer 3: statistics-download-menu-v3.css ===== */
+/*
+ * FindBack Kampus - Statistics PDF Menu Compact V3
+ * Compact proportions for desktop and mobile; menu remains in document flow.
+ */
+.fs-page .fs-header {
+    align-items: center !important;
+    gap: clamp(22px, 2.5vw, 38px) !important;
+    margin-bottom: 26px !important;
+}
+
+.fs-page .fs-header > div:first-child {
+    flex: 1 1 520px !important;
+    min-width: 0 !important;
+    max-width: 720px !important;
+    padding-top: 0 !important;
+}
+
+.fs-page .fs-header-actions {
+    flex: 0 1 340px !important;
+    width: min(100%, 340px) !important;
+    max-width: 340px !important;
+    min-width: 0 !important;
+    gap: 8px !important;
+    align-items: stretch !important;
+}
+
+.fs-page .fs-toolbar-label {
+    align-self: flex-end !important;
+    margin: 0 2px 1px 0 !important;
+    font-size: 9px !important;
+    letter-spacing: 1.15px !important;
+}
+
+.fs-page .fs-filter {
+    width: 100% !important;
+    min-height: 48px !important;
+    padding: 6px 9px 6px 13px !important;
+    gap: 8px !important;
+    box-sizing: border-box !important;
+}
+
+.fs-page .fs-filter label {
+    flex: 0 0 auto !important;
+    white-space: nowrap !important;
+    font-size: 11px !important;
+}
+
+.fs-page .fs-filter select {
+    flex: 1 1 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: 66% !important;
+    min-height: 36px !important;
+    padding: 7px 10px !important;
+    font-size: 13px !important;
+    box-sizing: border-box !important;
+}
+
+.fs-page .fs-report-download-wrap,
+.fs-page .fs-report-download {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+}
+
+.fs-page .fs-report-download-trigger {
+    width: 100% !important;
+    min-height: 48px !important;
+    padding: 0 15px !important;
+    border-radius: 13px !important;
+    gap: 10px !important;
+    box-sizing: border-box !important;
+    font-size: 13px !important;
+}
+
+.fs-page .fs-report-download-trigger-main {
+    gap: 9px !important;
+    min-width: 0 !important;
+}
+
+.fs-page .fs-report-download-trigger-main span {
+    white-space: nowrap !important;
+    font-size: 13px !important;
+}
+
+.fs-page .fs-report-download-menu {
+    position: static !important;
+    inset: auto !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 7px 0 0 !important;
+    padding: 5px !important;
+    border-radius: 13px !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 7px 20px rgba(54, 19, 36, .08) !important;
+}
+
+.fs-page .fs-report-download-option {
+    min-height: 58px !important;
+    padding: 8px 9px !important;
+    gap: 9px !important;
+    border-radius: 9px !important;
+    box-sizing: border-box !important;
+}
+
+.fs-page .fs-report-download-option-icon {
+    width: 36px !important;
+    height: 36px !important;
+    flex: 0 0 36px !important;
+    border-radius: 10px !important;
+}
+
+.fs-page .fs-report-download-option-icon svg {
+    width: 19px !important;
+    height: 19px !important;
+}
+
+.fs-page .fs-report-download-option-copy {
+    gap: 2px !important;
+}
+
+.fs-page .fs-report-download-option-copy strong {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+}
+
+.fs-page .fs-report-download-option-copy small {
+    font-size: 10px !important;
+    line-height: 1.3 !important;
+}
+
+.fs-page .fs-report-download-option-arrow {
+    width: 15px !important;
+    height: 15px !important;
+}
+
+.fs-page .fs-export-hint {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    font-size: 10px !important;
+    line-height: 1.45 !important;
+    text-align: right !important;
+}
+
+/* Keep the heading and control column balanced on medium screens. */
+@media (max-width: 1100px) and (min-width: 761px) {
+    .fs-page .fs-header {
+        align-items: flex-start !important;
+        gap: 20px !important;
+    }
+    .fs-page .fs-header > div:first-child {
+        flex: 1 1 420px !important;
+    }
+    .fs-page .fs-header-actions {
+        flex: 0 1 320px !important;
+        width: min(100%, 320px) !important;
+    }
+}
+
+/* Mobile: compact controls, no oversized full-height panel. */
+@media (max-width: 760px) {
+    .fs-page .fs-header {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 15px !important;
+        margin-bottom: 20px !important;
+    }
+    .fs-page .fs-header > div:first-child {
+        width: 100% !important;
+        max-width: none !important;
+        flex: 0 0 auto !important;
+        padding-top: 0 !important;
+    }
+    .fs-page .fs-header-actions {
+        width: 100% !important;
+        max-width: none !important;
+        flex: 0 0 auto !important;
+        gap: 8px !important;
+        align-items: stretch !important;
+    }
+    .fs-page .fs-toolbar-label {
+        align-self: flex-end !important;
+        font-size: 9px !important;
+    }
+    .fs-page .fs-filter {
+        min-height: 46px !important;
+        padding: 5px 8px 5px 11px !important;
+    }
+    .fs-page .fs-filter select {
+        min-height: 34px !important;
+        max-width: 68% !important;
+        font-size: 12px !important;
+    }
+    .fs-page .fs-report-download-trigger {
+        min-height: 46px !important;
+        padding: 0 13px !important;
+    }
+    .fs-page .fs-report-download-menu {
+        margin-top: 6px !important;
+    }
+    .fs-page .fs-report-download-option {
+        min-height: 56px !important;
+    }
+    .fs-page .fs-export-hint {
+        text-align: left !important;
+        font-size: 10px !important;
+    }
+}
+
+@media (max-width: 380px) {
+    .fs-page .fs-filter label {
+        font-size: 10px !important;
+    }
+    .fs-page .fs-filter select {
+        max-width: 64% !important;
+        font-size: 11px !important;
+        padding-right: 5px !important;
+    }
+    .fs-page .fs-report-download-option-arrow {
+        display: none !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fs-page .fs-report-download-menu,
+    .fs-page .fs-report-download-option,
+    .fs-page .fs-report-download-trigger {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+
+/* ===== Original layer 4: statistics-download-menu-v4.css ===== */
+/*
+ * FindBack Kampus — Floating PDF menu V4
+ * The dropdown overlays the page instead of changing the header/card layout.
+ */
+.fs-page .fs-header {
+    position: relative !important;
+    z-index: 24 !important;
+    overflow: visible !important;
+}
+
+.fs-page .fs-header-actions {
+    position: relative !important;
+    z-index: 25 !important;
+    overflow: visible !important;
+}
+
+.fs-page .fs-report-download-wrap {
+    position: relative !important;
+    z-index: 26 !important;
+    overflow: visible !important;
+}
+
+.fs-page .fs-report-download {
+    position: relative !important;
+    z-index: 27 !important;
+    overflow: visible !important;
+}
+
+/* Override V2/V3's in-flow menu rules: this layer floats over the page. */
+.fs-page .fs-report-download-menu {
+    position: absolute !important;
+    top: calc(100% + 8px) !important;
+    right: 0 !important;
+    bottom: auto !important;
+    left: auto !important;
+    inset-inline: auto 0 !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: min(390px, calc(100vw - 32px)) !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 7px !important;
+    box-sizing: border-box !important;
+    border: 1px solid #efdce4 !important;
+    border-radius: 15px !important;
+    background: #fff !important;
+    box-shadow: 0 18px 42px rgba(54, 19, 36, .18) !important;
+    transform-origin: top right !important;
+    animation: fs-report-floating-in-v4 .18s cubic-bezier(.2,.75,.25,1) both !important;
+    z-index: 80 !important;
+}
+
+@keyframes fs-report-floating-in-v4 {
+    from { opacity: 0; transform: translateY(-7px) scale(.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.fs-page .fs-report-download-option {
+    min-height: 62px !important;
+    padding: 9px 10px !important;
+    border-radius: 11px !important;
+    box-sizing: border-box !important;
+}
+
+.fs-page .fs-report-download-option + .fs-report-download-option {
+    border-top: 1px solid #f3e8ed !important;
+}
+
+.fs-page .fs-report-download-option:focus-visible {
+    outline: 2px solid #a20f4b !important;
+    outline-offset: 2px !important;
+}
+
+.fs-page .fs-report-download-trigger {
+    position: relative;
+    z-index: 28;
+}
+
+.fs-page .fs-report-download[open] .fs-report-download-trigger {
+    box-shadow: 0 8px 22px rgba(105, 13, 51, .16) !important;
+}
+
+@media (max-width: 760px) {
+    .fs-page .fs-header,
+    .fs-page .fs-header-actions,
+    .fs-page .fs-report-download-wrap,
+    .fs-page .fs-report-download {
+        overflow: visible !important;
+    }
+
+    .fs-page .fs-report-download-menu {
+        width: 100% !important;
+        max-width: 100% !important;
+        right: 0 !important;
+        top: calc(100% + 7px) !important;
+        padding: 6px !important;
+        border-radius: 13px !important;
+        box-shadow: 0 16px 36px rgba(54, 19, 36, .17) !important;
+    }
+
+    .fs-page .fs-report-download-option {
+        min-height: 58px !important;
+        padding: 8px !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fs-page .fs-report-download-menu {
+        animation: none !important;
+    }
+}
+

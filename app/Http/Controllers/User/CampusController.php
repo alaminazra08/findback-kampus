@@ -20,6 +20,11 @@ class CampusController extends Controller
             (int) $report->user_id === (int) $request->user()->id,
             404
         );
+        abort_if(
+            $report->status === 'rejected' && $report->revision_expires_at && now()->greaterThan($report->revision_expires_at),
+            404,
+            'Masa perbaikan laporan telah berakhir.'
+        );
 
         $report->load(['revisions', 'reviewer', 'reporter']);
 

@@ -1,0 +1,132 @@
+/* FINDBACK USERS STAT CARDS — SIGNATURE RAIL MOTION V3
+   Scoped to the four Manajemen Akun summary cards only.
+   Geometry remains aligned with the Verifikasi Laporan summary cards. */
+.fb-users-page .fb-users-stats > article.fb-users-stat-card {
+    position: relative !important;
+    isolation: isolate;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    min-height: 166px !important;
+    border-radius: 19px !important;
+    transform: translate3d(0,0,0);
+    transition:
+        transform .24s cubic-bezier(.2,.75,.25,1),
+        border-color .24s ease,
+        box-shadow .24s ease !important;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Always-visible accent rail: anchored fully inside the top-left corner. */
+.fb-users-page .fb-users-stats > article.fb-users-stat-card::before {
+    content: "" !important;
+    display: block !important;
+    position: absolute !important;
+    z-index: 5 !important;
+    top: 0 !important;
+    left: 22px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 66px !important;
+    height: 5px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 0 7px 7px !important;
+    background: var(--stat-accent, #a3134c) !important;
+    opacity: 1 !important;
+    transform: translateX(0) scaleX(1) !important;
+    transform-origin: left center !important;
+    transition:
+        width .34s cubic-bezier(.2,.75,.25,1),
+        transform .34s cubic-bezier(.2,.75,.25,1),
+        box-shadow .28s ease !important;
+    pointer-events: none !important;
+}
+
+/* Moving highlight that travels along the rail. */
+.fb-users-page .fb-users-stats > article.fb-users-stat-card::after {
+    content: "" !important;
+    display: block !important;
+    position: absolute !important;
+    z-index: 6 !important;
+    top: 0 !important;
+    left: 22px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 66px !important;
+    height: 5px !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 0 7px 7px !important;
+    opacity: 0 !important;
+    background: linear-gradient(105deg, transparent 0%, rgba(255,255,255,.95) 48%, transparent 100%) !important;
+    background-size: 220% 100% !important;
+    background-position: -120% 0 !important;
+    pointer-events: none !important;
+}
+
+.fb-users-page .fb-users-stat-card--total { --stat-accent: #a3134c; }
+.fb-users-page .fb-users-stat-card--admin { --stat-accent: #b7791f; }
+.fb-users-page .fb-users-stat-card--users { --stat-accent: #168052; }
+.fb-users-page .fb-users-stat-card--google { --stat-accent: #3475d1; }
+
+@media (hover: hover) and (pointer: fine) {
+    .fb-users-page .fb-users-stats > article.fb-users-stat-card:hover {
+        transform: translate3d(0,-4px,0) !important;
+        border-color: color-mix(in srgb, var(--stat-accent) 48%, #efdce5) !important;
+        box-shadow: 0 15px 30px rgba(64,17,41,.12) !important;
+    }
+    .fb-users-page .fb-users-stats > article.fb-users-stat-card:hover::before {
+        width: 112px !important;
+        box-shadow: 0 2px 11px color-mix(in srgb, var(--stat-accent) 34%, transparent) !important;
+    }
+    .fb-users-page .fb-users-stats > article.fb-users-stat-card:hover::after {
+        opacity: 1 !important;
+        animation: fb-users-rail-sweep-v3 .78s ease-out both !important;
+    }
+}
+
+.fb-users-page .fb-users-stats > article.fb-users-stat-card.is-animating,
+.fb-users-page .fb-users-stats > article.fb-users-stat-card:active {
+    transform: translate3d(0,-3px,0) !important;
+    border-color: color-mix(in srgb, var(--stat-accent) 52%, #efdce5) !important;
+    box-shadow: 0 13px 26px rgba(64,17,41,.12) !important;
+}
+.fb-users-page .fb-users-stats > article.fb-users-stat-card.is-animating::before,
+.fb-users-page .fb-users-stats > article.fb-users-stat-card:active::before {
+    width: 112px !important;
+    box-shadow: 0 2px 11px color-mix(in srgb, var(--stat-accent) 34%, transparent) !important;
+}
+.fb-users-page .fb-users-stats > article.fb-users-stat-card.is-animating::after,
+.fb-users-page .fb-users-stats > article.fb-users-stat-card:active::after {
+    opacity: 1 !important;
+    animation: fb-users-rail-sweep-v3 .78s ease-out both !important;
+}
+.fb-users-page .fb-users-stat-icon {
+    transition: transform .28s cubic-bezier(.2,.75,.25,1), box-shadow .24s ease !important;
+}
+.fb-users-page .fb-users-stat-card.is-animating .fb-users-stat-icon,
+.fb-users-page .fb-users-stat-card:hover .fb-users-stat-icon {
+    transform: translateY(-2px) rotate(-5deg);
+    box-shadow: 0 7px 15px color-mix(in srgb, var(--stat-accent) 18%, transparent);
+}
+
+@keyframes fb-users-rail-sweep-v3 {
+    0% { background-position: -120% 0; }
+    100% { background-position: 220% 0; }
+}
+
+@media (max-width: 960px) {
+    .fb-users-page .fb-users-stats { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+}
+@media (max-width: 580px) {
+    .fb-users-page .fb-users-stats > article.fb-users-stat-card { min-height: 146px !important; }
+    .fb-users-page .fb-users-stats > article.fb-users-stat-card::before,
+    .fb-users-page .fb-users-stats > article.fb-users-stat-card::after { left: 19px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .fb-users-page .fb-users-stats > article.fb-users-stat-card,
+    .fb-users-page .fb-users-stats > article.fb-users-stat-card::before,
+    .fb-users-page .fb-users-stat-icon { transition: none !important; }
+    .fb-users-page .fb-users-stats > article.fb-users-stat-card::after { animation: none !important; }
+}

@@ -1,0 +1,47 @@
+/* FindBack Kampus — Verifikasi Statistik V40
+   Loaded last on the verification page. Three desktop cards fill the content width.
+   Paths in this patch are relative to the Laravel project root. */
+html body .fb-admin-shell .fb-v-stats.fb-v-stats-v18 {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    justify-content: stretch !important;
+    justify-items: stretch !important;
+    align-items: stretch !important;
+    gap: clamp(14px, 1.4vw, 22px) !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+}
+html body .fb-admin-shell .fb-v-stats.fb-v-stats-v18 > .fb-v-stat {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+}
+
+/* Tablet: balanced two-column layout. */
+@media (min-width: 601px) and (max-width: 1100px) {
+    html body .fb-admin-shell .fb-v-stats.fb-v-stats-v18 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+    html body .fb-admin-shell .fb-v-stats.fb-v-stats-v18 > .fb-v-stat:last-child {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Mobile: one full-width card per row. */
+@media (max-width: 600px) {
+    html body .fb-admin-shell .fb-v-stats.fb-v-stats-v18 {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 12px !important;
+        margin-top: 18px !important;
+        margin-bottom: 20px !important;
+    }
+    html body .fb-admin-shell .fb-v-stats.fb-v-stats-v18 > .fb-v-stat {
+        min-height: 126px !important;
+        padding: 18px 17px !important;
+    }
+}

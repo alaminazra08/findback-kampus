@@ -145,6 +145,16 @@
             </div>
 
             {{-- Alasan penolakan --}}
+            @if ($report->status === 'rejected' && $report->revision_expires_at)
+                @php
+                    $revisionSecondsLeft = max(0, now()->diffInSeconds($report->revision_expires_at, false));
+                @endphp
+                <div class="fb-detail-notice">
+                    <strong>Batas waktu perbaikan</strong>
+                    <p>Perbaiki sebelum {{ $report->revision_expires_at->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j F Y, H:i') }} WIB.</p>
+                    <p><strong>{{ $revisionSecondsLeft > 0 ? max(1, (int) ceil($revisionSecondsLeft / 86400)).' hari tersisa' : 'Tenggat perbaikan telah berakhir' }}</strong>. Jika melewati tenggat, laporan akan dihapus permanen.</p>
+                </div>
+            @endif
             @if ($report->rejection_reason)
                 <div class="fb-detail-notice">
                     <strong>Alasan penolakan</strong>
@@ -184,7 +194,7 @@
             ? $report->revisions->firstWhere('closed_at', null)
             : null;
 
-        $canFixRejected = $report->status === 'rejected';
+        $canFixRejected = $report->status === 'rejected' && (!$report->revision_expires_at || now()->lessThanOrEqualTo($report->revision_expires_at));
     @endphp
 
     @if ($openRevision || $canFixRejected)

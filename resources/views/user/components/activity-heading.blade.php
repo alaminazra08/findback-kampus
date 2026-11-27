@@ -1,23 +1,14 @@
-{{-- HEADER AKTIVITAS SAYA --}}
-<div class="fb-activity-heading">
-    <div class="fb-activity-heading-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"
-            aria-hidden="true">
-            <path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5l-1.5 9A2.5 2.5 0 0 1 17 20.5H5a2.5 2.5 0 0 1-2.5-2.5z"/>
-            <path d="M3.5 9h16.8"/>
-        </svg>
-    </div>
-
+{{-- Header ringkas Aktivitas Saya --}}
+<header class="fb-activity-heading">
     <div class="fb-activity-heading-text">
         <h1>Aktivitas Saya</h1>
         <p>Pantau perkembangan laporan dan klaim barangmu.</p>
     </div>
-</div>
+</header>
 
-{{-- TAB AKTIVITAS --}}
+{{-- Navigasi dua kategori aktivitas --}}
 <nav class="fb-activity-tabs" aria-label="Navigasi aktivitas">
-    <a @class(['active' => $activityTab === 'reports']) @if ($activityTab === 'reports') aria-current="page" @endif href="{{ route('user.reports.index') }}" >
+    <a @class(['active' => $activityTab === 'reports']) @if ($activityTab === 'reports') aria-current="page" @endif href="{{ route('user.reports.index') }}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
             aria-hidden="true">
@@ -27,7 +18,7 @@
         <span>Riwayat Laporan</span>
     </a>
 
-    <a @class(['active' => $activityTab === 'claims']) @if ($activityTab === 'claims') aria-current="page" @endif href="{{ route('user.claims.index') }}" >
+    <a @class(['active' => $activityTab === 'claims']) @if ($activityTab === 'claims') aria-current="page" @endif href="{{ route('user.claims.index') }}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
             aria-hidden="true">

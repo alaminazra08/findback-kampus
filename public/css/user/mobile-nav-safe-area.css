@@ -1,0 +1,66 @@
+/*
+ * FindBack Kampus — Mobile navigation safe-area and scroll behavior
+ * Keeps the floating dock clear of page content and hides it only while
+ * the user scrolls down. Loaded after navbar-premium.css intentionally.
+ */
+@media (max-width: 800px) {
+    .cu-body {
+        box-sizing: border-box;
+        padding-bottom: calc(142px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+
+    .cu-body .cu-main {
+        box-sizing: border-box;
+        min-height: 0;
+        padding-bottom: max(34px, env(safe-area-inset-bottom, 0px)) !important;
+    }
+
+    .cu-body .cu-mobile-nav {
+        bottom: max(10px, env(safe-area-inset-bottom, 0px)) !important;
+        transition:
+            translate 240ms cubic-bezier(.22,.75,.25,1),
+            opacity 180ms ease,
+            visibility 180ms ease !important;
+        will-change: translate, opacity;
+    }
+
+    .cu-body .cu-mobile-nav.is-scrolled-away {
+        translate: -50% calc(100% + 28px) !important;
+        transform: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
+
+    .cu-body .cu-mobile-nav:not(.is-scrolled-away) {
+        translate: -50% 0 !important;
+        transform: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+    }
+
+    /* When keyboard focus or the report sheet is active, keep navigation usable. */
+    .cu-body .cu-mobile-nav:focus-within {
+        translate: -50% 0 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+    }
+}
+
+@media (max-width: 800px) and (max-height: 430px) {
+    .cu-body {
+        padding-bottom: calc(104px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+
+    .cu-body .cu-main {
+        padding-bottom: 24px !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cu-body .cu-mobile-nav {
+        transition: none !important;
+    }
+}

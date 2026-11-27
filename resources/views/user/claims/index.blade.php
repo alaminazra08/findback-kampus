@@ -6,9 +6,18 @@
 
     @include('user.components.activity-heading', ['activityTab' => 'claims'])
 
+    @include('user.components.activity-summary', ['activityStats' => [
+        ['label' => 'Total Klaim', 'value' => $totalClaims, 'tone' => 'rose', 'icon' => 'report'],
+        ['label' => 'Menunggu', 'value' => $pendingClaims, 'tone' => 'amber', 'icon' => 'clock'],
+        ['label' => 'Disetujui', 'value' => $approvedClaims, 'tone' => 'green', 'icon' => 'check'],
+        ['label' => 'Dikembalikan', 'value' => $returnedClaims, 'tone' => 'violet', 'icon' => 'claim'],
+    ]])
+
+
     <section class="cu-panel fb-cycle-report-list">
         <form method="GET" action="{{ route('user.claims.index') }}" class="fb-activity-filter fb-claim-list-filter">
             <div class="fb-filter-search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg>
                 <input type="search" name="search" value="{{ request('search') }}" maxlength="100"
                     placeholder="Cari nama barang atau lokasi..." aria-label="Cari klaim">
             </div>
@@ -70,6 +79,39 @@
                 </tbody>
             </table>
         </div>
+        <div class="fb-activity-mobile-list" aria-label="Daftar pengajuan klaim">
+            @forelse ($claims as $claim)
+                <article class="fb-activity-mobile-card">
+                    <div class="fb-activity-mobile-card-main">
+                        <div class="fb-report-photo">
+                            @if ($claim->item_photo)
+                                <img src="{{ asset('storage/' . $claim->item_photo) }}" alt="Foto {{ $claim->item_title }}" loading="lazy">
+                            @else
+                                <div class="fb-report-photo-placeholder" aria-hidden="true">▧</div>
+                            @endif
+                        </div>
+                        <div class="fb-activity-mobile-title">
+                            <strong>{{ $claim->item_title ?: 'Barang tidak tersedia' }}</strong>
+                            <small><span aria-hidden="true">⌖</span> {{ $claim->location ?: 'Lokasi tidak tersedia' }}</small>
+                            <small>{{ \Carbon\Carbon::parse($claim->created_at)->timezone('Asia/Jakarta')->locale('id')->translatedFormat('j M Y') }}</small>
+                        </div>
+                        <span class="fb-activity-mobile-chevron" aria-hidden="true">›</span>
+                    </div>
+                    <div class="fb-activity-mobile-meta">
+                        @if ($claim->item_type)
+                            <span class="fb-report-type {{ $claim->item_type === 'lost' ? 'lost' : 'found' }}">{{ $claim->item_type === 'lost' ? 'Hilang' : 'Ditemukan' }}</span>
+                        @endif
+                        @include('user.components.status', ['status' => $claim->status])
+                    </div>
+                    <div class="fb-activity-mobile-action">
+                        @include('user.components.activity-detail-link', ['url' => route('user.claims.show', $claim->id)])
+                    </div>
+                </article>
+            @empty
+                <div class="fb-activity-mobile-empty">Belum ada pengajuan klaim yang sesuai.</div>
+            @endforelse
+        </div>
+
         @if ($claims->hasPages())
             <div class="ucx-pagination">{{ $claims->links() }}</div>
         @endif

@@ -1,0 +1,919 @@
+/*
+ * FindBack Kampus — Admin Detail Barang activity timeline
+ * Desktop: chronological horizontal rail, date above and activity below.
+ * Mobile: readable vertical timeline.
+ */
+
+.fb-admin-item-journey-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(16px, 1.8vw, 22px);
+    min-width: 0;
+}
+
+.fb-admin-item-journey-grid > * { min-width: 0; }
+.fb-admin-item-information { height: auto; min-width: 0; }
+.fb-admin-item-information .fb-items-panel-head { align-items: flex-start; }
+.fb-admin-item-information .fb-v-card-body,
+.fb-admin-item-information .fb-v-card-facts,
+.fb-admin-item-information .fb-item-card-facts,
+.fb-admin-item-information .fb-v-description { min-width: 0; }
+.fb-admin-item-history { min-width: 0; }
+
+.fb-admin-item-timeline {
+    --journey-line: #df9bb5;
+    box-sizing: border-box;
+    min-width: 0;
+    padding: clamp(18px, 2vw, 26px);
+    border: 1px solid #efd5df;
+    border-radius: 20px;
+    background:
+        radial-gradient(ellipse at 8% 0%, rgba(190, 71, 117, .055), transparent 34%),
+        linear-gradient(145deg, #fff 0%, #fffafd 100%);
+    box-shadow: 0 12px 30px rgba(91, 13, 48, .055);
+    overflow: hidden;
+}
+
+.fb-admin-item-timeline > header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.fb-admin-item-timeline > header h2 {
+    margin: 0;
+    color: #65102f;
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    font-weight: 800;
+    letter-spacing: -.02em;
+}
+
+.fb-admin-item-timeline > header p {
+    max-width: 65ch;
+    margin: 0;
+    color: #87576b;
+    line-height: 1.5;
+}
+
+/*
+ * Important: each implicit desktop column has a real minimum width.
+ * This prevents the browser from squeezing six or more events into tiny columns.
+ * When the events exceed the available width, the timeline itself scrolls sideways.
+ */
+.fb-admin-item-timeline ol {
+    position: relative;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(215px, 1fr);
+    align-items: stretch;
+    gap: 0;
+    min-width: 0;
+    margin: 26px 0 0;
+    padding: 0 0 12px;
+    list-style: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #cc7898 #f8eaf0;
+    -webkit-overflow-scrolling: touch;
+}
+
+.fb-admin-item-timeline ol::-webkit-scrollbar { height: 8px; }
+.fb-admin-item-timeline ol::-webkit-scrollbar-track {
+    background: #f8eaf0;
+    border-radius: 20px;
+}
+.fb-admin-item-timeline ol::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #a21b50, #cf7898);
+    border: 2px solid #f8eaf0;
+    border-radius: 20px;
+}
+
+.fb-admin-item-timeline .fb-report-timeline-entry {
+    position: relative;
+    display: grid;
+    /* Shared timeline CSS defines three vertical columns; admin horizontal mode must override it. */
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: 42px 26px minmax(142px, auto);
+    justify-items: center;
+    align-content: start;
+    min-width: 215px;
+    padding: 0 13px 8px;
+    border: 0;
+    text-align: center;
+}
+
+.fb-admin-item-timeline .fb-report-timeline-entry time {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    min-height: 42px;
+    padding: 0 0 5px;
+    color: #89536a;
+    font-size: .76rem;
+    font-weight: 700;
+    line-height: 1.4;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.fb-admin-item-timeline .fb-report-timeline-marker {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    align-self: center;
+    width: 26px;
+    height: 26px;
+    background: transparent;
+}
+
+.fb-admin-item-timeline .fb-report-timeline-marker::before {
+    content: "";
+    width: 13px;
+    height: 13px;
+    margin: 0;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background: var(--report-event-color, #a21b50);
+    box-shadow:
+        0 0 0 2px var(--report-event-color, #a21b50),
+        0 3px 9px rgba(91, 13, 48, .18);
+}
+
+.fb-admin-item-timeline .fb-report-timeline-marker::after { display: none; }
+
+.fb-admin-item-timeline ol::before {
+    position: absolute;
+    z-index: 1;
+    top: 54px;
+    right: 7%;
+    left: 7%;
+    height: 3px;
+    border-radius: 99px;
+    background: linear-gradient(90deg, #bd4775 0%, #e7b2c6 48%, #9b3d79 100%);
+    content: "";
+}
+
+.fb-admin-item-timeline .fb-report-timeline-copy {
+    box-sizing: border-box;
+    grid-column: 1;
+    grid-row: 3;
+    justify-self: stretch;
+    width: 100%;
+    max-width: 255px;
+    min-width: 0;
+    min-height: 126px;
+    margin-top: 9px;
+    padding: 13px 12px;
+    border: 1px solid #f0dce5;
+    border-radius: 13px;
+    background: linear-gradient(155deg, #fff 0%, #fff8fb 100%);
+    box-shadow: 0 5px 14px rgba(91, 13, 48, .045);
+    text-align: left;
+    overflow-wrap: break-word;
+    word-break: normal;
+}
+
+.fb-admin-item-timeline .fb-report-timeline-copy strong {
+    display: block;
+    color: #5b102d;
+    font-size: .88rem;
+    font-weight: 800;
+    line-height: 1.4;
+    overflow-wrap: break-word;
+    word-break: normal;
+}
+
+.fb-admin-item-timeline .fb-report-timeline-copy small {
+    display: block;
+    margin-top: 6px;
+    color: #98516f;
+    font-size: .74rem;
+    font-weight: 650;
+    line-height: 1.45;
+    overflow-wrap: break-word;
+    word-break: normal;
+}
+
+.fb-admin-item-timeline .fb-report-timeline-copy p {
+    margin: 8px 0 0;
+    color: #714357;
+    font-size: .78rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: normal;
+}
+
+.fb-admin-item-timeline .fb-report-timeline-copy b {
+    display: inline;
+    color: #9b2858;
+    font-size: .9em;
+}
+
+.fb-admin-item-timeline .fb-report-timeline-entry { --report-event-color: #a21b50; }
+.fb-admin-item-timeline .fb-report-timeline-entry[data-event="created"] { --report-event-color: #bd4775; }
+.fb-admin-item-timeline .fb-report-timeline-entry[data-event="verified"] { --report-event-color: #8b1748; }
+.fb-admin-item-timeline .fb-report-timeline-entry[data-event="claim"] { --report-event-color: #c27a20; }
+.fb-admin-item-timeline .fb-report-timeline-entry[data-event="approved"] { --report-event-color: #9b3d79; }
+.fb-admin-item-timeline .fb-report-timeline-entry[data-event="confirmed"] { --report-event-color: #773c83; }
+.fb-admin-item-timeline .fb-report-timeline-entry[data-event="awaiting_handover"] { --report-event-color: #c45c48; }
+.fb-admin-item-timeline .fb-report-timeline-entry[data-event="returned"] { --report-event-color: #a21b50; }
+.fb-admin-item-timeline .fb-report-timeline-entry[data-event="rejected"] { --report-event-color: #c44755; }
+.fb-admin-item-timeline .fb-report-timeline-entry[data-event="resubmitted"] { --report-event-color: #b05a8d; }
+
+.fb-admin-item-timeline .fb-report-timeline-notice {
+    margin: 14px 0 0;
+    padding: 10px 12px;
+    border: 1px solid #f0d4df;
+    border-radius: 12px;
+    background: #fff5f8;
+    color: #7c3151;
+}
+
+/* Medium screens: preserve comfortable event width and allow local horizontal scroll. */
+@media (max-width: 900px) and (min-width: 681px) {
+    .fb-admin-item-information .fb-v-card-body.has-photo {
+        grid-template-columns: minmax(170px, 230px) minmax(0, 1fr);
+    }
+    .fb-admin-item-timeline ol { grid-auto-columns: minmax(215px, 245px); }
+}
+
+/* Mobile: switch to a vertical timeline; the page itself never scrolls sideways. */
+@media (max-width: 680px) {
+    .fb-admin-item-journey-grid { gap: 14px; }
+    .fb-admin-item-information { padding: 16px; }
+    .fb-admin-item-information .fb-v-card-body.has-photo { grid-template-columns: minmax(0, 1fr); }
+    .fb-admin-item-information .fb-item-card-facts { grid-template-columns: minmax(0, 1fr); }
+
+    .fb-admin-item-timeline { padding: 17px 14px; border-radius: 16px; }
+    .fb-admin-item-timeline > header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .fb-admin-item-timeline ol {
+        display: grid;
+        grid-auto-flow: row;
+        grid-auto-columns: auto;
+        gap: 0;
+        margin-top: 20px;
+        padding: 0;
+        overflow: visible;
+    }
+
+    .fb-admin-item-timeline ol::before {
+        top: 5px;
+        bottom: 8px;
+        left: 88px;
+        right: auto;
+        width: 2px;
+        height: auto;
+        background: linear-gradient(180deg, #bd4775, #e7b2c6 55%, #9b3d79);
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-entry {
+        grid-template-columns: 68px 28px minmax(0, 1fr) !important;
+        grid-template-rows: auto;
+        align-items: start;
+        justify-items: stretch;
+        gap: 0 9px;
+        min-width: 0;
+        padding: 0 0 17px;
+        text-align: left;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-entry:last-child { padding-bottom: 0; }
+
+    .fb-admin-item-timeline .fb-report-timeline-entry time {
+        grid-column: 1;
+        grid-row: 1;
+        min-height: 0;
+        padding: 1px 0 0;
+        align-items: flex-end;
+        font-size: .68rem;
+        text-align: right;
+        white-space: normal;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-marker {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: center;
+        width: 22px;
+        height: 22px;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-copy {
+        grid-column: 3;
+        grid-row: 1;
+        max-width: none;
+        min-height: 0;
+        margin-top: 0;
+        padding: 0 0 0 2px;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-copy strong { font-size: .85rem; }
+    .fb-admin-item-timeline .fb-report-timeline-copy small { font-size: .72rem; }
+    .fb-admin-item-timeline .fb-report-timeline-copy p { font-size: .76rem; }
+}
+
+@media (max-width: 360px) {
+    .fb-admin-item-timeline { padding-inline: 11px; }
+    .fb-admin-item-timeline ol::before { left: 80px; }
+    .fb-admin-item-timeline .fb-report-timeline-entry {
+        grid-template-columns: 62px 26px minmax(0, 1fr);
+        gap: 0 7px;
+    }
+}
+
+
+/* ============================================================
+   FINAL POLISH — admin activity timeline
+   - pure white panel
+   - continuous horizontal rail between every event
+   - date above marker, centered title/details below
+   - no individual event card boxes
+   ============================================================ */
+
+.fb-admin-item-timeline {
+    background: #fff !important;
+    border-color: #eadde3;
+    box-shadow: 0 10px 28px rgba(73, 18, 43, .045);
+}
+
+.fb-admin-item-timeline > header h2 {
+    color: #681334;
+}
+
+.fb-admin-item-timeline > header p {
+    color: #806b75;
+}
+
+/* Each event draws half a rail on both sides; adjacent halves meet
+   exactly, including when the timeline is horizontally scrollable. */
+.fb-admin-item-timeline ol::before {
+    display: none !important;
+}
+
+.fb-admin-item-timeline .fb-report-timeline-entry {
+    position: relative;
+    isolation: isolate;
+}
+
+.fb-admin-item-timeline .fb-report-timeline-entry::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 54px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: 999px;
+    background: #d66b91;
+}
+
+.fb-admin-item-timeline .fb-report-timeline-entry:first-child::before {
+    left: 50%;
+}
+
+.fb-admin-item-timeline .fb-report-timeline-entry:last-child::before {
+    right: 50%;
+}
+
+.fb-admin-item-timeline .fb-report-timeline-entry time,
+.fb-admin-item-timeline .fb-report-timeline-marker,
+.fb-admin-item-timeline .fb-report-timeline-copy {
+    position: relative;
+}
+
+.fb-admin-item-timeline .fb-report-timeline-entry time { z-index: 2; }
+.fb-admin-item-timeline .fb-report-timeline-marker { z-index: 3; }
+.fb-admin-item-timeline .fb-report-timeline-marker::before {
+    width: 12px;
+    height: 12px;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px var(--report-event-color, #a21b50);
+}
+
+.fb-admin-item-timeline .fb-report-timeline-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    max-width: 255px;
+    min-height: 0;
+    margin-top: 9px;
+    padding: 7px 8px 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    text-align: center;
+}
+
+.fb-admin-item-timeline .fb-report-timeline-copy strong {
+    width: 100%;
+    color: #65102f;
+    font-size: .9rem;
+    line-height: 1.45;
+    text-align: center;
+}
+
+.fb-admin-item-timeline .fb-report-timeline-copy small {
+    width: 100%;
+    margin-top: 6px;
+    color: #a13b67;
+    text-align: center;
+}
+
+.fb-admin-item-timeline .fb-report-timeline-copy p {
+    width: 100%;
+    margin-top: 7px;
+    color: #705563;
+    text-align: center;
+}
+
+@media (max-width: 680px) {
+    .fb-admin-item-timeline {
+        background: #fff !important;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-entry::before {
+        top: 0;
+        bottom: 0;
+        left: 88px;
+        right: auto;
+        width: 2px;
+        height: auto;
+        border-radius: 999px;
+        background: #d66b91;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-entry:first-child::before {
+        top: 11px;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-entry:last-child::before {
+        bottom: calc(100% - 11px);
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-copy {
+        align-items: flex-start;
+        padding: 0 0 0 2px;
+        text-align: left;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-copy strong,
+    .fb-admin-item-timeline .fb-report-timeline-copy small,
+    .fb-admin-item-timeline .fb-report-timeline-copy p {
+        text-align: left;
+    }
+}
+
+@media (max-width: 360px) {
+    .fb-admin-item-timeline .fb-report-timeline-entry::before {
+        left: 80px;
+    }
+}
+
+
+/* ============================================================
+   RESPONSIVE REPAIR — admin item activity timeline
+   Desktop keeps the horizontal design. Mobile gets a single
+   vertical rail anchored to the marker column.
+   ============================================================ */
+
+/* White surface on all viewport sizes. */
+.fb-admin-item-timeline,
+.fb-admin-item-timeline .fb-report-timeline-copy {
+    background: #fff !important;
+}
+
+.fb-admin-item-timeline {
+    border-color: #eadde3;
+}
+
+/* Desktop: keep the connected horizontal rail and centered copy. */
+@media (min-width: 681px) {
+    .fb-admin-item-timeline ol {
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-entry {
+        grid-template-columns: minmax(0, 1fr) !important;
+        grid-template-rows: 42px 26px minmax(112px, auto);
+        min-width: 215px;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-entry::before {
+        top: 54px;
+        left: 0;
+        right: 0;
+        width: auto;
+        height: 3px;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-entry:first-child::before {
+        left: 50%;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-entry:last-child::before {
+        right: 50%;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-marker::after {
+        display: none !important;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-copy {
+        align-items: center;
+        text-align: center;
+    }
+}
+
+/* Mobile: time | marker/rail | activity. No horizontal pseudo-rail. */
+@media (max-width: 680px) {
+    .fb-admin-item-timeline {
+        width: 100%;
+        padding: 17px 14px;
+        overflow: hidden;
+        background: #fff !important;
+    }
+
+    .fb-admin-item-timeline > header {
+        display: block;
+        margin-bottom: 18px;
+    }
+
+    .fb-admin-item-timeline > header h2 {
+        margin: 0;
+    }
+
+    .fb-admin-item-timeline > header p {
+        margin-top: 6px;
+        max-width: none;
+    }
+
+    .fb-admin-item-timeline ol {
+        display: block;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: visible !important;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-entry {
+        display: grid !important;
+        grid-template-columns: 76px 24px minmax(0, 1fr) !important;
+        grid-template-rows: auto !important;
+        align-items: start;
+        justify-items: stretch;
+        column-gap: 9px;
+        width: 100%;
+        min-width: 0 !important;
+        margin: 0;
+        padding: 0 0 22px;
+        border: 0;
+        text-align: left;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-entry:last-child {
+        padding-bottom: 0;
+    }
+
+    /* Disable desktop rail completely at mobile widths. */
+    .fb-admin-item-timeline .fb-report-timeline-entry::before {
+        content: none !important;
+        display: none !important;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-entry time {
+        grid-column: 1;
+        grid-row: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: flex-start;
+        min-width: 0;
+        min-height: 0;
+        padding: 1px 0 0;
+        color: #89536a;
+        font-size: .69rem;
+        line-height: 1.45;
+        text-align: right;
+        white-space: normal;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-marker {
+        grid-column: 2;
+        grid-row: 1;
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        align-self: stretch;
+        width: 24px;
+        min-height: 25px;
+        margin: 0;
+        padding: 0;
+        background: transparent;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-marker::before {
+        position: relative;
+        z-index: 2;
+        flex: 0 0 13px;
+        width: 13px;
+        height: 13px;
+        margin: 4px 0 0;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        background: var(--report-event-color, #a21b50);
+        box-shadow: 0 0 0 2px var(--report-event-color, #a21b50);
+    }
+
+    /* The one and only mobile connector runs through the center of dots. */
+    .fb-admin-item-timeline .fb-report-timeline-entry:not(:last-child) .fb-report-timeline-marker::after {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        top: 21px;
+        bottom: -23px;
+        left: 50%;
+        display: block !important;
+        width: 2px;
+        margin: 0;
+        transform: translateX(-50%);
+        background: #d66b91;
+        border: 0;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-entry:last-child .fb-report-timeline-marker::after {
+        content: none !important;
+        display: none !important;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-copy {
+        grid-column: 3;
+        grid-row: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-self: stretch;
+        width: 100%;
+        max-width: none;
+        min-width: 0;
+        min-height: 0;
+        margin: 0;
+        padding: 0 0 1px 1px;
+        border: 0 !important;
+        border-radius: 0;
+        background: #fff !important;
+        box-shadow: none !important;
+        text-align: left;
+        overflow-wrap: anywhere;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-copy strong {
+        width: 100%;
+        margin: 0;
+        color: #65102f;
+        font-size: .88rem;
+        line-height: 1.4;
+        text-align: left;
+        overflow-wrap: anywhere;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-copy small {
+        width: 100%;
+        margin-top: 5px;
+        color: #a13b67;
+        font-size: .74rem;
+        line-height: 1.4;
+        text-align: left;
+        overflow-wrap: anywhere;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-copy p {
+        width: 100%;
+        margin: 7px 0 0;
+        color: #705563;
+        font-size: .77rem;
+        line-height: 1.5;
+        text-align: left;
+        overflow-wrap: anywhere;
+        white-space: pre-wrap;
+    }
+}
+
+@media (max-width: 380px) {
+    .fb-admin-item-timeline {
+        padding-inline: 11px;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-entry {
+        grid-template-columns: 68px 22px minmax(0, 1fr) !important;
+        column-gap: 7px;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-marker {
+        width: 22px;
+    }
+}
+
+
+/* FIX v7: one continuous mobile rail for the complete activity list.
+   Do not draw short connector fragments on individual marker elements. */
+@media (max-width: 680px) {
+    .fb-admin-item-timeline ol {
+        position: relative !important;
+        isolation: isolate;
+    }
+
+    /* Single rail from the first marker to the last marker. */
+    .fb-admin-item-timeline ol::before {
+        content: "";
+        display: block !important;
+        position: absolute !important;
+        z-index: 0 !important;
+        top: 10px !important;
+        bottom: 10px !important;
+        left: calc(76px + 9px + 12px) !important;
+        right: auto !important;
+        width: 2px !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 999px !important;
+        background: #d66b91 !important;
+        transform: translateX(-50%);
+        pointer-events: none;
+    }
+
+    /* Turn off all per-event connector fragments. */
+    .fb-admin-item-timeline .fb-report-timeline-entry::before,
+    .fb-admin-item-timeline .fb-report-timeline-marker::after {
+        content: none !important;
+        display: none !important;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-entry {
+        position: relative;
+        z-index: 1;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-marker {
+        position: relative;
+        z-index: 2;
+        height: 22px !important;
+        min-height: 22px !important;
+        align-self: start !important;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-marker::before {
+        position: relative;
+        z-index: 3;
+    }
+}
+
+@media (max-width: 380px) {
+    .fb-admin-item-timeline ol::before {
+        left: calc(68px + 7px + 11px) !important;
+    }
+}
+
+
+/* ============================================================
+   V9 — DESKTOP WIDTH BALANCE + CONTENT-AWARE PANEL HEIGHT
+   Keep mobile layout from V8. Desktop events use readable,
+   consistent widths and are centered when there are few events.
+   ============================================================ */
+@media (min-width: 681px) {
+    .fb-admin-item-timeline {
+        height: auto !important;
+        min-height: 0 !important;
+        padding-bottom: clamp(18px, 2vw, 24px);
+        background: #fff !important;
+    }
+
+    .fb-admin-item-timeline ol {
+        display: grid !important;
+        grid-auto-flow: column !important;
+        grid-auto-columns: minmax(240px, 280px) !important;
+        grid-template-rows: auto !important;
+        align-items: stretch !important;
+        justify-content: safe center !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin-top: 24px !important;
+        padding: 0 0 8px !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        scrollbar-gutter: stable;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-entry {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        grid-template-rows: 42px 26px auto !important;
+        align-content: start !important;
+        align-items: start !important;
+        justify-items: center !important;
+        width: 100% !important;
+        min-width: 240px !important;
+        max-width: 280px !important;
+        min-height: 0 !important;
+        height: auto !important;
+        padding: 0 10px 10px !important;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-entry::before {
+        top: 54px !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: auto !important;
+        height: 3px !important;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-entry:first-child::before {
+        left: 50% !important;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-entry:last-child::before {
+        right: 50% !important;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-entry time {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+        justify-self: center !important;
+        width: 100% !important;
+        min-height: 0 !important;
+        text-align: center !important;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-marker {
+        grid-column: 1 !important;
+        grid-row: 2 !important;
+        justify-self: center !important;
+        align-self: center !important;
+        min-height: 22px !important;
+        height: 22px !important;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-copy {
+        grid-column: 1 !important;
+        grid-row: 3 !important;
+        justify-self: center !important;
+        align-self: start !important;
+        width: 100% !important;
+        max-width: 260px !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        height: auto !important;
+        margin: 8px 0 0 !important;
+        padding: 4px 8px 0 !important;
+        overflow-wrap: anywhere !important;
+        text-align: center !important;
+    }
+
+    .fb-admin-item-timeline .fb-report-timeline-copy strong,
+    .fb-admin-item-timeline .fb-report-timeline-copy small,
+    .fb-admin-item-timeline .fb-report-timeline-copy p {
+        width: 100% !important;
+        max-width: 100% !important;
+        text-align: center !important;
+        overflow-wrap: anywhere !important;
+        word-break: normal !important;
+    }
+}
+
+/* Mobile keeps the V8 vertical grid; only let the panel height follow content. */
+@media (max-width: 680px) {
+    .fb-admin-item-timeline {
+        height: auto !important;
+        min-height: 0 !important;
+        background: #fff !important;
+    }
+
+    .fb-admin-item-timeline ol {
+        height: auto !important;
+        min-height: 0 !important;
+    }
+}

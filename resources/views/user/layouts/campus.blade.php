@@ -22,7 +22,7 @@
     
 <link rel="stylesheet" href="{{ asset('css/user/campus.css') }}?v=4">
 
-    <link rel="stylesheet" href="{{ asset('css/user/navbar-premium.css') }}?v=16">
+    <link rel="stylesheet" href="{{ asset('css/user/navbar-premium.css') }}?v=18">
     @if (request()->routeIs('user.claims.show'))
     <link rel="stylesheet" href="{{ asset('css/user/user-claims.css') }}?v=4">
     @endif
@@ -36,7 +36,8 @@
 
     {{-- JAVASCRIPT --}}
 
-    <script src="{{ asset('js/user/campus.js') }}?v=3" defer></script>
+    <script src="{{ asset('js/user/campus.js') }}?v=4" defer></script>
+    <script src="{{ asset('js/user/mobile-navigation-behavior.js') }}?v=20261127-center-locked-v7" defer></script>
     <script src="{{ asset('js/shared/view-interactions.js') }}"></script>
 
     <!-- FINDBACK_UI_TEXT_KONSISTEN_V1 -->
@@ -94,6 +95,12 @@
 ))
     <link rel="stylesheet" href="{{ asset('css/report-cycle.css') }}?v=13">
     <link rel="stylesheet" href="{{ asset('css/user/activity-consistency.css') }}?v=3">
+    <link rel="stylesheet" href="{{ asset('css/user/activity-refresh.css') }}?v=20261127-4">
+    <link rel="stylesheet" href="{{ asset('css/user/activity-tabs-polish.css') }}?v=20261127-3">
+@endif
+
+@if (request()->routeIs('user.reports.index'))
+    <link rel="stylesheet" href="{{ asset('css/user/my-reports-premium.css') }}?v=20261127-5">
 @endif
 
     @include('partials.findback-brand-theme')
@@ -119,7 +126,7 @@
     <link rel="stylesheet" href="{{ asset('css/shared/notification-preview.css') }}?v=5">
     <script src="{{ asset('js/shared/notification-bell-motion.js') }}?v=3" defer></script>
 
-    @if (request()->routeIs('user.profile.index', 'user.profile.edit'))
+    @if (request()->routeIs('user.profile.index', 'user.profile.edit', 'user.account.security'))
     <style>
         /* Halaman profil fokus hanya pada layar mobile. */
         @media(max-width:800px) {
@@ -141,10 +148,15 @@
     </style>
     @endif
 
+    {{-- Acuan final navbar mobile: harus dimuat paling akhir agar posisi,
+         ukuran, safe-area, dan perilaku scroll seragam di seluruh halaman. --}}
+
+    <link rel="stylesheet" href="{{ asset('css/user/mobile-nav-stable.css') }}?v=20261127-center-locked-v7">
+
 </head>
 
 
-<body class="fb-responsive cu-body {{ request()->routeIs('user.reports.index', 'user.claims.index') ? 'fb-activity-page' : '' }} {{ request()->routeIs('user.account.index') ? 'cu-account-hub-page' : '' }} {{ request()->routeIs('user.profile.index', 'user.profile.edit') ? 'fbp-standalone-page' : '' }}">
+<body class="fb-responsive cu-body {{ request()->routeIs('user.reports.index', 'user.claims.index') ? 'fb-activity-page' : '' }} {{ request()->routeIs('user.account.index') ? 'cu-account-hub-page' : '' }} {{ request()->routeIs('user.profile.index', 'user.profile.edit', 'user.account.security') ? 'fbp-standalone-page' : '' }}">
 
     @php
         $noticeCount = auth()->user()->unreadNotifications()->count();
@@ -450,25 +462,8 @@ href="{{ route('user.reports.index') }}"
     <script src="{{ asset('js/shared/responsive-viewport.js') }}?v=20261111" defer></script>
 
 
-{{-- Navigasi cepat untuk empat halaman utama --}}
-@php
-    $fbFastRoutes = [
-        route('dashboard'),
-        route('user.reports.index'),
-        route('user.reports.lost.create'),
-        route('user.reports.found.create'),
-    ];
-@endphp
-
-<script type="application/json" id="fb-fast-navigation">
-{!! json_encode($fbFastRoutes, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!}
-</script>
-
-
-<script
-    src="{{ asset('js/user/fb-fast-navigation.js') }}?v=3"
-    defer>
-</script>
+{{-- Navigasi standar digunakan pada semua halaman agar status navbar
+     desktop dan mobile selalu dirender konsisten oleh server. --}}
 
 </body>
 </html>

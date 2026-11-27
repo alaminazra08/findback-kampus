@@ -1,0 +1,328 @@
+/*
+ * FindBack Kampus — Verifikasi Laporan / Menunggu Perbaikan
+ * V12: desktop horizontal table scroll + readable mobile cards.
+ * This file is intentionally loaded after the existing verification styles.
+ */
+
+/* Shared containment: no child may force the page itself wider. */
+.fb-v-panel--revision,
+.fb-v-panel--revision .fb-v25-table-wrap {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Desktop and tablet: keep a real table width and scroll the table, not the page. */
+@media (min-width: 721px) {
+    .fb-v-panel--revision .fb-v25-table-wrap {
+        display: block;
+        width: 100%;
+        overflow-x: auto !important;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: #c86b91 #f8edf2;
+        padding-bottom: 8px;
+    }
+
+    .fb-v-panel--revision .fb-v25-table {
+        display: table;
+        width: 100%;
+        min-width: 1320px;
+        table-layout: fixed;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .fb-v-panel--revision .fb-v25-table th,
+    .fb-v-panel--revision .fb-v25-table td {
+        box-sizing: border-box;
+        padding: 15px 14px;
+        vertical-align: middle;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .fb-v-panel--revision .fb-v25-table th:nth-child(1),
+    .fb-v-panel--revision .fb-v25-table td:nth-child(1) { width: 24%; }
+    .fb-v-panel--revision .fb-v25-table th:nth-child(2),
+    .fb-v-panel--revision .fb-v25-table td:nth-child(2) { width: 9%; }
+    .fb-v-panel--revision .fb-v25-table th:nth-child(3),
+    .fb-v-panel--revision .fb-v25-table td:nth-child(3) { width: 9%; }
+    .fb-v-panel--revision .fb-v25-table th:nth-child(4),
+    .fb-v-panel--revision .fb-v25-table td:nth-child(4) { width: 10%; }
+    .fb-v-panel--revision .fb-v25-table th:nth-child(5),
+    .fb-v-panel--revision .fb-v25-table td:nth-child(5) { width: 14%; }
+    .fb-v-panel--revision .fb-v25-table th:nth-child(6),
+    .fb-v-panel--revision .fb-v25-table td:nth-child(6) { width: 13%; }
+    .fb-v-panel--revision .fb-v25-table th:nth-child(7),
+    .fb-v-panel--revision .fb-v25-table td:nth-child(7) { width: 9%; }
+    .fb-v-panel--revision .fb-v25-table th:nth-child(8),
+    .fb-v-panel--revision .fb-v25-table td:nth-child(8) { width: 12%; }
+
+    .fb-v-panel--revision .fb-v25-table thead th {
+        white-space: nowrap;
+        text-align: center;
+    }
+
+    .fb-v-panel--revision .fb-v25-table tbody td {
+        text-align: center;
+    }
+
+    .fb-v-panel--revision .fb-v25-table tbody td:first-child {
+        text-align: left;
+    }
+
+    .fb-v-panel--revision .fb-v25-item {
+        display: grid;
+        grid-template-columns: 76px minmax(0, 1fr);
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .fb-v-panel--revision .fb-v25-thumb,
+    .fb-v-panel--revision .fb-v25-thumb-empty {
+        width: 76px;
+        height: 76px;
+    }
+
+    .fb-v-panel--revision .fb-v25-item-copy {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .fb-v-panel--revision .fb-v25-item-copy strong {
+        white-space: normal;
+        word-break: normal;
+        overflow-wrap: anywhere;
+        line-height: 1.45;
+    }
+
+    .fb-v-panel--revision .fb-v-status,
+    .fb-v-panel--revision .fb-revision-countdown {
+        max-width: 100%;
+        white-space: normal;
+        line-height: 1.45;
+    }
+
+    .fb-v-panel--revision .fb-v25-detail {
+        white-space: nowrap;
+    }
+}
+
+/* Mobile: convert the row to a clean information card. */
+@media (max-width: 720px) {
+    .fb-v-panel--revision {
+        width: 100%;
+        padding: 18px 14px !important;
+        overflow: hidden;
+    }
+
+    .fb-v-panel--revision .fb-v25-table-wrap {
+        display: block;
+        width: 100%;
+        overflow: visible !important;
+        border: 0;
+    }
+
+    .fb-v-panel--revision .fb-v25-table {
+        display: block;
+        width: 100%;
+        min-width: 0 !important;
+        table-layout: auto;
+        border-collapse: separate;
+    }
+
+    .fb-v-panel--revision .fb-v25-table thead {
+        display: none !important;
+    }
+
+    .fb-v-panel--revision .fb-v25-table tbody {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+        width: 100%;
+    }
+
+    .fb-v-panel--revision .fb-v25-table tbody tr.fb-v25-row {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px 12px;
+        width: 100%;
+        min-width: 0;
+        padding: 15px;
+        box-sizing: border-box;
+        border: 1px solid #eedde5;
+        border-radius: 16px;
+        background: #fff;
+        box-shadow: 0 7px 22px rgba(74, 17, 42, .055);
+    }
+
+    .fb-v-panel--revision .fb-v25-table tbody tr.fb-v25-row > td {
+        display: flex !important;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        width: 100%;
+        min-width: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        box-sizing: border-box;
+        text-align: left;
+        overflow-wrap: anywhere;
+    }
+
+    .fb-v-panel--revision .fb-v25-table tbody tr.fb-v25-row > td::before {
+        display: block;
+        content: attr(data-label);
+        color: #9b7e8d;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: .045em;
+        line-height: 1.3;
+        text-transform: uppercase;
+    }
+
+    .fb-v-panel--revision .fb-v25-table tbody tr.fb-v25-row > td:first-child {
+        grid-column: 1 / -1;
+        padding-bottom: 13px !important;
+        border-bottom: 1px solid #f0e4e9 !important;
+    }
+
+    .fb-v-panel--revision .fb-v25-table tbody tr.fb-v25-row > td:first-child::before,
+    .fb-v-panel--revision .fb-v25-table tbody tr.fb-v25-row > td:last-child::before {
+        display: none;
+    }
+
+    .fb-v-panel--revision .fb-v25-table tbody tr.fb-v25-row > td:last-child {
+        grid-column: 1 / -1;
+        padding-top: 12px !important;
+        border-top: 1px solid #f0e4e9 !important;
+    }
+
+    /* Critical fix: reserve a stable image column and give the title the rest. */
+    .fb-v-panel--revision .fb-v25-table .fb-v25-item {
+        display: grid !important;
+        grid-template-columns: 76px minmax(0, 1fr) !important;
+        align-items: center;
+        gap: 12px;
+        width: 100% !important;
+        max-width: 100%;
+        min-width: 0 !important;
+        box-sizing: border-box;
+    }
+
+    .fb-v-panel--revision .fb-v25-table .fb-v25-thumb,
+    .fb-v-panel--revision .fb-v25-table .fb-v25-thumb-empty {
+        display: block;
+        grid-column: 1;
+        width: 76px !important;
+        height: 76px !important;
+        min-width: 76px;
+        max-width: 76px;
+        object-fit: cover;
+    }
+
+    .fb-v-panel--revision .fb-v25-table .fb-v25-item-copy {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        min-width: 0 !important;
+        gap: 4px;
+    }
+
+    .fb-v-panel--revision .fb-v25-table .fb-v25-item-copy strong {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        color: #40172d;
+        font-size: 13px;
+        line-height: 1.45;
+        white-space: normal;
+        word-break: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .fb-v-panel--revision .fb-v25-table .fb-v25-item-copy small,
+    .fb-v-panel--revision .fb-v25-table .fb-v25-item-copy .fb-v25-date {
+        display: block;
+        width: 100%;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        font-size: 10.5px;
+        line-height: 1.45;
+    }
+
+    .fb-v-panel--revision .fb-v25-table .fb-v-status {
+        align-self: flex-start;
+        max-width: 100%;
+        white-space: normal;
+        line-height: 1.45;
+    }
+
+    .fb-v-panel--revision .fb-revision-deadline {
+        font-size: 12px;
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+    }
+
+    .fb-v-panel--revision .fb-revision-countdown {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        max-width: 100%;
+        min-height: 36px;
+        padding: 7px 12px;
+        box-sizing: border-box;
+        white-space: normal;
+        font-size: 12px;
+        line-height: 1.35;
+    }
+
+    .fb-v-panel--revision .fb-v25-detail {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 44px;
+        box-sizing: border-box;
+        white-space: nowrap;
+    }
+
+    .fb-v-panel--revision .fb-empty {
+        display: block;
+        width: 100%;
+        white-space: normal;
+    }
+}
+
+/* Very narrow phones: keep the item header readable and stack metadata. */
+@media (max-width: 380px) {
+    .fb-v-panel--revision .fb-v25-table tbody tr.fb-v25-row {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+        padding: 13px;
+    }
+
+    .fb-v-panel--revision .fb-v25-table tbody tr.fb-v25-row > td:first-child,
+    .fb-v-panel--revision .fb-v25-table tbody tr.fb-v25-row > td:last-child {
+        grid-column: 1;
+    }
+
+    .fb-v-panel--revision .fb-v25-table .fb-v25-item {
+        grid-template-columns: 68px minmax(0, 1fr) !important;
+        gap: 10px;
+    }
+
+    .fb-v-panel--revision .fb-v25-table .fb-v25-thumb,
+    .fb-v-panel--revision .fb-v25-table .fb-v25-thumb-empty {
+        width: 68px !important;
+        height: 68px !important;
+        min-width: 68px;
+        max-width: 68px;
+    }
+}

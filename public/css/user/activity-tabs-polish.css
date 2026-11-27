@@ -1,0 +1,177 @@
+/* FindBack Kampus — Aktivitas Saya
+   Tab layout aligned to the full content column on desktop and mobile. */
+body.fb-activity-page .fb-activity-heading {
+    display: block;
+    width: 100%;
+    max-width: 1375px;
+    margin: 34px auto 18px;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body.fb-activity-page .fb-activity-heading-text {
+    display: block;
+    min-width: 0;
+}
+
+body.fb-activity-page .fb-activity-heading-text h1 {
+    margin: 0;
+    color: #850c2d;
+    font-size: clamp(23px, 2vw, 29px);
+    line-height: 1.2;
+    font-weight: 800;
+    letter-spacing: -.03em;
+}
+
+body.fb-activity-page .fb-activity-heading-text p {
+    margin: 7px 0 0;
+    color: #81747a;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* Two equal tabs span the same content width as the summary and list. */
+body.fb-activity-page .fb-activity-tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    max-width: 1375px;
+    margin: 0 auto 22px;
+    padding: 0;
+    gap: 0;
+    border-bottom: 1px solid #e9e1e5;
+    box-sizing: border-box;
+}
+
+body.fb-activity-page .fb-activity-tabs a {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    min-height: 54px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 12px 12px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #655b60;
+    font-size: 13px;
+    font-weight: 650;
+    line-height: 1.25;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    box-sizing: border-box;
+    transition: color .18s ease, background-color .18s ease;
+}
+
+body.fb-activity-page .fb-activity-tabs a::after {
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+    background: #990e3d;
+    content: "";
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform .2s ease;
+}
+
+body.fb-activity-page .fb-activity-tabs a.active {
+    color: #990e3d;
+    background: transparent;
+}
+
+body.fb-activity-page .fb-activity-tabs a.active::after {
+    transform: scaleX(1);
+}
+
+body.fb-activity-page .fb-activity-tabs a svg {
+    display: block;
+    flex: 0 0 19px;
+    width: 19px;
+    height: 19px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    body.fb-activity-page .fb-activity-tabs a:not(.active):hover {
+        color: #990e3d;
+        background: rgba(153, 14, 61, .035);
+    }
+}
+
+@media (max-width: 760px) {
+    body.fb-activity-page .fb-activity-heading {
+        margin: 24px 0 15px;
+        padding: 0 2px;
+    }
+
+    body.fb-activity-page .fb-activity-heading-text h1 {
+        font-size: 23px;
+        line-height: 1.22;
+    }
+
+    body.fb-activity-page .fb-activity-heading-text p {
+        margin-top: 5px;
+        font-size: 12px;
+        line-height: 1.45;
+    }
+
+    body.fb-activity-page .fb-activity-tabs {
+        width: 100%;
+        margin: 0 0 18px;
+    }
+
+    body.fb-activity-page .fb-activity-tabs a {
+        min-height: 52px;
+        gap: 7px;
+        padding: 9px 5px 11px;
+        font-size: 12px;
+    }
+
+    body.fb-activity-page .fb-activity-tabs a svg {
+        flex-basis: 17px;
+        width: 17px;
+        height: 17px;
+    }
+}
+
+@media (max-width: 380px) {
+    body.fb-activity-page .fb-activity-tabs a {
+        gap: 5px;
+        padding-inline: 3px;
+        font-size: 11px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.fb-activity-page .fb-activity-tabs a,
+    body.fb-activity-page .fb-activity-tabs a::after {
+        transition: none !important;
+    }
+}
+
+
+/* FINDBACK_MOBILE_ACTIVITY_TAB_SCROLLBAR_FIX
+   The previous mobile rule in report-cycle.css enabled overflow-x:auto.
+   Because the tabs now use a two-column grid, scrolling is unnecessary and
+   caused a vertical scrollbar to appear at the right edge of the tab strip.
+   Keep the mobile tab strip fully visible without changing page scrolling. */
+@media (max-width: 760px) {
+    body.fb-activity-page .fb-activity-tabs {
+        overflow: visible !important;
+        overflow-x: visible !important;
+        overflow-y: visible !important;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    body.fb-activity-page .fb-activity-tabs::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+    }
+}

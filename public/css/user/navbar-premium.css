@@ -697,7 +697,7 @@
 
 @media (max-width: 800px) {
     .cu-body {
-        padding-bottom: calc(68px + env(safe-area-inset-bottom));
+        padding-bottom: calc(112px + env(safe-area-inset-bottom));
     }
 
     .cu-body .cu-header .cu-profile {
@@ -708,44 +708,6 @@
         width: 44px;
         height: 44px;
         flex-basis: 44px;
-    }
-
-    .cu-mobile-nav {
-        position: fixed;
-        z-index: 90;
-        inset: auto 0 0;
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 4px;
-        padding: 6px max(8px, env(safe-area-inset-right))
-            calc(6px + env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
-        border-top: 1px solid #eedfe4;
-        background: #fff;
-        box-shadow: 0 -4px 20px rgb(65 12 30 / 8%);
-    }
-
-    .cu-mobile-nav > :is(a, button) {
-        display: grid;
-        justify-items: center;
-        align-content: center;
-        gap: 3px;
-        min-height: 50px;
-        padding: 4px 0;
-        border: 0;
-        border-radius: 12px;
-        background: transparent;
-        color: #54414a;
-        font: inherit;
-        font-size: 12px;
-        font-weight: 650;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
-    .cu-mobile-nav > [aria-current],
-    .cu-mobile-nav > [aria-expanded="true"] {
-        background: #f9e9ef;
-        color: #790e30;
     }
 
     .cu-mobile-nav .cu-icon, .cu-mobile-report .cu-icon {
@@ -819,23 +781,6 @@
     .cu-mobile-signout { display: block; width: min(100%, 900px); margin: 0 auto 24px; }
 }
 
-
-@media (max-width: 800px) {
-    .cu-mobile-nav {
-        transition: transform 200ms ease;
-    }
-
-    .cu-mobile-nav.is-scrolled-away:not(:has(:focus-visible)) {
-        transform: translateY(calc(100% + 24px));
-        pointer-events: none;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .cu-mobile-nav {
-        transition: none;
-    }
-}
 
 @media (max-width: 800px) {
     .cu-mobile-report[open] {
@@ -1061,5 +1006,743 @@
     .cu-body .cu-header .cu-notice-panel {
         max-height: calc(100dvh - 88px);
         overflow: auto;
+    }
+}
+
+
+/* ==========================================================================
+   FINDBACK KAMPUS - PREMIUM NAVIGATION (DESKTOP + MOBILE)
+   Blok ini sengaja diletakkan paling akhir agar menjadi acuan visual
+   navbar. Semua nama animasi memakai awalan "cu-nav-".
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   A. MOBILE - PREMIUM FLOATING DOCK (<= 800px)
+   Empat menu tetap: Beranda, Lapor, Aktivitas, Akun.
+   Pil krem penanda halaman digambar dengan ::before dan titik emas dengan
+   ::after pada .cu-mobile-nav. Posisinya mengikuti atribut aria-current /
+   aria-expanded yang sudah dikelola campus.js dan fb-fast-navigation.js,
+   jadi perpindahan menu teranimasi tanpa JavaScript tambahan.
+   -------------------------------------------------------------------------- */
+@media (max-width: 800px) {
+    .cu-mobile-nav {
+        --cu-dock-gap: 2px;
+        --cu-dock-pad: 6px;
+        --cu-dock-accent: #70102e;
+        --cu-nav-i: 0;
+
+        position: fixed;
+        z-index: 90;
+        inset: auto 14px calc(12px + env(safe-area-inset-bottom));
+
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        align-items: stretch;
+        gap: var(--cu-dock-gap);
+
+        box-sizing: border-box;
+        width: auto;
+        max-width: 460px;
+        margin-inline: auto;
+        padding: var(--cu-dock-pad);
+        isolation: isolate;
+
+        /* Maroon gelap + kilau kaca di bagian atas */
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0) 46%),
+            linear-gradient(125deg, rgba(66, 6, 25, 0.97) 0%, rgba(104, 10, 38, 0.96) 54%, rgba(136, 16, 52, 0.95) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 28px;
+        -webkit-backdrop-filter: blur(18px) saturate(150%);
+        backdrop-filter: blur(18px) saturate(150%);
+        box-shadow:
+            0 22px 40px -14px rgba(58, 6, 22, 0.55),
+            0 6px 14px rgba(58, 6, 22, 0.18),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+        /* Kemunculan awal: naik halus, tanpa memakai transform */
+        animation: cu-nav-dock-rise 560ms cubic-bezier(0.2, 0.8, 0.25, 1) backwards;
+        transition: transform 320ms cubic-bezier(0.2, 0.7, 0.25, 1), opacity 220ms ease;
+    }
+
+    /* Sembunyi saat scroll ke bawah (class diatur campus.js) */
+    .cu-mobile-nav.is-scrolled-away:not(:has(:focus-visible)) {
+        transform: translateY(calc(100% + 36px + env(safe-area-inset-bottom)));
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    /* ----- Indeks menu aktif (0-3) untuk posisi pil ----- */
+    .cu-mobile-nav:has(> :nth-child(2):is([aria-current], [aria-expanded="true"])) { --cu-nav-i: 1; }
+    .cu-mobile-nav:has(> :nth-child(3):is([aria-current], [aria-expanded="true"])) { --cu-nav-i: 2; }
+    .cu-mobile-nav:has(> :nth-child(4):is([aria-current], [aria-expanded="true"])) { --cu-nav-i: 3; }
+    /* Saat popup Lapor terbuka, pil berpindah ke tombol Lapor */
+    .cu-mobile-nav:has(> :nth-child(2)[aria-expanded="true"]) { --cu-nav-i: 1; }
+
+    /* ----- Pil krem (::before) dan aksen emas (::after) ----- */
+    .cu-mobile-nav::before,
+    .cu-mobile-nav::after {
+        content: "";
+        position: absolute;
+        z-index: 0;
+        top: var(--cu-dock-pad);
+        bottom: var(--cu-dock-pad);
+        left: var(--cu-dock-pad);
+        width: calc((100% - 2 * var(--cu-dock-pad) - 3 * var(--cu-dock-gap)) / 4);
+        border-radius: 22px;
+        pointer-events: none;
+        opacity: 0;
+        translate: calc(var(--cu-nav-i) * (100% + var(--cu-dock-gap))) 0;
+        transition:
+            translate 540ms cubic-bezier(0.34, 1.32, 0.5, 1),
+            opacity 260ms ease;
+    }
+
+    .cu-mobile-nav::before {
+        background: linear-gradient(180deg, #fffafb 0%, #fbe5ed 100%);
+        box-shadow:
+            0 10px 20px -8px rgba(18, 0, 7, 0.5),
+            inset 0 1px 0 #fff,
+            inset 0 -1px 0 rgba(133, 13, 53, 0.1);
+    }
+
+    /* Titik emas kecil dengan halo lembut */
+    .cu-mobile-nav::after {
+        background: radial-gradient(
+                circle,
+                #ffc83d 0 2.3px,
+                rgba(255, 183, 3, 0.3) 3px 5px,
+                transparent 5.6px
+            )
+            center 3px / 12px 12px no-repeat;
+    }
+
+    .cu-mobile-nav:has(> [aria-current])::before,
+    .cu-mobile-nav:has(> [aria-current])::after,
+    .cu-mobile-nav:has(> [aria-expanded="true"])::before,
+    .cu-mobile-nav:has(> [aria-expanded="true"])::after {
+        opacity: 1;
+        animation: cu-nav-pill-in 520ms cubic-bezier(0.2, 0.8, 0.25, 1) 140ms backwards;
+    }
+
+    /* ----- Item menu ----- */
+    .cu-mobile-nav > :is(a, button) {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+
+        box-sizing: border-box;
+        min-width: 0;
+        min-height: 60px;
+        padding: 13px 2px 8px;
+
+        border: 0;
+        border-radius: 22px;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.7);
+
+        font: inherit;
+        font-size: 11px;
+        font-weight: 650;
+        letter-spacing: 0.1px;
+        line-height: 1.2;
+        text-align: center;
+        text-decoration: none;
+        white-space: nowrap;
+        cursor: pointer;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+
+        transition: color 280ms ease, scale 180ms cubic-bezier(0.2, 0.7, 0.25, 1);
+    }
+
+    .cu-mobile-nav > :is(a, button) .cu-icon {
+        display: block;
+        width: 22px;
+        height: 22px;
+        flex: none;
+        stroke-width: 1.7;
+        transition:
+            transform 440ms cubic-bezier(0.34, 1.56, 0.5, 1),
+            stroke-width 220ms ease;
+    }
+
+    .cu-mobile-nav-label {
+        display: block;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Hover lembut (hanya perangkat dengan kursor) */
+    @media (hover: hover) {
+        .cu-mobile-nav > :is(a, button):hover {
+            color: #fff;
+        }
+        .cu-mobile-nav > :is(a, button):hover .cu-icon {
+            transform: translateY(-2px);
+        }
+    }
+
+    /* Efek tekan: tombol sedikit mengecil, ikon memantul saat dilepas */
+    .cu-mobile-nav > :is(a, button):active {
+        scale: 0.94;
+    }
+    .cu-mobile-nav > :is(a, button):active .cu-icon {
+        transform: scale(0.82);
+        transition-duration: 120ms;
+    }
+
+    /* ----- Menu aktif (di atas pil krem) ----- */
+    .cu-mobile-nav > :is(a, button)[aria-current],
+    .cu-mobile-nav > :is(a, button)[aria-expanded="true"] {
+        color: var(--cu-dock-accent);
+        font-weight: 750;
+    }
+    .cu-mobile-nav > :is(a, button)[aria-current] .cu-icon,
+    .cu-mobile-nav > :is(a, button)[aria-expanded="true"] .cu-icon {
+        transform: translateY(1px) scale(1.07);
+        stroke-width: 2.1;
+    }
+
+    /* Popup Lapor terbuka: halaman asal kembali ke tampilan non-aktif */
+    .cu-mobile-nav:has(> [aria-expanded="true"]) > [aria-current]:not([aria-expanded="true"]) {
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 650;
+    }
+    .cu-mobile-nav:has(> [aria-expanded="true"]) > [aria-current]:not([aria-expanded="true"]) .cu-icon {
+        transform: none;
+        stroke-width: 1.7;
+    }
+
+    .cu-mobile-nav > :is(a, button):focus-visible {
+        outline: 2px solid #ffd27a;
+        outline-offset: -3px;
+    }
+}
+
+/* Cadangan untuk browser lama tanpa :has(): menu aktif diberi latar krem sendiri */
+@supports not selector(:has(*)) {
+    @media (max-width: 800px) {
+        .cu-mobile-nav::before,
+        .cu-mobile-nav::after {
+            display: none;
+        }
+        .cu-mobile-nav > :is(a, button)[aria-current],
+        .cu-mobile-nav > :is(a, button)[aria-expanded="true"] {
+            background: linear-gradient(180deg, #fffafb 0%, #fbe5ed 100%);
+        }
+    }
+}
+
+/* Warna merek kustom dari admin: dock mengikuti warna yang dipilih */
+@media (max-width: 800px) {
+    html[data-custom-brand] .cu-mobile-nav {
+        --cu-dock-accent: color-mix(in srgb, var(--fb-configured-brand) 70%, #161019);
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0) 46%),
+            linear-gradient(125deg,
+                color-mix(in srgb, var(--fb-configured-brand) 38%, #130c10),
+                color-mix(in srgb, var(--fb-configured-brand) 68%, #130c10));
+    }
+}
+
+/* HP kecil: 375px, 360px dan 320px */
+@media (max-width: 380px) {
+    .cu-mobile-nav {
+        --cu-dock-gap: 1px;
+        --cu-dock-pad: 5px;
+        inset-inline: 10px;
+        border-radius: 24px;
+    }
+    .cu-mobile-nav::before,
+    .cu-mobile-nav::after {
+        border-radius: 19px;
+    }
+    .cu-mobile-nav > :is(a, button) {
+        min-height: 56px;
+        padding-top: 12px;
+        border-radius: 19px;
+        font-size: 10px;
+    }
+    .cu-mobile-nav > :is(a, button) .cu-icon {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Layar landscape pendek: dock lebih ringkas */
+@media (max-width: 800px) and (max-height: 430px) {
+    .cu-mobile-nav > :is(a, button) {
+        min-height: 48px;
+        padding-top: 10px;
+    }
+    .cu-body {
+        padding-bottom: calc(88px + env(safe-area-inset-bottom));
+    }
+}
+
+@keyframes cu-nav-dock-rise {
+    from { opacity: 0; translate: 0 26px; }
+}
+@keyframes cu-nav-pill-in {
+    from { opacity: 0; scale: 0.82; }
+}
+
+
+/* --------------------------------------------------------------------------
+   B. DESKTOP - HEADER NAVIGATION (>= 801px)
+   Ukuran, padding, dan layout grid dari blok sebelumnya dipertahankan.
+   Bagian ini hanya menambah kedalaman visual, indikator aktif, dan gerak.
+   -------------------------------------------------------------------------- */
+@media (min-width: 801px) {
+    /* Bar melayang dengan kedalaman halus */
+    .cu-body .cu-header .cu-nav-wrap {
+        border-color: rgba(255, 255, 255, 0.16);
+        border-radius: 22px;
+        box-shadow:
+            0 16px 32px -16px rgba(75, 8, 30, 0.55),
+            0 3px 8px rgba(75, 8, 30, 0.12),
+            inset 0 1px 0 rgba(255, 255, 255, 0.16);
+        animation: cu-nav-header-in 520ms cubic-bezier(0.2, 0.8, 0.25, 1) backwards;
+    }
+
+    /* Rapi dan sejajar: ikon + teks selalu satu baris */
+    .cu-body .cu-header .cu-nav {
+        gap: 6px;
+    }
+    .cu-body .cu-header .cu-nav > a,
+    .cu-body .cu-header .cu-nav summary {
+        position: relative;
+        color: rgba(255, 255, 255, 0.84);
+        letter-spacing: 0.1px;
+        transition:
+            background-color 280ms ease,
+            color 280ms ease,
+            border-color 280ms ease,
+            box-shadow 280ms ease,
+            scale 160ms cubic-bezier(0.2, 0.7, 0.25, 1);
+    }
+    .cu-body .cu-header .cu-nav > a .fb-nav-icon,
+    .cu-body .cu-header .cu-nav summary .fb-nav-icon {
+        transition:
+            transform 380ms cubic-bezier(0.34, 1.56, 0.5, 1),
+            stroke-width 200ms ease;
+    }
+
+    /* Hover lembut */
+    .cu-body .cu-header .cu-nav > a:hover,
+    .cu-body .cu-header .cu-nav summary:hover {
+        background: rgba(255, 255, 255, 0.13);
+        color: #fff;
+    }
+    .cu-body .cu-header .cu-nav > a:hover .fb-nav-icon:first-child,
+    .cu-body .cu-header .cu-nav summary:hover .fb-nav-icon:first-child {
+        transform: translateY(-1px) scale(1.1);
+    }
+
+    /* Tekan: skala ringan + ikon memantul */
+    .cu-body .cu-header .cu-nav > a:active,
+    .cu-body .cu-header .cu-nav summary:active {
+        scale: 0.97;
+    }
+    .cu-body .cu-header .cu-nav > a:active .fb-nav-icon:first-child,
+    .cu-body .cu-header .cu-nav summary:active .fb-nav-icon:first-child {
+        transform: scale(0.88);
+        transition-duration: 120ms;
+    }
+
+    /* Menu aktif: pil krem + garis emas yang tumbuh dari tengah */
+    .cu-body .cu-header .cu-nav .active,
+    .cu-body .cu-header .cu-nav .active:hover {
+        box-shadow:
+            0 8px 18px -8px rgba(20, 0, 8, 0.5),
+            inset 0 -1px 0 rgba(133, 13, 53, 0.08);
+    }
+    .cu-body .cu-header .cu-nav > a.active::after,
+    .cu-body .cu-header .cu-nav summary.active::after {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 50%;
+        bottom: 4px;
+        width: 18px;
+        height: 3px;
+        margin-left: -9px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #e9a300, #ffcf5a);
+        box-shadow: 0 0 8px rgba(255, 183, 3, 0.45);
+        animation: cu-nav-bar-grow 460ms cubic-bezier(0.3, 1.3, 0.5, 1) backwards;
+    }
+
+    /* Panah dropdown berputar halus */
+    .cu-body .cu-header .cu-report-dropdown > summary .fb-nav-icon:last-child,
+    .cu-body .cu-header .cu-profile .cu-profile-chevron {
+        transition: rotate 300ms cubic-bezier(0.2, 0.7, 0.25, 1);
+    }
+
+    /* Menu turun muncul dengan lembut */
+    .cu-body .cu-header .cu-dropdown[open] > div {
+        transform-origin: top center;
+        animation: cu-nav-menu-pop 220ms cubic-bezier(0.2, 0.8, 0.25, 1) backwards;
+    }
+    .cu-body .cu-header .cu-dropdown > div a,
+    .cu-body .cu-header .cu-dropdown > div button {
+        transition: background-color 200ms ease, color 200ms ease;
+    }
+
+    /* Profil: transisi warna halus */
+    .cu-body .cu-header .cu-profile > summary {
+        transition: background-color 240ms ease, border-color 240ms ease;
+    }
+}
+
+/* Layar sangat lebar: sedikit lebih lega */
+@media (min-width: 1400px) {
+    .cu-body .cu-header .cu-nav {
+        gap: 8px;
+    }
+}
+
+@keyframes cu-nav-header-in {
+    from { opacity: 0; translate: 0 -10px; }
+}
+@keyframes cu-nav-bar-grow {
+    from { opacity: 0; scale: 0 1; }
+}
+@keyframes cu-nav-menu-pop {
+    from { opacity: 0; translate: 0 -6px; scale: 0.98; }
+}
+
+
+/* --------------------------------------------------------------------------
+   C. PENGURANGAN GERAK (aksesibilitas)
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    .cu-mobile-nav,
+    .cu-mobile-nav::before,
+    .cu-mobile-nav::after,
+    .cu-mobile-nav > :is(a, button),
+    .cu-mobile-nav > :is(a, button) .cu-icon,
+    .cu-body .cu-header .cu-nav-wrap,
+    .cu-body .cu-header .cu-nav > a::after,
+    .cu-body .cu-header .cu-nav summary::after,
+    .cu-body .cu-header .cu-dropdown[open] > div {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+
+/* --------------------------------------------------------------------------
+   FINDBACK NAVBAR STABILITY PATCH — 2026-11-27
+   Stabilitas dock mobile, indikator aktif, safe-area, dan header desktop.
+   -------------------------------------------------------------------------- */
+
+/* Desktop: header tetap satu baris, tidak terpotong oleh container halaman. */
+@media (min-width: 801px) {
+    .cu-body .cu-header {
+        width: calc(100% - 48px);
+        max-width: 1600px;
+        margin: 10px auto 0;
+        border-radius: 24px;
+        overflow: visible;
+        isolation: isolate;
+    }
+
+    .cu-body .cu-header .cu-nav-wrap {
+        width: 100%;
+        min-width: 0;
+        min-height: 72px;
+        padding-inline: clamp(12px, 1.5vw, 24px);
+        gap: clamp(8px, 1.2vw, 18px);
+        overflow: visible;
+    }
+
+    .cu-body .cu-header .cu-brand,
+    .cu-body .cu-header .cu-account,
+    .cu-body .cu-header .cu-nav {
+        min-width: 0;
+    }
+
+    .cu-body .cu-header .cu-nav > a,
+    .cu-body .cu-header .cu-nav summary {
+        flex-shrink: 0;
+    }
+}
+
+/* Mobile: satu dock stabil di semua halaman, tanpa animasi yang menggeser
+   indikator keluar dari bidang navbar atau menyembunyikan navbar saat scroll. */
+@media (max-width: 800px) {
+    .cu-body {
+        padding-bottom: calc(118px + env(safe-area-inset-bottom)) !important;
+        overflow-x: clip;
+    }
+
+    .cu-body .cu-mobile-nav {
+        position: fixed !important;
+        inset: auto auto max(10px, env(safe-area-inset-bottom)) 50% !important;
+        translate: -50% 0 !important;
+        transform: none !important;
+        width: min(460px, calc(100vw - 24px)) !important;
+        max-width: calc(100vw - 24px) !important;
+        min-height: 76px;
+        height: 76px;
+        margin: 0 !important;
+        padding: 6px !important;
+        display: grid !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        align-items: stretch;
+        gap: 3px;
+        overflow: visible !important;
+        z-index: 999 !important;
+        border-radius: 25px;
+        box-sizing: border-box;
+        animation: none !important;
+        transition: none !important;
+        -webkit-backdrop-filter: blur(16px) saturate(145%);
+        backdrop-filter: blur(16px) saturate(145%);
+    }
+
+    /* Jangan menyembunyikan dock ketika pengguna menggulir halaman. */
+    .cu-body .cu-mobile-nav.is-scrolled-away,
+    .cu-body .cu-mobile-nav.is-scrolled-away:not(:has(:focus-visible)) {
+        translate: -50% 0 !important;
+        transform: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+    }
+
+    /* Hilangkan indikator pseudo yang sebelumnya bergerak melintasi item.
+       Latar aktif diterapkan langsung pada item agar tidak pernah clipping. */
+    .cu-body .cu-mobile-nav::before,
+    .cu-body .cu-mobile-nav::after {
+        display: none !important;
+        content: none !important;
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .cu-body .cu-mobile-nav > :is(a, button) {
+        min-width: 0;
+        min-height: 62px;
+        height: 62px;
+        padding: 7px 2px 6px !important;
+        margin: 0;
+        gap: 4px;
+        border: 0;
+        border-radius: 19px;
+        overflow: hidden;
+        white-space: normal;
+        line-height: 1.15;
+        transform: none !important;
+        scale: 1 !important;
+        transition: background-color 160ms ease, color 160ms ease !important;
+    }
+
+    .cu-body .cu-mobile-nav > :is(a, button)[aria-current],
+    .cu-body .cu-mobile-nav > :is(a, button)[aria-expanded="true"] {
+        color: #70102e !important;
+        background: linear-gradient(180deg, #fffafb 0%, #fbe5ed 100%) !important;
+        box-shadow: 0 5px 12px rgba(24, 0, 9, .18), inset 0 1px 0 #fff;
+    }
+
+    .cu-body .cu-mobile-nav > :is(a, button) .cu-icon {
+        width: 21px;
+        height: 21px;
+        max-width: 21px;
+        flex: 0 0 21px;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    .cu-body .cu-mobile-nav .cu-mobile-nav-label {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 10px;
+        line-height: 1.15;
+    }
+
+    .cu-body .cu-mobile-nav > :is(a, button):active {
+        scale: 1 !important;
+        transform: none !important;
+    }
+
+    .cu-body .cu-mobile-nav > :is(a, button):focus-visible {
+        outline: 2px solid #ffd27a;
+        outline-offset: -3px;
+    }
+}
+
+/* HP sangat kecil: pertahankan empat kolom tanpa item saling menekan. */
+@media (max-width: 360px) {
+    .cu-body .cu-mobile-nav {
+        width: calc(100vw - 16px) !important;
+        max-width: calc(100vw - 16px) !important;
+        min-height: 72px;
+        height: 72px;
+        padding: 5px !important;
+        gap: 2px;
+    }
+
+    .cu-body .cu-mobile-nav > :is(a, button) {
+        min-height: 60px;
+        height: 60px;
+        padding-inline: 1px !important;
+        border-radius: 17px;
+    }
+
+    .cu-body .cu-mobile-nav .cu-mobile-nav-label {
+        font-size: 9px;
+    }
+}
+
+/* Landscape: dock tidak mengambil terlalu banyak tinggi layar. */
+@media (max-width: 800px) and (max-height: 430px) {
+    .cu-body {
+        padding-bottom: calc(88px + env(safe-area-inset-bottom)) !important;
+    }
+
+    .cu-body .cu-mobile-nav {
+        height: 62px;
+        min-height: 62px;
+        bottom: max(6px, env(safe-area-inset-bottom)) !important;
+    }
+
+    .cu-body .cu-mobile-nav > :is(a, button) {
+        height: 50px;
+        min-height: 50px;
+        padding-block: 4px !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cu-body .cu-mobile-nav,
+    .cu-body .cu-mobile-nav *,
+    .cu-body .cu-header,
+    .cu-body .cu-header * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+
+/* ==========================================================================
+   FINDBACK NAVBAR — STABILITAS KLIK & PERPINDAHAN HALAMAN
+   Patch 2026-11-27: indikator aktif statis, tanpa kedip/geser/animasi.
+   Berlaku sama pada desktop dan mobile.
+   ========================================================================== */
+.cu-body .cu-header,
+.cu-body .cu-header *,
+.cu-body .cu-mobile-nav,
+.cu-body .cu-mobile-nav *,
+.cu-body .cu-mobile-report,
+.cu-body .cu-mobile-report * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+}
+
+.cu-body .cu-header .cu-nav > a,
+.cu-body .cu-header .cu-nav summary,
+.cu-body .cu-header .cu-nav .fb-nav-icon,
+.cu-body .cu-header .cu-dropdown > div,
+.cu-body .cu-mobile-nav > :is(a, button),
+.cu-body .cu-mobile-nav > :is(a, button) .cu-icon {
+    transform: none !important;
+    translate: none !important;
+    rotate: none !important;
+    scale: 1 !important;
+}
+
+/* Desktop: status aktif berupa warna statis, tanpa garis yang tumbuh. */
+@media (min-width: 801px) {
+    .cu-body .cu-header .cu-nav > a.active,
+    .cu-body .cu-header .cu-nav > a.active:hover,
+    .cu-body .cu-header .cu-nav summary.active,
+    .cu-body .cu-header .cu-nav summary.active:hover {
+        background: rgba(255, 255, 255, 0.16) !important;
+        color: #fff !important;
+        box-shadow: none !important;
+    }
+
+    .cu-body .cu-header .cu-nav > a.active::after,
+    .cu-body .cu-header .cu-nav summary.active::after {
+        animation: none !important;
+        transform: none !important;
+        opacity: 0 !important;
+    }
+
+    .cu-body .cu-header .cu-nav > a:hover,
+    .cu-body .cu-header .cu-nav summary:hover {
+        transform: none !important;
+        background: rgba(255, 255, 255, 0.12);
+    }
+
+    .cu-body .cu-header .cu-nav > a:active,
+    .cu-body .cu-header .cu-nav summary:active {
+        transform: none !important;
+        scale: 1 !important;
+    }
+}
+
+/* Mobile: item aktif tetap berupa kapsul statis; dock tidak menghilang,
+   bergeser, atau berubah ukuran ketika ditekan maupun saat halaman scroll. */
+@media (max-width: 800px) {
+    .cu-body .cu-mobile-nav,
+    .cu-body .cu-mobile-nav.is-scrolled-away,
+    .cu-body .cu-mobile-nav.is-scrolled-away:not(:has(:focus-visible)) {
+        position: fixed !important;
+        inset: auto auto max(10px, env(safe-area-inset-bottom)) 50% !important;
+        translate: -50% 0 !important;
+        transform: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .cu-body .cu-mobile-nav > :is(a, button):hover,
+    .cu-body .cu-mobile-nav > :is(a, button):active {
+        transform: none !important;
+        translate: none !important;
+        scale: 1 !important;
+    }
+
+    .cu-body .cu-mobile-nav > :is(a, button)[aria-current],
+    .cu-body .cu-mobile-nav > :is(a, button)[aria-expanded="true"] {
+        transform: none !important;
+        background: linear-gradient(180deg, #fffafb 0%, #fbe5ed 100%) !important;
+        color: #70102e !important;
+        box-shadow: 0 5px 12px rgba(24, 0, 9, .18), inset 0 1px 0 #fff !important;
+    }
+
+    .cu-body .cu-mobile-nav::before,
+    .cu-body .cu-mobile-nav::after {
+        display: none !important;
+        content: none !important;
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* Preferensi aksesibilitas tetap dihormati. */
+@media (prefers-reduced-motion: reduce) {
+    .cu-body *,
+    .cu-body *::before,
+    .cu-body *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
     }
 }
